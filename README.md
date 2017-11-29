@@ -1,3 +1,5 @@
+Note: Contributing to this repository __does not__ disqualify anyone from competing in the PLAsTiCC.
+
 # proclam
 
 PRObabilistic CLAssification Metrics for PLAsTiCC
