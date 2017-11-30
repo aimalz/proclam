@@ -19,5 +19,6 @@ This repository may also serve as a space for experimenting with how to combine 
 * [Alex Malz](https://github.com/aimalz) (NYU)
 * [Renee Hlozek](https://github.com/reneehlozek) (U. Toronto)
 * [Rahul Biswas](https://github.com/rbiswas4) (U. Stockholm)
-* Add your name here!
+* [Gautham Narayan](https://github.com/gnarayan) (STScI)
+* [Rick Kessler](https://github.com/RickKessler) (U. Chicago)
 * The PLAsTiCC Team
