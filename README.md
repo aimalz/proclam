@@ -1,10 +1,10 @@
-Note: Contributing to this repository __does not__ disqualify anyone from competing in the PLAsTiCC.
+### Note: Contributing to this repository _does not_ disqualify anyone from competing in the PLAsTiCC.
 
 # proclam
 
 PRObabilistic CLAssification Metrics
 
-_(or proclamations of a professional clam?  You decide!)_
+_(Or proclamations of a professional clam?  You decide!)_
 
 ## Motivation
 
@@ -21,4 +21,5 @@ This repository may also serve as a space for experimenting with how to combine 
 * [Rahul Biswas](https://github.com/rbiswas4) (U. Stockholm)
 * [Gautham Narayan](https://github.com/gnarayan) (STScI)
 * [Rick Kessler](https://github.com/RickKessler) (U. Chicago)
+* [Rafael Martínez-Galarza](https://github.com/juramaga) (Harvard)
 * The PLAsTiCC Team
