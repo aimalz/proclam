@@ -1,4 +1,4 @@
-### Note: Contributing to this repository _does not_ disqualify anyone from competing in the PLAsTiCC.
+### Note: Contributing to this repository __does not__ disqualify anyone from competing in the PLAsTiCC.
 
 # proclam
 
