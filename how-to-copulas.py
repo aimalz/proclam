@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from copulalib.copulalib import Copula
+from ambhas.copula import Copula
 plt.style.use('ggplot')
 
 def generateData():
