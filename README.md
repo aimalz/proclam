@@ -21,7 +21,7 @@ This repository may also serve as a space for experimenting with how to combine 
 * [Gautham Narayan](https://github.com/gnarayan) (STScI)
 * [Renee Hlozek](https://github.com/reneehlozek) (U. Toronto)
 * [Christian Setzer](https://github.com/cnsetzer) (Stockholm U.)
-* [Tarek Allam] (https://github.com/tallamjr) (UCL)
+* [Tarek Allam](https://github.com/tallamjr) (UCL)
 * [Rick Kessler](https://github.com/RickKessler) (U. Chicago)
 * [Rafael Martínez-Galarza](https://github.com/juramaga) (Harvard)
 * The PLAsTiCC Team
