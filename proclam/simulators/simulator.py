@@ -6,7 +6,7 @@ import numpy as np
 
 class Simulator(object):
 
-    def __init__(self, scheme, seed=0):
+    def __init__(self, scheme=None, seed=0):
         """
         An object that simulates true class assignments.
 
@@ -28,18 +28,18 @@ class Simulator(object):
         Parameters
         ----------
         M: int
-            the number of classes
+            the number of true classes
         N: int
             the number of items
 
         Returns
         -------
-        truth: numpy.ndarray
+        truth: numpy.ndarray, int
             true classes
         """
 
-        print('No simulation procedure specified')
+        print('No simulation procedure specified: returning zeros')
 
-        truth = np.empty(N)
+        truth = np.zeros(N).astype(int)
 
         return truth

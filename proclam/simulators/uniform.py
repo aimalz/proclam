@@ -21,6 +21,7 @@ class Uniform(Simulator):
         """
 
         super(Uniform, self).__init__(scheme, seed)
+        np.random.seed(seed=self.seed)
 
     def simulate(self, M, N):
         """
@@ -29,7 +30,7 @@ class Uniform(Simulator):
         Parameters
         ----------
         M: int
-            the number of classes
+            the number of true classes
         N: int
             the number of items
 
