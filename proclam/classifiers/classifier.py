@@ -29,12 +29,13 @@ class Classifier(object):
         ----------
         M: int
             the number of anticipated classes
-        truth: numpy.ndarray, float
-            class probabilities for all classes for all items
+        truth: numpy.ndarray, int
+            class assignments for all items
+
         Returns
         -------
-        prediction: numpy.ndarray
-            true classes
+        prediction: numpy.ndarray, float
+            predicted classes
         """
 
         print('No classification procedure specified: returning truth table')
