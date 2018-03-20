@@ -23,7 +23,7 @@ class Guess(Classifier):
         super(Guess, self).__init__(scheme, seed)
         np.random.seed(seed=self.seed)
 
-    def classify(self, M, truth, **kwds):
+    def classify(self, M, truth, other=True, **kwds):
         """
         Simulates mock classifications based on truth
 
@@ -33,6 +33,9 @@ class Guess(Classifier):
             the number of anticipated classes
         truth: numpy.ndarray, float
             class probabilities for all classes for all items
+        other: boolean
+            include class for other
+
         Returns
         -------
         prediction: numpy.ndarray
@@ -40,6 +43,7 @@ class Guess(Classifier):
         """
 
         N = len(truth)
+        if other: M += 1
         prediction = np.random.uniform(size=(N, M))
         prediction /= np.sum(prediction, axis=1)[:, np.newaxis]
 

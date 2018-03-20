@@ -21,7 +21,7 @@ class Classifier(object):
         self.scheme = scheme
         self.seed = seed
 
-    def classify(self, M, truth, **kwds):
+    def classify(self, M, truth, other=True, **kwds):
         """
         Simulates mock classifications based on truth
 
@@ -31,6 +31,8 @@ class Classifier(object):
             the number of anticipated classes
         truth: numpy.ndarray, int
             class assignments for all items
+        other: boolean
+            include class for other 
 
         Returns
         -------
@@ -42,6 +44,7 @@ class Classifier(object):
 
         N = len(truth)
         indices = range(N)
+        if other: M += 1
         prediction = np.zeros((N, M))
 
         prediction[indices, truth[indices]] += 1.
