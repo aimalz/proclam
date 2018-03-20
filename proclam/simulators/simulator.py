@@ -6,20 +6,17 @@ import numpy as np
 
 class Simulator(object):
 
-    def __init__(self, scheme=None, seed=0):
+    def __init__(self, *args, seed=0, **kwds):
         """
         An object that simulates true class assignments.
 
         Parameters
         ----------
-        scheme: string
-            the name of the simulator
         seed: int, optional
             the random seed to use, handy for testing
         """
 
-        self.scheme = scheme
-        self.seed = seed
+        self.seed = np.random.seed(seed=self.seed)
 
     def simulate(self, M, N, **kwds):
         """

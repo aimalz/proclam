@@ -1,2 +1,2 @@
 import simulator
-import uniform
+import stats
