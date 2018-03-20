@@ -14,15 +14,9 @@ An immediate goal is to implement the metrics described [here](https://drive.goo
 
 This repository may also serve as a space for experimenting with how to combine metrics to declare a winner for the Kaggle requirement.
 
-## Modular Structure
+## Organization
 
-We want the metric to be resilient against a number of effects in the true data and the submitted classifications.  To make it easy for folks to contribute, there will be three directories with small modules to serve as "simulators," "classifiers," and metrics.
-
-1. The "simulators" produce "true data" in the form of a `.csv` file of true classes for each object.
-2. The "classifiers" are simple functions that take as input true data and produce as output a `.csv` file of class probabilities.
-3. The metrics are functional implementations in the `metrics` directory that take as input a `.csv` file of class probabilities and output a scalar value.
-
-This structure is intended to make it easy for anyone to contribute, because these modules should be very simple and self-contained.
+To get involved, check out the `README`s in the code directories.
 
 ## Contact
 
