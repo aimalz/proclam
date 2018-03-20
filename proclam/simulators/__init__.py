@@ -1,2 +1,2 @@
 import simulator
-import stats
+import scipydist

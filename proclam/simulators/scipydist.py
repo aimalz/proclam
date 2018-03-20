@@ -6,7 +6,7 @@ import numpy as np
 
 from simulator import Simulator
 
-class Stats(Simulator):
+class SciPyDist(Simulator):
 
     def __init__(self, scheme, seed=0):
         """
@@ -20,12 +20,13 @@ class Stats(Simulator):
             the random seed to use, handy for testing
         """
 
-        super(Stats, self).__init__(scheme, seed)
-        np.random.seed(seed=self.seed)
+        super(SciPyDist, self).__init__(scheme, seed)
+        # np.random.seed(seed=self.seed)
 
         self.scheme = scheme
+        self.scheme.seed = self.seed
 
-    def simulate(self, N, M=None):
+    def simulate(self, N, M):
         """
         Simulates the truth table
 
@@ -33,7 +34,7 @@ class Stats(Simulator):
         ----------
         N: int
             the number of items
-        M: int, optional
+        M: int
             the number of true classes
 
         Returns
@@ -41,9 +42,20 @@ class Stats(Simulator):
         truth: numpy.ndarray, int
             array of true class indices
         """
-        if M is not None:
-            self.scheme.b = M
+        try:
+            if M is not None:
+                self.scheme.b = M
 
-        truth = self.scheme.rvs(N, seed=self.seed)
+        except TypeError:
+            print('Cannot use '+str(type(self.scheme))+' because it is unbounded.')
+            return
 
+        try:
+            truth = self.scheme.rvs(N)
+
+            assert max(truth) < M
+
+        except AssertionError:
+            print('Cannot use '+str(type(self.scheme))+' because it is unbounded.')
+            return
         return truth

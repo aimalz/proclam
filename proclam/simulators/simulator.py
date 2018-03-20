@@ -6,7 +6,7 @@ import numpy as np
 
 class Simulator(object):
 
-    def __init__(self, *args, seed=0, **kwds):
+    def __init__(self, seed=0, *args, **kwds):
         """
         An object that simulates true class assignments.
 
@@ -16,18 +16,18 @@ class Simulator(object):
             the random seed to use, handy for testing
         """
 
-        self.seed = np.random.seed(seed=self.seed)
+        self.seed = np.random.seed()
 
-    def simulate(self, M, N, **kwds):
+    def simulate(self, N, M, **kwds):
         """
         Simulates the truth table
 
         Parameters
         ----------
-        M: int
-            the number of true classes
         N: int
             the number of items
+        M: int
+            the number of true classes
 
         Returns
         -------
