@@ -1,2 +1,3 @@
-import simulator
-import uniform
+from __future__ import absolute_import
+from . import simulator
+from . import uniform
