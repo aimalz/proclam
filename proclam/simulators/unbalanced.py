@@ -41,8 +41,8 @@ class Unbalanced(Simulator):
             array of true class indices
         """
 
-        counts = 10**(np.flip(np.arange(M), axis=0))
-        prob_classes = counts/float(np.sum(counts))
+        counts = 10 ** (np.flip(np.arange(M), axis=0))
+        prob_classes = counts / float(np.sum(counts))
         truth = np.random.choice(M, size=N, p=prob_classes)
 
         return truth
