@@ -1,6 +1,7 @@
 """
-A subclass for a unbalanced distribution of classes.
+A subclass for an unbalanced distribution of classes.
 """
+
 from __future__ import absolute_import
 import numpy as np
 
@@ -39,11 +40,15 @@ class Unbalanced(Simulator):
         truth: numpy.ndarray, int
             array of true class indices
         """
+        #
+        # counts = 10**(np.arange(N))
+        # prob_classes = counts/np.sum(counts)
+        #
+        #
+        # truth = np.random.choice(M, size=N, p=prob_classes)
 
-        counts = 10**(np.random.uniform(M,size=M))
-        prob_classes = counts/np.sum(counts)
-        
-
+        counts = 10**(np.flip(np.arange(M), axis=0))
+        prob_classes = counts/float(np.sum(counts))
         truth = np.random.choice(M, size=N, p=prob_classes)
 
         return truth
