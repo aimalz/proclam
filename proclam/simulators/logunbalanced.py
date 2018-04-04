@@ -42,7 +42,7 @@ class LogUnbalanced(Simulator):
         """
 
         counts = 10 ** (np.sort(np.random.uniform(M, size=M)))
-        prob_classes = counts / float(np.sum(counts))
+        prob_classes = counts / np.sum(counts)
         truth = np.random.choice(M, size=N, p=prob_classes)
 
         return truth
