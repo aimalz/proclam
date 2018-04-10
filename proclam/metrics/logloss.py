@@ -2,8 +2,11 @@
 A metric subclass for the log-loss
 """
 
+from __future__ import absolute_import
 import numpy as np
-from sys import
+import sys
+
+from .metric import Metric
 
 # would like some shared util functions
 # from util import epsilon
@@ -54,22 +57,23 @@ class LogLoss(Metric):
         truth_reformatted = np.zeros(prediction_shape)
         truth_reformatted += truth_reformatted[:, truth]
 
-        prediction_reformatted = prediction + epsilon * np.ones(prediction_shape)
+        prediction_reformatted = prediction + sys.float.epsilon * np.ones(prediction_shape)
         prediction_reformatted /= np.sum(prediction_reformatted, axis=1)
 
         log_prob = np.log(prediction_reformatted)
-        logloss_each = -1. np.sum(truth_reformatted * log_prob, axis=1)
+        logloss_each = -1. * np.sum(truth_reformatted * log_prob, axis=1)
 
-        # would like to replace this with general util function
+        # would like to replace this with general "averager" util function
         if self.averaging == 'per_class':
             class_logloss = np.empty(M)
             for m in range(M):
                 true_indices = np.where(truth == m)
+                how_many_in_class = len(true_indices)
                 per_class_logloss = logloss_each[true_indices]
-                class_logloss[m] = averager(logloss_each)
-            group_logloss = averager(class_logloss)
+                class_logloss[m] = np.average(per_class_logloss)
+            group_logloss = np.average(class_logloss)
         elif self.averaging == 'per_item':
             group_logloss = logloss_each
-        logloss = averager(group_logloss)
+        logloss = np.average(group_logloss)
 
         return logloss
