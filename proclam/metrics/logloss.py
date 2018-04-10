@@ -26,7 +26,6 @@ class LogLoss(Metric):
 
         super(LogLoss, self).__init__(scheme)
         self.scheme = scheme
-        self.averaging = averaging
 
     def evaluate(self, prediction, truth, averaging='per_class'):
         """
@@ -55,16 +54,22 @@ class LogLoss(Metric):
         (N, M) = prediction_shape
 
         truth_reformatted = np.zeros(prediction_shape)
-        truth_reformatted += truth_reformatted[:, truth]
+        # where_true = np.ones(prediction_shape)
+        # print(truth, truth_reformatted)
+        truth_reformatted[:, truth] = 1.
 
-        prediction_reformatted = prediction + sys.float.epsilon * np.ones(prediction_shape)
-        prediction_reformatted /= np.sum(prediction_reformatted, axis=1)
+        # we might also want a util function for normalizing these to be log-friendly along with the right dimensions
+        prediction_reformatted = prediction + sys.float_info.epsilon * np.ones(prediction_shape)
+        prediction_reformatted /= np.sum(prediction_reformatted, axis=1)[:, np.newaxis]
 
         log_prob = np.log(prediction_reformatted)
-        logloss_each = -1. * np.sum(truth_reformatted * log_prob, axis=1)
+        logloss_each = -1. * np.sum(truth_reformatted * log_prob, axis=1)[:, np.newaxis]
 
         # would like to replace this with general "averager" util function
-        if self.averaging == 'per_class':
+        # use a better structure for checking keyword support
+        group_logloss = logloss_each
+        print('Avering by '+averaging+'.')
+        if averaging == 'per_class':
             class_logloss = np.empty(M)
             for m in range(M):
                 true_indices = np.where(truth == m)
@@ -72,8 +77,11 @@ class LogLoss(Metric):
                 per_class_logloss = logloss_each[true_indices]
                 class_logloss[m] = np.average(per_class_logloss)
             group_logloss = np.average(class_logloss)
-        elif self.averaging == 'per_item':
-            group_logloss = logloss_each
+        elif averaging == 'per_item':
+            pass
+        else:
+            print('Averaging by '+averaging+' not yet supported.')
+            return
         logloss = np.average(group_logloss)
 
         return logloss
