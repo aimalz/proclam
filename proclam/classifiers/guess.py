@@ -1,10 +1,10 @@
 """
 A subclass for a randomly guessing classifier
 """
-
+from __future__ import absolute_import
 import numpy as np
 
-from classifier import Classifier
+from .classifier import Classifier
 
 class Guess(Classifier):
 

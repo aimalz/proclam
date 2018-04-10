@@ -1,16 +1,17 @@
 """
-A subclass for a uniform distribution of classes
+A subclass for a log-scaled unbalanced distribution of classes.
 """
+
 from __future__ import absolute_import
 import numpy as np
 
 from .simulator import Simulator
 
-class Uniform(Simulator):
+class LogUnbalanced(Simulator):
 
-    def __init__(self, scheme='uniform', seed=0):
+    def __init__(self, scheme='log-unbalanced', seed=0):
         """
-        An object that simulates true class assignments assuming equal fractions of each class.
+        An object that simulates umbalanced true class assignments such that the probability of an object being in class 'x' (with 0<=x<=M) is proportional to 10**y, where y is a draw from a uniform distribution U(0,M).
 
         Parameters
         ----------
@@ -20,12 +21,12 @@ class Uniform(Simulator):
             the random seed to use, handy for testing
         """
 
-        super(Uniform, self).__init__(scheme, seed)
+        super(LogUnbalanced, self).__init__(scheme, seed)
         np.random.seed(seed=self.seed)
 
     def simulate(self, M, N):
         """
-        Simulates the truth table as a uniform distribution
+        Simulates the truth table as an umbalanced distribution
 
         Parameters
         ----------
@@ -40,6 +41,8 @@ class Uniform(Simulator):
             array of true class indices
         """
 
-        truth = np.random.choice(M, size=N)
+        counts = 10 ** (np.sort(np.random.uniform(M, size=M)))
+        prob_classes = counts / np.sum(counts)
+        truth = np.random.choice(M, size=N, p=prob_classes)
 
         return truth
