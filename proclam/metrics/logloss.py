@@ -3,7 +3,7 @@ A metric subclass for the log-loss
 """
 
 import numpy as np
-from sys import 
+from sys import
 
 # would like some shared util functions
 # from util import epsilon
@@ -62,31 +62,14 @@ class LogLoss(Metric):
 
         # would like to replace this with general util function
         if self.averaging == 'per_class':
+            class_logloss = np.empty(M)
             for m in range(M):
                 true_indices = np.where(truth == m)
                 per_class_logloss = logloss_each[true_indices]
-                class_logloss = averager(logloss_each)
-            logloss = averager(args=(one_loss), axis=
+                class_logloss[m] = averager(logloss_each)
+            group_logloss = averager(class_logloss)
         elif self.averaging == 'per_item':
+            group_logloss = logloss_each
+        logloss = averager(group_logloss)
 
-
-        return metric
-
-    def evaluate_one(self, log_prob, truth_reformatted):
-        """
-        Evaluates a function of the truth and prediction
-
-        Parameters
-        ----------
-        log_prob: numpy.ndarray, float
-            log of predicted class probabilities
-        truth_reformatted: numpy.ndarray, int
-            1 at true class, 0 elsewhere
-
-        Returns
-        -------
-        logloss: float
-            value of the metric
-        """
-        logloss = -1. * np.sum((truth_reformatted * log_prob), axis=1)
         return logloss
