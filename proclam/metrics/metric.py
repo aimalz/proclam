@@ -6,7 +6,7 @@ import numpy as np
 
 class Metric(object):
 
-    def __init__(self, scheme=None):
+    def __init__(self, scheme=None, **kwargs):
         """
         An object that evaluates a function of the true classes and class probabilities
 
@@ -36,10 +36,10 @@ class Metric(object):
         """
 
         print('No metric specified: returning true positive rate based on maximum value')
+        #
+        # mode = np.argmax(prediction, axis=1)
+        # metric = len(np.where(truth == mode))
+        # N = len(mode)
+        # metric /= float(N)
 
-        mode = np.argmax(prediction, axis=1)
-        metric = len(np.where(truth == mode))
-        N = len(mode)
-        metric /= float(N)
-
-        return metric
+        return # metric
