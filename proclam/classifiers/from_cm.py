@@ -23,23 +23,23 @@ class FromCM(Classifier):
         super(FromCM, self).__init__(scheme, seed)
         np.random.seed(seed=self.seed)
 
-    def classify(self, CM, truth, other=True):
+    def classify(self, CM, truth, other=False):
         """
         Simulates mock classifications based on truth
 
         Parameters
         ----------
-        CM: float array
-            the confusion matrix. Its dimensions need to match the anticipated number of classes
+        CM: numpy.ndarray, float
+            the confusion matrix, normalized to sum to 1 across rows. Its dimensions need to match the anticipated number of classes
         truth: numpy.ndarray, float
             Array of the true classes of the items
-        other: boolean
+        other: boolean, optional
             include class for other
 
         Returns
         -------
-        prediction: numpy.ndarray
-            true classes
+        prediction: numpy.ndarray, float
+            predicted classes
         """
 
         N = len(truth)
