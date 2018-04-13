@@ -6,7 +6,7 @@ import numpy as np
 
 from .classifier import Classifier
 
-class CM_classifier(Classifier):
+class FromCM(Classifier):
 
     def __init__(self, scheme='CM', seed=0):
         """
@@ -20,10 +20,10 @@ class CM_classifier(Classifier):
             the random seed to use, handy for testing
         """
 
-        super(Guess, self).__init__(scheme, seed)
+        super(FromCM, self).__init__(scheme, seed)
         np.random.seed(seed=self.seed)
 
-    def classify(self, CM, truth, other=True, **kwds):
+    def classify(self, CM, truth, other=True):
         """
         Simulates mock classifications based on truth
 
