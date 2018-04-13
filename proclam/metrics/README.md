@@ -1,6 +1,6 @@
 # metric modules
 
-The metrics in this directory should be subclass instances of the `proclam.Metric` class contained in `metric.py`.  Each subclass should be in a separate `.py` file.  
+The metrics in this directory should be subclass instances of the `proclam.Metric` class contained in `metric.py`.  Each subclass should be in a separate `.py` file.  The log-loss metric is already implemented in `logloss.py` and can be used as a template for other metrics.
 
 A `proclam.Metric` subclass instance must have an `evaluate()` method that takes as input a length N `numpy.ndarray` of true class indices and an N*M `numpy.ndarray` with classification probabilities, and it outputs a single scalar value.  
 
@@ -15,6 +15,10 @@ There will be a utility file in this directory containing functions shared over 
 ## multi-class combiners
 
 There must be at least one function enabling combination of per-object metrics given the per-object classification probabilities, as metric results can differ based on whether they average over individual objects or over pre-averaged class summaries.
+
+## evaluation of the true/false positive/negative rates
+
+Many metrics are built on these basic quantities.  There should be a set of shared functions that compute these so we don't need to implement them for adaptations of deterministic metrics.
 
 ## probability reducer
 
