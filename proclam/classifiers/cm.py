@@ -47,8 +47,9 @@ class CM_classifier(Classifier):
         if other: M += 1
         prediction = []
         for item in truth:
-            prediction.append(CM[:,item])
-        
+            perturbed_prob = np.absolute(CM[item,:]+np.random.normal(0.0,0.03,np.shape(CM[item,:])))
+            normalized_prob = perturbed_prob/np.sum(perturbed_prob)
+            prediction.append(normalized_prob)
         prediction /= np.sum(prediction, axis=1)[:, np.newaxis]
 
         return prediction
