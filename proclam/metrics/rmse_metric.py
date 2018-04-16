@@ -4,9 +4,9 @@ A superclass for metrics
 
 import numpy as np
 
-class Metric(object):
+class RMSE_Metric(object):
 
-    def __init__(self, scheme=None, **kwargs):
+    def __init__(self, scheme=None):
         """
         An object that evaluates a function of the true classes and class probabilities
 
@@ -35,11 +35,13 @@ class Metric(object):
             value of the metric
         """
 
-        print('No metric specified: returning true positive rate based on maximum value')
-        #
-        # mode = np.argmax(prediction, axis=1)
-        # metric = len(np.where(truth == mode))
-        # N = len(mode)
-        # metric /= float(N)
+#        print('No metric specified: returning true positive rate based on maximum value')
+#        print(np.shape(prediction))
+        mode = np.argmax(prediction, axis=1)
+        
+        metric = np.sum((mode - truth)**2)
+        N = len(mode)
+        
+        metric /= float(N)
+        return metric 
 
-        return # metric
