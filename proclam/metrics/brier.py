@@ -1,5 +1,5 @@
 """
-A superclass for metrics
+Brier metric
 """
 
 import numpy as np
@@ -11,7 +11,7 @@ class Brier(Metric):
 
     def __init__(self, scheme=None):
         """
-        An object representing Brier score metric
+        An object representing the Brier score metric
 
         Parameters
         ----------
@@ -54,6 +54,7 @@ class Brier(Metric):
         if averaging == 'per_item':
             metric = np.average(q)
         elif averaging == 'per_class':
+            print(averaging+' not yet implemented')
             pass
 
         return metric
