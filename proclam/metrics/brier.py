@@ -1,6 +1,9 @@
 """
-Brier metric
+A metric subclass for the Brier score
 """
+
+from __future__ import absolute_import
+__all__ = ['Brier']
 
 import numpy as np
 
@@ -23,7 +26,7 @@ class Brier(Metric):
 
     def evaluate(self, prediction, truth, averaging='per_item'):
         """
-        Evaluates a function of the truth and prediction
+        Evaluates the Brier score
 
         Parameters
         ----------
