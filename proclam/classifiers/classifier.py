@@ -1,8 +1,10 @@
 """
 A superclass for classifiers
 """
+
 from __future__ import absolute_import
 __all__ = ['Classifier']
+
 import numpy as np
 
 class Classifier(object):
@@ -33,7 +35,7 @@ class Classifier(object):
         truth: numpy.ndarray, int
             class assignments for all items
         other: boolean
-            include class for other 
+            include class for other
 
         Returns
         -------

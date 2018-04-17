@@ -1,8 +1,10 @@
 """
 A superclass for metrics
 """
+
 from __future__ import absolute_import
 __all__ = ['Metric']
+
 import numpy as np
 
 class Metric(object):
