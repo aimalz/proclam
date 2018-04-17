@@ -29,7 +29,7 @@ class FromCM(Classifier):
 
     def classify(self, cm, truth, delta=0.1, other=False):
         """
-        Simulates mock classifications based on truth
+        Simulates mock classifications by perturbing a given confusion matrix
 
         Parameters
         ----------

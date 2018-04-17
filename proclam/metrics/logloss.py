@@ -19,7 +19,7 @@ class LogLoss(Metric):
 
     def __init__(self, scheme=None):
         """
-        An object that evaluates a function of the true classes and class probabilities
+        An object that evaluates the log-loss metric
 
         Parameters
         ----------
@@ -32,7 +32,7 @@ class LogLoss(Metric):
 
     def evaluate(self, prediction, truth, averaging='per_class'):
         """
-        Evaluates a function of the truth and prediction
+        Evaluates the log-loss
 
         Parameters
         ----------

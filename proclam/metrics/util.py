@@ -25,7 +25,7 @@ def truth_reformatter(truth, prediction=None):
 
     Notes
     -----
-    Does not yet handle number of classes in truth not matching number of classes in prediction
+    Does not yet handle number of classes in truth not matching number of classes in prediction, i.e. for having "other" class or secret classes not in training set
     """
     N = len(truth)
     indices = range(N)
