@@ -1,7 +1,8 @@
 """
 Utility functions for PLAsTiCC metrics
 """
-
+from __future__ import absolute_import
+__all__ = ['truth_reformatter']
 import numpy as np
 
 def truth_reformatter(truth, prediction=None):

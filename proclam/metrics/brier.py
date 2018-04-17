@@ -1,9 +1,9 @@
 """
 Brier metric
 """
-
+from __future__ import absolute_import
+__all__ = ['Brier']
 import numpy as np
-
 from .util import truth_reformatter
 from .metric import Metric
 

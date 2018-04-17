@@ -1,7 +1,8 @@
 """
 A superclass for simulators
 """
-
+from __future__ import absolute_import
+__all__ = ['Simulator']
 import numpy as np
 
 class Simulator(object):

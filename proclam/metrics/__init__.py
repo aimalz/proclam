@@ -1,6 +1,6 @@
 from __future__ import absolute_import
-from . import metric
-
-from . import util
-from . import brier
-from . import logloss
+from .metric import *
+from .rmse_metric import *
+from .util import *
+from .brier import *
+from .logloss import *

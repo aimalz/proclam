@@ -3,6 +3,7 @@ A metric subclass for the log-loss
 """
 
 from __future__ import absolute_import
+__all__ = ['LogLoss']
 import numpy as np
 import sys
 

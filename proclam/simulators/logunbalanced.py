@@ -2,9 +2,11 @@
 A subclass for a log-scaled unbalanced distribution of classes.
 """
 
-from __future__ import absolute_import
-import numpy as np
 
+from __future__ import absolute_import
+__all__ = ['LogUnbalanced']
+
+import numpy as np
 from .simulator import Simulator
 
 class LogUnbalanced(Simulator):

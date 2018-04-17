@@ -2,6 +2,7 @@
 A subclass for a randomly guessing classifier
 """
 from __future__ import absolute_import
+__all__  = ['FromCM']
 import numpy as np
 import scipy.stats as sps
 

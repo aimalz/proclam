@@ -1,7 +1,8 @@
 """
 A superclass for metrics
 """
-
+from __future__ import absolute_import
+__all__ = ['RMSE_Metric']
 import numpy as np
 
 class RMSE_Metric(object):
