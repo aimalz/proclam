@@ -4,7 +4,9 @@ Brier metric
 
 import numpy as np
 
+import util
 from util import truth_reformatter
+import metric
 from metric import Metric
 
 class Brier(Metric):
