@@ -45,14 +45,13 @@ def prob_to_cm(probs, truth):
     N_class = np.shape(probs)[1]
 
     CM = np.zeros((N_class, N_class))
-
+    
+    
     class_type = np.argmax(probs, axis=1)
 
-    for i in range(len(class_type)):
-        for j in range(len(truth)):
-            if (int(class_type[i]) == int(truth[j])):
-                CM[class_type[i],int(truth[j])] +=1
-
+    for i in range(len(class_type)):      
+            CM[int(class_type[i]), int(truth[i])] +=1
+            print(CM)
     return CM
 
 
