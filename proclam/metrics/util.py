@@ -53,6 +53,45 @@ def prob_to_cm(probs, truth):
             if (int(class_type[i]) == int(truth[j])):
                 CM[class_type[i],int(truth[j])] +=1
 
-                
-
     return CM
+
+
+import numpy as np
+def rates(det_class, truth):
+    """
+    Returns the the array of rates: [TPR, TNR, FPR, FNR] given a set of 
+    deterministic classifications and the true classes.
+
+    Parameters
+    ----------
+    det_class: numpy.ndarray, float
+        The deterministic classification
+    truth: numpy.ndarray, int
+        true classes
+    
+
+    Returns
+    -------
+    rates: numpy.ndarray, float
+        An array with the TPR, TNR, FPR, FNR
+    """
+    N = len(truth)
+    classes = np.unique(det_class) 
+    
+    TPC = np.sum(det_class == truth)
+    TNC = 0
+    FPC = 0
+    FNC = 0
+    for cl in classes:
+        FPC += np.sum(det_class[det_class == cl] != truth[det_class == cl])
+        FNC += np.sum(truth[truth == cl] != det_class[truth == cl])
+        TNC += np.sum(truth[truth != cl] != det_class[truth != cl])
+        
+    TPR = TPC/(TPC+FNC)
+    FPR = FPC/(FPC+TNC)
+    TNR = 1 - FPR
+    FNR = 1 - TPR
+
+    return np.array([TPR, TNR, FPR, FNR])
+
+
