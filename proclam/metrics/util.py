@@ -37,3 +37,22 @@ def truth_reformatter(truth, prediction=None):
     truth_reformatted[indices, truth] = 1.
 
     return truth_reformatted
+
+
+def prob_to_cm(probs, truth):
+
+    N = np.shape(probs)[0]
+    N_class = np.shape(probs)[1]
+
+    CM = np.zeros((N_class, N_class))
+
+    class_type = np.argmax(probs, axis=1)
+
+    for i in range(len(class_type)):
+        for j in range(len(truth)):
+            if (int(class_type[i]) == int(truth[j])):
+                CM[class_type[i],int(truth[j])] +=1
+
+                
+
+    return CM
