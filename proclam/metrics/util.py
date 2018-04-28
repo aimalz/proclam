@@ -92,16 +92,21 @@ def det_to_cm(dets, truth, per_class_norm=True, vb=True):
     """
     pred_classes, pred_counts = np.unique(dets, return_counts=True)
     true_classes, true_counts = np.unique(truth, return_counts=True)
+    # if vb: print((pred_classes, pred_counts), (true_classes, true_counts))
 
-    M = max(max(pred_classes), max(true_classes))
+    M = max(max(pred_classes), max(true_classes)) + 1
 
     cm = np.zeros((M, M))
     coords = zip(dets, truth)
-    if pm: print(coords)
-    cm[coords] += 1
+    indices, index_counts = np.unique(coords, axis=0, return_counts=True)
+    # if vb: print(indices, index_counts)
+    indices = indices.T
+    # if vb: print(np.shape(indices))
+    cm[indices[0], indices[1]] = index_counts
+    if vb: print(cm)
 
     if per_class_norm:
-        cm[:, true_classes] /= float(true_counts)
+        cm /= true_counts[np.newaxis, :]
 
     if vb: print(cm)
 
@@ -133,7 +138,7 @@ def prob_to_cm(probs, truth, per_class_norm=True, vb=True):
 
     return cm
 
-def cm_to_rate(cm):
+def cm_to_rate(cm, vb=True):
     """
     Turns a confusion matrix into true/false positive/negative rates
 
@@ -141,6 +146,8 @@ def cm_to_rate(cm):
     ----------
     cm: numpy.ndarray, int or float
         confusion matrix, first axis is predictions, second axis is truth
+    vb: boolean, optional
+        print progress to stdout?
 
     Returns
     -------
@@ -151,17 +158,21 @@ def cm_to_rate(cm):
     -----
     This can be done with a mask to weight the classes differently here.
     """
+    if vb: print(cm)
     diag = np.diag(cm)
+    if vb: print(diag)
 
     TP = np.sum(diag)
-    FP = np.sum(cm, axis=1) - TP
-    FN = np.sum(cm, axis=0) - TP
-    TN = np.sum(cm) - RP - FP - FN
+    FN = np.sum(np.sum(cm, axis=0) - diag)
+    FP = np.sum(np.sum(cm, axis=1) - diag)
+    TN = np.sum(cm) - TP
+    if vb: print((TP, FN, FP, TN))
 
     T = TP + TN
     F = FP + FN
     P = TP + FP
     N = TN + FN
+    if vb: print((T, F, P, N))
 
     TPR = TP / P
     FPR = FP / N
@@ -169,6 +180,7 @@ def cm_to_rate(cm):
     TNR = TN / N
 
     rates = RateMatrix(TPR=TPR, FPR=FPR, FNR=FNR, TNR=TNR)
+    if vb: print(rates)
 
     return rates
 
@@ -208,12 +220,12 @@ def cm_to_rate(cm):
 #
 #     return np.array([TPR, TNR, FPR, FNR])
 
-def det_to_rate(dets, truth, per_class_norm=True, pre_normed=True, vb=True):
+def det_to_rate(dets, truth, per_class_norm=True, vb=True):
     cm = det_to_cm(dets, truth, per_class_norm=per_class_norm, vb=vb)
-    rates = cm_to_rate(cm, normed=normed)
+    rates = cm_to_rate(cm)
     return rates
 
-def prob_to_rate(probs, truth, per_class_norm=True, pre_normed=True, vb=True):
+def prob_to_rate(probs, truth, per_class_norm=True, vb=True):
     cm = prob_to_cm(probs, truth, per_class_norm=per_class_norm, vb=vb)
-    rates = cm_to_rate(cm, normed=normed)
+    rates = cm_to_rate(cm)
     return rates
