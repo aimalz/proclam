@@ -3,97 +3,217 @@ Utility functions for PLAsTiCC metrics
 """
 
 from __future__ import absolute_import
-__all__ = ['truth_reformatter']
+__all__ = ['det_to_prob',
+            'prob_to_det',
+            'det_to_cm', 'prob_to_cm',
+            'cm_to_rate', 'det_to_rate', 'prob_to_rate']
 
+import collections
 import numpy as np
 
-def truth_reformatter(truth, prediction=None):
+RateMatrix = collections.namedtuple('rates', 'TPR FPR FNR TNR')
+
+def det_to_prob(dets, prediction=None):
     """
-    Reformats array of true classes into matrix with 1 at true class and zero elsewhere
+    Reformats vector of class assignments into matrix with 1 at true/assigned class and zero elsewhere
 
     Parameters
     ----------
-    truth: numpy.ndarray, int
-        true classes
+    dets: numpy.ndarray, int
+        vector of classes
     prediction: numpy.ndarray, float, optional
         predicted class probabilities
 
     Returns
     -------
-    metric: float
-        value of the metric
+    probs: numpy.ndarray, float
+        matrix with 1 at input classes and 0 elsewhere
 
     Notes
     -----
-    Does not yet handle number of classes in truth not matching number of classes in prediction, i.e. for having "other" class or secret classes not in training set
+    formerly truth_reformatter
+    Does not yet handle number of classes in truth not matching number of classes in prediction, i.e. for having "other" class or secret classes not in training set.  The prediction keyword is a kludge to enable this but should be replaced.
     """
-    N = len(truth)
+    N = len(dets)
     indices = range(N)
 
     if prediction is None:
-        prediction_shape = (N, np.max(truth) + 1)
+        prediction_shape = (N, np.max(dets) + 1)
     else:
-        prediction, truth = np.asarray(prediction), np.asarray(truth)
+        prediction, dets = np.asarray(prediction), np.asarray(dets)
         prediction_shape = np.shape(prediction)
 
-    truth_reformatted = np.zeros(prediction_shape)
-    truth_reformatted[indices, truth] = 1.
+    probs = np.zeros(prediction_shape)
+    probs[indices, dets] = 1.
 
-    return truth_reformatted
+    return probs
 
-
-def prob_to_cm(probs, truth):
-
-    N = np.shape(probs)[0]
-    N_class = np.shape(probs)[1]
-
-    CM = np.zeros((N_class, N_class))
-    
-    
-    class_type = np.argmax(probs, axis=1)
-
-    for i in range(len(class_type)):      
-            CM[int(class_type[i]), int(truth[i])] +=1
-            print(CM)
-    return CM
-
-
-import numpy as np
-def rates(det_class, truth):
+def prob_to_det(probs):
     """
-    Returns the the array of rates: [TPR, TNR, FPR, FNR] given a set of 
-    deterministic classifications and the true classes.
+    Converts probabilistic classifications to deterministic classifications by assigning the class with highest probability
 
     Parameters
     ----------
-    det_class: numpy.ndarray, float
-        The deterministic classification
-    truth: numpy.ndarray, int
-        true classes
-    
+    probs: numpy.ndarray, float
+        N * M matrix of class probabilities
 
     Returns
     -------
-    rates: numpy.ndarray, float
-        An array with the TPR, TNR, FPR, FNR
+    dets: numpy.ndarray, int
+        maximum probability classes
     """
-    N = len(truth)
-    classes = np.unique(det_class) 
-    
-    TPC = np.sum(det_class == truth)
-    TNC = 0
-    FPC = 0
-    FNC = 0
-    for cl in classes:
-        FPC += np.sum(det_class[det_class == cl] != truth[det_class == cl])
-        FNC += np.sum(truth[truth == cl] != det_class[truth == cl])
-        TNC += np.sum(truth[truth != cl] != det_class[truth != cl])
-        
-    TPR = TPC/(TPC+FNC)
-    FPR = FPC/(FPC+TNC)
-    TNR = 1 - FPR
-    FNR = 1 - TPR
+    dets = np.argmax(probs, axis=1)
 
-    return np.array([TPR, TNR, FPR, FNR])
+    return dets
 
+def det_to_cm(dets, truth, per_class_norm=True, vb=True):
+    """
+    Converts deterministic classifications and truth into confusion matrix
 
+    Parameters
+    ----------
+    dets: numpy.ndarray, int
+        assigned classes
+    truth: numpy.ndarray, int
+        true classes
+    per_class_norm: boolean, optional
+        equal weight per class if True, equal weight per object if False
+    vb: boolean, optional
+        if True, print cm
+
+    Returns
+    -------
+    cm: numpy.ndarray, int
+        confusion matrix
+
+    Notes
+    -----
+    I need to fix the norm keyword all around to enable more options, like normed output vs. not.
+    """
+    pred_classes, pred_counts = np.unique(dets, return_counts=True)
+    true_classes, true_counts = np.unique(truth, return_counts=True)
+
+    M = max(max(pred_classes), max(true_classes))
+
+    cm = np.zeros((M, M))
+    coords = zip(dets, truth)
+    if pm: print(coords)
+    cm[coords] += 1
+
+    if per_class_norm:
+        cm[:, true_classes] /= float(true_counts)
+
+    if vb: print(cm)
+
+    return cm
+
+def prob_to_cm(probs, truth, per_class_norm=True, vb=True):
+    """
+    Turns probabilistic classifications into confusion matrix by taking maximum probability as deterministic class
+
+    Parameters
+    ----------
+    probs: numpy.ndarray, float
+        N * M matrix of class probabilities
+    truth: numpy.ndarray, int
+        N-dimensional vector of true classes
+    per_class_norm: boolean, optional
+        equal weight per class if True, equal weight per object if False
+    vb: boolean, optional
+        if True, print cm
+
+    Returns
+    -------
+    cm: numpy.ndarray, int
+        confusion matrix
+    """
+    dets = prob_to_det(probs)
+
+    cm = det_to_cm(dets, truth, per_class_norm=per_class_norm, vb=vb)
+
+    return cm
+
+def cm_to_rate(cm):
+    """
+    Turns a confusion matrix into true/false positive/negative rates
+
+    Parameters
+    ----------
+    cm: numpy.ndarray, int or float
+        confusion matrix, first axis is predictions, second axis is truth
+
+    Returns
+    -------
+    rates: tuple, float
+        RateMatrix named tuple
+
+    Notes
+    -----
+    This can be done with a mask to weight the classes differently here.
+    """
+    diag = np.diag(cm)
+
+    TP = np.sum(diag)
+    FP = np.sum(cm, axis=1) - TP
+    FN = np.sum(cm, axis=0) - TP
+    TN = np.sum(cm) - RP - FP - FN
+
+    T = TP + TN
+    F = FP + FN
+    P = TP + FP
+    N = TN + FN
+
+    TPR = TP / P
+    FPR = FP / N
+    FNR = FN / P
+    TNR = TN / N
+
+    rates = RateMatrix(TPR=TPR, FPR=FPR, FNR=FNR, TNR=TNR)
+
+    return rates
+
+# def make_rates(dets, truth):
+#     """
+#     Returns a named tuple of rates: [TPR, TNR, FPR, FNR] given a set of
+#     deterministic classifications and the true classes
+#
+#     Parameters
+#     ----------
+#     det_class: numpy.ndarray, int
+#         deterministic classifications
+#     truth: numpy.ndarray, int
+#         true classes
+#
+#     Returns
+#     -------
+#     rates: numpy.ndarray, float
+#         An array with the TPR, TNR, FPR, FNR
+#     """
+#     N = len(truth)
+#     classes = np.unique(truth)
+#
+#     TPC = np.sum(det_class == truth)
+#     TNC = 0
+#     FPC = 0
+#     FNC = 0
+#     for cl in classes:
+#         FPC += np.sum(det_class[det_class == cl] != truth[det_class == cl])
+#         FNC += np.sum(truth[truth == cl] != det_class[truth == cl])
+#         TNC += np.sum(truth[truth != cl] != det_class[truth != cl])
+#
+#     TPR = TPC/(TPC+FNC)
+#     FPR = FPC/(FPC+TNC)
+#     TNR = 1 - FPR
+#     FNR = 1 - TPR
+#
+#     return np.array([TPR, TNR, FPR, FNR])
+
+def det_to_rate(dets, truth, per_class_norm=True, pre_normed=True, vb=True):
+    cm = det_to_cm(dets, truth, per_class_norm=per_class_norm, vb=vb)
+    rates = cm_to_rate(cm, normed=normed)
+    return rates
+
+def prob_to_rate(probs, truth, per_class_norm=True, pre_normed=True, vb=True):
+    cm = prob_to_cm(probs, truth, per_class_norm=per_class_norm, vb=vb)
+    rates = cm_to_rate(cm, normed=normed)
+    return rates

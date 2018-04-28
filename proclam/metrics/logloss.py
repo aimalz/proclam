@@ -8,7 +8,7 @@ __all__ = ['LogLoss']
 import numpy as np
 import sys
 
-from .util import truth_reformatter
+from .util import det_to_prob as truth_reformatter
 from .metric import Metric
 
 # would like some shared util functions

@@ -7,7 +7,7 @@ __all__ = ['Brier']
 
 import numpy as np
 
-from .util import truth_reformatter
+from .util import det_to_prob as truth_reformatter
 from .metric import Metric
 
 class Brier(Metric):
