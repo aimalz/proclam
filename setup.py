@@ -19,5 +19,5 @@ setup(
         "Operating System :: OS Independent",
         "Programming Language :: Python",
         ],
-    install_requires=["matplotlib", "numpy", "sklearn"]
+    install_requires=["matplotlib", "numpy", "scipy", "sklearn"]
 )
