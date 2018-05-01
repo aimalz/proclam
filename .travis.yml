@@ -14,16 +14,12 @@ install:
   - pip install --upgrade jupyter
   - pip install nbconvert
   # Finally get set up to build the docs
-  - pip install sphinx
-  - pip install sphinx_rtd_theme
 
 script:
   # Run the unit tests:
 #   - nosetests
   # Run the demo notebook, to make demo.html:
   - jupyter nbconvert --ExecutePreprocessor.kernel_name=python --ExecutePreprocessor.timeout=600 --to html --execute pipeline_sandbox.ipynb ; cp pipeline.html .
-  # Build the docs, the same way readthedocs does it:
-  - cd docs ; sphinx-build -b html . _build/html ; cd -
 
 # Finally, if it's the master branch being updated, force-push the
 # notebook html pages to an otherwise empty "html" branch:
