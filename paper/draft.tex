@@ -1,0 +1,139 @@
+\documentclass[iop]{emulateapj}
+
+\usepackage{tikz}
+\usepackage{natbib}
+\usepackage{amsmath}
+
+\usetikzlibrary{shapes.geometric, arrows}
+\usetikzlibrary{fit}
+
+\tikzstyle{hyper} = [circle, text centered, draw=black]
+\tikzstyle{param} = [circle, text centered, draw=black]
+\tikzstyle{data} = [circle, text centered, draw=black, line width=2pt]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+\newcommand{\myemail}{aimalz@nyu.edu}
+\newcommand{\textul}{\underline}
+\newcommand{\plasticc}{PLAsTiCC}
+
+\newcommand{\aim}[1]{\textcolor{red}{#1}}
+
+\begin{document}
+
+\title{Selection of a metric for probabilistic transient classification}
+
+\author{Alex Malz\altaffilmark{1}}
+\email{aimalz@nyu.edu}
+
+\author{PLAsTiCC team}
+
+\altaffiltext{1}{Center for Cosmology and Particle Physics, Department of 
+Physics,
+  New York University, 726 Broadway, 9th floor, New York, NY 10003, USA}
+
+\begin{abstract}
+
+\end{abstract}
+
+\keywords{data analysis --- methods: statistical\dots}
+
+\maketitle
+
+\section{Introduction}
+\label{sec:introduction}
+
+Brief literature review
+
+\begin{itemize}
+	\item Previous classification challenges
+	\item LSST is different due to S/N and many consumers of classification 
+results
+\end{itemize}
+
+This paper aims to answer the following questions:
+
+\begin{itemize}
+	\item Q: How do we best choose a classification metric for \plasticc?\\
+	A: Due to low S/N, deterministic classes are inappropriate for LSST.  
+We need to consider many consumers of these classifications.
+	\item Q: How can we adapt familiar deterministic metrics, and what 
+probabilistic alternatives are available?\\
+	A: There are many options, but we focus on a few\dots
+	\item Q: What metric do we use for the choice of a metric?\\
+	A: Develop intuition by considering obvious cases to align with our 
+goals -- this is about systematizing a choice we as experimenters make all the 
+time without being self-critical.
+\end{itemize}
+
+\section{Motivation}
+\label{sec:motivation}
+
+How do we best choose a classification metric for \plasticc?
+
+\begin{enumerate}
+	\item Establish that prior challenges have not been probabilistic but 
+that LSST will have to be
+	\item Establish that LSST has consumers with diverse science goals
+	\item Introduce the data: refer to model and validation papers but 
+share overall dataset size, rough number of classes, relative proportions, and 
+potential for ``other'' class(es)
+\end{enumerate}
+
+\section{Methods}
+\label{sec:methods}
+
+How can we adapt familiar deterministic metrics, and what probabilistic 
+alternatives are available?
+
+\begin{enumerate}
+	\item Introduce contrast between deterministic and probabilistic
+\end{enumerate}
+
+\subsection{Deterministic}
+
+\subsection{Probabilistic}
+
+\subsubsection{Brier metric}
+
+\subsubsection{Log loss}
+
+\section{Results}
+\label{sec:results}
+
+What metric do we use for the choice of a metric?  
+
+\begin{enumerate}
+	\item Emphasize subjectivity and thoughtful balance for survey like 
+LSST (high-stakes, lots of cooks)
+	\item Introduce ``pathology'' framework to cultivate intuition.
+\end{enumerate}
+
+\subsection{Controls}
+
+\subsubsection{Random guesser}
+
+\subsubsection{Perfect classifier}
+
+\subsection{Treatment}
+
+\subsubsection{Tunnel vision}
+
+\dots
+
+\section{Discussion}
+\label{sec:discussion}
+
+Need visualizations!
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+
+
+\begin{acknowledgements}
+\end{acknowledgements}
+
+\bibliographystyle{apj}
+\bibliography{references}
+
+\end{document}
