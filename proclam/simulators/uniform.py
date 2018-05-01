@@ -1,7 +1,10 @@
 """
 A subclass for a uniform distribution of classes
 """
+
 from __future__ import absolute_import
+__all__ = ['Uniform']
+
 import numpy as np
 
 from .simulator import Simulator

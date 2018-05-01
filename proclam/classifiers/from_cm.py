@@ -1,7 +1,10 @@
 """
-A subclass for a randomly guessing classifier
+A subclass for a general classifier based on a perturbed confusion matrix
 """
+
 from __future__ import absolute_import
+__all__  = ['FromCM']
+
 import numpy as np
 import scipy.stats as sps
 
@@ -26,7 +29,7 @@ class FromCM(Classifier):
 
     def classify(self, cm, truth, delta=0.1, other=False):
         """
-        Simulates mock classifications based on truth
+        Simulates mock classifications by perturbing a given confusion matrix
 
         Parameters
         ----------
