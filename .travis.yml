@@ -19,7 +19,7 @@ script:
   # Run the unit tests:
 #   - nosetests
   # Run the demo notebook, to make demo.html:
-  - jupyter nbconvert --ExecutePreprocessor.kernel_name=python --ExecutePreprocessor.timeout=600 --to html --execute pipeline_sandbox.ipynb ; cp pipeline_sandbox.html .
+  - jupyter nbconvert --ExecutePreprocessor.kernel_name=python --ExecutePreprocessor.timeout=600 --to html --execute pipeline_sandbox.ipynb
 
 # Finally, if it's the master branch being updated, force-push the
 # notebook html pages to an otherwise empty "html" branch:
