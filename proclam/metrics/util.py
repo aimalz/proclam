@@ -151,7 +151,7 @@ def cm_to_rate(cm, vb=True):
 
     Returns
     -------
-    rates: tuple, float
+    rates: named tuple, float
         RateMatrix named tuple
 
     Notes
@@ -184,48 +184,12 @@ def cm_to_rate(cm, vb=True):
 
     return rates
 
-# def make_rates(dets, truth):
-#     """
-#     Returns a named tuple of rates: [TPR, TNR, FPR, FNR] given a set of
-#     deterministic classifications and the true classes
-#
-#     Parameters
-#     ----------
-#     det_class: numpy.ndarray, int
-#         deterministic classifications
-#     truth: numpy.ndarray, int
-#         true classes
-#
-#     Returns
-#     -------
-#     rates: numpy.ndarray, float
-#         An array with the TPR, TNR, FPR, FNR
-#     """
-#     N = len(truth)
-#     classes = np.unique(truth)
-#
-#     TPC = np.sum(det_class == truth)
-#     TNC = 0
-#     FPC = 0
-#     FNC = 0
-#     for cl in classes:
-#         FPC += np.sum(det_class[det_class == cl] != truth[det_class == cl])
-#         FNC += np.sum(truth[truth == cl] != det_class[truth == cl])
-#         TNC += np.sum(truth[truth != cl] != det_class[truth != cl])
-#
-#     TPR = TPC/(TPC+FNC)
-#     FPR = FPC/(FPC+TNC)
-#     TNR = 1 - FPR
-#     FNR = 1 - TPR
-#
-#     return np.array([TPR, TNR, FPR, FNR])
-
 def det_to_rate(dets, truth, per_class_norm=True, vb=True):
     cm = det_to_cm(dets, truth, per_class_norm=per_class_norm, vb=vb)
-    rates = cm_to_rate(cm)
+    rates = cm_to_rate(cm, vb=vb)
     return rates
 
 def prob_to_rate(probs, truth, per_class_norm=True, vb=True):
     cm = prob_to_cm(probs, truth, per_class_norm=per_class_norm, vb=vb)
-    rates = cm_to_rate(cm)
+    rates = cm_to_rate(cm, vb=vb)
     return rates
