@@ -92,7 +92,7 @@ def det_to_cm(dets, truth, per_class_norm=True, vb=True):
     """
     pred_classes, pred_counts = np.unique(dets, return_counts=True)
     true_classes, true_counts = np.unique(truth, return_counts=True)
-    # if vb: print((pred_classes, pred_counts), (true_classes, true_counts))
+    if vb: print((pred_classes, pred_counts), (true_classes, true_counts))
 
     M = max(max(pred_classes), max(true_classes)) + 1
 
