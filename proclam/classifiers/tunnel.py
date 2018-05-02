@@ -10,7 +10,7 @@ import scipy.stats as sps
 
 from .classifier import Classifier
 
-class FromCM(Classifier):
+class Tunnel(Classifier):
 
     def __init__(self, scheme='CM', seed=0):
         """
@@ -24,10 +24,9 @@ class FromCM(Classifier):
             the random seed to use, handy for testing
         """
 
-        super(FromCM, self).__init__(scheme, seed)
-        np.random.seed(seed=self.seed)
+        self = proclam.classifiers.FromCM(scheme=scheme, seed=seed)
 
-    def classify(self, cm, truth, other=False):
+    def classify(self, accuracy, variability, truth, class, other=False):
         """
         Simulates mock classifications by perturbing a given confusion matrix
 
@@ -53,16 +52,16 @@ class FromCM(Classifier):
         N = len(truth)
         M = len(cm)
         if other: M += 1
- 
+
         prediction = np.zeros((N,M))
         class_corr = np.random.randint(0, M, size=1) # randomly choose which class to work well on
-        
+
         for i in range(N):
-            if cm[truth][i][class_corr] > (1./3):    # take cm[truth] for the rows with correct class
+            if cm[truth][i][class_corr] > (1./M):    # take cm[truth] for the rows with correct class
                 prediction[i] = cm[truth][i]
             else:
                 prediction[i] = np.ones(M) * (1./M)  # assign (1/M) probability to rows of other classes
-        
+
         prediction /= np.sum(prediction, axis=1)[:, np.newaxis] # normalize the rows to sum to 1
 
         return prediction
