@@ -218,7 +218,7 @@ def weight_sum(per_obj_metrics, weight_vector, norm=True):
         avg_score_per_class.append(np.mean(cl))
     weight_sum = weight_vector*avg_score_per_class
 
-    if norm: weight_sum = weight_sum/(np.sum(weigth_sum))
+    if norm: weight_sum = weight_sum/(np.sum(weight_sum))
     
     return weigth_sum
 
