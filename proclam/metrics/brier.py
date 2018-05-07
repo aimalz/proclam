@@ -68,7 +68,7 @@ class Brier(Metric):
         # wull ultimately call averager, but for now, equally per object
         
         if averaging == 'per_item':
-            metric = np.average(q)
+            metric = np.average(q_each)
         elif averaging == 'per_class':
             class_brier = averager(q_each,truth,M)
             metric = weight_sum(class_brier, weight_vector=weights)
