@@ -2,7 +2,7 @@
 Utility functions for PLAsTiCC metrics
 """
 
-from __future__ import absolute_import
+from __future__ import absolute_import, division
 __all__ = ['det_to_prob',
             'prob_to_det',
             'det_to_cm', 'prob_to_cm',
