@@ -193,3 +193,32 @@ def prob_to_rate(probs, truth, per_class_norm=True, vb=True):
     cm = prob_to_cm(probs, truth, per_class_norm=per_class_norm, vb=vb)
     rates = cm_to_rate(cm, vb=vb)
     return rates
+
+def weight_sum(per_obj_metrics, weight_vector, norm=True):
+    """
+    Calculates the weighted metric
+
+    Parameters
+    ----------
+    per_class_metrics: numpy.float 
+        the scores separated by class (a list of arrays)
+    weight_vector: numpy.ndarray floar
+        The array of weights per class
+    norm: boolean, optional
+
+    Returns
+    -------
+    weight_sum: np.float
+        The weighted metric
+    """
+    
+    avg_score_per_class = []
+
+    for cl in per_class_metrics:
+        avg_score_per_class.append(np.mean(cl))
+    weight_sum = weight_vector*avg_score_per_class
+
+    if norm: weight_sum = weight_sum/(np.sum(weigth_sum))
+    
+    return weigth_sum
+
