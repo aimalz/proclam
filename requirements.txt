@@ -1,4 +1,6 @@
 matplotlib
-numpy
+numpy>=1.13.0
 scipy
-sklearn
+scikit-learn>=1.19.0
+jupyter
+pandas
