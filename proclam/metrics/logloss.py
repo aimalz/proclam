@@ -71,7 +71,6 @@ class LogLoss(Metric):
         log_prob = np.log(prediction)
         logloss_each = -1. * np.sum(truth_mask * log_prob, axis=1)[:, np.newaxis]
 
-        # would like to replace this with general "averager" util function
         # use a better structure for checking keyword support
         class_logloss = averager(logloss_each,truth,M)
         
