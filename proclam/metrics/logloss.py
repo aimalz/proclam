@@ -11,6 +11,7 @@ import sys
 from .util import weight_sum
 from .util import check_weights
 from .util import det_to_prob as truth_reformatter
+from .util import averager
 from .metric import Metric
 
 # would like some shared util functions
@@ -72,14 +73,8 @@ class LogLoss(Metric):
 
         # would like to replace this with general "averager" util function
         # use a better structure for checking keyword support
-        group_logloss = logloss_each
-        print('Averaging by '+averaging+'.')
-        class_logloss = np.empty(M)
-        for m in range(M):
-            true_indices = np.where(truth == m)
-            how_many_in_class = len(true_indices)
-            per_class_logloss = logloss_each[true_indices]
-            class_logloss[m] = np.average(per_class_logloss)
+        class_logloss = averager(logloss_each,truth,M)
+        
         logloss = weight_sum(class_logloss, weight_vector=weights)
         # elif averaging == 'per_item':
         #     group_logloss = logloss_each

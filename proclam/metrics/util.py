@@ -236,3 +236,18 @@ def check_weights(avg_info, M, truth=None):
         weights = weights / float(len(truth))
 
     return weights
+
+
+def averager(per_object_metrics,truth,M):
+    """
+    Creates a list with the metrics per object, separated by class
+    """
+    group_metric = per_object_metrics
+    class_metric = np.empty(M)
+    for m in range(M):
+        true_indices = np.where(truth == m)
+        how_many_in_class = len(true_indices)
+        per_class_metric = group_metric[true_indices]
+        class_metric[m] = np.average(per_class_metric)
+
+    return class_metric

@@ -7,7 +7,10 @@ __all__ = ['Brier']
 
 import numpy as np
 
+from .util import weight_sum
+from .util import check_weights
 from .util import det_to_prob as truth_reformatter
+from .util import averager
 from .metric import Metric
 
 class Brier(Metric):
@@ -24,7 +27,7 @@ class Brier(Metric):
 
         super(Brier, self).__init__(scheme)
 
-    def evaluate(self, prediction, truth, averaging='per_item'):
+    def evaluate(self, prediction, truth, averaging='per_class'):
         """
         Evaluates the Brier score
 
@@ -36,6 +39,7 @@ class Brier(Metric):
             true classes
         averaging: string, optional
             'per_class' weights classes equally, other keywords possible
+            vector assumed to be class weights
 
         Returns
         -------
@@ -47,17 +51,27 @@ class Brier(Metric):
         Uses the [original, multi-class Brier score](https://en.wikipedia.org/wiki/Brier_score#Original_definition_by_Brier).
         Currently only supports equal weight per object
         """
-        truth = truth_reformatter(truth, prediction)
+        prediction, truth = np.asarray(prediction), np.asarray(truth)
+        prediction_shape = np.shape(prediction)
+        (N, M) = prediction_shape
+
+        weights = check_weights(averaging, M, truth=truth)
+        truth_mask = truth_reformatter(truth, prediction)
+        
+        # truth = truth_reformatter(truth, prediction)
         # inds = truth[:]
         # ri = np.zeros(len(truth))
         # for count,i in enumerate(inds):
         #     ri[count] = prediction[count,int(i)]
-        q = (prediction - truth) ** 2
+        q_each = (prediction - truth_mask) ** 2
+
         # wull ultimately call averager, but for now, equally per object
+        
         if averaging == 'per_item':
             metric = np.average(q)
         elif averaging == 'per_class':
-            print(averaging+' not yet implemented')
-            pass
+            class_brier = averager(q_each,truth,M)
+            metric = weight_sum(class_brier, weight_vector=weights)
+    
 
         return metric
