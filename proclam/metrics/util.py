@@ -194,13 +194,13 @@ def prob_to_rate(probs, truth, per_class_norm=True, vb=True):
     rates = cm_to_rate(cm, vb=vb)
     return rates
 
-def weight_sum(per_obj_metrics, weight_vector, norm=True):
+def weight_sum(per_class_metrics, weight_vector, norm=True):
     """
     Calculates the weighted metric
 
     Parameters
     ----------
-    per_class_metrics: numpy.float 
+    per_class_metrics: numpy.float
         the scores separated by class (a list of arrays)
     weight_vector: numpy.ndarray floar
         The array of weights per class
@@ -211,14 +211,28 @@ def weight_sum(per_obj_metrics, weight_vector, norm=True):
     weight_sum: np.float
         The weighted metric
     """
-    
-    avg_score_per_class = []
+    # print(weight_vector, per_class_metrics)
+    # avg_score_per_class = []
+    # for cl in per_class_metrics:
+    #     avg_score_per_class.append(np.mean(cl))
+    weight_sum = np.dot(weight_vector, per_class_metrics)
 
-    for cl in per_class_metrics:
-        avg_score_per_class.append(np.mean(cl))
-    weight_sum = weight_vector*avg_score_per_class
+    # if norm: weight_sum = weight_sum / np.sum(weight_sum)
 
-    if norm: weight_sum = weight_sum/(np.sum(weigth_sum))
-    
-    return weigth_sum
+    return weight_sum
 
+def check_weights(avg_info, M, truth=None):
+    """
+    Converts standard weighting schemes to weight vectors for weight_sum
+    """
+
+    if type(avg_info) != str:
+        weights = avg_info
+    elif avg_info == 'per_class':
+        weights = np.ones(M) / float(M)
+    elif avg_info == 'per_item':
+        classes, weights = np.unique(truth, return_counts=True)
+        # print(classes, type(weights))
+        weights = weights / float(len(truth))
+
+    return weights
