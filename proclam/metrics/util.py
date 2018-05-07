@@ -2,7 +2,7 @@
 Utility functions for PLAsTiCC metrics
 """
 
-from __future__ import absolute_import
+from __future__ import absolute_import, division
 __all__ = ['det_to_prob',
             'prob_to_det',
             'det_to_cm', 'prob_to_cm',
@@ -96,8 +96,8 @@ def det_to_cm(dets, truth, per_class_norm=True, vb=True):
 
     M = max(max(pred_classes), max(true_classes)) + 1
 
-    cm = np.zeros((M, M))
-    coords = zip(dets, truth)
+    cm = np.zeros((M, M), dtype=float)
+    coords = np.array(list(zip(dets, truth)))
     indices, index_counts = np.unique(coords, axis=0, return_counts=True)
     # if vb: print(indices, index_counts)
     indices = indices.T
