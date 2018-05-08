@@ -4,6 +4,7 @@ Utility functions for PLAsTiCC metrics
 
 from __future__ import absolute_import, division
 __all__ = ['sanitize_predictions',
+           'weight_sum', 'averager', 'check_weights',
            'det_to_prob',
            'prob_to_det',
            'det_to_cm', 'prob_to_cm',
@@ -16,6 +17,21 @@ import sys
 RateMatrix = collections.namedtuple('rates', 'TPR FPR FNR TNR')
 
 def sanitize_predictions(predictions, epsilon=sys.float_info.epsilon):
+    """
+    Replaces 0 and 1 with 0+epsilon, 1-epsilon
+
+    Parameters
+    ----------
+    predictions: numpy.ndarray, float
+        N*M matrix of probabilities per object, may have 0 or 1 values
+    epsilon: float
+        small placeholder number, defaults to floating point precision
+
+    Returns
+    -------
+    predictions: numpy.ndarray, float
+        N*M matrix of probabilities per object, no 0 or 1 values
+    """
     assert epsilon > 0. and epsilon < 0.0005
     mask1 = (predictions < epsilon)
     mask2 = (predictions > 1.0 - epsilon)
@@ -173,6 +189,7 @@ def cm_to_rate(cm, vb=True):
 
     Notes
     -----
+    BROKEN!
     This can be done with a mask to weight the classes differently here.
     """
     if vb: print(cm)
@@ -228,32 +245,32 @@ def weight_sum(per_class_metrics, weight_vector, norm=True):
     weight_sum: np.float
         The weighted metric
     """
-    # print(weight_vector, per_class_metrics)
-    # avg_score_per_class = []
-    # for cl in per_class_metrics:
-    #     avg_score_per_class.append(np.mean(cl))
     weight_sum = np.dot(weight_vector, per_class_metrics)
-
-    # if norm: weight_sum = weight_sum / np.sum(weight_sum)
 
     return weight_sum
 
 def check_weights(avg_info, M, truth=None):
     """
     Converts standard weighting schemes to weight vectors for weight_sum
-    """
 
+    Parameters
+    ----------
+    avg_info: str or numpy.ndarray, float
+        keyword about how to calculate weighted average metric
+    M: int
+        number of classes
+    truth: numpy.ndarray, int, optional
+        true class assignments
+    """
     if type(avg_info) != str:
         weights = avg_info
     elif avg_info == 'per_class':
         weights = np.ones(M) / float(M)
     elif avg_info == 'per_item':
         classes, weights = np.unique(truth, return_counts=True)
-        # print(classes, type(weights))
         weights = weights / float(len(truth))
 
     return weights
-
 
 def averager(per_object_metrics, truth, M):
     """
