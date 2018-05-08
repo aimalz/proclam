@@ -16,12 +16,12 @@ RateMatrix = collections.namedtuple('rates', 'TPR FPR FNR TNR')
 
 def sanitize_predictions(predictions, epsilon=1.0e-10):
     assert epsilon > 0. and epsilon < 0.0005
-    mask1 = (predictions < epsilon) 
+    mask1 = (predictions < epsilon)
     mask2 = (predictions > 1.0 - epsilon)
 
     predictions[mask1] = epsilon
     predictions[mask2] = 1.0 - epsilon
-    return predictions 
+    return predictions
 
 def det_to_prob(dets, prediction=None):
     """
@@ -116,6 +116,12 @@ def det_to_cm(dets, truth, per_class_norm=True, vb=True):
     if vb: print(cm)
 
     if per_class_norm:
+        np.savetxt("cm.txt", cm, fmt='%.18g')
+        np.savetxt("true_counts.txt", true_counts, fmt='%.18g')
+        print(type(cm))
+        print(type(true_counts))
+        # cm = cm / true_counts
+        # cm /= true_counts[:, np.newaxis] #
         cm /= true_counts[np.newaxis, :]
 
     if vb: print(cm)
