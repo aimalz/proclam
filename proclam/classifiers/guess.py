@@ -2,7 +2,7 @@
 A subclass for a randomly guessing classifier
 """
 
-from __future__ import absolute_import
+from __future__ import absolute_import, division
 __all__ = ['Guess']
 
 import numpy as np
@@ -48,6 +48,6 @@ class Guess(Classifier):
         N = len(truth)
         if other: M += 1
         prediction = np.random.uniform(size=(N, M))
-        prediction /= np.sum(prediction, axis=1)[:, np.newaxis]
+        prediction = prediction / np.sum(prediction, axis=1)[:, np.newaxis]
 
         return prediction
