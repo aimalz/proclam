@@ -11,10 +11,11 @@ __all__ = ['sanitize_predictions',
 
 import collections
 import numpy as np
+import sys
 
 RateMatrix = collections.namedtuple('rates', 'TPR FPR FNR TNR')
 
-def sanitize_predictions(predictions, epsilon=1.0e-10):
+def sanitize_predictions(predictions, epsilon=sys.float_info.epsilon):
     assert epsilon > 0. and epsilon < 0.0005
     mask1 = (predictions < epsilon)
     mask2 = (predictions > 1.0 - epsilon)
@@ -254,7 +255,7 @@ def check_weights(avg_info, M, truth=None):
     return weights
 
 
-def averager(per_object_metrics,truth,M):
+def averager(per_object_metrics, truth, M):
     """
     Creates a list with the metrics per object, separated by class
     """

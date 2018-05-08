@@ -15,10 +15,6 @@ from .util import sanitize_predictions
 from .util import averager
 from .metric import Metric
 
-# would like some shared util functions
-# from util import epsilon
-# from util import averager
-
 class LogLoss(Metric):
 
     def __init__(self, scheme=None):
@@ -64,25 +60,14 @@ class LogLoss(Metric):
         weights = check_weights(averaging, M, truth=truth)
         truth_mask = truth_reformatter(truth, prediction)
 
-        # we might also want a util function for normalizing these to be log-friendly along with the right dimensions
-        # if np.any(prediction == 0.):
-        #    prediction_reformatted = prediction + sys.float_info.epsilon * np.ones(prediction_shape)
-        #    prediction /= np.sum(prediction_reformatted, axis=1)[:, np.newaxis]
         prediction = sanitize_predictions(prediction)
 
         log_prob = np.log(prediction)
         logloss_each = -1. * np.sum(truth_mask * log_prob, axis=1)[:, np.newaxis]
 
         # use a better structure for checking keyword support
-        class_logloss = averager(logloss_each,truth,M)
+        class_logloss = averager(logloss_each, truth, M)
 
         logloss = weight_sum(class_logloss, weight_vector=weights)
-        # elif averaging == 'per_item':
-        #     group_logloss = logloss_each
-        #     pass
-        # else:
-        #     print('Averaging by '+averaging+' not yet supported.')
-        #     return
-        # logloss = np.average(group_logloss)
 
         return logloss

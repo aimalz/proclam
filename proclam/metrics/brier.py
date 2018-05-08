@@ -57,21 +57,10 @@ class Brier(Metric):
 
         weights = check_weights(averaging, M, truth=truth)
         truth_mask = truth_reformatter(truth, prediction)
-        
-        # truth = truth_reformatter(truth, prediction)
-        # inds = truth[:]
-        # ri = np.zeros(len(truth))
-        # for count,i in enumerate(inds):
-        #     ri[count] = prediction[count,int(i)]
+
         q_each = (prediction - truth_mask) ** 2
 
-        # wull ultimately call averager, but for now, equally per object
-        
-        #if averaging == 'per_item':
-        #    metric = np.average(q_each)
-        #elif averaging == 'per_class':
-        class_brier = averager(q_each,truth,M)
+        class_brier = averager(q_each, truth, M)
         metric = weight_sum(class_brier, weight_vector=weights)
-    
 
         return metric
