@@ -3,15 +3,25 @@ Utility functions for PLAsTiCC metrics
 """
 
 from __future__ import absolute_import, division
-__all__ = ['det_to_prob',
-            'prob_to_det',
-            'det_to_cm', 'prob_to_cm',
-            'cm_to_rate', 'det_to_rate', 'prob_to_rate']
+__all__ = ['sanitize_predictions',
+           'det_to_prob',
+           'prob_to_det',
+           'det_to_cm', 'prob_to_cm',
+           'cm_to_rate', 'det_to_rate', 'prob_to_rate']
 
 import collections
 import numpy as np
 
 RateMatrix = collections.namedtuple('rates', 'TPR FPR FNR TNR')
+
+def sanitize_predictions(predictions, epsilon=1.0e-10):
+    assert epsilon > 0. and epsilon < 0.0005
+    mask1 = (predictions < epsilon) 
+    mask2 = (predictions > 1.0 - epsilon)
+
+    predictions[mask1] = epsilon
+    predictions[mask2] = 1.0 - epsilon
+    return predictions 
 
 def det_to_prob(dets, prediction=None):
     """

@@ -9,6 +9,7 @@ import numpy as np
 import sys
 
 from .util import det_to_prob as truth_reformatter
+from .util import sanitize_predictions
 from .metric import Metric
 
 # would like some shared util functions
@@ -59,9 +60,10 @@ class LogLoss(Metric):
         truth = truth_reformatter(truth, prediction)
 
         # we might also want a util function for normalizing these to be log-friendly along with the right dimensions
-        if np.any(prediction == 0.):
-            prediction_reformatted = prediction + sys.float_info.epsilon * np.ones(prediction_shape)
-            prediction /= np.sum(prediction_reformatted, axis=1)[:, np.newaxis]
+        # if np.any(prediction == 0.):
+        #    prediction_reformatted = prediction + sys.float_info.epsilon * np.ones(prediction_shape)
+        #    prediction /= np.sum(prediction_reformatted, axis=1)[:, np.newaxis]
+        prediction = sanitize_predictions(prediction) 
 
         log_prob = np.log(prediction)
         logloss_each = -1. * np.sum(truth * log_prob, axis=1)[:, np.newaxis]
