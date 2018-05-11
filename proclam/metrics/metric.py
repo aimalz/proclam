@@ -7,6 +7,9 @@ __all__ = ['Metric']
 
 import numpy as np
 
+from .util import weight_sum
+from .util import check_weights
+
 class Metric(object):
 
     def __init__(self, scheme=None, **kwargs):
@@ -21,7 +24,7 @@ class Metric(object):
 
         self.scheme = scheme
 
-    def evaluate(self, prediction, truth, **kwds):
+    def evaluate(self, prediction, truth, weights=None, **kwds):
         """
         Evaluates a function of the truth and prediction
 
@@ -31,12 +34,16 @@ class Metric(object):
             predicted class probabilities
         truth: numpy.ndarray, int
             true classes
+        weights: numpy.ndarray, float
+            per-class weights
 
         Returns
         -------
         metric: float
             value of the metric
         """
+
+
 
         print('No metric specified: returning true positive rate based on maximum value')
         #
