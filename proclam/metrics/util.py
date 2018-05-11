@@ -65,7 +65,7 @@ def det_to_prob(dets, prediction=None):
     indices = range(N)
 
     if prediction is None:
-        prediction_shape = (N, np.max(dets) + 1)
+        prediction_shape = (N, int(np.max(dets) + 1))
     else:
         prediction, dets = np.asarray(prediction), np.asarray(dets)
         prediction_shape = np.shape(prediction)
