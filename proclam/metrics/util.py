@@ -93,7 +93,7 @@ def prob_to_det(probs):
 
     return dets
 
-def det_to_cm(dets, truth, per_class_norm=True, vb=True):
+def det_to_cm(dets, truth, per_class_norm=True, vb=False):
     """
     Converts deterministic classifications and truth into confusion matrix
 
@@ -134,19 +134,17 @@ def det_to_cm(dets, truth, per_class_norm=True, vb=True):
     if vb: print(cm)
 
     if per_class_norm:
-        np.savetxt("cm.txt", cm, fmt='%.18g')
-        np.savetxt("true_counts.txt", true_counts, fmt='%.18g')
-        print(type(cm))
-        print(type(true_counts))
+        # print(type(cm))
+        # print(type(true_counts))
         # cm = cm / true_counts
         # cm /= true_counts[:, np.newaxis] #
-        cm /= true_counts[np.newaxis, :]
+        cm = cm / true_counts[np.newaxis, :]
 
     if vb: print(cm)
 
     return cm
 
-def prob_to_cm(probs, truth, per_class_norm=True, vb=True):
+def prob_to_cm(probs, truth, per_class_norm=True, vb=False):
     """
     Turns probabilistic classifications into confusion matrix by taking maximum probability as deterministic class
 
@@ -172,7 +170,7 @@ def prob_to_cm(probs, truth, per_class_norm=True, vb=True):
 
     return cm
 
-def cm_to_rate(cm, vb=True):
+def cm_to_rate(cm, vb=False):
     """
     Turns a confusion matrix into true/false positive/negative rates
 
@@ -219,12 +217,12 @@ def cm_to_rate(cm, vb=True):
 
     return rates
 
-def det_to_rate(dets, truth, per_class_norm=True, vb=True):
+def det_to_rate(dets, truth, per_class_norm=True, vb=False):
     cm = det_to_cm(dets, truth, per_class_norm=per_class_norm, vb=vb)
     rates = cm_to_rate(cm, vb=vb)
     return rates
 
-def prob_to_rate(probs, truth, per_class_norm=True, vb=True):
+def prob_to_rate(probs, truth, per_class_norm=True, vb=False):
     cm = prob_to_cm(probs, truth, per_class_norm=per_class_norm, vb=vb)
     rates = cm_to_rate(cm, vb=vb)
     return rates
