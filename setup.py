@@ -6,7 +6,7 @@ setup(
     author="Alex Malz",
     author_email="aimalz@nyu.edu",
     url = "https://github.com/aimalz/proclam",
-    packages=["proclam"],
+    packages=["proclam", "proclam.classifiers", "proclam.metrics", "proclam.simulators"],
     description="PRObabilistic CLAssification Metrics",
     long_description=open("README.md").read(),
     package_data={"": ["README.md", "LICENSE"]},
