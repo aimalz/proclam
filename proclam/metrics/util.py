@@ -278,9 +278,14 @@ def averager(per_object_metrics, truth, M):
     group_metric = per_object_metrics
     class_metric = np.empty(M)
     for m in range(M):
-        true_indices = np.where(truth == m)
+        true_indices = np.where(truth == m)[0]
         how_many_in_class = len(true_indices)
-        per_class_metric = group_metric[true_indices]
-        class_metric[m] = np.average(per_class_metric)
-
+        try:
+            assert(how_many_in_class > 0)
+            per_class_metric = group_metric[true_indices]
+            # assert(~np.all(np.isnan(per_class_metric)))
+            class_metric[m] = np.average(per_class_metric)
+        except AssertionError:
+            class_metric[m] = 0.
+        # print((m, how_many_in_class, class_metric[m]))
     return class_metric

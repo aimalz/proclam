@@ -63,4 +63,6 @@ class Brier(Metric):
         class_brier = averager(q_each, truth, M)
         metric = weight_sum(class_brier, weight_vector=weights)
 
+        assert(~np.isnan(metric))
+
         return metric
