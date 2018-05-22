@@ -15,6 +15,7 @@ install:
   - sudo apt-get install texlive-fonts-recommended
   - sudo apt-get install chktex
   - sudo apt-get install dvipng
+  - sudo apt-get install pandoc
   - pip install --upgrade jupyter
   - pip install nbconvert
   # Finally get set up to build the docs
