@@ -38,6 +38,7 @@ def sanitize_predictions(predictions, epsilon=sys.float_info.epsilon):
 
     predictions[mask1] = epsilon
     predictions[mask2] = 1.0 - epsilon
+    predictions = predictions / np.sum(predictions, axis=1)
     return predictions
 
 def det_to_prob(dets, prediction=None):
