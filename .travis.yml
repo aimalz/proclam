@@ -25,9 +25,11 @@ script:
 #   - nosetests
   # Run the demo notebook, to make main.html:
 #    - jupyter nbconvert --ExecutePreprocessor.kernel_name=python --ExecutePreprocessor.timeout=600 --to html --execute desc_note/main.ipynb
-  - jupyter nbconvert --ExecutePreprocessor.kernel_name=python --ExecutePreprocessor.timeout=600 --execute desc_note/main.ipynb --TagRemovePreprocessor.remove_cell_tags='["hideme"]' --TagRemovePreprocessor.remove_input_tags='["hidein"]' --to pdf
+  - jupyter nbconvert --ExecutePreprocessor.kernel_name=python --ExecutePreprocessor.timeout=600 --execute desc_note/main.ipynb --to notebook
+  - jupyter nbconvert --TagRemovePreprocessor.remove_cell_tags='["hideme"]' --TagRemovePreprocessor.remove_input_tags='["hidein"]' desc_note/main.nbconvert.ipynb
 
-# Finally, if it's the master branch being updated, force-push the
+# Finally, if it's the master branch be
+ing updated, force-push the
 # notebook html pages to an otherwise empty "html" branch:
 #     if [ -n "$GITHUB_API_KEY" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; then
 after_success: |
