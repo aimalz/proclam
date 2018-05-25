@@ -38,6 +38,7 @@ def sanitize_predictions(predictions, epsilon=sys.float_info.epsilon):
 
     predictions[mask1] = epsilon
     predictions[mask2] = 1.0 - epsilon
+    predictions = predictions / np.sum(predictions, axis=1)[:, np.newaxis]
     return predictions
 
 def det_to_prob(dets, prediction=None):
@@ -260,15 +261,23 @@ def check_weights(avg_info, M, truth=None):
         number of classes
     truth: numpy.ndarray, int, optional
         true class assignments
+
+    Returns
+    -------
+    weights: numpy.ndarray, float
+        relative weights per class
     """
     if type(avg_info) != str:
-        weights = avg_info
+        avg_info = np.asarray(avg_info)
+        weights = avg_info / np.sum(avg_info)
+        assert(np.isclose(sum(weights), 1.))
     elif avg_info == 'per_class':
         weights = np.ones(M) / float(M)
     elif avg_info == 'per_item':
-        classes, weights = np.unique(truth, return_counts=True)
-        weights = weights / float(len(truth))
-
+        classes, counts = np.unique(truth, return_counts=True)
+        weights = np.zeros(M)
+        weights[classes] = counts / float(len(truth))
+        assert len(weights) == M
     return weights
 
 def averager(per_object_metrics, truth, M):
