@@ -20,7 +20,7 @@
 % Add your own macros here:
 
 
-\author{Alex Malz, Tarek Allam, Anita Bahmanyar, Rahul Biswas, Renee Hlozek, Juan Rafael Martinez Galarza, Gautham Narayan}
+%\author{Alemx Malz, Tarek Allam, Anita Bahmanyar, Rahul Biswas, Renee Hlozek, Juan Rafael Martinez Galarza, Gautham Narayan}
 % ======================================================================
 
 \begin{document}
@@ -47,6 +47,10 @@ This note is the brief introduction to the metrics used for the PLAsTiCC data ch
 \section{Introduction}
 \label{sec:intro}
 
+The main goal of the PLAsTiCC competition is to answer the following: \textit{can one classify a large test set of transients and variables using their photometric data, given a small and unbalanced training set?}
+
+In this challenge, classification over the full range of classes is preferred, hence the main metric that will be used to evaluate the challenge is the \textit{Brier metric}, as described below.
+ 
 The metric of this note is for the first version of the Kaggle competition, though there are future plans for an early classification challenge and identification of class-specific metrics for different science goals. This note serves only to summarize the results and code online in the \href{https://github.com/aimalz/proclam/}{ProClam} repository. Interactive notebooks and calculations are provided there.
 
 The criteria for the metric included:
@@ -66,17 +70,20 @@ We considered two metrics of classification probabilities, each of which is inte
 
 The Brier score is defined as
 \begin{eqnarray*}
-B &=& \sum_{m=1}^{M}\frac{w_{m}}{N_{m}}\sum_{n=1}^{N_{m}}\left((1-p_{n}(m | m))^{2}+\sum_{m'\neq m}^{M}(p_{n}(m' | m))^{2}\right)
+B &=& \sum_{m=1}^{M}\frac{w_{m}}{N_{m}}\sum_{n=1}^{N_{m}}\left((1-p_{n}(m | m))^{2}+\sum_{m'\neq m}^{M}(p_{n}(m' | m))^{2}\right),
 \end{eqnarray*}
+
+where the sum over $M$ is a sum over the $M$ classes defined, while the sum over $N_m$ is the sum over the individual objects in a given class $m$ in $M$. The $w_m$ are the weights defined per class (adjusting the relative important of classifying a particular class).
+
 
 The log-loss is defined as
 \begin{eqnarray*}
-L &=& -\sum_{m=1}^{M}\frac{w_{m}}{N_{m}}\sum_{n=1}^{N_{m}}\ln[p_{n}(m | m)]
+L &=& -\sum_{m=1}^{M}\frac{w_{m}}{N_{m}}\sum_{n=1}^{N_{m}}\ln[p_{n}(m | m)],
 \end{eqnarray*}
 
-average within each class, then weighted average between classes.
+where again the sum over $M$ is computed across classes, while the sum over $N_m$ is within a class.
 
-We define a weight vector across classes, which will be provided to the Kaggle team separately, since it contains model-specific information. For both the Brier metric and the log-loss metric, the goal is to minimise the metric score.
+We define a weight vector across classes $N_m$, which will be provided to the Kaggle team separately, since it contains model-specific information. For both the Brier metric and the log-loss metric, the goal is to minimise the metric score.
 % ----------------------------------------------------------------------
 
 In addition to providing the output of some classifiers evaluated on the metric, as shown in Figure~\ref{fig:ProClam}, we also include various `systematics' across which we test the metric performance.
