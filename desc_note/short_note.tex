@@ -50,7 +50,7 @@ This note is the brief introduction to the metrics used for the PLAsTiCC data ch
 The main goal of the PLAsTiCC competition is to answer the following: \textit{can one classify a large test set of transients and variables using their photometric data, given a small and unbalanced training set?}
 
 In this challenge, classification over the full range of classes is preferred, hence the main metric that will be used to evaluate the challenge is the \textit{Brier metric}, as described below.
- 
+
 The metric of this note is for the first version of the Kaggle competition, though there are future plans for an early classification challenge and identification of class-specific metrics for different science goals. This note serves only to summarize the results and code online in the \href{https://github.com/aimalz/proclam/}{ProClam} repository. Interactive notebooks and calculations are provided there.
 
 The criteria for the metric included:
@@ -72,9 +72,8 @@ The Brier score is defined as
 \begin{eqnarray*}
 B &=& \sum_{m=1}^{M}\frac{w_{m}}{N_{m}}\sum_{n=1}^{N_{m}}\left((1-p_{n}(m | m))^{2}+\sum_{m'\neq m}^{M}(p_{n}(m' | m))^{2}\right),
 \end{eqnarray*}
-
-where the sum over $M$ is a sum over the $M$ classes defined, while the sum over $N_m$ is the sum over the individual objects in a given class $m$ in $M$. The $w_m$ are the weights defined per class (adjusting the relative important of classifying a particular class).
-
+where the sum over $M$ is a sum over the $M$ classes defined, while the sum over $N_m$ is the sum over the individual objects in a given class $m$ in $M$. The $w_m$ are the weights defined per class.
+These weighted averages of the per-class metrics maybe be considered in terms of the systematics we discussed, by upweighting or downweighting the chosen `class' most affected by the systematics.
 
 The log-loss is defined as
 \begin{eqnarray*}
@@ -113,8 +112,9 @@ We show the performance of the metric on the various classifiers included in Fig
 \end{figure}
 % ----------------------------------------------------------------------
 
-
-%\section{Discussion}
+\section{Contributions}
+The contributions of those directly involved in the metrics are included in the online version of this note in the \href{https://github.com/aim\
+alz/proclam/}{ProClam} repository.
 %\label{sec:discussion}
 
 

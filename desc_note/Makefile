@@ -11,7 +11,7 @@
 
 # Primary file names - avoid cookiecutter variables, to enable `make
 # upgrade` to cleanly over-write this Makefile...
-main ?= main
+main ?= short_note
 #default=$(shell cat .metadata.json | grep 'default_format' | cut -d'"' -f4)
 outname ?= $(notdir $(shell pwd))
 
