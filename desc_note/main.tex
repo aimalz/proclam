@@ -51,7 +51,7 @@ The metric of this note is for the first version of the Kaggle competition, thou
 \begin{itemize}
 \item    The metric must return a single scalar value.
 \item    The metric must be well-defined for non-binary classes.
-\item\item    The metric must balance diverse science use cases in the presence of heavily nonuniform class prevalence.
+\item    The metric must balance diverse science use cases in the presence of heavily nonuniform class prevalence.
 \item    The metric must respect the information content of probabilistic classifications.
 \item    The metric must be able to evaluate deterministic classifications.
 \item    The metric must be interpretable, meaning it gives a more optimal value for "good" mock classifiers and a less optimal value for mock classifiers plagued by anticipated systematic errors; in other words, it must pass basic tests of intuition.
@@ -145,6 +145,22 @@ We may take weighted averages of the per-class metrics, and these weights may be
 
 \subsection{Representative classifications}
 \label{sec:realresults}
+
+\begin{figure*}
+	\begin{center}
+		\includegraphics[width=\textwidth]{SNPhotCC.png}\\
+		\caption{}
+		\label{fig:snphotcc_metric_compare}
+	\end{center}
+\end{figure*}
+
+\begin{figure*}
+	\begin{center}
+		\includegraphics[width=\textwidth]{Unknown.png}\\
+		\caption{}
+		\label{fig:unknown_metric_compare}
+	\end{center}
+\end{figure*}
 
 \section{Discussion}
 \label{sec:discussion}
