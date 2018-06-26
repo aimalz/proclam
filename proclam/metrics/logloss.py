@@ -8,12 +8,12 @@ __all__ = ['LogLoss']
 import numpy as np
 import sys
 
+from .util import weight_sum
+from .util import check_weights
 from .util import det_to_prob as truth_reformatter
+from .util import sanitize_predictions
+from .util import averager
 from .metric import Metric
-
-# would like some shared util functions
-# from util import epsilon
-# from util import averager
 
 class LogLoss(Metric):
 
@@ -40,8 +40,9 @@ class LogLoss(Metric):
             predicted class probabilities
         truth: numpy.ndarray, int
             true classes
-        averaging: string
+        averaging: string or numpy.ndarray, float
             'per_class' weights classes equally, other keywords possible
+            vector assumed to be class weights
 
         Returns
         -------
@@ -56,34 +57,19 @@ class LogLoss(Metric):
         prediction_shape = np.shape(prediction)
         (N, M) = prediction_shape
 
-        truth = truth_reformatter(truth, prediction)
+        weights = check_weights(averaging, M, truth=truth)
+        truth_mask = truth_reformatter(truth, prediction)
 
-        # we might also want a util function for normalizing these to be log-friendly along with the right dimensions
-        if np.any(prediction == 0.):
-            prediction_reformatted = prediction + sys.float_info.epsilon * np.ones(prediction_shape)
-            prediction /= np.sum(prediction_reformatted, axis=1)[:, np.newaxis]
+        prediction = sanitize_predictions(prediction)
 
         log_prob = np.log(prediction)
-        logloss_each = -1. * np.sum(truth * log_prob, axis=1)[:, np.newaxis]
+        logloss_each = -1. * np.sum(truth_mask * log_prob, axis=1)[:, np.newaxis]
 
-        # would like to replace this with general "averager" util function
         # use a better structure for checking keyword support
-        group_logloss = logloss_each
-        print('Averaging by '+averaging+'.')
-        if averaging == 'per_class':
-            class_logloss = np.empty(M)
-            for m in range(M):
-                true_indices = np.where(truth == m)
-                how_many_in_class = len(true_indices)
-                per_class_logloss = logloss_each[true_indices]
-                class_logloss[m] = np.average(per_class_logloss)
-            group_logloss = np.average(class_logloss)
-        elif averaging == 'per_item':
-            group_logloss = logloss_each
-            pass
-        else:
-            print('Averaging by '+averaging+' not yet supported.')
-            return
-        logloss = np.average(group_logloss)
+        class_logloss = averager(logloss_each, truth, M)
+
+        logloss = weight_sum(class_logloss, weight_vector=weights)
+
+        assert(~np.isnan(logloss))
 
         return logloss

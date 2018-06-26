@@ -19,7 +19,9 @@ To get involved, check out the `README`s in the code directories.
 ## Contact
 
 * [Alex Malz](https://github.com/aimalz) (NYU)
+* [Anita Bahmanyar](https://github.com/Andromedanita) (U. Toronto)
+* [Rahul Biswas](https://github.com/rbiswas4) (U. Stockholm)
+* [Rafael Martinez-Galarza]((https://github.com/juramaga) (CfA)
 * [Renee Hlozek](https://github.com/reneehlozek) (U. Toronto)
 * [Gautham Narayan](https://github.com/gnarayan) (STScI)
-* [Rahul Biswas](https://github.com/rbiswas4) (U. Stockholm)
 * The PLAsTiCC Team
