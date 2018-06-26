@@ -49,7 +49,6 @@ class Brier(Metric):
         Notes
         -----
         Uses the [original, multi-class Brier score](https://en.wikipedia.org/wiki/Brier_score#Original_definition_by_Brier).
-        Currently only supports equal weight per object
         """
         prediction, truth = np.asarray(prediction), np.asarray(truth)
         prediction_shape = np.shape(prediction)
@@ -62,5 +61,7 @@ class Brier(Metric):
 
         class_brier = averager(q_each, truth, M)
         metric = weight_sum(class_brier, weight_vector=weights)
+
+        assert(~np.isnan(metric))
 
         return metric

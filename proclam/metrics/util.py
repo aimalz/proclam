@@ -38,6 +38,7 @@ def sanitize_predictions(predictions, epsilon=sys.float_info.epsilon):
 
     predictions[mask1] = epsilon
     predictions[mask2] = 1.0 - epsilon
+    predictions = predictions / np.sum(predictions, axis=1)[:, np.newaxis]
     return predictions
 
 def det_to_prob(dets, prediction=None):
@@ -65,7 +66,7 @@ def det_to_prob(dets, prediction=None):
     indices = range(N)
 
     if prediction is None:
-        prediction_shape = (N, np.max(dets) + 1)
+        prediction_shape = (N, int(np.max(dets) + 1))
     else:
         prediction, dets = np.asarray(prediction), np.asarray(dets)
         prediction_shape = np.shape(prediction)
@@ -93,7 +94,7 @@ def prob_to_det(probs):
 
     return dets
 
-def det_to_cm(dets, truth, per_class_norm=True, vb=True):
+def det_to_cm(dets, truth, per_class_norm=True, vb=False):
     """
     Converts deterministic classifications and truth into confusion matrix
 
@@ -124,6 +125,7 @@ def det_to_cm(dets, truth, per_class_norm=True, vb=True):
     M = max(max(pred_classes), max(true_classes)) + 1
 
     cm = np.zeros((M, M), dtype=float)
+    # print((np.shape(dets), np.shape(truth)))
     coords = np.array(list(zip(dets, truth)))
     indices, index_counts = np.unique(coords, axis=0, return_counts=True)
     # if vb: print(indices, index_counts)
@@ -133,19 +135,17 @@ def det_to_cm(dets, truth, per_class_norm=True, vb=True):
     if vb: print(cm)
 
     if per_class_norm:
-        np.savetxt("cm.txt", cm, fmt='%.18g')
-        np.savetxt("true_counts.txt", true_counts, fmt='%.18g')
-        print(type(cm))
-        print(type(true_counts))
+        # print(type(cm))
+        # print(type(true_counts))
         # cm = cm / true_counts
         # cm /= true_counts[:, np.newaxis] #
-        cm /= true_counts[np.newaxis, :]
+        cm = cm / true_counts[np.newaxis, :]
 
     if vb: print(cm)
 
     return cm
 
-def prob_to_cm(probs, truth, per_class_norm=True, vb=True):
+def prob_to_cm(probs, truth, per_class_norm=True, vb=False):
     """
     Turns probabilistic classifications into confusion matrix by taking maximum probability as deterministic class
 
@@ -171,7 +171,7 @@ def prob_to_cm(probs, truth, per_class_norm=True, vb=True):
 
     return cm
 
-def cm_to_rate(cm, vb=True):
+def cm_to_rate(cm, vb=False):
     """
     Turns a confusion matrix into true/false positive/negative rates
 
@@ -218,12 +218,12 @@ def cm_to_rate(cm, vb=True):
 
     return rates
 
-def det_to_rate(dets, truth, per_class_norm=True, vb=True):
+def det_to_rate(dets, truth, per_class_norm=True, vb=False):
     cm = det_to_cm(dets, truth, per_class_norm=per_class_norm, vb=vb)
     rates = cm_to_rate(cm, vb=vb)
     return rates
 
-def prob_to_rate(probs, truth, per_class_norm=True, vb=True):
+def prob_to_rate(probs, truth, per_class_norm=True, vb=False):
     cm = prob_to_cm(probs, truth, per_class_norm=per_class_norm, vb=vb)
     rates = cm_to_rate(cm, vb=vb)
     return rates
@@ -261,15 +261,23 @@ def check_weights(avg_info, M, truth=None):
         number of classes
     truth: numpy.ndarray, int, optional
         true class assignments
+
+    Returns
+    -------
+    weights: numpy.ndarray, float
+        relative weights per class
     """
     if type(avg_info) != str:
-        weights = avg_info
+        avg_info = np.asarray(avg_info)
+        weights = avg_info / np.sum(avg_info)
+        assert(np.isclose(sum(weights), 1.))
     elif avg_info == 'per_class':
         weights = np.ones(M) / float(M)
     elif avg_info == 'per_item':
-        classes, weights = np.unique(truth, return_counts=True)
-        weights = weights / float(len(truth))
-
+        classes, counts = np.unique(truth, return_counts=True)
+        weights = np.zeros(M)
+        weights[classes] = counts / float(len(truth))
+        assert len(weights) == M
     return weights
 
 def averager(per_object_metrics, truth, M):
@@ -279,9 +287,14 @@ def averager(per_object_metrics, truth, M):
     group_metric = per_object_metrics
     class_metric = np.empty(M)
     for m in range(M):
-        true_indices = np.where(truth == m)
+        true_indices = np.where(truth == m)[0]
         how_many_in_class = len(true_indices)
-        per_class_metric = group_metric[true_indices]
-        class_metric[m] = np.average(per_class_metric)
-
+        try:
+            assert(how_many_in_class > 0)
+            per_class_metric = group_metric[true_indices]
+            # assert(~np.all(np.isnan(per_class_metric)))
+            class_metric[m] = np.average(per_class_metric)
+        except AssertionError:
+            class_metric[m] = 0.
+        # print((m, how_many_in_class, class_metric[m]))
     return class_metric

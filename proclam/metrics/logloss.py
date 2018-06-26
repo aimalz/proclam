@@ -70,4 +70,6 @@ class LogLoss(Metric):
 
         logloss = weight_sum(class_logloss, weight_vector=weights)
 
+        assert(~np.isnan(logloss))
+
         return logloss
