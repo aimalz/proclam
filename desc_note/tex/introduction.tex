@@ -1,0 +1,16 @@
+\section{Introduction}
+\label{sec:intro}
+
+The metric of this note is for the first version of the Kaggle competition, though there are future plans for an early classification challenge and identification of class-specific metrics for different science goals.
+
+\begin{itemize}
+\item    The metric must return a single scalar value.
+\item    The metric must be well-defined for non-binary classes.
+\item    The metric must balance diverse science use cases in the presence of heavily nonuniform class prevalence.
+\item    The metric must respect the information content of probabilistic classifications.
+\item    The metric must be able to evaluate deterministic classifications.
+\item    The metric must be interpretable, meaning it gives a more optimal value for "good" mock classifiers and a less optimal value for mock classifiers plagued by anticipated systematic errors; in other words, it must pass basic tests of intuition.
+\item    The metric must be reliable, giving consistent results for different instantiations of the same test case.
+\end{itemize}
+
+The Probabilistic Classification Metric (ProClaM) code used in this exploration of performance metrics is publicly available on GitHub.\footnote{\url{https://github.com/aimalz/proclam}}

@@ -1,0 +1,24 @@
+\section{Methods}
+\label{sec:methods}
+
+\subsection{Probabilistic metrics}
+\label{sec:metrics}
+
+We considered two metrics of classification probabilities, each of which is interpretable and avoids reducing probabilities to point estimates
+
+The Brier score is defined as
+\begin{eqnarray}
+B &=& \sum_{m=1}^{M}\frac{w_{m}}{N_{m}}\sum_{n=1}^{N_{m}}\left((1-p_{n}(m | m))^{2}+\sum_{m'\neq m}^{M}(p_{n}(m' | m))^{2}\right)
+\end{eqnarray}
+
+The log-loss is defined as
+\begin{eqnarray}
+L &=& -\sum_{m=1}^{M}\frac{w_{m}}{N_{m}}\sum_{n=1}^{N_{m}}\ln[p_{n}(m | m)]
+\end{eqnarray}
+
+We calculate the metric within each class $m$ by taking an average of its value $-\ln[p_{n}(m | m)]$ for each true member $n$ of the class.  Then we weight the metrics for each class by an arbitrary weight $w_{m}$ and take a weighted average of the per-class metrics to produce a global scalar metric.
+
+\subsection{Weights}
+\label{sec:weights}
+
+We may take weighted averages of the per-class metrics, and these weights may be considered in terms of the systematics we discussed, by upweighting or downweighting the "chosen" class most affected by the systematics.
