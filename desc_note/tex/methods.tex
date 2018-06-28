@@ -16,9 +16,13 @@ The log-loss is defined as
 L &=& -\sum_{m=1}^{M}\frac{w_{m}}{N_{m}}\sum_{n=1}^{N_{m}}\ln[p_{n}(m | m)]
 \end{eqnarray}
 
+\aim{The CDE Loss should also be included in the paper (and sent to Kaggle, if there's still time).}
+
 We calculate the metric within each class $m$ by taking an average of its value $-\ln[p_{n}(m | m)]$ for each true member $n$ of the class.  Then we weight the metrics for each class by an arbitrary weight $w_{m}$ and take a weighted average of the per-class metrics to produce a global scalar metric.
 
 \subsection{Weights}
 \label{sec:weights}
+
+\aim{Add motivation for weighting.}
 
 We may take weighted averages of the per-class metrics, and these weights may be considered in terms of the systematics we discussed, by upweighting or downweighting the "chosen" class most affected by the systematics.
