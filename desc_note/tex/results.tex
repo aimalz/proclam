@@ -8,56 +8,36 @@
 \subsection{Mock classifier systematics}
 \label{sec:mockresults}
 
-\begin{figure}
+\begin{figure*}
 	\begin{center}
-		\includegraphics[width=0.5\textwidth]{./fig/multi_metric_per_item.png}
-		\caption{}
-		\label{fig:plasticc_per_item}
+		\includegraphics[width=0.45\textwidth]{./fig/multi_metric_per_item.png}
+		\includegraphics[width=0.45\textwidth]{./fig/multi_metric_per_class.png}
+		\caption{left: equal weight per lightcurve, right: equal weight per class}
+		\label{fig:fig:plasticc_per_item_vs_class}
 	\end{center}
-\end{figure}
+\end{figure*}
 
-\begin{figure}
+\begin{figure*}
 	\begin{center}
-		\includegraphics[width=0.5\textwidth]{./fig/multi_metric_per_class.png}
-		\caption{}
-		\label{fig:plasticc_per_class}
+		\includegraphics[width=0.45\textwidth]{./fig/multi_metric_down.png}
+		\includegraphics[width=0.45\textwidth]{./fig/multi_metric_up.png}
+		\caption{left: downweight a particular class, right: upweight a particular class, \aim{This isn't interesting because the class is randomly chosen, might be more informative under per item weighting}}
+		\label{fig:plasticc_down_vs_up_random}
 	\end{center}
-\end{figure}
+\end{figure*}
 
-\begin{figure}
-	\begin{center}
-		\includegraphics[width=0.5\textwidth]{./fig/multi_metric_down.png}
-		\caption{}
-		\label{fig:plasticc_down}
-	\end{center}
-\end{figure}
-
-\begin{figure}
-	\begin{center}
-		\includegraphics[width=0.5\textwidth]{./fig/multi_metric_up.png}
-		\caption{}
-		\label{fig:plasticc_up}
-	\end{center}
-\end{figure}
 
 \subsection{Representative classifications}
 \label{sec:realresults}
 
 \begin{figure*}
 	\begin{center}
-		\includegraphics[width=\textwidth]{./fig/SNPhotCC_res.png}
-		\caption{}
-		\label{fig:snphotcc_metric_compare}
+		\includegraphics[width=0.45\textwidth]{./fig/SNPhotCC_res.png}
+		\includegraphics[width=0.45\textwidth]{./fig/Unknown_res.png}
+		\caption{equal weight per class}
+		\label{fig:real_metric_compare}
 	\end{center}
 \end{figure*}
-
-\begin{figure}
-	\begin{center}
-		\includegraphics[width=0.5\textwidth,height=5.5in]{./fig/Unknown_res.png}
-		\caption{}
-		\label{fig:unknown_metric_compare}
-	\end{center}
-\end{figure}
 
 \subsection{Weighting systematics}
 \label{sec:weight_res}
@@ -65,7 +45,7 @@
 \begin{figure}
 	\begin{center}
 		\includegraphics[width=0.5\textwidth]{./fig/systematic_Unknown_common.png}
-		\caption{}
+		\caption{upweighting most common (best accuracy?)}
 		\label{fig:systematic_common}
 	\end{center}
 \end{figure}
@@ -73,7 +53,7 @@
 \begin{figure}
 	\begin{center}
 		\includegraphics[width=0.5\textwidth]{./fig/systematic_Unknown_rare.png}
-		\caption{}
+		\caption{upweighting least common (worst accuracy?)}
 		\label{fig:systematic_rare}
 	\end{center}
 \end{figure}
@@ -81,7 +61,7 @@
 \begin{figure}
 	\begin{center}
 		\includegraphics[width=0.5\textwidth]{./fig/systematic_Unknown_subsumer.png}
-		\caption{}
+		\caption{upweighting class commonly misclassified as another class}
 		\label{fig:systematic_subsumer}
 	\end{center}
 \end{figure}
@@ -89,7 +69,7 @@
 \begin{figure}
 	\begin{center}
 		\includegraphics[width=0.5\textwidth]{./fig/systematic_Unknown_subsumee.png}
-		\caption{}
+		\caption{upweighting class that a combination of other real classes are classified as}
 		\label{fig:systematic_subsumee}
 	\end{center}
 \end{figure}
@@ -97,7 +77,7 @@
 \begin{figure}
 	\begin{center}
 		\includegraphics[width=0.5\textwidth]{./fig/systematic_Unknown_invisible.png}
-		\caption{}
+		\caption{upweighting class that's totally missed}
 		\label{fig:systematic_invisible}
 	\end{center}
 \end{figure}
