@@ -1,9 +1,8 @@
 \section{Data}
 \label{sec:data}
 
-We confirm the behavior of the metrics on mock data with well-understood systematics as well as real data from past classification challenges.
-
-\aim{Describe what mock data is: probability vectors}
+We confirm the behavior of the metrics on mock data with well-understood systematics as well as realistic mock data from past classification challenges.
+Data is in the form of catalogs of posterior probability vectors over all classes, where one class is designated ``other'' to encompass never-before-seen classes, and each probability vector is normalized to sum to unity.
 
 \subsection{Mock classifier systematics}
 \label{sec:mockdata}
@@ -89,7 +88,7 @@ classifies all objects as a single class
 
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.45\textwidth]{./fig/Cruise.png}\\
+		\includegraphics[width=0.45\textwidth]{./fig/Cruise.png}
 		\caption{}
 		\label{fig:cruise_data}
 	\end{center}
@@ -100,21 +99,14 @@ classifies all objects as a single class
 
 consistently misclassifies one class as one other class
 
-\begin{figure}
+\begin{figure*}
 	\begin{center}
-		\includegraphics[width=0.45\textwidth]{./fig/SubsumedTo.png}\\
-		\caption{}
-		\label{fig:subsumer_data}
+		\includegraphics[width=0.45\textwidth]{./fig/SubsumedTo.png}
+		\includegraphics[width=0.45\textwidth]{./fig/SubsumedFrom.png}
+		\caption{left: upweight the predicted class encompassing both true classes, right: upweight the predicted class that is consistently misclassified}
+		\label{fig:subsume_data}
 	\end{center}
-\end{figure}
-
-\begin{figure}
-	\begin{center}
-		\includegraphics[width=0.45\textwidth]{./fig/SubsumedFrom.png}\\
-		\caption{}
-		\label{fig:subsumee_data}
-	\end{center}
-\end{figure}
+\end{figure*}
 
 \subsection{Representative classifications}
 \label{sec:realdata}
