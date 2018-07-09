@@ -4,6 +4,10 @@
 \subsection{Probabilistic metrics}
 \label{sec:metrics}
 
+\plasticc\ aims to identify classifiers that produce discrete posterior probability distributions over classes.
+Such probabilities are more valuable than point estimates, which we call deterministic metrics in this work, because of their versatility in application and encapsulation of observational and systematic error that may propagate through inference.
+However, traditional classification metrics are incompatible with probabilistic classifications, so we consider different metrics here.
+
 \aim{Alex Malz will describe the probabilistic metrics considered.  Finding actual references is a top priority!}
 
 We considered two metrics of classification probabilities, each of which is interpretable and avoids reducing probabilities to point estimates
@@ -27,4 +31,12 @@ We calculate the metric within each class $m$ by taking an average of its value 
 
 \aim{Rafael Martinez-Galarza will write the motivation for and definition of the weights.}
 
+Weights are desirable when class membership rates differ by orders of magnitude
 We may take weighted averages of the per-class metrics, and these weights may be considered in terms of the systematics we discussed, by upweighting or downweighting the "chosen" class most affected by the systematics.
+
+\subsection{Evaluation of performance}
+\label{sec:inception}
+
+To identify a metric for \plasticc, it is necessary to define a metric over possible metrics.
+We acknowledge that, as with the weights, the choice of metric is in many ways a human problem, and defer back to the numbered questions of Section~\ref{sec:intro}.
+We perform qualitative tests of each our our proposed metrics, comparing them to one another and observing how they respond to the controlled introduction of systematics we anticipate will affect \plasticc\ submissions, which are described in the following sections.
