@@ -1,30 +1,50 @@
 \section{Methods}
 \label{sec:methods}
 
+In Section~\ref{sec:metrics}, we compare several metrics to check that they indicate favorability of classifications that meet our needs and disfavorability of those that do not.
+Our metrics are a function of per-class weights described in Section~\ref{sec:weights} to mitigate the most obvious systematic, that of the most dominant class determining the performance when our science needs require accurate classifications of uncommon classes as well.
+Section~\ref{sec:inception} discusses the systematic way in which we evaluate the performance of the metrics.
+
 \subsection{Probabilistic metrics}
 \label{sec:metrics}
 
-\plasticc\ aims to identify classifiers that produce discrete posterior probability distributions over classes.
-Such probabilities are more valuable than point estimates, which we call deterministic metrics in this work, because of their versatility in application and encapsulation of observational and systematic error that may propagate through inference.
-However, traditional classification metrics are incompatible with probabilistic classifications, so we consider different metrics here.
+\plasticc\ aims to identify classifiers that produce discrete posterior probability distributions $p(m \mid d)$ over $M$ classes $m$ given their photometric lightcurve data $d$.
+Such posteriors are more valuable than point estimates, which we call deterministic metrics in this work, because of their versatility in application and encapsulation of observational and systematic error that may propagate through inference.
+Traditional classification metrics may be modified for evaluation on probabilistic classifications (Lochner+16, M\"{o}ller+16, Hon,Stello,Zinn18) but only by reducing class probabilities to point estimates of class, so we consider different metrics here.
+
+\aim{Should I add a subsection on traditional metrics used in previous classification challenges in astronomy before introducing the probabilistic metrics we looked at?}
 
 \aim{Alex Malz will describe the probabilistic metrics considered.  Finding actual references is a top priority!}
 
-We considered two metrics of classification probabilities, each of which is interpretable and avoids reducing probabilities to point estimates
+We considered two (three?) metrics of classification probabilities, each of which is interpretable and avoids reducing probabilities to point estimates.
+We calculate the metric within each class $m$ by taking an average of its value $-\ln[p_{n}(m | d_{n})]$ for each true member $n$ of the class.  Then we weight the metrics for each class by an arbitrary weight $w_{m}$ and take a weighted average of the per-class metrics to produce a global scalar metric.
+
+\subsubsection{Brier score}
+\label{sec:brier}
+
+The Brier score (Brier50) has been used extensively in solar flare forecasting (Crown12, Mays+15, Florios+18), stellar variability identification (Richards+12, Armstrong+15), and star-galaxy separation (Kim+15).
 
 The Brier score is defined as
 \begin{eqnarray}
-B &=& \sum_{m=1}^{M}\frac{w_{m}}{N_{m}}\sum_{n=1}^{N_{m}}\left((1-p_{n}(m | m))^{2}+\sum_{m'\neq m}^{M}(p_{n}(m' | m))^{2}\right)
+B &=& \sum_{m=1}^{M}\frac{w_{m}}{N_{m}}\sum_{n\in\mathcal{S}_{m}}\left((1-p_{n}(m | d_{n}))^{2}+\sum_{m'\neq m}^{M}(p_{n}(m' | d_{n}))^{2}\right)
 \end{eqnarray}
+
+\subsubsection{Log-loss}
+\label{sec:logloss}
+
+\aim{Relate to cross-entropy}
+
+The log-loss, also known as the cross-entropy, is a metric of the information\dots that has only recently gained some presence in the astronomy literature (Hon+17, Hon+18).
 
 The log-loss is defined as
 \begin{eqnarray}
-L &=& -\sum_{m=1}^{M}\frac{w_{m}}{N_{m}}\sum_{n=1}^{N_{m}}\ln[p_{n}(m | m)]
+L &=& -\sum_{m=1}^{M}\frac{w_{m}}{N_{m}}\sum_{n\in\mathcal{S}_{m}}\ln[p_{n}(m | d_{n})]
 \end{eqnarray}
 
-\aim{The CDE Loss should also be included in the paper (and sent to Kaggle, if there's still time).}
+\subsubsection{Conditional density estimation loss}
+\label{sec:cdeloss}
 
-We calculate the metric within each class $m$ by taking an average of its value $-\ln[p_{n}(m | m)]$ for each true member $n$ of the class.  Then we weight the metrics for each class by an arbitrary weight $w_{m}$ and take a weighted average of the per-class metrics to produce a global scalar metric.
+\aim{The CDE Loss should also be included in the paper (and sent to Kaggle, if there's still time).}
 
 \subsection{Weights}
 \label{sec:weights}
@@ -34,7 +54,7 @@ We calculate the metric within each class $m$ by taking an average of its value 
 Weights are desirable when class membership rates differ by orders of magnitude
 We may take weighted averages of the per-class metrics, and these weights may be considered in terms of the systematics we discussed, by upweighting or downweighting the "chosen" class most affected by the systematics.
 
-\subsection{Evaluation of performance}
+\subsection{Evaluation of performance of the metric}
 \label{sec:inception}
 
 To identify a metric for \plasticc, it is necessary to define a metric over possible metrics.
