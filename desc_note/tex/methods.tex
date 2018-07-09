@@ -16,18 +16,28 @@ Traditional classification metrics may be modified for evaluation on probabilist
 
 \aim{Alex Malz will describe the probabilistic metrics considered.  Finding actual references is a top priority!}
 
-We considered two (three?) metrics of classification probabilities, each of which is interpretable and avoids reducing probabilities to point estimates.
-We calculate the metric within each class $m$ by taking an average of its value $-\ln[p_{n}(m | d_{n})]$ for each true member $n$ of the class.  Then we weight the metrics for each class by an arbitrary weight $w_{m}$ and take a weighted average of the per-class metrics to produce a global scalar metric.
+We consider two (three?) metrics of classification probabilities, each of which is interpretable and avoids reducing probabilities to point estimates.
+We define the indicator variable $t_{n, m}$ as
+\begin{eqnarray}
+  \tau_{n, m} &=& \left\{\begin{tabular}{cc}
+  0 & t_{n} \neq m\\
+  1 & t_{n} = m
+  \end{tabular}.
+\end{eqnarray}
+
+% We calculate the metric within each class $m$ by taking an average of its value $-\ln[p_{n}(m | d_{n})]$ for each true member $n$ of the class.
+% Then we weight the metrics for each class by an arbitrary weight $w_{m}$ and take a weighted average of the per-class metrics to produce a global scalar metric.
 
 \subsubsection{Brier score}
 \label{sec:brier}
 
-The Brier score (Brier50) has been used extensively in solar flare forecasting (Crown12, Mays+15, Florios+18), stellar variability identification (Richards+12, Armstrong+15), and star-galaxy separation (Kim+15).
+The Brier score (Brier50) is a mean square error calculated between the true has been used extensively in solar flare forecasting (Crown12, Mays+15, Florios+18), stellar variability identification (Richards+12, Armstrong+15), and star-galaxy separation (Kim+15).
 
-The Brier score is defined as
+The Brier score for a single object is defined as
 \begin{eqnarray}
-B &=& \sum_{m=1}^{M}\frac{w_{m}}{N_{m}}\sum_{n\in\mathcal{S}_{m}}\left((1-p_{n}(m | d_{n}))^{2}+\sum_{m'\neq m}^{M}(p_{n}(m' | d_{n}))^{2}\right)
+B_{n} &=& \sum_{m=1}^{M}(\tau_{n, m}-p(m \mid d_{n}))^{2}.
 \end{eqnarray}
+
 
 \subsubsection{Log-loss}
 \label{sec:logloss}
@@ -46,13 +56,13 @@ L &=& -\sum_{m=1}^{M}\frac{w_{m}}{N_{m}}\sum_{n\in\mathcal{S}_{m}}\ln[p_{n}(m | 
 
 \aim{The CDE Loss should also be included in the paper (and sent to Kaggle, if there's still time).}
 
-\subsection{Weights}
+\subsection{Weights (Rafael Martinez-Galarza)}
 \label{sec:weights}
 
-\aim{Rafael Martinez-Galarza will write the motivation for and definition of the weights.}
+% \aim{Rafael Martinez-Galarza will write the motivation for and definition of the weights.}
 
-Weights are desirable when class membership rates differ by orders of magnitude
-We may take weighted averages of the per-class metrics, and these weights may be considered in terms of the systematics we discussed, by upweighting or downweighting the "chosen" class most affected by the systematics.
+Weights are desirable when class membership rates differ by orders of magnitude, as they are the most obvious path toward discouraging classification of all objects as the most common class.
+We take weighted averages $Q_{tot} = \frac{1}{M}\sum_{m=1}^{M}w_{m}Q_{m}$ of the per-class metrics $Q_{m}$, and these weights $w_{m}$ may be considered in terms of the systematics we discussed, by upweighting or downweighting the "chosen" class most affected by the systematics.
 
 \subsection{Evaluation of performance of the metric}
 \label{sec:inception}
