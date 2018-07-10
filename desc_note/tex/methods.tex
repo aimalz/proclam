@@ -32,10 +32,10 @@ Traditional classification metrics may be modified for evaluation on probabilist
 We consider two (three?) metrics of classification probabilities, each of which is interpretable and avoids reducing probabilities to point estimates.
 We define the indicator variable $t_{n, m}$ as
 \begin{eqnarray}
-  \tau_{n, m} &=& \left\{\begin{bmatrix}
+  \tau_{n, m} &=& \begin{cases}
   0 & t_{n} \neq m\\
   1 & t_{n} = m
-  \end{bmatrix}\right\}.
+  \end{cases}.
 \end{eqnarray}
 
 % We calculate the metric within each class $m$ by taking an average of its value $-\ln[p_{n}(m | d_{n})]$ for each true member $n$ of the class.

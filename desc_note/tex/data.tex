@@ -92,7 +92,6 @@ For future challenges, a more balanced metric can be used to ensure correct clas
 
 \aim{We should also do this for Ashish's data in the form of confusion matrices.}
 
-
 In response to the SNPhotCC, a range of classifications approaches were submitted, namely $\chi^{2}$ fits of the SN data to publicly available templates (ref. Nugent+), identification with the SiFTO light curve fitter (Conley et al. 2008) through the fitted values of the stretch, colour and also the $\chi^{2}$ of the fit for Ia fits, and a linear slope to magnitudes per day was used for the non-Ia sample. Other groups constructed a Hubble diagram from the training data, and used the residuals away from that Hubble diagram as a criterion for classification in the test data.
 
 Other groups performed classification by reducing the dimensionality of the light curves (the so-called InCA approach). A general light curve shape (rather than one motivated by the physical differences between SNeIa and core collapse SNe) was assumed by some competitors and then a kernel density estimation was performed over the fit parameters, with various approaches employed including boosting over the feature space.
@@ -103,8 +102,8 @@ Machine learning was also eployed over the reduced data set of light-curve slope
 The above approaches vary between very physically motivated and \textbf{template based} (and also prone to bias given non-representativity of the test data) and agnostic and based on decomposition of the light curves into \textbf{generic features} (but also making use of less information in the classifications).
 In figure~\ref{fig:snphotcc_cm} we show a range of classification approaches over the wavelet (feature) space (top row) and using templates (bottom row).
 
-%\subsubsection{SNPhotCC}
-%\label{sec:snphotcc}
+\subsubsection{SNPhotCC}
+\label{sec:snphotcc}
 
 \begin{figure*}
 	\begin{center}
@@ -116,12 +115,12 @@ In figure~\ref{fig:snphotcc_cm} we show a range of classification approaches ove
 		\includegraphics[width=0.2\textwidth]{./fig/SNPhotCC_TemplatesNeuralNetwork_cm.png}
 		\includegraphics[width=0.2\textwidth]{./fig/SNPhotCC_TemplatesNB_cm.png}
 		\includegraphics[width=0.2\textwidth]{./fig/SNPhotCC_TemplatesBoostForest_cm.png}
-		\caption{}
+		\caption{\aim{Change confusion matrices to log-confusion matrices to better see contrast?}}
 		\label{fig:snphotcc_cm}
 	\end{center}
 \end{figure*}
 
-\subsubsection{Unknown}
+\subsubsection{Unknown dataset}
 \label{sec:mystery}
 
 \begin{figure*}
