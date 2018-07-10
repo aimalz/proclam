@@ -1,6 +1,19 @@
 \section{Methods}
 \label{sec:methods}
 
+%\begin{itemize}
+%\item    The metric must return a single scalar value.
+%\item    The metric must be well-defined for non-binary classes.
+%\item    The metric must balance diverse science use cases in the presence of heavily nonuniform class prevalence.
+%\item    The metric must respect the information content of probabilistic classifications.
+%\item    The metric must be able to evaluate deterministic classifications.
+%\item    The metric must be interpretable, meaning it gives a more optimal value for "good" mock classifiers and a less optimal value for mock classifiers plagued by anticipated systematic errors; in other words, it must pass basic tests of intuition.
+%\item    The metric must be reliable, giving consistent results for different instantiations of the same test case.
+%\end{itemize}
+
+The metric chosen for a Kaggle challenge is required to return a single scalar value.
+Because many classifiers, including some of the most prevalent classifiers in the time-domain astronomy field, can only provide deterministic classifications (probabilities of 0 or 1) and/or binary classifications (``yes'' vs. ``no'' for a particular class), the metric must be well-defined for those cases as well as for nontrivial probabilities and multiple classes.
+
 In Section~\ref{sec:metrics}, we compare several metrics to check that they indicate favorability of classifications that meet our needs and disfavorability of those that do not.
 Our metrics are a function of per-class weights described in Section~\ref{sec:weights} to mitigate the most obvious systematic, that of the most dominant class determining the performance when our science needs require accurate classifications of uncommon classes as well.
 Section~\ref{sec:inception} discusses the systematic way in which we evaluate the performance of the metrics.
@@ -38,7 +51,6 @@ The Brier score for a single object is defined as
 B_{n} &=& \sum_{m=1}^{M}(\tau_{n, m}-p(m \mid d_{n}))^{2}.
 \end{eqnarray}
 
-
 \subsubsection{Log-loss}
 \label{sec:logloss}
 
@@ -51,10 +63,10 @@ The log-loss is defined as
 L &=& -\sum_{m=1}^{M}\frac{w_{m}}{N_{m}}\sum_{n\in\mathcal{S}_{m}}\ln[p_{n}(m | d_{n})]
 \end{eqnarray}
 
-\subsubsection{Conditional density estimation loss}
-\label{sec:cdeloss}
-
-\aim{The CDE Loss should also be included in the paper (and sent to Kaggle, if there's still time).}
+% \subsubsection{Conditional density estimation loss}
+% \label{sec:cdeloss}
+%
+% \aim{The CDE Loss should also be included in the paper (and sent to Kaggle, if there's still time).}
 
 \subsection{Weights (Rafael Martinez-Galarza)}
 \label{sec:weights}
