@@ -74,7 +74,7 @@ L &=& -\sum_{m=1}^{M}(1-\tau_{n, m})\ln[p_{n}(m | d_{n})]
 % \aim{Rafael Martinez-Galarza will write the motivation for and definition of the weights.}
 
 Weights are desirable when class membership rates differ by orders of magnitude, as they are the most obvious path toward mitigating the most obvious systematic, that of the most dominant class determining the performance when our science needs require accurate classifications of uncommon classes as well.
-We take weighted averages $Q_{tot} = \frac{1}{M}\sum_{m=1}^{M}w_{m}Q_{m}$ of the per-class metrics $Q_{m}$, and these weights $w_{m}$ may be considered in terms of the systematics we discussed, by upweighting or downweighting the "chosen" class most affected by the systematics.
+We take weighted averages $Q_{tot} = \frac{1}{M}\sum_{m=1}^{M}w_{m}Q_{m}$ of the per-class metrics $Q_{m} = \frac{1}{N_{m}}\sum_{i\in\mathcal{S}_{m}}Q_{i}$, and these weights $w_{m}$ may be considered in terms of the systematics we discussed, by upweighting or downweighting the "chosen" class most affected by the systematics.
 
 \subsection{Evaluation of performance of the metric}
 \label{sec:inception}
