@@ -14,8 +14,8 @@
 The metric chosen for a Kaggle challenge is required to return a single scalar value.
 Because many classifiers, including some of the most prevalent classifiers in the time-domain astronomy field, can only provide deterministic classifications (probabilities of 0 or 1) and/or binary classifications (``yes'' vs. ``no'' for a particular class), the metric must be well-defined for those cases as well as for nontrivial probabilities and multiple classes.
 
-In Section~\ref{sec:metrics}, we compare several metrics to check that they indicate favorability of classifications that meet our needs and disfavorability of those that do not.
-Our metrics are a function of per-class weights described in Section~\ref{sec:weights} to mitigate the most obvious systematic, that of the most dominant class determining the performance when our science needs require accurate classifications of uncommon classes as well.
+In Section~\ref{sec:metrics}, we introduce several metrics.
+We take weighted averages of the per-object metrics with per-class weights described in Section~\ref{sec:weights}.
 Section~\ref{sec:inception} discusses the systematic way in which we evaluate the performance of the metrics.
 
 \subsection{Probabilistic metrics}
@@ -58,9 +58,9 @@ B_{n} &=& \sum_{m=1}^{M}(\tau_{n, m}-p(m \mid d_{n}))^{2}.
 
 The log-loss, also known as the cross-entropy, is a metric of the information\dots that has only recently gained some presence in the astronomy literature (Hon+17, Hon+18).
 
-The log-loss is defined as
+The log-loss for a single object is defined as
 \begin{eqnarray}
-L &=& -\sum_{m=1}^{M}\frac{w_{m}}{N_{m}}\sum_{n\in\mathcal{S}_{m}}\ln[p_{n}(m | d_{n})]
+L &=& -\sum_{m=1}^{M}(1-\tau_{n, m})\ln[p_{n}(m | d_{n})]
 \end{eqnarray}
 
 % \subsubsection{Conditional density estimation loss}
@@ -73,7 +73,7 @@ L &=& -\sum_{m=1}^{M}\frac{w_{m}}{N_{m}}\sum_{n\in\mathcal{S}_{m}}\ln[p_{n}(m | 
 
 % \aim{Rafael Martinez-Galarza will write the motivation for and definition of the weights.}
 
-Weights are desirable when class membership rates differ by orders of magnitude, as they are the most obvious path toward discouraging classification of all objects as the most common class.
+Weights are desirable when class membership rates differ by orders of magnitude, as they are the most obvious path toward mitigating the most obvious systematic, that of the most dominant class determining the performance when our science needs require accurate classifications of uncommon classes as well.
 We take weighted averages $Q_{tot} = \frac{1}{M}\sum_{m=1}^{M}w_{m}Q_{m}$ of the per-class metrics $Q_{m}$, and these weights $w_{m}$ may be considered in terms of the systematics we discussed, by upweighting or downweighting the "chosen" class most affected by the systematics.
 
 \subsection{Evaluation of performance of the metric}
