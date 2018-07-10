@@ -29,4 +29,4 @@
 #
 # ======================================================================
 Lastname,Firstname,Authorname,AuthorType,Affiliation,Contribution,Email
-"Lastname", "Firstname","{{ cookiecutter.author }}",Contact,"{{ cookiecutter.affiliation }}","Initiated project, led development work.","{{ cookiecutter.email }}"
+"Author", "Ann","A.~N.~Author",Contact,"Affiliation","Contribution","ann.author@dev.null"
