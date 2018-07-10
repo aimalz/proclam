@@ -1,5 +1,9 @@
+# Do not track compressed desc_note file
+desc_note.tar.gz
+
 # Do not track output pdf
 *.pdf
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
