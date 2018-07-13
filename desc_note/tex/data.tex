@@ -1,29 +1,28 @@
 \section{Data}
 \label{sec:data}
 
-We explore the behavior of the metrics on mock data with well-understood systematics as well as realistic mock data from past classification challenges.
-
-Data is in the form of catalogs of posterior probability vectors $p(m \mid d)$ over $M$ classes $m$ conditioned on the observed data $d$, where one class is designated ``other'' to encompass never-before-seen classes, and each probability vector is normalized to sum to unity.
-Such probabilities are more valuable than point estimates, which we call deterministic metrics in this work, because of their versatility in application and encapsulation of observational and systematic error that may propagate through inference (Roberts+17).
+We explore the behavior of the metrics on toy data with well-understood systematics as well as realistic mock data from past classification challenges.
+Data is in the form of catalogs of posterior probability vectors $p(m \mid d)$ over $M$ classes $m$ conditioned on the observed data $d$, with each probability vector normalized to sum to unity.
+We introduce the convention that the M$^{\mathrm{th}}$ class is designated ``other'' to encompass never-before-seen classes.
 
 \subsection{Mock classifier systematics}
 \label{sec:mockdata}
 
-The test cases of this section are introduced to confirm that our metric aligns with our intuitive understanding of what constitutes a good classifier, that it should not reward classifications suffering from the systematics that we find most concerning.
-
-For each, we will address:
+The test cases of this section are devised to confirm that our metric aligns with our intuitive understanding of what constitutes a good classifier, that it should not reward classifications suffering from the systematics that we find most concerning.
+We consider a situation with $M=13$ classes, with one designated as ``other,'' and with a lognormal distribution of the number of members of each class.
+We test eight mock classifiers, each of which derives classification probabilities based on the true classes, as a proxy for the information contained in the data, and a confusion matrix, encapsulating the systematic errors we wish to test.
+Figure~\ref{fig:mock_cm} shows the confusion matrices corresponding to each error as well as four experimental controls.
+For each case, we address:
 \begin{enumerate}
   \item What defines this systematic?
-  \item When has this systematic cropped up in the literature?
-  \item What are our expectations for metric behavior?
+  \item When has this systematic been observed before?
+  \item What are our expectations for this systematic's effect on metric behavior?
 \end{enumerate}
-
-\aim{Anita Bahmanyar will write the descriptions of and motivation for the confusion matrix-based systematics tests, as well as how the data is generated (what the underlying functions from the notebook are doing).}
 
 \begin{figure*}
 	\begin{center}
     \includegraphics[width=0.8\textwidth]{./fig/all_sim_cm.png}
-		\caption{leftmost top:,
+		\caption{leftmost top: uniform ,
     leftmost bottom:,
     left-center top:,
     left-center bottom:,
