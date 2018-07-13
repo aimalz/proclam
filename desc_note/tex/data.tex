@@ -25,8 +25,14 @@ For each, we will address:
 \begin{figure*}
 	\begin{center}
     \includegraphics[width=0.8\textwidth]{./fig/all_sim_cm.png}
-		\caption{caption text for rightmost column:
-    top: upweight the predicted class encompassing both true classes, bottom: upweight the predicted class that is consistently misclassified}
+		\caption{leftmost top:,
+    leftmost bottom:,
+    left-center top:,
+    left-center bottom:,
+    right-center top:,
+    right-center bottom:,
+    rightmost top: upweight the predicted class encompassing both true classes,
+    rightmost bottom: upweight the predicted class that is consistently misclassified}
 		\label{fig:mock_cm}
 	\end{center}
 \end{figure*}
@@ -113,11 +119,13 @@ In figure~\ref{fig:snphotcc_cm} we show a range of classification approaches ove
 
 \begin{figure*}
 	\begin{center}
-    \includegraphics[width=0.8\textwidth]{./fig/all_snphotcc_cm.png}
-		\caption{SNPhotCC confusion matrices}
+    \includegraphics[width=\textwidth]{./fig/all_snphotcc_cm.png}
+		\caption{SNPhotCC confusion matrices; note that the KNN classifiers suffer from the cruise control systematic, }
 		\label{fig:snphotcc_cm}
 	\end{center}
 \end{figure*}
+
+
 
 % \subsubsection{Unknown dataset}
 % \label{sec:mystery}

@@ -1,10 +1,6 @@
 \section{Results}
 \label{sec:results}
 
-\aim{Make similar plots for Brier (and CDE Loss?).}
-
-\aim{Obviously this is too many plots!  Some can be condensed further, but there's a lot of redundancy.  For each ``dataset,'' I would like to show the different metrics' performance under each weighting.}
-
 \subsection{Mock classifier systematics}
 \label{sec:mockresults}
 
@@ -41,8 +37,8 @@
 \begin{figure*}
 	\begin{center}
 		\includegraphics[width=0.45\textwidth]{./fig/SNPhotCC_res.png}
-		\includegraphics[width=0.45\textwidth]{./fig/Unknown_res.png}
-		\caption{equal weight per class}
+		% \includegraphics[width=0.45\textwidth]{./fig/Unknown_res.png}
+		\caption{equal weight per class -- what kinds of weightings are meaningful to test here?  Would it be reasonable to take the real SNPhotCC entries' confusion matrices and see who would have won under each weighting/metric combination?}
 		\label{fig:real_metric_compare}
 	\end{center}
 \end{figure*}
@@ -52,7 +48,7 @@
 
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.5\textwidth]{./fig/systematic_Unknown_common.png}
+		% \includegraphics[width=0.5\textwidth]{./fig/systematic_Unknown_common.png}
 		\caption{upweighting most common (best accuracy?)}
 		\label{fig:systematic_common}
 	\end{center}
@@ -60,7 +56,7 @@
 
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.5\textwidth]{./fig/systematic_Unknown_rare.png}
+		% \includegraphics[width=0.5\textwidth]{./fig/systematic_Unknown_rare.png}
 		\caption{upweighting least common (worst accuracy?)}
 		\label{fig:systematic_rare}
 	\end{center}
@@ -68,7 +64,7 @@
 
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.5\textwidth]{./fig/systematic_Unknown_subsumer.png}
+		% \includegraphics[width=0.5\textwidth]{./fig/systematic_Unknown_subsumer.png}
 		\caption{upweighting class commonly misclassified as another class}
 		\label{fig:systematic_subsumer}
 	\end{center}
@@ -76,7 +72,7 @@
 
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.5\textwidth]{./fig/systematic_Unknown_subsumee.png}
+		% \includegraphics[width=0.5\textwidth]{./fig/systematic_Unknown_subsumee.png}
 		\caption{upweighting class that a combination of other real classes are classified as}
 		\label{fig:systematic_subsumee}
 	\end{center}
@@ -84,7 +80,7 @@
 
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.5\textwidth]{./fig/systematic_Unknown_invisible.png}
+		% \includegraphics[width=0.5\textwidth]{./fig/systematic_Unknown_invisible.png}
 		\caption{upweighting class that's totally missed}
 		\label{fig:systematic_invisible}
 	\end{center}
