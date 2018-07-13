@@ -40,37 +40,37 @@ For each, we will address:
 \subsubsection{Agnostic classifier}
 \label{sec:agnostic_data}
 
-uniform probabilities across all classes
+This classifier assigns the same probability to all the elements of the confusion matrix. This means that none of the classes are classified correctly and if they are, it is only by chance. Therefore, this classifier is only as good as a random classifier.
 
 \subsubsection{Perfect classifier}
 \label{sec:perfect_data}
 
-perfectly accurate on all classes
+This classifier classifies all classes correctly. This means that the probability of all the diagonal elements of the confusion matrix are 1 while the off-diagonal elements are all 0.
 
 \subsubsection{Almost perfect classifier}
 \label{sec:almost_data}
 
-a slight perturbation of the perfect classifier
+This is a similar classifier as the perfect classifier in the sense that it classifies all the classes correctly but there is some uncertainty in classification. Therefore, the matrix has larger probabilities on the diagonal elements but they are smaller than 1 and all the off-diagonal elements have very small values.
 
 \subsubsection{Noisy classifier}
 \label{sec:nois_datay}
 
-a large perturbation of the perfect classifier
+ \aim{I am not sure how to  make the distinction between "almost perfcet classifier" and "noisy classifier". Is there a threshold for the probability values to distinguish between the two?}
 
 \subsubsection{Tunnel vision classifier}
 \label{sec:tunnel_data}
 
-classifies one class well and others randomly
+This classifier works well for only one class. This means that the probability given to the correct class for one specific class is high while the probabilities for all the other classes are randomly assigned meaning that it only classifies that specific class correctly. This is shown in panel c of Figure \ref{fig:mock_cm} where only class 4 has been classified correctly as it has a high value on the diagonal element, while all the other elements have low probabilities.
 
 \subsubsection{Cruise control classifier}
 \label{sec:cruise_data}
 
-classifies all objects as a single class
+This classifier classifies all the objects as one specific class. This might happen when we have a lot of data in one class while the number of training data in other classes are very small so the classifier does not have enough data to be trained on and assigns all the test data as the single class it has a lot of data. This might happen to transients that are rare and we do not observed any of them yet \aim{(this is only my idea so might not be true)}
 
 \subsubsection{Subsuming classifier}
 \label{sec:subsume_data}
 
-consistently misclassifies one class as one other class
+This classifier classifies class m as class m' all the time. This is shown in panel 8 of Figure \ref{fig:mock_cm}  where all classes are classified correctly where they have higher values on the diagonal element except one class that has higher probability on a non-diagonal component which shows that specific class has been classified as the other class. This could happen when two classes of data are very similar but only different in a small property and the data that we have is not representative of that differentiating property so they both get classified as one similar class. \aim{(this is also what I think and might not be true)}
 
 \subsubsection{Combination of systematics}
 \label{sec:combo}
