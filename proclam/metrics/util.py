@@ -249,7 +249,7 @@ def weight_sum(per_class_metrics, weight_vector, norm=True):
 
     return weight_sum
 
-def check_weights(avg_info, M, truth=None):
+def check_weights(avg_info, M, chosen=None, truth=None):
     """
     Converts standard weighting schemes to weight vectors for weight_sum
 
@@ -259,6 +259,8 @@ def check_weights(avg_info, M, truth=None):
         keyword about how to calculate weighted average metric
     M: int
         number of classes
+    chosen: int, optional
+        which class is to be singled out for down/up-weighting
     truth: numpy.ndarray, int, optional
         true class assignments
 
@@ -266,6 +268,10 @@ def check_weights(avg_info, M, truth=None):
     -------
     weights: numpy.ndarray, float
         relative weights per class
+
+    Notes
+    -----
+    Assumes a random class
     """
     if type(avg_info) != str:
         avg_info = np.asarray(avg_info)
@@ -280,12 +286,15 @@ def check_weights(avg_info, M, truth=None):
         assert len(weights) == M
     elif avg_info == 'flat':
         weights = np.ones(M)
-    elif avg_info == 'up':
-        weights = np.ones(M) / np.float(M)
-        weight[np.random.randint(M)] = 1.
-    elif avg_info == 'down':
-        weights = np.ones(M)
-        weight[np.random.randint(M)] = 1./np.float(M)
+    elif avg_info == 'up' or avg_info == 'down':
+        if chosen is None:
+            chosen = np.random.randint(M)
+        if avg_info == 'up':
+            weights = np.ones(M) / np.float(M)
+            weight[chosen] = 1.
+        elif avg_info == 'down':
+            weights = np.ones(M)
+            weight[chosen] = 1./np.float(M)
     return weights
 
 
