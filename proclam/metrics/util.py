@@ -278,7 +278,16 @@ def check_weights(avg_info, M, truth=None):
         weights = np.zeros(M)
         weights[classes] = counts / float(len(truth))
         assert len(weights) == M
+    elif avg_info == 'flat':
+        weights = np.ones(M)
+    elif avg_info == 'up':
+        weights = np.ones(M) / np.float(M)
+        weight[np.random.randint(M)] = 1.
+    elif avg_info == 'down':
+        weights = np.ones(M)
+        weight[np.random.randint(M)] = 1./np.float(M)
     return weights
+
 
 def averager(per_object_metrics, truth, M):
     """
