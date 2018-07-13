@@ -14,9 +14,28 @@
 The metric chosen for a Kaggle challenge is required to return a single scalar value.
 Because many classifiers, including some of the most prevalent classifiers in the time-domain astronomy field, can only provide deterministic classifications (probabilities of 0 or 1) and/or binary classifications (``yes'' vs. ``no'' for a particular class), the metric must be well-defined for those cases as well as for nontrivial probabilities and multiple classes.
 
-In Section~\ref{sec:metrics}, we introduce several metrics.
+In Section~\ref{sec:past}, we review the metrics that have been used in previous challenges with deterministic classifications.
+In Section~\ref{sec:metrics}, we introduce metrics appropriate for probabilistic classifications.
 We take weighted averages of the per-object metrics with per-class weights described in Section~\ref{sec:weights}.
 Section~\ref{sec:inception} discusses the systematic way in which we evaluate the performance of the metrics.
+
+\subsection{Traditional metrics}
+\label{sec:past}
+
+Classification problems in astronomy have historically focused on separating a heterogenous population into a limited number of subclasses (cite Kessler+2010), with the focus or goal being to identify one particular type of object.
+
+In the Supernova Photometric Classification Challenge (SNPhotCC), the metric for deciding on who `won' the challenge was determined as a ratio of the efficiency of Type Ia classification and a `pseudo purity' factor, and a penalty for false-flagging (which is related to the cost of following up an object spectroscopically that is not a SNIa).
+The figure of metric was given by:
+
+\begin{eqnarray}
+\mathcal{C}_{FOM-Ia} &\equiv& \frac{1}{\mathcal{N}_{Ia}^{TOT}}\times \frac{(N_{Ia}^{\mathrm{true}})^2}{N_{Ia}^\mathrm{true}+W_{Ia}^\mathrm{false}N_{Ia}^\mathrm{false}}
+\end{eqnarray}
+%\aim{Renee Hlozek will write the descriptions of these datasets.}
+
+The above reduces to $\mathcal{C}_{FOM-Ia}  = \epsilon_{Ia} + PP_{Ia},$ the efficiency and pseudopurity, which can be interpreted as the traditional purity factor in the limit that the weight $W_{Ia}^\mathrm{false} = 1$.
+For the SNPhotCC the false penalty was related to the size of the spectroscopic subsample as roughly $W_{Ia}^\mathrm{false} = 1 + \epsilon_{spec}^{-1} \gg 1$ but the conservative limit of $W_{Ia}^\mathrm{false} = 3$ was chosen to penalize wasted spectroscopic time over rejected SNe.
+
+For future challenges, a more balanced metric can be used to ensure correct classifications across the range of objects, without focusing or highlighting a specific object as above.
 
 \subsection{Probabilistic metrics}
 \label{sec:metrics}
