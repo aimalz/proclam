@@ -1,35 +1,26 @@
 \section{Results}
 \label{sec:results}
 
-\subsection{Mock classifier systematics}
+\subsection{Mock classifier systematics and weightings}
 \label{sec:mockresults}
+
+Our first set of experiments investigates the relative responses of the log-loss and Brier metrics as a function of isolated systematic effects imposed on baselines of a realistically good classifier and pessimally performing classifier.
 
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.5\textwidth]{./fig/all_effects_isolated.png}
-		\caption{This unreasonably complex plot shows the performance of the two metrics we considered as a function of the isolated systematics (shape), the weight applied to the affected class (color), and the true population of that class (size).}
-		\label{fig:plasticc_all}
+		\includegraphics[width=0.5\textwidth]{./fig/almostall_effects_isolated.png}
+		\caption{This unreasonably complex plot shows the performance of the two metrics we considered, relative to the ``almost perfect'' classifier, as a function of the isolated systematics (shape), the weight applied to the affected class (color), and the true population of that class (size).}
+		\label{fig:plasticc_all_almost}
 	\end{center}
 \end{figure}
 
-% \begin{figure*}
-% 	\begin{center}
-% 		\includegraphics[width=0.45\textwidth]{./fig/multi_metric_per_item.png}
-% 		\includegraphics[width=0.45\textwidth]{./fig/multi_metric_per_class.png}
-% 		\caption{left: equal weight per lightcurve, right: equal weight per class}
-% 		\label{fig:plasticc_per_item_vs_class}
-% 	\end{center}
-% \end{figure*}
-%
-% \begin{figure*}
-% 	\begin{center}
-% 		\includegraphics[width=0.45\textwidth]{./fig/multi_metric_down.png}
-% 		\includegraphics[width=0.45\textwidth]{./fig/multi_metric_up.png}
-% 		\caption{left: downweight a particular class, right: upweight a particular class, \aim{This isn't interesting because the class is randomly chosen, might be more informative under per item weighting}}
-% 		\label{fig:plasticc_down_vs_up_random}
-% 	\end{center}
-% \end{figure*}
-
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.5\textwidth]{./fig/agnosticall_effects_isolated.png}
+		\caption{This unreasonably complex plot shows the performance of the two metrics we considered, relative to the ``agnostic'' classifier, as a function of the isolated systematics (shape), the weight applied to the affected class (color), and the true population of that class (size).}
+		\label{fig:plasticc_all_agnostic}
+	\end{center}
+\end{figure}
 
 \subsection{Representative classifications}
 \label{sec:realresults}
@@ -43,45 +34,45 @@
 	\end{center}
 \end{figure*}
 
-\subsection{Weighting systematics}
-\label{sec:weight_res}
-
-\begin{figure}
-	\begin{center}
-		% \includegraphics[width=0.5\textwidth]{./fig/systematic_Unknown_common.png}
-		\caption{upweighting most common (best accuracy?)}
-		\label{fig:systematic_common}
-	\end{center}
-\end{figure}
-
-\begin{figure}
-	\begin{center}
-		% \includegraphics[width=0.5\textwidth]{./fig/systematic_Unknown_rare.png}
-		\caption{upweighting least common (worst accuracy?)}
-		\label{fig:systematic_rare}
-	\end{center}
-\end{figure}
-
-\begin{figure}
-	\begin{center}
-		% \includegraphics[width=0.5\textwidth]{./fig/systematic_Unknown_subsumer.png}
-		\caption{upweighting class commonly misclassified as another class}
-		\label{fig:systematic_subsumer}
-	\end{center}
-\end{figure}
-
-\begin{figure}
-	\begin{center}
-		% \includegraphics[width=0.5\textwidth]{./fig/systematic_Unknown_subsumee.png}
-		\caption{upweighting class that a combination of other real classes are classified as}
-		\label{fig:systematic_subsumee}
-	\end{center}
-\end{figure}
-
-\begin{figure}
-	\begin{center}
-		% \includegraphics[width=0.5\textwidth]{./fig/systematic_Unknown_invisible.png}
-		\caption{upweighting class that's totally missed}
-		\label{fig:systematic_invisible}
-	\end{center}
-\end{figure}
+% \subsection{Weighting systematics}
+% \label{sec:weight_res}
+%
+% \begin{figure}
+% 	\begin{center}
+% 		% \includegraphics[width=0.5\textwidth]{./fig/systematic_Unknown_common.png}
+% 		\caption{upweighting most common (best accuracy?)}
+% 		\label{fig:systematic_common}
+% 	\end{center}
+% \end{figure}
+%
+% \begin{figure}
+% 	\begin{center}
+% 		% \includegraphics[width=0.5\textwidth]{./fig/systematic_Unknown_rare.png}
+% 		\caption{upweighting least common (worst accuracy?)}
+% 		\label{fig:systematic_rare}
+% 	\end{center}
+% \end{figure}
+%
+% \begin{figure}
+% 	\begin{center}
+% 		% \includegraphics[width=0.5\textwidth]{./fig/systematic_Unknown_subsumer.png}
+% 		\caption{upweighting class commonly misclassified as another class}
+% 		\label{fig:systematic_subsumer}
+% 	\end{center}
+% \end{figure}
+%
+% \begin{figure}
+% 	\begin{center}
+% 		% \includegraphics[width=0.5\textwidth]{./fig/systematic_Unknown_subsumee.png}
+% 		\caption{upweighting class that a combination of other real classes are classified as}
+% 		\label{fig:systematic_subsumee}
+% 	\end{center}
+% \end{figure}
+%
+% \begin{figure}
+% 	\begin{center}
+% 		% \includegraphics[width=0.5\textwidth]{./fig/systematic_Unknown_invisible.png}
+% 		\caption{upweighting class that's totally missed}
+% 		\label{fig:systematic_invisible}
+% 	\end{center}
+% \end{figure}

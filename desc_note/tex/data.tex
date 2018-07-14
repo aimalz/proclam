@@ -1,38 +1,35 @@
 \section{Data}
 \label{sec:data}
 
-We explore the behavior of the metrics on mock data with well-understood systematics as well as realistic mock data from past classification challenges.
-
-Data is in the form of catalogs of posterior probability vectors $p(m \mid d)$ over $M$ classes $m$ conditioned on the observed data $d$, where one class is designated ``other'' to encompass never-before-seen classes, and each probability vector is normalized to sum to unity.
-Such probabilities are more valuable than point estimates, which we call deterministic metrics in this work, because of their versatility in application and encapsulation of observational and systematic error that may propagate through inference (Roberts+17).
+We explore the behavior of the metrics on toy data with well-understood systematics as well as realistic mock data from past classification challenges.
+Data is in the form of catalogs of posterior probability vectors $p(m \mid d)$ over $M$ classes $m$ conditioned on the observed data $d$, with each probability vector normalized to sum to unity.
+We introduce the convention that the M$^{\mathrm{th}}$ class is designated ``other'' to encompass never-before-seen classes.
 
 \subsection{Mock classifier systematics}
 \label{sec:mockdata}
 
-The test cases of this section are introduced to confirm that our metric aligns with our intuitive understanding of what constitutes a good classifier, that it should not reward classifications suffering from the systematics that we find most concerning.
-
-For each, we will address:
+The test cases of this section are devised to confirm that our metric aligns with our intuitive understanding of what constitutes a good classifier, that it should not reward classifications suffering from the systematics that we find most concerning.
+We consider a situation with $M=13$ classes, with one designated as ``other,'' and with a lognormal distribution of the number of members of each class.
+We test eight mock classifiers, each of which derives classification probabilities based on the true classes, as a proxy for the information contained in the data, and a confusion matrix, encapsulating the systematic errors we wish to test.
+Figure~\ref{fig:mock_cm} shows the confusion matrices corresponding to each error as well as four experimental controls.
+For each case, we address:
 \begin{enumerate}
   \item What defines this systematic?
-  \item When has this systematic cropped up in the literature?
-  \item What are our expectations for metric behavior?
+  \item When has this systematic been observed before?
+  \item What are our expectations for this systematic's effect on metric behavior?
 \end{enumerate}
-
-\aim{Anita Bahmanyar will write the descriptions of and motivation for the confusion matrix-based systematics tests, as well as how the data is generated (what the underlying functions from the notebook are doing).}
-
-\aim{Let's condense these to a single multipanel figure.}
 
 \begin{figure*}
 	\begin{center}
     \includegraphics[width=0.8\textwidth]{./fig/all_sim_cm.png}
-		\caption{leftmost top:,
-    leftmost bottom:,
-    left-center top:,
-    left-center bottom:,
-    right-center top:,
-    right-center bottom:,
-    rightmost top: upweight the predicted class encompassing both true classes,
-    rightmost bottom: upweight the predicted class that is consistently misclassified}
+		\caption{leftmost top: uniform confusion matrix,
+    leftmost bottom: perfect classifications,
+    left-center top: unbiased classifications with uniform 10\% uncertainty,
+    left-center bottom: unbiased classifications with uniform 50\% uncertainty,
+    right-center top: perfect classification (type 1 and type 2 errors) for one class and uniform for all others,
+    right-center bottom: assigning all objects the same class apart from 10\% uniform error,
+    rightmost top: consistently assign one class to another,
+    rightmost bottom: consistently assign another class to one class}
 		\label{fig:mock_cm}
 	\end{center}
 \end{figure*}
@@ -40,37 +37,48 @@ For each, we will address:
 \subsubsection{Agnostic classifier}
 \label{sec:agnostic_data}
 
-This classifier assigns the same probability to all the elements of the confusion matrix. This means that none of the classes are classified correctly and if they are, it is only by chance. Therefore, this classifier is only as good as a random classifier.
+This classifier assigns the same probability to all the elements of the confusion matrix.
+This means that none of the classes are classified correctly and if they are, it is only by chance.
+Therefore, this classifier is only as good as a random classifier.
 
 \subsubsection{Perfect classifier}
 \label{sec:perfect_data}
 
-This classifier classifies all classes correctly. This means that the probability of all the diagonal elements of the confusion matrix are 1 while the off-diagonal elements are all 0.
+This classifier classifies all classes correctly.
+This means that the probability of all the diagonal elements of the confusion matrix are 1 while the off-diagonal elements are all 0.
 
 \subsubsection{Almost perfect classifier}
 \label{sec:almost_data}
 
-This is a similar classifier as the perfect classifier in the sense that it classifies all the classes correctly but there is some uncertainty in classification. Therefore, the matrix has larger probabilities on the diagonal elements but they are smaller than 1 and all the off-diagonal elements have very small values.
+This is a similar classifier as the perfect classifier in the sense that it classifies all the classes correctly but there is some uncertainty in classification.
+Therefore, the matrix has larger probabilities on the diagonal elements but they are smaller than 1 and all the off-diagonal elements have very small values.
 
 \subsubsection{Noisy classifier}
 \label{sec:nois_datay}
 
- \aim{I am not sure how to  make the distinction between "almost perfcet classifier" and "noisy classifier". Is there a threshold for the probability values to distinguish between the two?}
+ \aim{I am not sure how to  make the distinction between "almost perfcet classifier" and "noisy classifier".
+ Is there a threshold for the probability values to distinguish between the two?}
 
 \subsubsection{Tunnel vision classifier}
 \label{sec:tunnel_data}
 
-This classifier works well for only one class. This means that the probability given to the correct class for one specific class is high while the probabilities for all the other classes are randomly assigned meaning that it only classifies that specific class correctly. This is shown in panel c of Figure \ref{fig:mock_cm} where only class 4 has been classified correctly as it has a high value on the diagonal element, while all the other elements have low probabilities.
+This classifier works well for only one class.
+This means that the probability given to the correct class for one specific class is high while the probabilities for all the other classes are randomly assigned meaning that it only classifies that specific class correctly.
+This is shown in panel c of Figure \ref{fig:mock_cm} where only class 4 has been classified correctly as it has a high value on the diagonal element, while all the other elements have low probabilities.
 
 \subsubsection{Cruise control classifier}
 \label{sec:cruise_data}
 
-This classifier classifies all the objects as one specific class. This might happen when we have a lot of data in one class while the number of training data in other classes are very small so the classifier does not have enough data to be trained on and assigns all the test data as the single class it has a lot of data. This might happen to transients that are rare and we do not observed any of them yet \aim{(this is only my idea so might not be true)}
+This classifier classifies all the objects as one specific class.
+This might happen when we have a lot of data in one class while the number of training data in other classes are very small so the classifier does not have enough data to be trained on and assigns all the test data as the single class it has a lot of data.
+This might happen to transients that are rare and we do not observed any of them yet \aim{(this is only my idea so might not be true)}
 
 \subsubsection{Subsuming classifier}
 \label{sec:subsume_data}
 
-This classifier classifies class m as class m' all the time. This is shown in panel 8 of Figure \ref{fig:mock_cm}  where all classes are classified correctly where they have higher values on the diagonal element except one class that has higher probability on a non-diagonal component which shows that specific class has been classified as the other class. This could happen when two classes of data are very similar but only different in a small property and the data that we have is not representative of that differentiating property so they both get classified as one similar class. \aim{(this is also what I think and might not be true)}
+This classifier classifies class m as class m' all the time.
+This is shown in panel 8 of Figure \ref{fig:mock_cm}  where all classes are classified correctly where they have higher values on the diagonal element except one class that has higher probability on a non-diagonal component which shows that specific class has been classified as the other class.
+This could happen when two classes of data are very similar but only different in a small property and the data that we have is not representative of that differentiating property so they both get classified as one similar class. \aim{(this is also what I think and might not be true)}
 
 \subsubsection{Combination of systematics}
 \label{sec:combo}
@@ -88,12 +96,13 @@ This classifier classifies class m as class m' all the time. This is shown in pa
 
 \aim{This discussion probably belongs in Section~\ref{sec:methods} because it's about the metrics used in SNPhotCC, not the systematics in the submitted classification results.}
 
-\aim{It's unclear how the three-class case of SNPhotCC is relevant.  We should perhaps do this for Ashish's confusion matrices for more classes.}
+\aim{It's unclear how the three-class case of SNPhotCC is relevant.
+We should perhaps do this for Ashish's confusion matrices for more classes.}
 
 Classification problems in astronomy have historically focused on separating a heterogenous population into a limited number of subclasses (cite Kessler+2010), with the focus or goal being to identify one particular type of object.
 
 In the Supernova Photometric Classification Challenge (SNPhotCC), the metric for deciding on who `won' the challenge was determined as a ratio of the efficiency of Type Ia classification and a `pseudo purity' factor, and a penalty for false-flagging (which is related to the cost of following up an object spectroscopically that is not a SNIa).
-The figure of metric was given by:
+The figure of merit was given by:
 
 \begin{eqnarray}
 \mathcal{C}_{FOM-Ia} &\equiv& \frac{1}{\mathcal{N}_{Ia}^{TOT}}\times \frac{(N_{Ia}^{\mathrm{true}})^2}{N_{Ia}^\mathrm{true}+W_{Ia}^\mathrm{false}N_{Ia}^\mathrm{false}}
