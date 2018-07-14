@@ -89,17 +89,20 @@ Unlike the Brier score, the log-loss does not have an explicit penalty term, a d
 %
 % \aim{The CDE Loss should also be included in the paper (and sent to Kaggle, if there's still time).}
 
-\subsection{Weights (Rafael Martinez-Galarza)}
+\subsection{Weights}
 \label{sec:weights}
 
 % \aim{Rafael Martinez-Galarza will write the motivation for and definition of the weights.}
 Classifiers can be subject to several types of systematics that can be either mild or sever, and the metrics we choose should be able to evaluate, and where appropriate panalize those systematics. For example, there can be ``tunnel vision'' classifiers that perform very well at identifying one particluar class of objects, while doing a poor job for all the other classes. Another example is a ``cruise control'' classifier, that overwhelmingly predicts that all objects are of one particular class. In the context of the challenge, these systematics mostly arise because of the class membership rates differ by orders of magnitude, and therefore some of those classes are underrepresented in the training set, leading to classification underperformance. This can be problematic because our science needs might require accurate classifications of uncommon classes as well.
 
-One way to deal with these systematics is by considering weights associated to the different classes. In general terms, the idea is to take weighted averages of the per-class metric $Q_{m} = (1/N_{m})\sum_{i\in\mathcal{S}_{m}}Q_{i}$:
-
-\begin{equation}
-$Q_{tot} = \frac{1}{M}\sum_{m=1}^{M}w_{m}Q_{m}$
-\end{equation}
+One way to deal with these systematics is by considering weights associated to the different classes. In general terms, the idea is to take weighted averages
+\begin{eqnarray}
+Q_{tot} &=& \frac{1}{M}\sum_{m=1}^{M}w_{m}Q_{m}
+\end{eqnarray}
+of the per-class metrics
+\begin{eqnarray}
+Q_{m} &=& \frac{1}{N_{M}}\sum_{i\in\mathcal{S}_{m}}Q_{i}.
+\end{eqnarray}
 
 These weights $w_{m}$ may be considered in terms of the systematics we discussed, by upweighting or downweighting the "chosen" class most affected by the systematics.
 

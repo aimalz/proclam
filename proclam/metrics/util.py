@@ -301,6 +301,10 @@ def check_weights(avg_info, M, chosen=None, truth=None):
 def averager(per_object_metrics, truth, M):
     """
     Creates a list with the metrics per object, separated by class
+
+    Notes
+    -----
+    There is currently a kludge for when there are no true class members, causing an improvement when that class is upweighted due to increasing the weight of 0.  
     """
     group_metric = per_object_metrics
     class_metric = np.empty(M)
@@ -314,5 +318,5 @@ def averager(per_object_metrics, truth, M):
             class_metric[m] = np.average(per_class_metric)
         except AssertionError:
             class_metric[m] = 0.
-        # print((m, how_many_in_class, class_metric[m]))
+        print((m, how_many_in_class, class_metric[m]))
     return class_metric

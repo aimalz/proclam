@@ -11,6 +11,8 @@ We introduce the convention that the M$^{\mathrm{th}}$ class is designated ``oth
 The test cases of this section are devised to confirm that our metric aligns with our intuitive understanding of what constitutes a good classifier, that it should not reward classifications suffering from the systematics that we find most concerning.
 We consider a situation with $M=13$ classes, with one designated as ``other,'' and with a lognormal distribution of the number of members of each class.
 We test eight mock classifiers, each of which derives classification probabilities based on the true classes, as a proxy for the information contained in the data, and a confusion matrix, encapsulating the systematic errors we wish to test.
+The probability vector for a given object is a perturbation of the row of the confusion matrix corresponding to its true class, with a perturbation factor of $\delta=0.1$.
+\aim{Write out an equation showing how $\delta$ factors in.}
 Figure~\ref{fig:mock_cm} shows the confusion matrices corresponding to each error as well as four experimental controls.
 For each case, we address:
 \begin{enumerate}
@@ -37,14 +39,14 @@ For each case, we address:
 \subsubsection{Agnostic classifier}
 \label{sec:agnostic_data}
 
-This classifier assigns the same probability to all the elements of the confusion matrix.
-This means that none of the classes are classified correctly and if they are, it is only by chance.
-Therefore, this classifier is only as good as a random classifier.
+The confusion matrix of the ``Uncertain'' classifier is entirely uniform.
+The deterministic classifications corresponding to this classifier are uniform random guesses, but the classification probability vectors drawn from it are perturbations of flat probability vectors whose peak values are uniformly distributed.
+This classifier is an experimental control for the worst possible classifier in the absence of systematic biases, noting that if classifications were anticorrelated with true classes, the experimenter would simply relabel to improve performance.
 
 \subsubsection{Perfect classifier}
 \label{sec:perfect_data}
 
-This classifier classifies all classes correctly.
+The ``Perfect'' classifier classifies all classes correctly.
 This means that the probability of all the diagonal elements of the confusion matrix are 1 while the off-diagonal elements are all 0.
 
 \subsubsection{Almost perfect classifier}
@@ -85,7 +87,7 @@ This could happen when two classes of data are very similar but only different i
 
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.45\textwidth]{./fig/Combined.png}
+		% \includegraphics[width=0.45\textwidth]{./fig/Combined.png}
 		\caption{}
 		\label{fig:combo_cm}
 	\end{center}

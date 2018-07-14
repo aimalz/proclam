@@ -30,15 +30,15 @@
 # ======================================================================
 Lastname,Firstname,Authorname,AuthorType,Affiliation,Contribution,Email
 Malz,Alex,A.I.~Malz,Contact,"Center for Cosmology and Particle Physics, New York University, 726 Broadway, New York, NY 10004, USA","conceptualization, data curation, formal analysis, investigation, methodology, project administration, software, supervision, validation, visualization, writing - original draft","aimalz@nyu.edu"
+Hlozek,Renee,R.~Hlozek,Contributor,"[address]","data curation, formal analysis, funding acquisition, investigation, project administration, software, supervision, validation, visualization, writing - original draft",[email]
 Alam,Tarek,T.~Alam,Contributor,"[address]","investigation, software, validation, writing - original draft",[email]
 Bahmanyar,Anita,A.~Bahmanyar,Contributor,"[address]","formal analysis, investigation, methodology, software, writing - original draft",[email]
 Biswas,Rahul,R.~Biswas,Contributor,"[address]","conceptualization, methodology, software",[email]
-Hlozek,Renee,R.~Hlozek,Contributor,"[address]","data curation, formal analysis, funding acquisition, investigation, project administration, software, supervision, validation, visualization, writing - original draft",[email]
 Ishida,Emille,E.E.O.~Ishida,Contributor,"[address]","conceptualization, project administration, supervision",[email]
+Jones,David,D.~Jones,Contributor,"[address]","software",[email]
 Lochner,Michelle,M.~Lochner,Contributor,"[address]","conceptualizaton, data curation, writing - editing",[email]
+Martinez-Galarza,Rafael,R.~Martinez-Galarza,Contributor,"[address]","data curation, software, visualization, writing - original draft",[email]
 McEwen,Jason,J.~McEwen,Contributor,"[address]","",[email]
 Narayan,Gautham,G.~Narayan,Contributor,"[address]","data curation, formal analysis",[email]
-Jones,David,D.~Jones,Contributor,"[address]","software",[email]
 Mahabal,Ashish,A.~Mahabal,Contributor,"[address]","data curation, software",[email]
-Martinez-Galarza,Rafael,R.~Martinez-Galarza,Contributor,"[address]","data curation, software, visualization",[email]
 Setzer,Christian,C.N.~Setzer,Contributor,"The Oskar Klein Centre for Cosmoparticle Physics, Department of Physics, Stockholm University, AlbaNova, Stockholm, SE-106 91, Sweden","initial metric discussion/suggestions, software","christian.setzer@fysik.su.se"
