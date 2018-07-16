@@ -10,9 +10,15 @@ We introduce the convention that the M$^{\mathrm{th}}$ class is designated ``oth
 
 The test cases of this section are devised to confirm that our metric aligns with our intuitive understanding of what constitutes a good classifier, that it should not reward classifications suffering from the systematics that we find most concerning.
 We consider a situation with $M=13$ classes, with one designated as ``other,'' and with a lognormal distribution of the number of members of each class.
-We test eight mock classifiers, each of which derives classification probabilities based on the true classes, as a proxy for the information contained in the data, and a confusion matrix, encapsulating the systematic errors we wish to test.
-The probability vector for a given object is a perturbation of the row of the confusion matrix corresponding to its true class, with a perturbation factor of $\delta=0.1$.
-\aim{Write out an equation showing how $\delta$ factors in.}
+
+We test eight mock classifiers, each of which derives classification probabilities based on the true classes $t = m'$, as a proxy for the information contained in the data, and a confusion matrix $\mathbb{C}$, encapsulating the systematic errors we wish to test.
+The probability vector $p(m \mid m')$ for a given object is a perturbation of the row of the confusion matrix corresponding to its true class, with a perturbation factor of $\delta=0.1$, following
+\begin{eqnarray}
+  \label{eq:cmtoprob}
+  p(m \mid m') = \mathbb{C}_{m'} + \delta\vec{e},
+\end{eqnarray}
+where the perturbation $\vec{e}$ has components drawn from the standard half-cauchy distribution.
+
 Figure~\ref{fig:mock_cm} shows the confusion matrices corresponding to each error as well as four experimental controls.
 For each case, we address:
 \begin{enumerate}
@@ -36,35 +42,36 @@ For each case, we address:
 	\end{center}
 \end{figure*}
 
-\subsubsection{Agnostic classifier}
-\label{sec:agnostic_data}
+\subsubsection{Controls}
+\label{sec:unbiased}
 
-The confusion matrix of the ``Uncertain'' classifier is entirely uniform.
-The deterministic classifications corresponding to this classifier are uniform random guesses, but the classification probability vectors drawn from it are perturbations of flat probability vectors whose peak values are uniformly distributed.
-This classifier is an experimental control for the worst possible classifier in the absence of systematic biases, noting that if classifications were anticorrelated with true classes, the experimenter would simply relabel to improve performance.
+Four of our tests are control cases free of \textit{systematic} errors.
+These are to be contrasted against cases of systematic biases discussed below.
 
-\subsubsection{Perfect classifier}
-\label{sec:perfect_data}
+\textit{Uncertain/Agnostic classifier}
+\aim{Make a choice about the name: ``Agnostic'' or ``Uncertain''.}
+An entirely uniform confusion matrix would correspond to uniform random guesses for deterministic classification, but the probability vectors drawn from it are more nuanced.
+In accordance with Equation~\ref{eq:cmtoprob}, the probability vectors are perturbations away from a  uniform distribution across all classes.
+The peak values of these probability vectors will correspond to uniform random classifications, however.
+We can consider the uncertain/agnostic classifier as an experimental control for the worst possible classifier in the absence of systematic biases, noting that if classifications were anticorrelated with true classes, the experimenter would simply relabel them to improve performance.
 
-The ``Perfect'' classifier classifies all classes correctly.
-This means that the probability of all the diagonal elements of the confusion matrix are 1 while the off-diagonal elements are all 0.
+\textit{Perfect classifier}
+A perfect classification result would be a probability vector with 1 for the true class and 0 for all other classes.
+The ``Perfect'' classifier has a diagonal confusion matrix, but the probability vectors drawn from it are randomly perturbed away from perfect classifications.
 
-\subsubsection{Almost perfect classifier}
-\label{sec:almost_data}
+\textit{Almost perfect classifier}
+We test a linear combination of the perfect and uncertain classifiers where the contribution of the perfect classifier is four times that of the uncertain one.
+Deterministic classifications drawn from such a confusion matrix would be correct four times as often as they are wrong, and the incorrect guesses would be uncorrelated across classes.
+The probability vectors drawn from this
 
-This is a similar classifier as the perfect classifier in the sense that it classifies all the classes correctly but there is some uncertainty in classification.
-Therefore, the matrix has larger probabilities on the diagonal elements but they are smaller than 1 and all the off-diagonal elements have very small values.
+\textit{Noisy classifier}
+We consider another linear combination of the perfect and uncertain classifiers in which the contribution due to the perfect classifier is only twice that of the uncertain classifier.
+Deterministic classifications from such a confusion matrix would be correct only twice as often as they are wrong, and the incorrect guesses would be uncorrelated across classes.
 
-\subsubsection{Noisy classifier}
-\label{sec:nois_datay}
+\subsubsection{Experimental conditions}
+\label{sec:biased}
 
- \aim{I am not sure how to  make the distinction between "almost perfcet classifier" and "noisy classifier".
- Is there a threshold for the probability values to distinguish between the two?}
-
-\subsubsection{Tunnel vision classifier}
-\label{sec:tunnel_data}
-
-This classifier works well for only one class.
+A classifier may be said to suffer from ``tunnel vision'' if it This classifier works well for only one class.
 This means that the probability given to the correct class for one specific class is high while the probabilities for all the other classes are randomly assigned meaning that it only classifies that specific class correctly.
 This is shown in panel c of Figure \ref{fig:mock_cm} where only class 4 has been classified correctly as it has a high value on the diagonal element, while all the other elements have low probabilities.
 
