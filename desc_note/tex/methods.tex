@@ -43,12 +43,6 @@ For future challenges, a more balanced metric can be used to ensure correct clas
 \label{sec:metrics}
 
 \plasticc\ aims to identify classifiers that produce discrete posterior probability distributions $p(m \mid d)$ over $M$ classes $m$ given their photometric lightcurve data $d$.
-Such posteriors are more valuable than point estimates, which we call deterministic metrics in this work, because of their versatility in application and encapsulation of observational and systematic error that may propagate through inference.
-Traditional classification metrics may be modified for evaluation on probabilistic classifications (Lochner+16, M\"{o}ller+16, Hon,Stello,Zinn18) but only by reducing class probabilities to point estimates of class.
-For the purposes of making decisions about the allocation of limited spectroscopic follow-up resources, reduction to point estimates is appropriate, because the action of making a spectroscopic observation is itself deterministic.
-The landscape for population-level inference in astronomy is changing 
-
-
 
 We consider two  metrics of classification probabilities, each of which is interpretable and avoids reducing probabilities to point estimates.
 Both our metrics make use of the indicator variable
@@ -64,30 +58,46 @@ However, the metric for \plasticc\ must also be compatible with deterministic cl
 % We calculate the metric within each class $m$ by taking an average of its value $-\ln[p_{n}(m | d_{n})]$ for each true member $n$ of the class.
 % Then we weight the metrics for each class by an arbitrary weight $w_{m}$ and take a weighted average of the per-class metrics to produce a global scalar metric.
 
-\subsubsection{Brier score}
-\label{sec:brier}
-
-The Brier score (Brier50) is a mean square error calculated between the true class indicator vector and the estimated probability vector.
-It has been used extensively in solar flare forecasting (Crown12, Mays+15, Florios+18), stellar variability identification (Richards+12, Armstrong+15), and star-galaxy separation (Kim+15).
-
-The Brier score for a single object is defined as
-\begin{eqnarray}
-B_{n} &=& \sum_{m=1}^{M}(\tau_{n, m}-p(m \mid d_{n}))^{2}.
-\end{eqnarray}
-
 \subsubsection{Log-loss}
 \label{sec:logloss}
 
-\aim{Relate to cross-entropy}
-
-The log-loss, also known as the cross-entropy, is a metric of the information\dots that has only recently gained some presence in the astronomy literature (Hon+17, Hon+18).
-
-The log-loss for a single object is defined as
+The log-loss, also known as the cross-entropy, originates in the field of information theory.
+In that context, entropy
 \begin{eqnarray}
-L &=& -\sum_{m=1}^{M}(1-\tau_{n, m})\ln[p_{n}(m | d_{n})]
+  \label{eq:entropy}
+  H_{n} &=& -\sum_{m=1}^{M}p(m \mid d_{n})\ln[p(m \mid d_{n})]
 \end{eqnarray}
+is a measure of uncertainty, independent of the true value of $m_{n}$.
+Any deterministic classification, regardless of accuracy, minimizes the entropy, and the uncertain classifier of Section~\ref{sec:uncertaindata} provably maximizes the entropy (Murphy12).
+The cross-entropy
+\begin{eqnarray}
+  \label{eq:logloss}
+  L_{n} &=& -\sum_{m=1}^{M}(1-\tau_{n, m})\ln[p(m \mid d_{n})]
+\end{eqnarray}
+is the uncertainty of using $p(m \mid d_{n})$ in place of $\tau_{n, m}$.
+(A difference between $L_{n}$ and $H_{n}$ evaluated at $\tau_{n}$ would be the information lost in using $p(m \mid d_{n})$ in place of $\tau_{n, m}$, also known as the Kullback-Leibler Divergence.
+See Malz+18 for a comprehensive exploration of the KLD for a continuous 1-dimensional probability space.)
 
-Unlike the Brier score, the log-loss does not have an explicit penalty term, a difference we expect expect to significantly distinguish the log-loss from the Brier score.
+The log-loss has only recently gained some presence in the astronomy literature (Hon+17, Hon+18).
+Its greatest strength is that it is straightforwardly interpretable, enabling the metric itself to directly contribute to uncertainty propagation in an inference problem using the probability densities provided by the classifier.
+
+\subsubsection{Brier score}
+\label{sec:brier}
+
+The Brier score (Brier50)
+\begin{eqnarray}
+  \label{eq:brier}
+B_{n} &=& \sum_{m=1}^{M}(\tau_{n, m}-p(m \mid d_{n}))^{2}.
+\end{eqnarray}
+is a mean square error calculated between the true class indicator vector and the estimated probability vector.
+It has been used extensively in solar flare forecasting (Crown12, Mays+15, Florios+18), stellar variability identification (Richards+12, Armstrong+15), and star-galaxy separation (Kim+15).
+
+The Brier score is an attractive option because it both rewards classifiers assigning high probability to the true class and penalizes classifiers for assigning high probability to classes other than the true class.
+We expect expect this difference to significantly distinguish the log-loss from the Brier score.
+
+However, its interpretation is less obvious, as its dimensions depend on those of the probability space upon which the posterior estimates are defined.
+Furthermore, weighting it involves making a choice about whether weights should only be on the per-object values $B_{n}$ or whether weights should also enter the individual terms.
+\aim{I'm not sure if there's time to actually investigate the latter, nor how forthcoming to be about that being a nontrivial concern that drove the final decision about a metric for Kaggle.}
 
 % \subsubsection{Conditional density estimation loss}
 % \label{sec:cdeloss}

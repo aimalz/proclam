@@ -21,12 +21,33 @@ The Photometric \lsst\ Astronomical Time-series Classification Challenge (\plast
 Unlike previous challenges, \plasticc\ differs in that the more comprehensive dataset includes models for well-understood classes, newly observed classes, and classes that have only been proposed to exist, to simulate serendipitous discovery anticipated of \lsst.
 Additionally, \plasticc\ will join the ranks of a handful of past astronomy classification challenges hosted on Kaggle \aim{[describe Kaggle here and cite those previous challenges]}, attracting classification experts from the world of machine learning whose perspectives may be untainted by traditional approaches.
 
-Because of the low-signal-to-noise expected of \lsst, probabilistic classifications are more appropriate (Roberts+17), introducing a conflict with the metrics of deterministic class assignments used in previous classification challenges (Kessler+10a, Kesser+10b) and efforts to develop supernova classifiers (Narayan+18).
+Because of the low-signal-to-noise expected of \lsst, probabilistic classifications are more appropriate (Roberts+17) than the point estimates of previous challenges.
+Such posteriors are more valuable than point estimates, which we call deterministic classifications in this work, because of their versatility in application and encapsulation of observational and systematic error that may propagate through inference.
+A classification posterior can be propagated through population-level inference without a separate error propagation pipeline, and for the purposes of allocation of follow-up resources, a probability can always be reduced to a point estimate for the purposes of deterministic decisionmaking (such as for allocation of follow-up resources), but a deterministic classification cannot in general be used to reconstruct a probability density for an individual object.
+\plasticc\ will thus accept classifiers producing classification posteriors.
+
+However, probabilistic classifications are incompatible with the metrics of deterministic class assignments used in previous classification challenges (Kessler+10a, Kesser+10b) and efforts to develop supernova classifiers (Narayan+18).
+In this context, a metric is simply a quantification of the performance of a classifier.
+Notions of accuracy, purity, completeness, and other terms endemic in science are examples of traditional metrics appropriate to classification point estimates.
+Many traditional classification metrics may be modified for evaluation on probabilistic classifications (Lochner+16, M\"{o}ller+16, Hon,Stello,Zinn18) but only by reducing class probabilities to point estimates of class and evaluating those at discrete cutoffs that can affect the conclusions of the study.
+
 If the data are simulated using a fully self-consistent forward model, a metric of the accuracy of classification probabilities relative to the true, underlying probabilities would be straightforward.
 However, such a simulation procedure would require beginning with a fully populated probability space over all classes and all possible lightcurves, which is an insurmountable challenge.
-Therefore, attention must be directed toward the no longer straightforward matter of selecting the winner of a classification challenge.
+Therefore, attention must be directed toward the no longer straightforward matter of defining the criterion for a winning classifier.
+In the context of astronomy, concerns about the choice of metric for probabilistic classifications have been investigated only to a limited degree thus far (Kim\&Brunner17, Florios+18, Bethapudi\&Desai18) and never with such a broad set of goals.
+\aim{Summarize these papers.}
+This work explores the two-fold problem of how to select a metric of a probabilistic data product that will be used in many science applications and thus lacks a single obvious figure of merit.
 
-\aim{I actually preferred this as a list, although I agree that it could use some pruning.}
+\aim{I actually preferred the following as a list, although I agree that it could use some pruning.}
+%\begin{itemize}
+%\item    The metric must return a single scalar value.
+%\item    The metric must be well-defined for non-binary classes.
+%\item    The metric must balance diverse science use cases in the presence of heavily nonuniform class prevalence.
+%\item    The metric must respect the information content of probabilistic classifications.
+%\item    The metric must be able to evaluate deterministic classifications.
+%\item    The metric must be interpretable, meaning it gives a more optimal value for "good" mock classifiers and a less optimal value for mock classifiers plagued by anticipated systematic errors; in other words, it must pass basic tests of intuition.
+%\item    The metric must be reliable, giving consistent results for different instantiations of the same test case.
+%\end{itemize}
 
 In order for the metric to be useful in such a heterogenous challenge, we require that the metric must return a single, scalar value, while being well-defined for non-binary classes.
 
@@ -39,20 +60,7 @@ Similarly, any probabilistic metric much be easily transferred to a deterministi
 
 The metric must pass basic tests of intuition,rewarding classifiers that serve our needs and penalizing those plagued by anticipated systematic errors.
 
-%\begin{itemize}
-%\item    The metric must return a single scalar value.
-%\item    The metric must be well-defined for non-binary classes.
-%\item    The metric must balance diverse science use cases in the presence of heavily nonuniform class prevalence.
-%\item    The metric must respect the information content of probabilistic classifications.
-%\item    The metric must be able to evaluate deterministic classifications.
-%\item    The metric must be interpretable, meaning it gives a more optimal value for "good" mock classifiers and a less optimal value for mock classifiers plagued by anticipated systematic errors; in other words, it must pass basic tests of intuition.
-%\item    The metric must be reliable, giving consistent results for different instantiations of the same test case.
-%\end{itemize}
-
 And finally, the metric must be reliable, giving consistent results for different instantiations of the same test case.
 While it is clear that different procedures will happen simultansously, the metric should be stable to these changes, and be able to rank different scenarious given any particular set of rules imposed upon the metric.
-
-In the context of astronomy, concerns about the choice of metric for probabilistic classifications have been investigated only to a limited degree thus far (Kim\&Brunner17, Florios+18, Bethapudi\&Desai18).
-\aim{Summarize conclusions of these papers.}
 
 The Probabilistic Classification Metric (ProClaM) code used in this exploration of performance metrics is publicly available on GitHub.\footnote{\url{https://github.com/aimalz/proclam}}
