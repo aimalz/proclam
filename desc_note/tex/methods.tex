@@ -32,9 +32,11 @@ The figure of metric was given by
   \label{eq:snphotcc}
   \mathcal{C}_{FOM-Ia} &\equiv& \frac{1}{\mathcal{N}_{Ia}^{TOT}}\times \frac{(N_{Ia}^{\mathrm{true}})^2}{N_{Ia}^\mathrm{true}+W_{Ia}^\mathrm{false}N_{Ia}^\mathrm{false}}.
 \end{eqnarray}
-\aim{Renee, what is this in terms of the notation of the rest of the paper, or, at minimum, in terms of true/false positive/negative?}
+%\aim{Renee, what is this in terms of the notation of the rest of the paper, or, at minimum, in terms of true/false positive/negative?}
 
 The above reduces to $\mathcal{C}_{FOM-Ia}  = \epsilon_{Ia} + PP_{Ia},$ the efficiency and pseudopurity, which can be interpreted as the traditional purity factor in the limit that the weight $W_{Ia}^\mathrm{false} = 1$.
+The efficiency is the ratio of the number of true postives successfully recovered as the fraction of the true classifications or TP/TP+FN, while the purity can itself be related tothe ratio of TP/TP+FP, or the positive predictive valuev.
+
 For the SNPhotCC the false penalty was related to the size of the spectroscopic subsample as roughly $W_{Ia}^\mathrm{false} = 1 + \epsilon_{spec}^{-1} \gg 1$ but the conservative limit of $W_{Ia}^\mathrm{false} = 3$ was chosen to penalize wasted spectroscopic time over rejected SNe.
 
 For future challenges, a more balanced metric can be used to ensure correct classifications across the range of classes, without focusing or highlighting a specific class as above.
@@ -97,6 +99,7 @@ We expect expect this difference to significantly distinguish the log-loss from 
 
 However, its interpretation is less obvious, as its dimensions depend on those of the probability space upon which the posterior estimates are defined.
 Furthermore, weighting it involves making a choice about whether weights should only be on the per-object values $B_{n}$ or whether weights should also enter the individual terms.
+\textbf{RH: this isnt super clear, we should discuss}
 \aim{I'm not sure if there's time to actually investigate the latter, nor how forthcoming to be about that being a nontrivial concern that drove the final decision about a metric for Kaggle.}
 
 % \subsubsection{Conditional density estimation loss}
