@@ -4,15 +4,21 @@
 \subsection{Mock classifier systematics}
 \label{sec:mockresults}
 
-Our first set of experiments investigates the relative responses of the log-loss and Brier metrics as a function of isolated systematic effects imposed on baselines of a realistically good classifier and pessimally performing classifier.
+Our first set of experiments investigates the relative responses of the log-loss and Brier metrics as a function of isolated systematic effects imposed on baselines of the best possible classifier.
 
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.5\textwidth]{./fig/systematics_only.png}
+		\includegraphics[width=0.5\textwidth]{./fig/systematics_onlyperfect.png}
 		\caption{}
-		\label{fig:plasticc_systematics}
+		\label{fig:subsume}
 	\end{center}
 \end{figure}
+
+Figure~\ref{fig:subsume} shows the effect of adding each of four forms of error to a perfect classification, one class at a time, and calculating the metrics with flat weightings.
+We confirm that more palatable effects affect the metric values in minor ways and those considered most severe have a more obvious effect.
+Both metrics are appropriate for singling out a classifier that enables any class to subsume other classes.
+
+
 
 \subsection{Representative classifications}
 \label{sec:realresults}
@@ -26,9 +32,10 @@ Our first set of experiments investigates the relative responses of the log-loss
 	\end{center}
 \end{figure*}
 
-% \subsection{Weighting systematics}
-% \label{sec:weight_res}
-%
+\subsection{Weighting systematics}
+\label{sec:weight_res}
+
+\aim{We have not yet reached consensus on what tests are reasonable in the absence of physical motivations, as the test cases here are independent of such context.}
 % \begin{figure}
 % 	\begin{center}
 % 		% \includegraphics[width=0.5\textwidth]{./fig/systematic_Unknown_common.png}

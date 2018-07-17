@@ -3,22 +3,30 @@
 
 \aim{Fix citation format.}
 
-Bright cosmological objects like Type Ia supernova are probes of cosmological distance (and hence probe the expansion of the universe).
-Core-collapse supernovae encode within their stunning demise the evolution properties of massive stars.
-Bright astrophysical transients like RR Lyrae give insight into the structure and evolution of stars.
-Active galactic nuclei probe the evolution of large massive galaxies.
-These are but some of the physical principles that are testable with the many different kinds of transients that will be delivered with the Large Synoptic Survey Telescope (LSST).
-With its rapid scan strategy, exquisite depth and many filters, LSST will deliver orders of magnitude more supernovae than are currently known, and will allow observers to find these obtjects at a range or redshifts (and hence distances) in the universe, allowing us to learn about how they change with cosmological time.
-Using the wealth of data (for any of a multitude of science cases) requires distinguishing different classes of sources, according to the available data.
-The volume of discovery of LSST will make spectroscpic confirmation of the different types of objects impossible: any classifications of data into types will be based on the photometric (light curve) data of a given object.
+The Large Synoptic Survey Telescope (\lsst) has the potential to advance time-domain astronomy, with anticipated impacts on the study of transient and variable objects (TVs) within and beyond the Galaxy.
+% Bright cosmological objects like Type Ia supernova are probes of cosmological distance (and thus the expansion of the universe).
+% Core-collapse supernovae encode within their stunning demise the evolution properties of massive stars.
+% Bright astrophysical transients like RR Lyrae give insight into the structure and evolution of stars.
+% Active galactic nuclei probe the evolution of large massive galaxies.
+% These are but some of the physical principles that are testable with the many different kinds of transients that will be delivered with the Large Synoptic Survey Telescope (LSST).
+With its rapid scan strategy, exquisite depth, and many photometric filters, \lsst\ will deliver orders of magnitude more supernova than are currently known in addition to \aim{[insert numbers here]} other time-varying objects, enabling unprecedented population-level studies, in some cases across cosmic time.
 
-Data challenges have been employed in astronomy in the past to compare classification techniques on images \aim{[insert citations here]} and lightcurves \aim{[insert citations here]}, however previous challenges in the realm of transient and variable sources were restricted to either only a handful of different types of objects (eg. SNPhotCC), or were tailored to a specific science case.
-\plasticc\ differs in that the more comprehensive dataset includes models for well-understood classes, newly observed classes, and classes that have only been proposed to exist, to simulate serendipitous discovery anticipated of \lsst.
+The statistical power of the \lsst\ dataset, however, is contingent on distinguishing classes of sources from one another.
+% Using the wealth of data (for any of a multitude of science cases) requires distinguishing different classes of sources, according to the available data.
+The volume of discovery of LSST will make spectroscpic confirmation of the different types of objects impossible: classifications will be based solely on the photometric (light curve) data of a given object.
+As such, there is an acute need for photometric lightcurve classifiers that can perform well on heterogeneous datasets including time series of many classes of transient and variable objects.
+
+Data challenges have been employed in astronomy in the past to compare classification techniques on images \aim{[insert citations here]} and lightcurves \aim{[insert citations here]}, however previous challenges in the realm of transient and variable sources were restricted to either only a handful of different types of objects (eg. \snphotcc), or were tailored to a specific science case.
+The Photometric \lsst\ Astronomical Time-series Classification Challenge (\plasticc) aims to identify classification techniques that serve the broader astronomical community by engaging the broader community outside astronomy.
+Unlike previous challenges, \plasticc\ differs in that the more comprehensive dataset includes models for well-understood classes, newly observed classes, and classes that have only been proposed to exist, to simulate serendipitous discovery anticipated of \lsst.
+Additionally, \plasticc\ will join the ranks of a handful of past astronomy classification challenges hosted on Kaggle \aim{[describe Kaggle here and cite those previous challenges]}, attracting classification experts from the world of machine learning whose perspectives may be untainted by traditional approaches.
 
 Because of the low-signal-to-noise expected of \lsst, probabilistic classifications are more appropriate (Roberts+17), introducing a conflict with the metrics of deterministic class assignments used in previous classification challenges (Kessler+10a, Kesser+10b) and efforts to develop supernova classifiers (Narayan+18).
 If the data are simulated using a fully self-consistent forward model, a metric of the accuracy of classification probabilities relative to the true, underlying probabilities would be straightforward.
 However, such a simulation procedure would require beginning with a fully populated probability space over all classes and all possible lightcurves, which is an insurmountable challenge.
 Therefore, attention must be directed toward the no longer straightforward matter of selecting the winner of a classification challenge.
+
+\aim{I actually preferred this as a list, although I agree that it could use some pruning.}
 
 In order for the metric to be useful in such a heterogenous challenge, we require that the metric must return a single, scalar value, while being well-defined for non-binary classes.
 
@@ -26,10 +34,10 @@ In addition, the metric should balance diverse science use cases in the presence
 This is key given that the rates of astornomical transients of different types varies greatly: any classifier that requires a balance of types will under perform in the \plasticc\ (and other) competitions.
 
 We impose the restriction that the metric must respenct the information content of the probabilistic classifiers.
-Should a determininstic metric (i.e. a ``1'' or a ``0'' metric), that deterministic metric must be readily convertible into a probabilistic classification - and should preserve the relationships between classes accordingly.
+Should a determininstic classifier (i.e. returning a ``1'' or a ``0''), that deterministic metric must be readily convertible into a probabilistic classification - and should preserve the relationships between classes accordingly.
 Similarly, any probabilistic metric much be easily transferred to a deterministic one (given, e.g. given a threshold on the most likely classficiation choice).
 
-The metric must be interpretable, meaning it gives a more optimal value for ``good'' mock classifiers and a less optimal value for mock classifiers plagued by anticipated systematic errors; in other words, it must pass basic tests of intuition.
+The metric must pass basic tests of intuition,rewarding classifiers that serve our needs and penalizing those plagued by anticipated systematic errors.
 
 %\begin{itemize}
 %\item    The metric must return a single scalar value.
