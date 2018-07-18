@@ -38,9 +38,9 @@ Bahmanyar,Anita,A.~Bahmanyar,Contributor,"Dunlap Institute for Astronomy and Ast
 Biswas,Rahul,R.~Biswas,Contributor,"The Oskar Klein Centre for Cosmoparticle Physics, Department of Physics, Stockholm University, AlbaNova, SE-106 91 Stockholm, Sweden","conceptualization, methodology, software",[email]
 Ishida,Emille,E.E.O.~Ishida,Contributor,"Universite Clermont Auvergne, Clermont-Ferrand Universite 24 Avenue des Landais, 63170 Aubiere, France","conceptualization, project administration, supervision",[email]
 Jones,David,D.~Jones,Contributor,"University of Santa Cruz, 1156 High St, Santa Cruz, CA 95064, USA","software",[email]
-Lochner,Michelle,M.~Lochner,Contributor,"African Institute for Mathematical Sciences, 6 Melrose Road, Muizenberg, 7945","conceptualizaton, data curation, writing - editing",[email]
+Lochner,Michelle,M.~Lochner,Contributor,"African Institute for Mathematical Sciences, 6 Melrose Road, Muizenberg, 7945","conceptualizaton, data curation, formal analysis, visualization, writing - editing",[email]
+Mahabal,Ashish,A.~Mahabal,Contributor,"California Institute of Technology, Pasadena, CA 91125, USA","data curation, software, writing - original draft",[email]
 Martinez-Galarza,Rafael,R.~Martinez-Galarza,Contributor,"[address]","data curation, software, visualization, writing - original draft",[email]
 McEwen,Jason,J.~McEwen,Contributor,"Mullard Space Science Laboratory, Holmbury Hill Rd, Dorking RH5 6NT, UK","",[email]
 Narayan,Gautham,G.~Narayan,Contributor,"Space Telescope Science Institute, 3700 San Martin Dr, Baltimore, MD 21218, USA","data curation, formal analysis",[email]
-Mahabal,Ashish,A.~Mahabal,Contributor,"California Institute of Technology, Pasadena, CA 91125, USA","data curation, software",[email]
-Setzer,Christian,C.N.~Setzer,Contributor,"The Oskar Klein Centre for Cosmoparticle Physics, Department of Physics, Stockholm University, AlbaNova, Stockholm, SE-106 91, Sweden","initial metric discussion/suggestions, software","christian.setzer@fysik.su.se"
+Setzer,Christian,C.N.~Setzer,Contributor,"The Oskar Klein Centre for Cosmoparticle Physics, Department of Physics, Stockholm University, AlbaNova, Stockholm, SE-106 91, Sweden","conceptualization, software","christian.setzer@fysik.su.se"

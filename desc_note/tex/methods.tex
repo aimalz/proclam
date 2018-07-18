@@ -126,6 +126,9 @@ The two most concerning systematics are the ``tunnel vision'' and ``cruise contr
 The most universal underlying causes of these systematics are the imbalance of class membership rates, which may differ by orders of magnitude, and the nonrepresentative training set.
 Both of these problems are anticipated for \lsst\ and thus featured in \plasticc; class prevalence will differ by orders of magnitude, and there will be classes that are not present in the training set at all.
 % This can be problematic because our science needs might require accurate classifications of uncommon classes as well.
+It is common for `tunnel classifiers' or those that follow a `winner takes all' approach to dominate classification schemes, and large, unbalanced data sets can be especially prone to this.
+As such, one approach is to require a threshold of classification of all classes in order to assign a winner in any classification challenge.
+
 To derive a final scalar metric, we use a weighted average
 \begin{eqnarray}
 Q_{tot} &=& \frac{1}{M}\sum_{m=1}^{M}w_{m}Q_{m}

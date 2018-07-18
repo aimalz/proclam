@@ -9,22 +9,31 @@ What we mean by systematic is some alteration to the standard classifier that co
 In Figure~\ref{fig:cruise}, we illustrate shows the effect of adding each of four forms of error to a classification scheme that performed perfectly at classifying objects of a given type (prior to the systematic being added).
 The four systematics include changing the classification from perfect to almost perfect as described in Section~\ref{sec:accuratedata}, subsuming the classifications of class $m'$ for another class $\tilde{m}$ (labelled by `subsumed'), changing the classification from perfect to wholly uncertain, and making the classification more `noisy', which is by a reduction in the contribution of the classifier by a factor of $s=2,$ as described in Section~\ref{sec:accuratedata}.
 In each case, the metric weights are assumed to be flat.
-The log-loss and Brier scores behave very consistently, with the log-loss more affected than the Brier score for systematics in which the class $m'$ is subsumed by a different class (top right panel), however the effect is reasonably small.
-This shows that for a given metric (log-loss/Brier) and classification scheme, the metrics are stable to the introduction of systematic changes in the classifications.
-Both metrics are appropriate for singling out a classifier that enables any class to subsume other classes, thereby confirming that the cruise control classifier will not in general outscore a classifier that avoids subsuming.
 
 \begin{figure}
 	\begin{center}
 		\label{fig:cruise}
 		\includegraphics[width=0.5\textwidth]{./fig/systematics_onlyperfect.png}
 		\caption{Systematic effects added to the perfect classifier.
-		The log-loss and Brier scores (left and right $y$ axes, respectively) are shown for classifiers that are ``perfect' aside from the indicated systematic (panels) as a function how many classes are affected by the systematic (on the $x$-axis), beginning with the lowest population classes.
+		The log-loss and Brier scores (left and right $y$ axes, respectively) are shown for classifiers that are ``perfect'' aside from the indicated systematic (panels) as a function how many classes are affected by the systematic (on the $x$-axis), beginning with the lowest population classes.
 		The two metrics behave very similarly to one another and have high sensitivity to a subsuming classifier.}
 	\end{center}
 \end{figure}
 
-It is common for `tunnel classifiers' or those that follow a `winner takes all' approach to dominate classification schemes, and large, unbalanced data sets can be especially prone to this.
-As such, one approach is to require a threshold of classification of all classes in order to assign a winner in any classification challenge.
+The log-loss and Brier scores behave very consistently, with the log-loss more affected than the Brier score for systematics in which the class $m'$ is subsumed by a different class (top right panel), however the effect is reasonably small.
+This shows that for a given metric (log-loss/Brier) and classification scheme, the metrics are stable to the introduction of systematic changes in the classifications.
+Both metrics are appropriate for singling out a classifier that enables any class to subsume other classes, thereby confirming that the cruise control classifier will not in general outscore a classifier that avoids subsuming.
+
+Because the metrics are always calculated under the flat weighting scheme, there is a one-to-one correspondence between the number of classes affected and the weights on affected and unaffected classes in Figure~\ref{fig:cruise}.
+From this perspective, we may view the $x$ axis as also representing increasing weight on the affected systematic.
+The ``tunnel vision'' classifier is really the ``perfect'' classifier when it is applied to only one class (or a few), so the figure also shows the effect of decreasing the weight on the a ``tunnel vision'' classifier as the $x$ coordinate increases, relative to a baseline of the systematics indicated in each panel.
+The approximately linear relationship between metric value and fractional weight for ``tunnel vision'' classifier for each of the ``uncertain,'' ``almost perfect,'' and ``noisy'' baselines is to be expected, because the only weighting scheme we considered is linear.
+However the slopes differ for each systematic.
+
+Consider a weighting of $\sim0.2$ for a class affected by tunnel vision, leaving $\sim0.8$ to be shared among all other classes uniformly affected by the other systematics.
+
+When the weight is highest, the classifier has optimal performance by both metrics, but the domination of the perfect classifier can be modulated by downweighting it appropriately.
+
 We introduced weighting of per-class metrics to discourage `tunnel vision' and `cruise control' classifiers that can ignore classes other than the most common and nonetheless perform well by a metric.
 Figure~\ref{fig:popweight}, shows the impact of weighting the metric by number of objects in the class.
 The points show different classification schemes, and all points are coloured by the change in the weighting, dependent on the size of the population class being classified.
