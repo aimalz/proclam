@@ -86,13 +86,13 @@ Its greatest strength is that it is straightforwardly interpretable, enabling th
 \subsubsection{Brier score}
 \label{sec:brier}
 
-The Brier score (Brier50)
+The Brier score \cite{brier_verification_1950}, given as
 \begin{eqnarray}
   \label{eq:brier}
 B_{n} &=& \sum_{m=1}^{M}(\tau_{n, m}-p(m \mid d_{n}))^{2}.
 \end{eqnarray}
 is a mean square error calculated between the true class indicator vector and the estimated probability vector.
-It has been used extensively in solar flare forecasting (Crown12, Mays+15, Florios+18), stellar variability identification (Richards+12, Armstrong+15), and star-galaxy separation (Kim+15).
+It has been used extensively in solar flare forecasting \cite{crown_validation, mays_ensemble_2015, florios_forecasting_2018}, stellar variability identification \cite{richards_construction_2012, armstrong_k2_2016}, and star-galaxy separation \cite{kim_hybrid_2015}.
 
 The Brier score is an attractive option because it both rewards classifiers assigning high probability to the true class and penalizes classifiers for assigning high probability to classes other than the true class.
 We expect expect this difference to significantly distinguish the log-loss from the Brier score.
