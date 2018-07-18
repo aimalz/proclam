@@ -122,12 +122,15 @@ def det_to_cm(dets, truth, per_class_norm=True, vb=False):
     true_classes, true_counts = np.unique(truth, return_counts=True)
     if vb: print((pred_classes, pred_counts), (true_classes, true_counts))
 
-    M = max(max(pred_classes), max(true_classes)) + 1
+    M = np.int(max(max(pred_classes), max(true_classes)) + 1)
 
+    print((np.shape(dets), np.shape(truth)), M)
     cm = np.zeros((M, M), dtype=float)
-    # print((np.shape(dets), np.shape(truth)))
+    
     coords = np.array(list(zip(dets, truth)))
     indices, index_counts = np.unique(coords, axis=0, return_counts=True)
+    index_counts = index_counts.astype(int)
+    print(index_counts)
     # if vb: print(indices, index_counts)
     indices = indices.T
     # if vb: print(np.shape(indices))

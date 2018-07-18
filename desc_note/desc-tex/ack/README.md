@@ -7,6 +7,7 @@ Note that the standard wording is only one part of the acknowledgements. A rough
 
 ```
 This paper has undergone internal review in the LSST Dark Energy Science Collaboration. % REQUIRED
+% The internal reviewers were \ldots. % Optional but recommended
 % Standard papers only: author contribution statements. For examples, see http://blogs.nature.com/nautilus/2007/11/post_12.html
 % This work used TBD kindly provided by Not-A-DESC Member and benefitted from comments by Another Non-DESC person.
 % Standard papers only: A.B.C. acknowledges support from grant 1234 from ...
@@ -15,4 +16,4 @@ This paper has undergone internal review in the LSST Dark Energy Science Collabo
 % We acknowledge the use of An-External-Tool-like-NED-or-ADS.
 ```
 
-When in doubt, refer to the [DESC Author Guide](https://github.com/LSSTDESC/Author_Guide/blob/compiled/main.pdf).
+When in doubt, refer to the [DESC Author Guide](https://github.com/LSSTDESC/Author_Guide/raw/compiled/Author_Guide.pdf).
