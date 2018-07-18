@@ -15,22 +15,11 @@ Both metrics are appropriate for singling out a classifier that enables any clas
 
 \begin{figure}
 	\begin{center}
+		\label{fig:cruise}
 		\includegraphics[width=0.5\textwidth]{./fig/systematics_onlyperfect.png}
 		\caption{Systematic effects added to the perfect classifier.
-		The log-loss and Brier scores (left and right $y$ axes, respectively) are shown for classifiers that are ``perfect' aside from the indicated systematic (panels) as a function how many classes are affected by the systematic (on the $x$-axis).
-		Both scores are reasonably insensitive to the systematics we simulate, with the biggest change occuring for the case where one class is subsumed by another (top right panel).\label{fig:cruise}}
-	\end{center}
-\end{figure}
-
-In Figure~\ref{fig:tunnel}
-The perfect classifier has tunnel vision at every class, but the metric value drops because the class chosen to be affected by tunnel vision was the largest one, as that is the real situation that is most likely to have this problem, and thus has decreasing statistical noise from smaller classes as they contribute less and less to the overall metric.
-
-\begin{figure}
-	\begin{center}
-		\includegraphics[width=0.5\textwidth]{./fig/tunnel_abs_weights_on_baselines.png}
-		\caption{Tunnel vision classification of the dominant class under defferent weighting schemes.
-		The log-loss and Brier scores (left and right $y$ axes, respectively) are shown for each classifier (panels) with the largest class affected by ``tunnel vision'' as a function of the weight placed on the affected class ($x$-axis).
-		Both scores are reasonably insensitive to the systematics we simulate, with the biggest change occuring for the case where one class is subsumed by another (top right panel).\label{fig:tunnel}}
+		The log-loss and Brier scores (left and right $y$ axes, respectively) are shown for classifiers that are ``perfect' aside from the indicated systematic (panels) as a function how many classes are affected by the systematic (on the $x$-axis), beginning with the lowest population classes.
+		The two metrics behave very similarly to one another and have high sensitivity to a subsuming classifier.}
 	\end{center}
 \end{figure}
 
