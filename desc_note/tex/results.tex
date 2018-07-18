@@ -47,17 +47,17 @@ This is highlighted in Figure~\ref{fig:popweight}, which shows the impact of wei
 
 \begin{figure*}
 	\begin{center}
-		\includegraphics[width=0.85\textwidth]{./fig/SNPhotCC_res.png}
-		% \includegraphics[width=0.45\textwidth]{./fig/Unknown_res.png}
-		\caption{equal weight per class -- what kinds of weightings are meaningful to test here?  Would it be reasonable to take the real SNPhotCC entries' confusion matrices and see who would have won under each weighting/metric combination?}
+		\includegraphics[width=0.85\textwidth]{./fig/SNPhotCC_res.png}\\
+		 \includegraphics[width=0.45\textwidth]{./fig/fom_vs_brier.png}
+		\caption{The algorithms presented in \cite{lochner_photometric_2016} based on a representative subset of the SNPhotCC data. The top panel shows the performace of the various classification schemes described in \ref{sec:realdata} as a function of both the Brier and log-loss scores. The bottom panel shows the performance of the same classification schemes, this time evaluated on the SNPhotCC Figure of Merit (explicitly defined in Section~\ref{sec:past}) which is based on a combination of pseudopurity and classification efficiency. The Figure of Merit closely tracks the Brier score for the same entries, suggesting its applicability to the problem of photometric transient classification.
 		\label{fig:real_metric_compare}
 	\end{center}
 \end{figure*}
 
-\textbf{Current plan is that we compute the SNPhotCC metric for Michelle's contributions and also turn the binary classifications into probabilities - Renee will flesh this out}
-\aim{We are still iterating on the most informative tests to conduct on the \snphotcc\ data.
-I would like to have the confusion matrices from a real classification challenge (\snphotcc\ or Ashish Mahabal's) and test different weightings of our metrics on mock classification probabilities derived from those confusion matrices to check whether we choose the same ``winner,'' but the arrangements have not yet been finalized.
-The ``pipeline,'' however, is complete and ready to run as soon as the test conditions are agreed upon.}
+%\textbf{Current plan is that we compute the SNPhotCC metric for Michelle's contributions and also turn the binary classifications into probabilities - Renee will flesh this out}
+%\aim{We are still iterating on the most informative tests to conduct on the \snphotcc\ data.
+%I would like to have the confusion matrices from a real classification challenge (\snphotcc\ or Ashish Mahabal's) and test different weightings of our metrics on mock classification probabilities derived from those confusion matrices to check whether we choose the same ``winner,'' but the arrangements have not yet been finalized.
+%The ``pipeline,'' however, is complete and ready to run as soon as the test conditions are agreed upon.}
 
 
 % \subsection{Weighting systematics}
