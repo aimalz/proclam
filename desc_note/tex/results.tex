@@ -1,13 +1,12 @@
 \section{Results}
 \label{sec:results}
-
-Our first set of experiments investigates the relative responses of the log-loss and Brier metrics as a function of isolated systematic effects imposed on baselines of the best possible classifier.
+In order to understand how a given classifier with its specific properties (e.g. those that take a `winner takes all' approach compared to those that provide balanced classifications across types) performs in different metric schemes, we simulate the responses of both the log-loss metric and the Brier score as a function of isolated `systematic effects' imposed on various classifier baselines. What we mean by systematic is some alteration to the standard classifier that could affect its performance.  We outline these systematics below.
 
 \subsection{Mock classifier systematics}
 \label{sec:mockresults}
+In Figure~\ref{fig:cruise}, we illustrate shows the effect of adding each of four forms of error to a classification scheme that performed perfectly at classifying objects of a given type (prior to the systematic being added). The four systematics include changing the classification from perfect to almost perfect as described in Section~\label{sec:accuratedata},  subsuming the classifications of class $m'$ for another class $\tilde{m}$ (labelled by `subsumed'), changing the classification from perfect to wholly uncertain, and making the classification more `noisy', which is by a reduction in the contribution of the classifier by a factor of $s=2,$ as described in Section \label{sec:accuratedata}.
 
-Figure~\ref{fig:cruise} shows the effect of adding each of four forms of error to a perfect classification, one class at a time, and calculating the metrics with flat weightings.
-We confirm that more palatable effects affect the metric values in minor ways and those considered most severe have a more obvious effect.
+In each case, the metric weights are assumed to be flat.  The log-loss and Brier scores behave very consistently, with the log-loss more affected than the Brier score for systematics in which the class $m'$ is subsumed by a different class (top right panel), however the effect is reasonably small. This shows that for a given metric (log-loss/Brier) and classification scheme, the metrics are stable to the introduction of systematic changes in the classifications.
 Both metrics are appropriate for singling out a classifier that enables any class to subsume other classes, thereby confirming that the cruise control classifier will not in general outscore a classifier that avoids subsuming.
 
 \begin{figure}
@@ -17,8 +16,6 @@ Both metrics are appropriate for singling out a classifier that enables any clas
 		\label{fig:cruise}}
 	\end{center}
 \end{figure}
-
-
 
 \aim{Preliminary results indicate weighting will be very important for preventing the tunnel vision classifier from winning.
 It may be necessary to a priori anticipate which classes will have to be most strongly protected from this systematic via upweighting them.}

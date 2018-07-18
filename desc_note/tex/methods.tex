@@ -78,9 +78,9 @@ The cross-entropy
 \end{eqnarray}
 is the uncertainty of using $p(m \mid d_{n})$ in place of $\tau_{n, m}$.
 (A difference between $L_{n}$ and $H_{n}$ evaluated at $\tau_{n}$ would be the information lost in using $p(m \mid d_{n})$ in place of $\tau_{n, m}$, also known as the Kullback-Leibler Divergence.
-See Malz+18 for a comprehensive exploration of the KLD for a continuous 1-dimensional probability space.)
+See \cite{2018AJ....156...35M} for a comprehensive exploration of the KLD for a continuous 1-dimensional probability space.)
 
-The log-loss has only recently gained some presence in the astronomy literature (Hon+17, Hon+18).
+The log-loss has only recently gained some presence in the astronomy literature \citep{hon_deep_2017, hon_deep_2018}.
 Its greatest strength is that it is straightforwardly interpretable, enabling the metric itself to directly contribute to uncertainty propagation in an inference problem using the probability densities provided by the classifier.
 
 \subsubsection{Brier score}
@@ -92,15 +92,16 @@ The Brier score \cite{brier_verification_1950}, given as
 B_{n} &=& \sum_{m=1}^{M}(\tau_{n, m}-p(m \mid d_{n}))^{2}.
 \end{eqnarray}
 is a mean square error calculated between the true class indicator vector and the estimated probability vector.
-It has been used extensively in solar flare forecasting \cite{crown_validation, mays_ensemble_2015, florios_forecasting_2018}, stellar variability identification \cite{richards_construction_2012, armstrong_k2_2016}, and star-galaxy separation \cite{kim_hybrid_2015}.
+It has been used extensively in solar flare forecasting \cite{crown_validation, mays_ensemble_2015, florios_forecasting_2018}, stellar variability identification \citep{richards_construction_2012, armstrong_k2_2016}, and star-galaxy separation \citep{kim_hybrid_2015}.
 
 The Brier score is an attractive option because it both rewards classifiers assigning high probability to the true class and penalizes classifiers for assigning high probability to classes other than the true class.
 We expect expect this difference to significantly distinguish the log-loss from the Brier score.
 
-However, its interpretation is less obvious, as its dimensions depend on those of the probability space upon which the posterior estimates are defined.
-Furthermore, weighting it involves making a choice about whether weights should only be on the per-object values $B_{n}$ or whether weights should also enter the individual terms.
-\textbf{RH: this isnt super clear, we should discuss}
-\aim{I'm not sure if there's time to actually investigate the latter, nor how forthcoming to be about that being a nontrivial concern that drove the final decision about a metric for Kaggle.}
+However, its interpretation is less obvious, as its dimensions depend on those of the probability space upon which the posterior estimates are defined. Furthermore, weighting it involves making a choice about whether weights should only be on the \textit{per-object} values $B_{n}$ or whether weights should also enter the individual terms in the metric above. We leave a full investigation of the weighting on the Brier metric for future work.
+
+
+%\textbf{RH: this isnt super clear, we should discuss}
+%\aim{I'm not sure if there's time to actually investigate the latter, nor how forthcoming to be about that being a nontrivial concern that drove the final decision about a metric for Kaggle.}
 
 % \subsubsection{Conditional density estimation loss}
 % \label{sec:cdeloss}

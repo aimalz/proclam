@@ -110,7 +110,7 @@ Though we defend against this systematic by employing per-class weights, describ
 Also, it may be more interpretable if we instead use Ashish's confusion matrices that have more classes.
 As an alternative, however, Michelle Lochner has volunteered to write more about the representative classifications presented in this section as is.}
 
-Classification problems in astronomy have historically focused on separating a heterogenous population into a limited number of subclasses (cite Kessler+2010), with the focus or goal being to identify one particular type of object.
+Classification problems in astronomy have historically focused on separating a heterogenous population into a limited number of subclasses \citep{kessler_results_2010}, with the focus or goal being to identify one particular type of object.
 
 % In the Supernova Photometric Classification Challenge (SNPhotCC), the metric for deciding on who `won' the challenge was determined as a ratio of the efficiency of Type Ia classification and a `pseudo purity' factor, and a penalty for false-flagging (which is related to the cost of following up an object spectroscopically that is not a SNIa).
 % The figure of merit was given by:
@@ -127,13 +127,13 @@ Classification problems in astronomy have historically focused on separating a h
 % For future challenges, a more balanced metric can be used to ensure correct classifications across the range of objects, without focusing or highlighting a specific object as above.
 % Furthermore,
 
-In response to the SNPhotCC, a range of classifications approaches were submitted, namely $\chi^{2}$ fits of the SN data to publicly available templates (ref. Nugent+), identification with the SiFTO light curve fitter (Conley et al. 2008) through the fitted values of the stretch, colour and also the $\chi^{2}$ of the fit for Ia fits, and a linear slope to magnitudes per day was used for the non-Ia sample.
+In response to the SNPhotCC, a range of classifications approaches were submitted, namely $\chi^{2}$ fits of the SN data to publicly available templates \citep[see the][templates,]{2002PASP..114..803N}, identification with the SiFTO light curve fitter \citep{2008ApJ...681..482C} through the fitted values of the stretch, colour and also the $\chi^{2}$ of the fit for Ia fits, and a linear slope to magnitudes per day was used for the non-Ia sample.
 Other groups constructed a Hubble diagram from the training data, and used the residuals away from that Hubble diagram as a criterion for classification in the test data.
 Still other groups performed classification by reducing the dimensionality of the light curves (the so-called InCA approach).
 A general light curve shape (rather than one motivated by the physical differences between SNeIa and core collapse SNe) was assumed by some competitors and then a kernel density estimation was performed over the fit parameters, with various approaches employed including boosting over the feature space.
 
 Machine learning was also eployed over the reduced data set of light-curve slopes (in magnitudes per day) as above to produce a predictive model for the training data.
-For more information on these methods and their success within the SNPhotCC, we refer the reader to Kessler+2010.
+For more information on these methods and their success within the SNPhotCC, we refer the reader to \cite{kessler_results_2010}.
 
 The above approaches vary between very physically motivated and \textbf{template based} (and also prone to bias given non-representativity of the test data) and agnostic and based on decomposition of the light curves into \textbf{generic features} (but also making use of less information in the classifications).
 In figure~\ref{fig:snphotcc_cm} we show a range of classification approaches over the wavelet (feature) space (top row) and using templates (bottom row).
