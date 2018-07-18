@@ -1,9 +1,9 @@
 \section{Introduction}
 \label{sec:intro}
 
-\aim{Fix citation format.}
+\aim{[Fix citation format.]}
 
-The Large Synoptic Survey Telescope (\lsst) has the potential to advance time-domain astronomy, with anticipated impacts on the study of transient and variable objects (TVs) within and beyond the Galaxy.
+The Large Synoptic Survey Telescope ( \lsst\ ) has the potential to advance time-domain astronomy, with anticipated impacts on the study of transient and variable objects (TVs) within and beyond the Galaxy.
 % Bright cosmological objects like Type Ia supernova are probes of cosmological distance (and thus the expansion of the universe).
 % Core-collapse supernovae encode within their stunning demise the evolution properties of massive stars.
 % Bright astrophysical transients like RR Lyrae give insight into the structure and evolution of stars.
@@ -16,29 +16,36 @@ Science from the \lsst\ dataset, however, is contingent on distinguishing classe
 based on the spectrum of the source. However, the volume of discovered objects in the LSST, as well as their potentially high redshifts implies that the prospect of spectroscopic follow-up of a large fraction of them is difficult
 with expected spectroscopic resources. Thus several science cases (such as SN cosmology) will actively depend om classification of astrophysical sources based on the photometric light curve, and possibly a much smaller training sample/model based on a spectroscopic sub-sample. 
 % Using the wealth of data (for any of a multitude of science cases) requires distinguishing different classes of sources, according to the available data.
-As such, there is an acute need for photometric lightcurve classifiers that can perform well on \aim{Rahul: what does heterogeneous mean here ? differnt classes of objects?} heterogeneous datasets including time series of many classes of transient and variable objects.
+As such, there is an acute need for photometric lightcurve classifiers that can perform well on \aim{[Rahul: what does heterogeneous mean here ? differnt classes of objects?]} heterogeneous datasets including time series of many classes of transient and variable objects.
 
 Classifaction of noisy light curves is intrinsically probabilistic. Sometimes, classification can lead to identification of a category wth very high probabilities, while at other times several categories might seem approximately 
 less likely. The latter is clearly the likely scenario for light curves dominated by noise.
 Here, we will refer to classification schemes which preserve these probabilities as `Probabilistic Classification`.
 However, often one compresses this to a  
  `Deterministic classification` which is equivalent to choosing a single category with probability 1.0 through som 
-rules, obviously leading to a loss of information. The value of this loss depends on how the classification results are subsequently used. For example, when using classification of astrophysical sources to determine the use of follow-up resources, one ultimately takes a binary decision on whether to follow-up a particular source or not. While the knowlege that an object has been identified to be a particular type with an overwhelming probability (eg 0.99) is likely different to a situation where an object is simply slightly likelier to be a particular class than the remaining classes of objects is important but could be appropriately reflected in a deterministic classifier. If the follow-up resources were abundant enough to warrant the optimization of follow-up of less well classified objects,  the information in the probabilities could be useful in resource allocation. Considering the different case of supernova cosmology from a photometric classified sample of SNe, such probabilistic classifications can be propagated to subsequent analyses of cosmological parameters allowing one to extract information from the (large) part of the sample where photometric classification failed to identify a particular type with overwhelming probability (Roberts+17) \aim{whoever had the Roberts+17 reference should put this in a more appropriate place}. This implies that one should plan and investigate probabilistic classification for future surveys like LSST. 
+rules, obviously leading to a loss of information. The value of this loss depends on how the classification results are subsequently used. For example, when using classification of astrophysical sources to determine the use of follow-up resources, one ultimately takes a binary decision on whether to follow-up a particular source or not. While the knowlege that an object has been identified to be a particular type with an overwhelming probability (eg 0.99) is likely different to a situation where an object is simply slightly likelier to be a particular class than the remaining classes of objects is important but could be appropriately reflected in a deterministic classifier. If the follow-up resources were abundant enough to warrant the optimization of follow-up of less well classified objects,  the information in the probabilities could be useful in resource allocation. Considering the different case of supernova cosmology from a photometric classified sample of SNe, such probabilistic classifications can be propagated to subsequent analyses of cosmological parameters allowing one to extract information from the (large) part of the sample where photometric classification failed to identify a particular type with overwhelming probability (Roberts+17) \aim{[whoever had the Roberts+17 reference could you please put this in a more appropriate place than where I am leaving it]}. This implies that one should plan and investigate probabilistic classification for future surveys like LSST. 
 %Because of the low-signal-to-noise expected of \lsst, probabilistic classifications are more appropriate (Roberts+17) than the point estimates of previous challenges.
 %Such posteriors are more valuable than point estimates, which we call deterministic classifications in this work, because of their versatility in application and encapsulation of observational and systematic error that may propagate through inference.
+
 Data challenges have been employed in astronomy in the past to compare classification techniques on images \aim{[insert citations here]} and lightcurves \aim{[insert citations here]}, however previous challenges in the realm of transient and variable sources were restricted to either only a handful of different types of objects (eg. \snphotcc), or were tailored to a specific science case.
 
+\aim{[RB: I think it might be good to have something more on PLAsTiCC, also it might be good to have version of PLasTiCC clearly mentioned]}
 The Photometric \lsst\ Astronomical Time-series Classification Challenge (\plasticc) aims to identify classification techniques that serve the broader astronomical community by engaging the broader community outside astronomy.
 Unlike previous challenges, \plasticc\ differs in that the more comprehensive dataset includes models for well-understood classes, newly observed classes, and classes that have only been proposed to exist, to simulate serendipitous discovery anticipated of \lsst.
 Additionally, \plasticc\ will join the ranks of a handful of past astronomy classification challenges hosted on Kaggle \aim{[describe Kaggle here and cite those previous challenges]}, attracting classification experts from the world of machine learning whose perspectives may be untainted by traditional approaches.
 
-A classification posterior can be propagated through population-level inference without a separate error propagation pipeline, and for the purposes of allocation of follow-up resources, a probability can always be reduced to a point estimate for the purposes of deterministic decisionmaking (such as for allocation of follow-up resources), but a deterministic classification cannot in general be used to reconstruct a probability density for an individual object.
+% A classification posterior can be propagated through population-level inference without a separate error propagation pipeline, and for the purposes of allocation of follow-up resources, a probability can always be reduced to a point estimate for the purposes of deterministic decisionmaking (such as for allocation of follow-up resources), but a deterministic classification cannot in general be used to reconstruct a probability density for an individual object.
 
-\plasticc\ will thus accept classifiers producing classification posteriors.
-
-However, probabilistic classifications are incompatible with the metrics of deterministic class assignments used in previous classification challenges (Kessler+10a, Kesser+10b) and efforts to develop supernova classifiers (Narayan+18).
+As a data challenge \plasticc\ needs to have a metric to rank classification submissions. 
 In this context, a metric is simply a quantification of the performance of a classifier.
-Notions of accuracy, purity, completeness, and other terms endemic in science are examples of traditional metrics appropriate to classification point estimates.
+Notions of accuracy, purity, completeness, and other terms endemic in science are examples of traditional metrics appropriate to classification point estimates. \aim{[We need to be consistent in the use of either `point estimates` or `Deterministic Classification` thtoughout the paper]}
+In previous data challenges (Kessler+10a, Kessler+10b), such metrics were based on the assumption that entries would be deterministic classifiers, and thus the relevant parameters describing the entries would be quantities like 'purity' and 'efficiency'.
+Such quantities do not exist for probabilistic classifiers (without a transformation that throws away information).
+Due to the importance of Probabilistic Classifiers discussed above, it is imperative that \plasticc\ have metrics
+that can rank probabilistic classifers, and therefore new metrics to rank classifers for \plasticc\ are required. 
+
+\aim{I think I addressed the issue of SNPhotCC metrics above, but missed the point on the Narayan+18 reference}
+%However, probabilistic classifications are incompatible with the metrics of deterministic class assignments used in previous classification challenges (Kessler+10a, Kesser+10b) and efforts to develop supernova classifiers (Narayan+18).
 Many traditional classification metrics may be modified for evaluation on probabilistic classifications (Lochner+16, M\"{o}ller+16, Hon,Stello,Zinn18) but only by reducing class probabilities to point estimates of class and evaluating those at discrete cutoffs that can affect the conclusions of the study.
 
 If the data are simulated using a fully self-consistent forward model, a metric of the accuracy of classification probabilities relative to the true, underlying probabilities would be straightforward.
@@ -74,3 +81,4 @@ And finally, the metric must be reliable, giving consistent results for differen
 While it is clear that different procedures will happen simultansously, the metric should be stable to these changes, and be able to rank different scenarious given any particular set of rules imposed upon the metric.
 
 The Probabilistic Classification Metric (ProClaM) code used in this exploration of performance metrics is publicly available on GitHub.\footnote{\url{https://github.com/aimalz/proclam}}
+\aim{[We do not want  to refer to this project this way. A better way would be to have a release, put it on zenodo, and then reference the doi in the references]}
