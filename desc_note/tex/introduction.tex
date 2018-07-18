@@ -12,20 +12,22 @@ The Large Synoptic Survey Telescope (\lsst) has the potential to advance time-do
 With its rapid scan strategy, exquisite depth, and many photometric filters, \lsst\ will deliver orders of magnitude more supernova than are currently known in addition to \aim{[insert numbers here]} other time-varying objects, enabling unprecedented population-level studies, in some cases across cosmic time.
 
 Science from the \lsst\ dataset, however, is contingent on distinguishing classes of astrophysical sources
- from one another. The gold standard for performing such identification in astronomy has traditionally been
-based on the spectrum. However, the volume of discovered objects in the LSST, as well as their potentially hight redshifts implies that the prospect of spectroscopic follow-up of a large fraction of them is difficult
-with current spectroscopic resources. Thus several science cases (such as SN cosmolohy) will actively depend om classification of astrophysical sources  from their photometric ligt curve. 
+ from one another. The gold standard for such identification in astronomy has traditionally been
+based on the spectrum of the source. However, the volume of discovered objects in the LSST, as well as their potentially high redshifts implies that the prospect of spectroscopic follow-up of a large fraction of them is difficult
+with expected spectroscopic resources. Thus several science cases (such as SN cosmology) will actively depend om classification of astrophysical sources based on the photometric light curve, and possibly a much smaller training sample/model based on a spectroscopic sub-sample. 
 % Using the wealth of data (for any of a multitude of science cases) requires distinguishing different classes of sources, according to the available data.
-As such, there is an acute need for photometric lightcurve classifiers that can perform well on heterogeneous datasets including time series of many classes of transient and variable objects.
+As such, there is an acute need for photometric lightcurve classifiers that can perform well on \aim{Rahul: what does heterogeneous mean here ? differnt classes of objects?} heterogeneous datasets including time series of many classes of transient and variable objects.
 
+Because of the low-signal-to-noise expected of \lsst, probabilistic classifications are more appropriate (Roberts+17) than the point estimates of previous challenges.
+Such posteriors are more valuable than point estimates, which we call deterministic classifications in this work, because of their versatility in application and encapsulation of observational and systematic error that may propagate through inference.
 Data challenges have been employed in astronomy in the past to compare classification techniques on images \aim{[insert citations here]} and lightcurves \aim{[insert citations here]}, however previous challenges in the realm of transient and variable sources were restricted to either only a handful of different types of objects (eg. \snphotcc), or were tailored to a specific science case.
+
 The Photometric \lsst\ Astronomical Time-series Classification Challenge (\plasticc) aims to identify classification techniques that serve the broader astronomical community by engaging the broader community outside astronomy.
 Unlike previous challenges, \plasticc\ differs in that the more comprehensive dataset includes models for well-understood classes, newly observed classes, and classes that have only been proposed to exist, to simulate serendipitous discovery anticipated of \lsst.
 Additionally, \plasticc\ will join the ranks of a handful of past astronomy classification challenges hosted on Kaggle \aim{[describe Kaggle here and cite those previous challenges]}, attracting classification experts from the world of machine learning whose perspectives may be untainted by traditional approaches.
 
-Because of the low-signal-to-noise expected of \lsst, probabilistic classifications are more appropriate (Roberts+17) than the point estimates of previous challenges.
-Such posteriors are more valuable than point estimates, which we call deterministic classifications in this work, because of their versatility in application and encapsulation of observational and systematic error that may propagate through inference.
 A classification posterior can be propagated through population-level inference without a separate error propagation pipeline, and for the purposes of allocation of follow-up resources, a probability can always be reduced to a point estimate for the purposes of deterministic decisionmaking (such as for allocation of follow-up resources), but a deterministic classification cannot in general be used to reconstruct a probability density for an individual object.
+
 \plasticc\ will thus accept classifiers producing classification posteriors.
 
 However, probabilistic classifications are incompatible with the metrics of deterministic class assignments used in previous classification challenges (Kessler+10a, Kesser+10b) and efforts to develop supernova classifiers (Narayan+18).
