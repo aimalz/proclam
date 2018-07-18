@@ -14,7 +14,7 @@
 \plasticc\ aims to identify the most promising classification techniques, meaning there must be a performance metric, a single scalar value quantifying how appropriate a classifier is for the task at hand.
 Choosing a metric therefore is logically entwined with the question the challenge aims to answer.
 \snphotcc, for example, sought the best classifier of SN Ia, for the purpose of devoting precious follow-up resources to spectroscopically confirm likely candidates and use the spectroscopic data for cosmology investigations, and from that specific goal a well-defined metric followed.
-This choice of a metric is not so simple for \plasticc, which has many science goals and the reality that most analyses using \lsst\ lightcurves will be done without follow-up data.
+The choice of a metric is not so simple for \plasticc, which has many science goals and the reality that most analyses using \lsst\ lightcurves will be done without follow-up data.
 The probability densities classifiers produce must be accurate for use in inference as well as for the allocation of follow-up resources, and they must be evaluated in a way that does not excessively favor any one science application.
 
 In Section~\ref{sec:past}, we review the metrics that have been used in previous challenges with deterministic classifications.
@@ -32,9 +32,11 @@ The figure of metric was given by
   \label{eq:snphotcc}
   \mathcal{C}_{FOM-Ia} &\equiv& \frac{1}{\mathcal{N}_{Ia}^{TOT}}\times \frac{(N_{Ia}^{\mathrm{true}})^2}{N_{Ia}^\mathrm{true}+W_{Ia}^\mathrm{false}N_{Ia}^\mathrm{false}}.
 \end{eqnarray}
-\aim{Renee, what is this in terms of the notation of the rest of the paper, or, at minimum, in terms of true/false positive/negative?}
+%\aim{Renee, what is this in terms of the notation of the rest of the paper, or, at minimum, in terms of true/false positive/negative?}
 
 The above reduces to $\mathcal{C}_{FOM-Ia}  = \epsilon_{Ia} + PP_{Ia},$ the efficiency and pseudopurity, which can be interpreted as the traditional purity factor in the limit that the weight $W_{Ia}^\mathrm{false} = 1$.
+The efficiency is the ratio of the number of true postives successfully recovered as the fraction of the true classifications or TP/TP+FN, while the purity can itself be related tothe ratio of TP/TP+FP, or the positive predictive valuev.
+
 For the SNPhotCC the false penalty was related to the size of the spectroscopic subsample as roughly $W_{Ia}^\mathrm{false} = 1 + \epsilon_{spec}^{-1} \gg 1$ but the conservative limit of $W_{Ia}^\mathrm{false} = 3$ was chosen to penalize wasted spectroscopic time over rejected SNe.
 
 For future challenges, a more balanced metric can be used to ensure correct classifications across the range of classes, without focusing or highlighting a specific class as above.
@@ -45,14 +47,16 @@ For future challenges, a more balanced metric can be used to ensure correct clas
 \plasticc\ aims to identify classifiers that produce discrete posterior probability distributions $p(m \mid d)$ over $M$ classes $m$ given their photometric lightcurve data $d$.
 
 We consider two  metrics of classification probabilities, each of which is interpretable and avoids reducing probabilities to point estimates.
-Both our metrics make use of the indicator variable
+\changes{Both our metrics make use of the indicator variable $\tau_{n, m}$ for each possibile class $m$ for the nth 
+event which in truth belongs to class $t_{n}$ defined as}
 \begin{eqnarray}
   \label{eq:indicator}
-  \tau_{n, m} &=& \begin{cases}
+  \tau_{n, m} &\equiv& \begin{cases}
   0 & t_{n} \neq m\\
   1 & t_{n} = m
   \end{cases}.
 \end{eqnarray}
+
 However, the metric for \plasticc\ must also be compatible with deterministic class assignments, as many classifiers, including some of the most prevalent classifiers in the time-domain astronomy field, can only provide deterministic classifications (probabilities of 0 or 1) and/or binary classifications (``yes'' vs. ``no'' for a particular class without addressing others), the metric must be well-defined for those cases as well as for nontrivial probabilities and multiple classes.
 
 % We calculate the metric within each class $m$ by taking an average of its value $-\ln[p_{n}(m | d_{n})]$ for each true member $n$ of the class.
@@ -76,28 +80,29 @@ The cross-entropy
 \end{eqnarray}
 is the uncertainty of using $p(m \mid d_{n})$ in place of $\tau_{n, m}$.
 (A difference between $L_{n}$ and $H_{n}$ evaluated at $\tau_{n}$ would be the information lost in using $p(m \mid d_{n})$ in place of $\tau_{n, m}$, also known as the Kullback-Leibler Divergence.
-See Malz+18 for a comprehensive exploration of the KLD for a continuous 1-dimensional probability space.)
+See \cite{2018AJ....156...35M} for a comprehensive exploration of the KLD for a continuous 1-dimensional probability space.)
 
-The log-loss has only recently gained some presence in the astronomy literature (Hon+17, Hon+18).
-Its greatest strength is that it is straightforwardly interpretable, enabling the metric itself to directly contribute to uncertainty propagation in an inference problem using the probability densities provided by the classifier.
+The log-loss has only recently gained some presence in the astronomy literature \citep{hon_deep_2017, hon_deep_2018}. Its greatest strength is that it is straightforwardly interpretable, enabling the metric itself to directly contribute to uncertainty propagation in an inference problem using the probability densities provided by the classifier.
 
 \subsubsection{Brier score}
 \label{sec:brier}
 
-The Brier score (Brier50)
+The Brier score \cite{brier_verification_1950}, given as
 \begin{eqnarray}
   \label{eq:brier}
 B_{n} &=& \sum_{m=1}^{M}(\tau_{n, m}-p(m \mid d_{n}))^{2}.
 \end{eqnarray}
 is a mean square error calculated between the true class indicator vector and the estimated probability vector.
-It has been used extensively in solar flare forecasting (Crown12, Mays+15, Florios+18), stellar variability identification (Richards+12, Armstrong+15), and star-galaxy separation (Kim+15).
+It has been used extensively in solar flare forecasting \cite{crown_validation, mays_ensemble_2015, florios_forecasting_2018}, stellar variability identification \citep{richards_construction_2012, armstrong_k2_2016}, and star-galaxy separation \citep{kim_hybrid_2015}.
 
 The Brier score is an attractive option because it both rewards classifiers assigning high probability to the true class and penalizes classifiers for assigning high probability to classes other than the true class.
 We expect expect this difference to significantly distinguish the log-loss from the Brier score.
 
-However, its interpretation is less obvious, as its dimensions depend on those of the probability space upon which the posterior estimates are defined.
-Furthermore, weighting it involves making a choice about whether weights should only be on the per-object values $B_{n}$ or whether weights should also enter the individual terms.
-\aim{I'm not sure if there's time to actually investigate the latter, nor how forthcoming to be about that being a nontrivial concern that drove the final decision about a metric for Kaggle.}
+However, its interpretation is less obvious, as its dimensions depend on those of the probability space upon which the posterior estimates are defined. Furthermore, weighting it involves making a choice about whether weights should only be on the \textit{per-object} values $B_{n}$ or whether weights should also enter the individual terms in the metric above. We leave a full investigation of the weighting on the Brier metric for future work.
+
+
+%\textbf{RH: this isnt super clear, we should discuss}
+%\aim{I'm not sure if there's time to actually investigate the latter, nor how forthcoming to be about that being a nontrivial concern that drove the final decision about a metric for Kaggle.}
 
 % \subsubsection{Conditional density estimation loss}
 % \label{sec:cdeloss}

@@ -281,7 +281,7 @@ access fonts for the \string\astro\space command
  \fi
 
 %% LSST DESC Notes: use fonts that look like GitHub-presented Markdown:
-\usepackage{helvet,mathpple}
+\usepackage{helvet}
 \renewcommand{\familydefault}{\sfdefault}
 
 %%%%%%%%%%%%%
@@ -632,15 +632,27 @@ revtex4-1.cls^^J^^J}\stop
 \let\shorttitle\lefthead
 \let\shortauthors\righthead
 
-\def\ps@apjheads{\let\@mkboth\markboth
-     \def\@evenfoot{}
-    \def\@evenhead{\lower9mm\hbox to\textwidth{
-                     \rm\thepage\hfil \rm\textsc{\@rectohead} \hfil}}}
-    \def\@oddfoot{}
-    \def\@oddhead{\lower9mm\hbox to\textwidth{
-                     \hfil\rm\textsc{\@versohead}\hfil \rm\thepage}}
+% LSST DESC Notes have page numbers at the bottom
 
-\pagestyle{apjheads}
+% \def\ps@apjheads{\let\@mkboth\markboth
+%      \def\@evenfoot{}
+%     \def\@evenhead{\lower9mm\hbox to\textwidth{
+%                      \rm\thepage\hfil \rm\textsc{\@rectohead} \hfil}}}
+%     \def\@oddfoot{}
+%     \def\@oddhead{\lower9mm\hbox to\textwidth{
+%                      \hfil\rm\textsc{\@versohead}\hfil \rm\thepage}}
+%
+% \pagestyle{apjheads}
+
+\def\ps@lsstdescnoteheads{\let\@mkboth\markboth
+    \def\@evenhead{}
+    \def\@evenfoot{\lower9mm\hbox to\textwidth{
+                     \thepage\hfil \rm\textsc{\@rectohead} \hfil}}}
+    \def\@oddhead{}
+    \def\@oddfoot{\lower9mm\hbox to\textwidth{
+                     \hfil\rm\textsc{\@versohead}\hfil \thepage}}
+
+\pagestyle{lsstdescnoteheads}
 
 \@twosidetrue
 
@@ -823,7 +835,10 @@ revtex4-1.cls^^J^^J}\stop
 
 
 %   ABSTRACT
-\def\frontmatter@abstractfont{\normalsize\parindent=9pt
+% LSST DESC Notes have no indents in their abstracts:
+% \def\frontmatter@abstractfont{\normalsize\parindent=9pt
+% }%
+\def\frontmatter@abstractfont{\normalsize\parindent=0pt
 }%
 %\def\frontmatter@abstractwidth{6in}
 \def\frontmatter@preabstractspace{12pt}
@@ -1040,20 +1055,20 @@ revtex4-1.cls^^J^^J}\stop
 %    \fi
 % \fi
 
-% LSST DESC Notes: big, bold section headings:
+% LSST DESC Notes: big, bold section headings, with numbering!:
 % \@startsection{section}{1}{\z@}{9pt plus 1pt minus
 % 1pt}{4pt}{\apjsecfont\center}}
-\@startsection{section}{1}{\z@}{9pt plus 1pt minus 1pt}{4pt}{\bf\Large}}
+\@startsection{section}{1}{\z@}{9pt plus 1pt minus 1pt}{4pt}{\normalfont\bf\Large}}
 
-% LSST DESC Notes: big, bold section headings:
+% LSST DESC Notes: big, bold section headings, with numbering!:
 % \def\subsection{\@startsection{subsection}{2}{\z@}{9pt plus 1pt minus 1pt}{4pt}{\normalsize\itshape \center}}
-\def\subsection{\@startsection{subsection}{2}{\z@}{9pt plus 1pt minus 1pt}{4pt}{\bf\large}}
+\def\subsection{\@startsection{subsection}{2}{\z@}{9pt plus 1pt minus 1pt}{4pt}{\normalfont\bf\large}}
 
-% LSST DESC Notes: big, bold section headings:
+% LSST DESC Notes: big, bold section headings, with numbering!:
 % \def\subsubsection{\@startsection{subsubsection}{3}{\z@}%
 %   {2ex plus 1ex minus .2ex}{1ex plus .2ex}{\small\itshape \center}}
 \def\subsubsection{\@startsection{subsubsection}{3}{\z@}%
-  {2ex plus 1ex minus .2ex}{1ex plus .2ex}{\bf\normalsize}}
+  {2ex plus 1ex minus .2ex}{1ex plus .2ex}{\normalfont\bf\normalsize}}
 
 \def\paragraph{\@startsection{paragraph}{4}{\z@}%
   {1.5ex plus 1ex minus .2ex}{0pt}{\small\itshape}}
@@ -1077,9 +1092,9 @@ revtex4-1.cls^^J^^J}\stop
 \def\subsec@upcase#1{\relax{#1}}
 
 % How the section number will appear in the section title - AV
-% LSST DESC Notes: no section numbering!
-% \def\ApjSectionMarkInTitle#1{#1.\ }
-\def\ApjSectionMarkInTitle#1{\!\!}
+% LSST DESC Notes: no section numbering? In latex they do, to enable
+% cross referencing.
+\def\ApjSectionMarkInTitle#1{#1. }
 \def\ApjSectionpenalty{0}
 
 
@@ -1092,8 +1107,11 @@ revtex4-1.cls^^J^^J}\stop
     \refstepcounter{#1} \edef \@svsec {\ApjSectionMarkInTitle
     {\csname the#1\endcsname}}\fi
   \@hangfrom {\hskip #3\relax
-    \ifnum #2=1{\secnum@size {\rm\@svsec~}}%
-    \else {\subsecnum@size {\rm\@svsec~}}\fi }%
+  % LSST DESC Notes have helevetica font section numbers:
+  % \ifnum #2=1{\secnum@size {\rm\@svsec~}}%
+  % \else {\subsecnum@size {\rm\@svsec~}}\fi }%
+  \ifnum #2=1{\secnum@size {\@svsec~}}%
+  \else {\subsecnum@size {\@svsec~}}\fi }%
   {\interlinepenalty \@M
    \ifnum #2=1\sec@upcase{#8}%
    \else \subsec@upcase{#8}\fi\par}\endgroup
@@ -6311,16 +6329,19 @@ Affiliations\vrule depth 18pt width0pt}\nobreak
 \setlength{\footnotesep}{8pt}
 
 \ifmodern
-\setlength{\voffset}{0in}
-\setlength{\hoffset}{0in}
-\setlength{\textwidth}{6in}
-\setlength{\textheight}{9.2in}
+\setlength{\voffset}{-1in}
+\setlength{\hoffset}{-1in}
+% LSST DESC Notes have fairly narrow margins, 1in on each side
+\setlength{\textwidth}{6.5in}
+\setlength{\oddsidemargin}{1.0in}
+\setlength{\evensidemargin}{1.0in}
+\setlength{\textheight}{8.2in}
 \setlength{\headheight}{0ex}
 \setlength{\headsep}{36pt} % this is 2 lines in ``manuscript''
 \setlength{\footnotesep}{0in}
-\setlength{\topmargin}{-\headsep}
-\setlength{\oddsidemargin}{0.25in}
-\setlength{\evensidemargin}{0.25in}
+% LSST DESC Notes have a reasonable gap to the header image
+% \setlength{\topmargin}{-\headsep}
+\setlength{\topmargin}{1.0in}
 % LSST DESC Notes don't have indented paragraphs:
 % \setlength{\parindent}{0.54\baselineskip}
 \setlength{\parindent}{0in}
@@ -6383,7 +6404,7 @@ width 0pt\relax\fi}}}
 
 
 %% get rid of \jobname Notes being sent to .aux file:
-% Commented out to avoid .bib cache creation (we hope): 
+% Commented out to avoid .bib cache creation (we hope):
 % http://journals.aas.org/authors/aastex/linux.html
 % \let\bibdata@app\relax
 % \def\pre@bibdata{}
