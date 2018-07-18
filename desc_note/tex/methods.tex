@@ -47,7 +47,7 @@ For future challenges, a more balanced metric can be used to ensure correct clas
 \plasticc\ aims to identify classifiers that produce discrete posterior probability distributions $p(m \mid d)$ over $M$ classes $m$ given their photometric lightcurve data $d$.
 
 We consider two  metrics of classification probabilities, each of which is interpretable and avoids reducing probabilities to point estimates.
-\changes{Both our metrics make use of the indicator variable $\tau_{n, m}$ for each possibile class $m$ for the nth 
+Both our metrics make use of the indicator variable $\tau_{n, m}$ \changes{for each possibile class $m$ for the nth 
 event which in truth belongs to class $t_{n}$ defined as}
 \begin{eqnarray}
   \label{eq:indicator}
@@ -71,7 +71,7 @@ In that context, entropy
   \label{eq:entropy}
   H_{n} &=& -\sum_{m=1}^{M}p(m \mid d_{n})\ln[p(m \mid d_{n})]
 \end{eqnarray}
-\aim{{[Rahul: uncertainty of what? you could define it in terms of the number of states or number of messages like it is used in information theory]}
+\aim{[Rahul: uncertainty of what? you could define it in terms of the number of states or number of messages like it is used in information theory]}
 is a measure of uncertainty, independent of the true value of \changes{$t_{n}$}.
 Any deterministic classification, regardless of accuracy, minimizes the entropy, and the uncertain classifier of Section~\ref{sec:uncertaindata} provably maximizes the entropy (Murphy12).
 The cross-entropy
