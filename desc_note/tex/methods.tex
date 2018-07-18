@@ -47,7 +47,7 @@ For future challenges, a more balanced metric can be used to ensure correct clas
 \plasticc\ aims to identify classifiers that produce discrete posterior probability distributions $p(m \mid d)$ over $M$ classes $m$ given their photometric lightcurve data $d$.
 
 We consider two  metrics of classification probabilities, each of which is interpretable and avoids reducing probabilities to point estimates.
-\changes{Both our metrics make use of the indicator variable $\tau_{n, m}$ for each possibile class $m$ for the nth 
+Both our metrics make use of the indicator variable $\tau_{n, m}$ \changes{for each possibile class $m$ for the nth 
 event which in truth belongs to class $t_{n}$ defined as}
 \begin{eqnarray}
   \label{eq:indicator}
@@ -71,19 +71,24 @@ In that context, entropy
   \label{eq:entropy}
   H_{n} &=& -\sum_{m=1}^{M}p(m \mid d_{n})\ln[p(m \mid d_{n})]
 \end{eqnarray}
-is a measure of uncertainty, independent of the true value of $m_{n}$.
+\aim{[Rahul: uncertainty of what? you could define it in terms of the number of states or number of messages like it is used in information theory]}
+is a measure of uncertainty, independent of the true value of \changes{$t_{n}$}.
 Any deterministic classification, regardless of accuracy, minimizes the entropy, and the uncertain classifier of Section~\ref{sec:uncertaindata} provably maximizes the entropy (Murphy12).
 The cross-entropy
+\aim{[Rahul: Alex, I changed Eqn 6. please check. I think this follows from the cross entropy being the entropy + KL div, and also make sense in terms of limits, for eg. an ideal classifier still gets this to be 0.]}
+\changes{
 \begin{eqnarray}
   \label{eq:logloss}
-  L_{n} &=& -\sum_{m=1}^{M}(1-\tau_{n, m})\ln[p(m \mid d_{n})]
+  L_{n} &=& -\sum_{m=1}^{M}(\tau_{n, m})\ln[p(m \mid d_{n})]
 \end{eqnarray}
+}
 is the uncertainty of using $p(m \mid d_{n})$ in place of $\tau_{n, m}$.
+\aim{[Rahul: Would not the stuff in the parenthesis below be clearer than this]}
 (A difference between $L_{n}$ and $H_{n}$ evaluated at $\tau_{n}$ would be the information lost in using $p(m \mid d_{n})$ in place of $\tau_{n, m}$, also known as the Kullback-Leibler Divergence.
 See \cite{2018AJ....156...35M} for a comprehensive exploration of the KLD for a continuous 1-dimensional probability space.)
 
 The log-loss has only recently gained some presence in the astronomy literature \citep{hon_deep_2017, hon_deep_2018}. Its greatest strength is that it is straightforwardly interpretable, enabling the metric itself to directly contribute to uncertainty propagation in an inference problem using the probability densities provided by the classifier.
-
+\aim{[Rahul: Are you saying you could rewrite a BEAMs like model in terms of the logloss metric rather than the Probabilities P(m|d)? ]}
 \subsubsection{Brier score}
 \label{sec:brier}
 
