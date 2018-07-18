@@ -4,7 +4,7 @@ In order to understand how a given classifier with its specific properties (e.g.
 
 \subsection{Mock classifier systematics}
 \label{sec:mockresults}
-In Figure~\ref{fig:cruise}, we illustrate shows the effect of adding each of four forms of error to a classification scheme that performed perfectly at classifying objects of a given type (prior to the systematic being added). The four systematics include changing the classification from perfect to almost perfect as described in Section~\label{sec:accuratedata},  subsuming the classifications of class $m'$ for another class $\tilde{m}$ (labelled by `subsumed'), changing the classification from perfect to wholly uncertain, and making the classification more `noisy', which is by a reduction in the contribution of the classifier by a factor of $s=2,$ as described in Section \label{sec:accuratedata}.
+In Figure~\ref{fig:cruise}, we illustrate shows the effect of adding each of four forms of error to a classification scheme that performed perfectly at classifying objects of a given type (prior to the systematic being added). The four systematics include changing the classification from perfect to almost perfect as described in Section~\ref{sec:accuratedata},  subsuming the classifications of class $m'$ for another class $\tilde{m}$ (labelled by `subsumed'), changing the classification from perfect to wholly uncertain, and making the classification more `noisy', which is by a reduction in the contribution of the classifier by a factor of $s=2,$ as described in Section \ref{sec:accuratedata}.
 
 In each case, the metric weights are assumed to be flat.  The log-loss and Brier scores behave very consistently, with the log-loss more affected than the Brier score for systematics in which the class $m'$ is subsumed by a different class (top right panel), however the effect is reasonably small. This shows that for a given metric (log-loss/Brier) and classification scheme, the metrics are stable to the introduction of systematic changes in the classifications.
 Both metrics are appropriate for singling out a classifier that enables any class to subsume other classes, thereby confirming that the cruise control classifier will not in general outscore a classifier that avoids subsuming.
@@ -12,13 +12,23 @@ Both metrics are appropriate for singling out a classifier that enables any clas
 \begin{figure}
 	\begin{center}
 		\includegraphics[width=0.5\textwidth]{./fig/systematics_onlyperfect.png}
-		\caption{We confirm that the addition of systematics to the perfect classifier increases the metric values and that the increase is more or less proportional to our concerns about the systematic. \textbf{RH:green text is not visible.}
-		\label{fig:cruise}}
+		\caption{Systematic effects added to the perfect classifier. The left and right axes give the log-loss and Brier scores respectively, and for each panel we show how the performance of the classification scheme for each class (shown on $x$-axis changes upon introduction of a classification systematic. Both scores are reasonably insensitive to the systematics we simulate, with the biggest change occuring for the case where one class is subsumed by another (top right panel).\label{fig:cruise}}
 	\end{center}
 \end{figure}
 
-\aim{Preliminary results indicate weighting will be very important for preventing the tunnel vision classifier from winning.
-It may be necessary to a priori anticipate which classes will have to be most strongly protected from this systematic via upweighting them.}
+It is common for `tunnel classifiers' or those that follow a `winner takes all' approach to dominate classification schemes, and large, unbalanced data sets can be especially prone to this. As such, one approach is to require a threshold of classification of all classes in order to assign a winner in any classification challenge.
+This is highlighted in Figure~\ref{fig:popweight}, which shows the impact of weighting the metric by number of objects in the class. The points show different classification schemes, and all points are coloured by the change in the weighting, dependent on the size of the population class being classified. The tunner classifier has a consistently low Brier score and log-loss score (bottom left corner of the plot), only increasing its Brier score once the weighting is severe. Conversely, the cruise control classifier prefers to be heavily weighted by the number of objects in the class, but under-performs relative to the tunnel for all values of the weights.
+
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.5\textwidth]{./fig/all_effects_isolated.png}
+		\caption{Classification algorithm performance on the log-loss and Brier scores. We evaulate a few characteristic classification approaches (indicated by the symbols) in the log-loss-Brier metric space (where a low score indicates a more favourable classification). The points are coloured by weights which depend on the overall number of objects in the class \textbf{[are the weights getting more extreme, but we are keeping the N in each bin constant? Make this clearer.]}. In almost all cases, the tunnel classifier out performs the other classification schemes. When considering a method of converting from a Brier score to a finall `winner' of the classification challenge, care must be taken to ensure that all approaches do reasonably well at classifying more than one object. This thresholding procedure is discussed in the text.}
+		\label{fig:popweight}
+	\end{center}
+\end{figure}
+
+\textbf{Ashish to reaplce/add more here?}
+%\aim{Preliminary results indicate weighting will be very important for preventing the tunnel vision classifier from winning. It may be necessary to a priori anticipate which classes will have to be most strongly protected from this systematic via upweighting them.}
 
 %\begin{figure}
 %	\begin{center}
@@ -28,15 +38,7 @@ It may be necessary to a priori anticipate which classes will have to be most st
 %	\end{center}
 %\end{figure}
 
-\aim{For reference, Figure~\ref{fig:popweight} shows the effect of weighting by true class population.}
 
-\begin{figure}
-	\begin{center}
-		\includegraphics[width=0.5\textwidth]{./fig/all_effects_isolated.png}
-		\caption{\aim{The tunnel vision classifier is hard to beat!}}
-		\label{fig:popweight}
-	\end{center}
-\end{figure}
 
 
 
