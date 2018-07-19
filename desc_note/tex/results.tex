@@ -21,8 +21,8 @@ Flat weights are used for each of these tests.
 	\begin{center}
 		\label{fig:cruise}
 		\includegraphics[width=0.5\textwidth]{./fig/systematics_onlyperfect.png}
-		\caption{Systematic effects added to the perfect classifier.
-		The log-loss and Brier scores (left and right $y$ axes, respectively) are shown for classifiers that are ``perfect'' aside from the indicated systematic (panels) as a function how many classes are affected by the systematic (on the $x$-axis), beginning with the lowest population classes.
+		\caption{The behavior of the metrics when systematic effects added to the perfect classifier.
+		The log-loss (blue, left $y$ axis) and Brier score (green, right $y$ axis) are shown for classifiers that are ``perfect'' aside from the indicated systematic (panels) as a function how many classes are affected by the systematic (on the $x$-axis), beginning with the lowest population classes.
 		The two metrics behave very similarly to one another and have high sensitivity to a subsuming classifier.}
 	\end{center}
 \end{figure}
@@ -55,7 +55,7 @@ Conversely, the cruise control classifier and, to a lesser degree the noisy clas
 		\label{fig:popweight}
 		\includegraphics[width=0.5\textwidth]{./fig/all_effects_isolated.png}
 		\caption{Population-weighted log-loss and Brier scores for classifiers with one class affected by a systematic, as a function of the population of the affected class.
-		Each point corresponds to an almost perfect classifier that with one class instead affected by a systematic (shape).
+		Each point corresponds to an almost perfect classifier that with one class instead affected by a systematic (shape), with log-loss on the $y$ axis and Brier score on the $x$ axis.
 		The metrics are calculated with a weighting (color and size) proportional to the log of its weight in a weighted average following Equation~\ref{eq:weightavg}.
 		}
 	\end{center}
@@ -81,25 +81,24 @@ This finding suggests that weighting alone may not be sufficient to counter the 
 \subsection{Representative classifications}
 \label{sec:realresults}
 
+We also present the values of our metrics and the \snphotcc\ metric for classification probabilities derived from running the algorithms of \cite{lochner_photometric_2016} on the \snphotcc\ data presented in Section~\ref{sec:realdata}.
+
 \begin{figure*}
 	\begin{center}
-		\includegraphics[width=0.85\textwidth]{./fig/SNPhotCC_res.png}\\
-		 \includegraphics[width=0.8\textwidth]{./fig/fom_vs_brier.png}
-		\caption{The algorithms presented in \cite{lochner_photometric_2016} based on a representative subset of the SNPhotCC data.
-		The top panel shows the performace of the various classification schemes described in \ref{sec:realdata} as a function of both the Brier and log-loss scores.
-		The bottom panel shows the performance of the same classification schemes, this time evaluated on the SNPhotCC Figure of Merit (explicitly defined in Section~\ref{sec:past}) which is based on a combination of pseudopurity and classification efficiency.
-		The Figure of Merit closely tracks the Brier score for the same entries, suggesting its applicability to the problem of photometric transient classification.
+		\includegraphics[width=0.5\textwidth]{./fig/SNPhotCC_res.png}
+	  \includegraphics[width=0.5\textwidth]{./fig/fom_vs_brier.png}
+		\caption{The metric values for the representative classifications.
+		Left: the Brier score (green squares, left $y$ axis) and log-loss (blue circles, right $y$ axis) for each classifier.
+		Right: the Brier score (green triangles) and \snphotcc\ FOM (blue circles) for each classifier.
+		\aim{Note: These figures will be consolidated and made consistent with one another.}
 		\label{fig:real_metric_compare}}
 	\end{center}
 \end{figure*}
+
+The FOM of Equation~\ref{eq:snphotcc} closely tracks the Brier score for the same entries, suggesting its applicability to the problem of photometric transient classification.
+\aim{[Needs work]}
 
 %\textbf{Current plan is that we compute the SNPhotCC metric for Michelle's contributions and also turn the binary classifications into probabilities - Renee will flesh this out}
 %\aim{We are still iterating on the most informative tests to conduct on the \snphotcc\ data.
 %I would like to have the confusion matrices from a real classification challenge (\snphotcc\ or Ashish Mahabal's) and test different weightings of our metrics on mock classification probabilities derived from those confusion matrices to check whether we choose the same ``winner,'' but the arrangements have not yet been finalized.
 %The ``pipeline,'' however, is complete and ready to run as soon as the test conditions are agreed upon.}
-
-
-% \subsection{Weighting systematics}
-% \label{sec:weight_res}
-%
-% \aim{We have not yet reached consensus on what tests are reasonable in the absence of physical motivations, as the test cases here are independent of such context.}
