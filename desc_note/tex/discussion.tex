@@ -1,7 +1,10 @@
 \section{Discussion}
 \label{sec:discussion}
-The metrics investigated here are specific to the first version of \plasticc, in which participants compete to classify complete lightcurves similar to light curves in LSST data releases.
-A slightly different and interesting problem which might be part of later versions of \plasticc is the early classification of events, which is discussed in the subsection \ref{sec:early}, and the investigation of metrics for that problem will be addressed in a separate work.
+
+The metrics investigated here are specific to \plasticc, in which participants compete to classify complete lightcurves similar to light curves in LSST data releases without regard for the impacts of misclassification on science results.
+At the conclusion of \plasticc, the identities of the classes will become public, and we will consider science-motivated metrics on a per-class basis to identify ``best in class'' classifiers in addition to Kaggle's required ``best in show'' metric.
+
+A number of slightly different and interesting problems which might be part of later versions of \plasticc\ are discussed below, and the investigation of metrics for those problems will be addressed in a separate work.
 Additionally, there are other perspectives on what constitutes a good classifier, and those perspectives must be boiled down to a metric in order to identify a classifier that is best for the task.
 For this reason, there will likely be future versions of \plasticc, each requiring a metric appropriate to its goals.
 We proceed to discuss approaches to identifying optimal metrics for these variations.

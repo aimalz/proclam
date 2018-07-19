@@ -30,24 +30,27 @@ The ``tunnel vision'' classifier is really the ``perfect'' classifier when it is
 The approximately linear relationship between metric value and fractional weight for ``tunnel vision'' classifier for each of the ``uncertain,'' ``almost perfect,'' and ``noisy'' baselines is to be expected, because the only weighting scheme we considered is linear.
 However the slopes differ for each systematic.
 
-Consider a weighting of $\sim0.2$ for a class affected by tunnel vision, leaving $\sim0.8$ to be shared among all other classes uniformly affected by the other systematics.
+Consider a weighting of $\sim0.8$ for a class affected by tunnel vision, leaving $\sim0.2$ to be shared evenly among all other classes uniformly affected by the other systematics.
+Qualitatively, we would say that a classifier that is almost perfect for other classes is superior to one that is noisy, and a classifier that is noisy for other classes is still superior to one that is uniform; furthermore, the subsuming classifier is even more harshly penalized in this situation than the uncertain classifier, meaning both metrics are  consistent with our basic tests of intuition in this case.
+However, this observation is also evidence indicating that the tunnel vision systematic is difficult to penalize, and that if the affected class is given a large weight, it can easily dominate the metric.
+If all classes are of scientific importance, heavily unequal weighting can incentivize tunnel vision classification.
 
-When the weight is highest, the classifier has optimal performance by both metrics, but the domination of the perfect classifier can be modulated by downweighting it appropriately.
-
-We introduced weighting of per-class metrics to discourage `tunnel vision' and `cruise control' classifiers that can ignore classes other than the most common and nonetheless perform well by a metric.
-Figure~\ref{fig:popweight}, shows the impact of weighting the metric by number of objects in the class.
+% We introduced weighting of per-class metrics to discourage `tunnel vision' and `cruise control' classifiers that can ignore classes other than the most common and nonetheless perform well by a metric.
+Figure~\ref{fig:popweight}, shows the impact of weighting the per-class metrics by the number of objects in the class as each is affected by one of the systematics and the rest are held at ``almost perfect'' performance.
 The points show different classification schemes, and all points are coloured by the change in the weighting, dependent on the size of the population class being classified.
 The tunner classifier has a consistently low Brier score and log-loss score (bottom left corner of the plot), only increasing its Brier score once the weighting is severe.
 Conversely, the cruise control classifier prefers to be heavily weighted by the number of objects in the class, but under-performs relative to the tunnel for all values of the weights.
 
 \begin{figure}
 	\begin{center}
+		\label{fig:popweight}
 		\includegraphics[width=0.5\textwidth]{./fig/all_effects_isolated.png}
-		\caption{Classification algorithm performance on the log-loss and Brier scores. We evaulate a few characteristic classification approaches (indicated by the symbols) in the log-loss-Brier metric space (where a low score indicates a more favourable classification).
-		The points are coloured by weights which depend on the overall number of objects in the class \textbf{[are the weights getting more extreme, but we are keeping the N in each bin constant? Make this clearer.]}.
+		\caption{Classification algorithm performance on the log-loss and Brier scores.
+		We evaulate our mock moclassifiers (symbols) in the log-loss-Brier metric space (where a low score indicates a more favourable classification).
+		The points are coloured by the by weights which depend on the overall number of objects in the class \textbf{[are the weights getting more extreme, but we are keeping the N in each bin constant? Make this clearer.]}.
 		In almost all cases, the tunnel classifier out performs the other classification schemes.
 		When considering a method of converting from a Brier score to a finall `winner' of the classification challenge, care must be taken to ensure that all approaches do reasonably well at classifying more than one object.
-		This thresholding procedure is discussed in the text \label{fig:popweight}}
+		This thresholding procedure is discussed in the text }
 	\end{center}
 \end{figure}
 
