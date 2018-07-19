@@ -129,11 +129,13 @@ Under a ``winner takes all'' challenge and with equal weight per lightcurve, \pl
 One option is to require a threshold of classification of all classes in order to assign an overall winner, though it would require reducing the classification probabilities to point estimates of class.
 Another alternative is to use a ``flat'' average of per-class metrics
 \begin{eqnarray}
+  \label{eq:perclassavg}
 Q_{m} &=& \frac{1}{N_{M}}\sum_{n}Q_{n}
 \end{eqnarray}
 resulting from first averaging the metric values $Q_{n}$ for each member $n$ of the class $m$.
 For this study, we consider a general weighted average
 \begin{eqnarray}
+  \label{eq:weightavg}
 Q_{tot} &=& \frac{1}{M}\sum_{m=1}^{M}w_{m}Q_{m}
 \end{eqnarray}
 of the per-class metrics.
