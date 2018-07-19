@@ -119,6 +119,7 @@ We leave to fuiture work the thorough investigation of a nontrivial weighting sc
 \label{sec:weights}
 
 % TODO: motivate weights as opposed to flat
+% TODO: rename section
 
 The underlying causes of the most troubling of the systematics of Section~\ref{sec:mockdata}, tunnel vision and cruise control, are the a nonrepresentative training set and an extreme imbalance of class membership rates.
 Both of these problems are anticipated for \lsst\ and thus featured in \plasticc; class prevalence will differ by orders of magnitude, and there will be classes that are not present in the training set at all.
@@ -126,8 +127,17 @@ Both of these problems are anticipated for \lsst\ and thus featured in \plasticc
 Because tunnel vision is actually strong performance, it is common for tunnel classifiers to dominate challenges.
 Under a ``winner takes all'' challenge and with equal weight per lightcurve, \plasticc\ would be particularly vulnerable to a tunnel vision classifier winning despite not meeting the needs of those studying less common classes.
 
-One option is to require a threshold of classification of all classes in order to assign an overall winner, though it would require reducing the classification probabilities to point estimates of class.
-Another alternative is to use a ``flat'' average of per-class metrics
+One option is to apply a threshold of classification of all classes in order to assign an overall winner, though it would require reducing the classification probabilities to point estimates of class.
+When doing binary classification with a method that reduces probabilities to point estimates of class, each object is assigned the class of higher probability, even if the two probabilities are quite similar.
+This situation is particularly likely if the object, in fact, belongs to a third class or if the two classes are subclasses of a single physical phenomenon.
+We thus anticipate it to be a more severe issue for \plasticc\ and other realistic multi-class challenges as well as any challenges with multiple subclasses.
+% RRc/RRd?
+
+A simple reduction to a point estimate would in general be inappropriate but possibly salvageable with a threshold mechanism.
+For example, requiring a minimum difference in probability density between the maximum probability class and the next highest probability class would help avert this degeneracy.
+% (e.g. a newly discovered supernova with a very small number of points may be indistinguishable from a Cataclysmic variable going through a brightening).
+
+The alternative we systematically investigate in this paper is to use a ``flat'' average of per-class metrics
 \begin{eqnarray}
   \label{eq:perclassavg}
 Q_{m} &=& \frac{1}{N_{M}}\sum_{n}Q_{n}
