@@ -7,14 +7,14 @@ The Large Synoptic Survey Telescope (\lsst) has the potential to advance time-do
 % Bright astrophysical transients like RR Lyrae give insight into the structure and evolution of stars.
 % Active galactic nuclei probe the evolution of large massive galaxies.
 % These are but some of the physical principles that are testable with the many different kinds of transients that will be delivered with the Large Synoptic Survey Telescope (LSST).
-With its rapid scan strategy, exquisite depth, and many photometric filters, \lsst\ will deliver millions of transient detections, enabling unprecedented population-level studies of astronomically varying sources in some cases across cosmic time.
+With its rapid scan strategy, exquisite depth, and many photometric filters, \lsst\ will deliver millions of transient detections, enabling unprecedented population-level studies of time-varying astrophysical sources.
+% , in some cases across cosmic time.
 
-Science from the \lsst\ dataset, however, is contingent on distinguishing classes of astrophysical sources from one another.
+Science output from the \lsst\ dataset is contingent on distinguishing classes of astrophysical sources from one another.
 The gold standard for such identification in astronomy has traditionally been based on the spectrum of the source.
-However, the volume of discovered objects in the LSST, as well as their potentially high redshifts implies that the prospect of spectroscopic follow-up of a large fraction of them is difficult with expected spectroscopic resources.
-Thus several science cases (such as SN cosmology) will actively depend om classification of astrophysical sources based on the photometric light curve, and possibly a much smaller training sample/model based on a spectroscopic sub-sample.
-% Using the wealth of data (for any of a multitude of science cases) requires distinguishing different classes of sources, according to the available data.
-As such, there is an acute need for photometric lightcurve classifiers that can perform well on datasets data include a wide variety of sources, and where classification over the range of objects is desired, rather than challenges that focus on only one class.
+However, the volume of discovered objects in the \lsst, as well as their potentially challenging noise properties, likely exceeds the availability of spectroscopic follow-up resources; the great majority of \lsst's time-varying discoveries will never be spectroscopically confirmed.
+% Thus several science cases (such as SN cosmology) will actively depend om classification of astrophysical sources based on the photometric light curve, and possibly a much smaller training sample/model based on a spectroscopic sub-sample.
+As such, there is an acute need for photometric lightcurve classifiers that can perform well on datasets that include a wide variety of sources, and where classification over the range of objects is desired, rather than challenges that focus on only one class.
 
 Classifaction of noisy light curves is intrinsically probabilistic.
 Sometimes, classification can lead to identification of a category wth very high probabilities, while at other times several categories might seem approximately less likely. The latter is clearly the likely scenario for light curves dominated by noise.
