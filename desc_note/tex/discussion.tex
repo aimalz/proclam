@@ -2,7 +2,7 @@
 \label{sec:discussion}
 
 The metrics investigated here are specific to \plasticc, in which participants compete to classify complete lightcurves similar to light curves in LSST data releases without regard for the impacts of misclassification on science results.
-At the conclusion of \plasticc, the identities of the classes will become public, and we will consider science-motivated metrics on a per-class basis to identify ``best in class'' classifiers in addition to Kaggle's required ``best in show'' metric.
+At the conclusion of \plasticc, the identities of the classes will become public, and we will consider science-motivated metrics on a per-class basis to identify ``best in class'' classifiers in addition to Kaggle's required ``best in show'' metric upon which we focus here.
 
 A number of slightly different and interesting problems which might be part of later versions of \plasticc\ are discussed below, and the investigation of metrics for those problems will be addressed in a separate work.
 Additionally, there are other perspectives on what constitutes a good classifier, and those perspectives must be boiled down to a metric in order to identify a classifier that is best for the task.
@@ -42,6 +42,7 @@ Thus, a metric tuned to anomaly detection would aim to minimize the false positi
 In any astronomical survey, most of the detected objects in a particular class will be distant and therefore dim leading to poor signal to noise and data quality.
 While the use of such an object for a scientific purpose (eg. for SN cosmology, a very low SNR light curve would produce a low quality distance measurement), this could possibly be overcome by the sheer number of such low SNR light curves.
 Thus, classification methods which
-work well on low quality light curves are specially important for opening up the possibilities of using such objects in science. While the groundwork for producing a metric has been laid by \cite{wu_radio_2018}).
-In this work, we will not discuss metrics that take quality into account, but assume (and we know, this is true for \plasticc) selection cuts to have cut out the largest  sample of poor light curves.
+work well on low quality light curves are specially important for opening up the possibilities of using such objects in science.
+While the groundwork for producing a metric has been laid by \cite{wu_radio_2018}).
+In this work, we do not discuss metrics that take quality into account, but assume (and we know, this is true for \plasticc) selection cuts to have cut out the largest sample of poor light curves.
 In a later work, we hope to return to the possibility of including this in the metric itself, so that such selection cuts are unnecessary.
