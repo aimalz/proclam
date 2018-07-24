@@ -1,0 +1,80 @@
+\section{Introduction}
+\label{sec:intro}
+
+The Large Synoptic Survey Telescope (\lsst) has the potential to advance time-domain astronomy, with anticipated impacts on the study of transient and variable objects (TVs) within and beyond the Galaxy.
+% Bright cosmological objects like Type Ia supernova are probes of cosmological distance (and thus the expansion of the universe).
+% Core-collapse supernovae encode within their stunning demise the evolution properties of massive stars.
+% Bright astrophysical transients like RR Lyrae give insight into the structure and evolution of stars.
+% Active galactic nuclei probe the evolution of large massive galaxies.
+% These are but some of the physical principles that are testable with the many different kinds of transients that will be delivered with the Large Synoptic Survey Telescope (LSST).
+With its rapid scan strategy, exquisite depth, and many photometric filters, \lsst\ will deliver millions of transient detections, enabling unprecedented population-level studies of time-varying astrophysical sources.
+% , in some cases across cosmic time.
+
+Science output from the \lsst\ dataset is contingent on distinguishing classes of astrophysical sources from one another.
+The gold standard for such identification in astronomy has traditionally been based on the spectrum of the source.
+However, the volume of discovered objects in the \lsst, as well as their potentially challenging noise properties, likely exceeds the availability of spectroscopic follow-up resources; the great majority of \lsst's time-varying discoveries will never be spectroscopically confirmed.
+% Thus several science cases (such as SN cosmology) will actively depend om classification of astrophysical sources based on the photometric light curve, and possibly a much smaller training sample/model based on a spectroscopic sub-sample.
+As such, there is an acute need for photometric lightcurve classifiers that can perform well on datasets that include a wide variety of sources, and where classification over the range of objects is desired, rather than challenges that focus on only one class.
+
+Classifaction of noisy light curves is intrinsically probabilistic.
+Sometimes, classification can lead to identification of a category wth very high probabilities, while at other times several categories might seem approximately less likely. The latter is clearly the likely scenario for light curves dominated by noise.
+Here, we will refer to classification schemes which preserve these probabilities as `probabilistic classification`.
+However, often one compresses this to a `deterministic classification` which is equivalent to choosing a single category with probability 1.0 through some rules, obviously leading to a loss of information.
+The value of this loss depends on how the classification results are subsequently used.
+For example, when using classification of astrophysical sources to determine the use of follow-up resources, one ultimately takes a binary decision on whether to follow-up a particular source or not.
+While the knowlege that an object has been identified to be a particular type with an overwhelming probability (eg 0.99) is likely different to a situation where an object is simply slightly more likely to be a particular class than the remaining classes of objects is important but could be appropriately reflected in a deterministic classifier.
+If the follow-up resources were abundant enough to warrant the optimization of follow-up of less well classified objects, the information in the probabilities could be useful in resource allocation.
+Considering the different case of supernova cosmology from a photometric classified sample of SNe, such probabilistic classifications can be propagated to subsequent analyses of cosmological parameters allowing one to extract information from the (large) part of the sample where photometric classification failed to identify a particular type with overwhelming probability \cite{roberts_zbeams:_2017}.
+This implies that one should plan and investigate probabilistic classification for future surveys like LSST.
+%Because of the low-signal-to-noise expected of \lsst, probabilistic classifications are more appropriate (Roberts+17) than the point estimates of previous challenges.
+%Such posteriors are more valuable than point estimates, which we call deterministic classifications in this work, because of their versatility in application and encapsulation of observational and systematic error that may propagate through inference.
+
+Classification in astronomy is often done based on images e.g. galaxy classification \cite{2016A&C....16...34H}, supernova classification \cite{2017ApJ...836...97C}, identifying bars in galaxies \cite{2018MNRAS.477..894A}, separating Near Earth Asteroids from artifacts in images \cite{2016PASJ...68..104M}, as well as light curves e.g. \cite{2016PASJ...68..104M,2017arXiv170906257M,2017CQGra..34f4003Z}, and even noise classification e.g. Abbot et al, \cite{2017CQGra..34f4003Z}, \cite{2018PhRvD..97j1501G}.
+The most well-studied classification problems are often binary, with only two classes.
+The last such challenge viz. SNPhotCC was also restricted to a subset of classes (specifically, extragalactic explosive events).
+
+The Photometric \lsst\ Astronomical Time-series Classification Challenge (\plasticc) aims to identify classification techniques that serve the broader astronomical community by engaging the broader community outside astronomy.
+Unlike previous challenges, \plasticc\ differs in that the more comprehensive dataset includes models for well-understood classes, newly observed classes, and classes that have only been proposed to exist, to simulate serendipitous discovery anticipated of \lsst.
+Additionally, \plasticc\ will join the ranks of a handful of past astronomy classification challenges hosted on \href{https://www.kaggle.com/competitions}{Kaggle}, a platform for predictive modelling, that hosts data analytics competitions where seasoned professionals and amateurs can compete to classify, model and predict large data sets uploaded by companies or scientific collaborations. It attracts a broad user base, and those without domain knowledge of astronomy may provide novel approaches to the problem of photometric classification.
+
+A classification posterior can be propagated through population-level inference without a separate error propagation pipeline, and for the purposes of allocation of follow-up resources, a probability can always be reduced to a point estimate for the purposes of deterministic decisionmaking (such as for allocation of follow-up resources), but a deterministic classification cannot in general be used to reconstruct a probability density for an individual object.
+\plasticc\ will thus accept classifiers producing classification posteriors.
+
+However, probabilistic classifications are incompatible with the metrics of deterministic class assignments used in previous classification challenges \cite{kessler_supernova_2010, kessler_results_2010} and efforts to develop supernova classifiers \cite{2018ApJS..236....9N}.
+In this context, a metric is simply a quantification of the performance of a classifier.
+Notions of accuracy, purity, completeness, and other terms endemic in science are examples of traditional metrics appropriate to classification point estimates.
+Many traditional classification metrics may be modified for evaluation on probabilistic classifications \cite{lochner_photometric_2016, moller_photometric_2016, hon_deep_2017, hon_detecting_2018, 2011arXiv1108.4696G} but only by reducing class probabilities to point estimates of class and evaluating those at discrete cutoffs that can affect the conclusions of the study.
+
+If the data are simulated using a fully self-consistent forward model, a metric of the accuracy of classification probabilities relative to the true, underlying probabilities would be straightforward.
+However, such a simulation procedure would require beginning with a fully populated probability space over all classes and all possible lightcurves, which is an insurmountable challenge.
+Therefore, attention must be directed toward the no longer straightforward matter of defining the criterion for a winning classifier.
+In the context of astronomy, concerns about the choice of metric for probabilistic classifications have been investigated only to a limited degree thus far \cite{2018SoPh..293...28F, 2017MNRAS.464.4463K}, with most approaches concentrating on the `standard' metrics of purity and completeness, however metric consistency over a range of classifiers and between different analyses is not always ensured \cite{2018A&C....23...15B}.
+
+This work explores the two-fold problem of how to select a metric of a probabilistic data product that will be used in many science applications and thus lacks a single obvious figure of merit.
+
+%\aim{I actually preferred the following as a list, although I agree that it could use some pruning.}
+%\begin{itemize}
+%\item    The metric must return a single scalar value.
+%\item    The metric must be well-defined for non-binary classes.
+%\item    The metric must balance diverse science use cases in the presence of heavily nonuniform class prevalence.
+%\item    The metric must respect the information content of probabilistic classifications.
+%\item    The metric must be able to evaluate deterministic classifications.
+%\item    The metric must be interpretable, meaning it gives a more optimal value for "good" mock classifiers and a less optimal value for mock classifiers plagued by anticipated systematic errors; in other words, it must pass basic tests of intuition.
+%\item    The metric must be reliable, giving consistent results for different instantiations of the same test case.
+%\end{itemize}
+
+In order for the metric to be useful in such a heterogenous challenge, we require that the metric must return a single, scalar value, while being well-defined for non-binary classes.
+
+In addition, the metric should balance diverse science use cases in the presence of heavily non-uniform classes.
+This is key given that the rates of astornomical transients of different types varies greatly: any classifier that requires a balance of types will under perform in the \plasticc\ (and other) competitions.
+
+We impose the restriction that the metric must respenct the information content of the probabilistic classifiers.
+Should a determininstic classifier (i.e. returning a ``1'' or a ``0''), that deterministic metric must be readily convertible into a probabilistic classification - and should preserve the relationships between classes accordingly.
+Similarly, any probabilistic metric much be easily transferred to a deterministic one (given, e.g. given a threshold on the most likely classficiation choice).
+
+The metric must pass basic tests of intuition,rewarding classifiers that serve our needs and penalizing those plagued by anticipated systematic errors.
+
+And finally, the metric must be reliable, giving consistent results for different instantiations of the same test case.
+While it is clear that different procedures will happen simultansously, the metric should be stable to these changes, and be able to rank different scenarious given any particular set of rules imposed upon the metric.
+
+The Probabilistic Classification Metric (ProClaM) code used in this exploration of performance metrics is publicly available on GitHub.\footnote{\url{https://github.com/aimalz/proclam}}

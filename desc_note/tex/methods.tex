@@ -1,0 +1,155 @@
+\section{Methods}
+\label{sec:methods}
+
+%\begin{itemize}
+%\item    The metric must return a single scalar value.
+%\item    The metric must be well-defined for non-binary classes.
+%\item    The metric must balance diverse science use cases in the presence of heavily nonuniform class prevalence.
+%\item    The metric must respect the information content of probabilistic classifications.
+%\item    The metric must be able to evaluate deterministic classifications.
+%\item    The metric must be interpretable, meaning it gives a more optimal value for "good" mock classifiers and a less optimal value for mock classifiers plagued by anticipated systematic errors; in other words, it must pass basic tests of intuition.
+%\item    The metric must be reliable, giving consistent results for different instantiations of the same test case.
+%\end{itemize}
+
+\plasticc\ aims to identify the most promising classification techniques, meaning there must be a performance metric, a single scalar value quantifying how appropriate a classifier is for the task at hand.
+Choosing a metric therefore is logically entwined with the question the challenge aims to answer.
+\snphotcc, for example, sought the best classifier of SN Ia, for the purpose of devoting precious follow-up resources to spectroscopically confirm likely candidates and use the spectroscopic data for cosmology investigations, specific goal from which a well-defined metric easily followed.
+The choice of a metric is not so simple for \plasticc, which has many science goals with few arguments strong enough for meaningful fractions of spectroscopic follow-up.
+The posterior probabilities classifiers produce must be accurate for use in inference as well as for the allocation of follow-up resources, and they must be evaluated in a way that does not excessively favor any one science application.
+
+In Section~\ref{sec:past}, we review the metrics that have been used in \snphotcc\ as the most similar previous challenge.
+In Section~\ref{sec:metrics}, we introduce metrics appropriate for probabilistic classifications as opposed to deterministic classifications required of \snphotcc.
+We take weighted averages of the per-object metrics with per-class weights described in Section~\ref{sec:weights}.
+
+\subsection{Traditional metrics}
+\label{sec:past}
+
+% TODO: Needs work to make consistent with rest of paper!
+%\aim{Needs work to make consistent with rest of paper!}
+
+\snphotcc\ aimed to identify deterministic classifiers of SN Ia using a metric of the ratio of the \textit{efficiency} of SN Ia classification and a ``pseudo purity'' factor with an additive penalty term for false positives, motivated by the expense of squandering SN Ia follow-up resources on an object of a different class.
+The figure of metric was given by
+\begin{eqnarray}
+  \label{eq:snphotcc}
+  \mathcal{C}_{FOM-Ia} &\equiv& \frac{1}{\mathcal{N}_{Ia}^{TOT}}\times \frac{(N_{Ia}^{\mathrm{true}})^2}{N_{Ia}^\mathrm{true}+W_{Ia}^\mathrm{false}N_{Ia}^\mathrm{false}}.
+\end{eqnarray}
+%\aim{Renee, what is this in terms of the notation of the rest of the paper, or, at minimum, in terms of true/false positive/negative?}
+
+The above reduces to $\mathcal{C}_{FOM-Ia}  = \epsilon_{Ia} + PP_{Ia},$ the efficiency and pseudopurity, which can be interpreted as the traditional purity factor in the limit that the weight $W_{Ia}^\mathrm{false} = 1$.
+The efficiency is the ratio of the number of true postives successfully recovered as the fraction of the true classifications or TP/TP+FN, while the purity can itself be related tothe ratio of TP/TP+FP, or the positive predictive valuev.
+
+For the SNPhotCC the false penalty was related to the size of the spectroscopic subsample as roughly $W_{Ia}^\mathrm{false} = 1 + \epsilon_{spec}^{-1} \gg 1$ but the conservative limit of $W_{Ia}^\mathrm{false} = 3$ was chosen to penalize wasted spectroscopic time over rejected SNe.
+For future challenges, a more balanced metric can be used to ensure correct classifications across the range of classes, without focusing or highlighting a specific class as above.
+
+% TODO: discuss ROC/AUC, etc. here as well
+
+\subsection{Probabilistic metrics}
+\label{sec:metrics}
+
+\plasticc\ differs from \snphotcc\ in two major ways.
+First, we do not have a unifying science goal, such as SN cosmology, to provide direction as to a metric motivated directly by physics.
+Second, we aim to identify classifiers that produce discrete posterior probability distributions $p(m \mid d)$ over $M$ classes $m$ given their photometric lightcurves $d$, not deterministic classifications.
+The metric for \plasticc, however, must also be compatible with deterministic class assignments, as many classifiers, including some of the most prevalent classifiers in the time-domain astronomy field, can only provide deterministic classifications (probabilities of 0 or 1) and/or binary classifications (``yes'' vs. ``no'' for a particular class without addressing others).
+
+The first difference will be discussed in Section~\ref{sec:weights}.
+To address the second difference, we consider two metrics of classification probabilities that avoid reducing probabilities to point estimates.
+Both our metrics make use of the indicator variable
+\begin{eqnarray}
+  \label{eq:indicator}
+  \tau_{n, m} &\equiv& \begin{cases}
+  0 & m' \neq m\\
+  1 & m' = m
+  \end{cases}
+\end{eqnarray}
+for each possibile class $m$ for the $n^{\mathrm{th}}$ lightcurve which in truth belongs to class $m'$.
+
+\subsubsection{Log-loss}
+\label{sec:logloss}
+
+The log-loss, also known as the cross-entropy, originates in the field of information theory.
+In that context, entropy
+\begin{eqnarray}
+  \label{eq:entropy}
+  H_{n} &=& -\sum_{m=1}^{M}p(m \mid d_{n})\ln[p(m \mid d_{n})]
+\end{eqnarray}
+is a measure of the entropy of the state space of classes based on the lightcurve data, independent of knowledge of the true class.
+Any deterministic classification, regardless of accuracy, minimizes the entropy, and the uncertain classifier of Section~\ref{sec:uncertaindata} provably maximizes the entropy (Murphy12).
+% TODO: fix this citation!
+The cross-entropy
+\begin{eqnarray}
+  \label{eq:logloss}
+  L_{n} &=& -\sum_{m=1}^{M}\tau_{n, m}\ln[p(m \mid d_{n})]
+\end{eqnarray}
+is the disorder of using $p(m \mid d_{n})$ in place of $\tau_{n, m}$.
+A difference between $L_{n}$ and $H_{n}$ evaluated at $\tau_{n}$ would be the information \textit{lost} to disorder in using $p(m \mid d_{n})$ in place of $\tau_{n, m}$, also known as the Kullback-Leibler Divergence.
+See \cite{2018AJ....156...35M} for a comprehensive exploration of the KLD for a continuous 1-dimensional probability space.
+
+The log-loss has only recently established a presence in the astronomy literature \citep{hon_deep_2017, hon_deep_2018}.
+Its greatest strength is that it is straightforwardly interpretable, enabling the metric itself to directly contribute to uncertainty propagation in an inference problem using the probability densities provided by the classifier.
+% \aim{[Rahul: Are you saying you could rewrite a BEAMs like model in terms of the logloss metric rather than the Probabilities P(m|d)?]}
+% \aim{[Alex: Not rather than, but as the performance metric of how it's doing.  When propagated through a cosmology calculation, we'd be able to say that BEAMS improves the cosmological parameters by preserving X more information than the alternative.]}
+
+\subsubsection{Brier score}
+\label{sec:brier}
+
+The Brier score \cite{brier_verification_1950}, given as
+\begin{eqnarray}
+  \label{eq:brier}
+B_{n} &=& \sum_{m=1}^{M}(\tau_{n, m}-p(m \mid d_{n}))^{2}.
+\end{eqnarray}
+is a mean square error calculated between the true class indicator vector and the estimated probability vector.
+It has been used extensively in solar flare forecasting \cite{crown_validation, mays_ensemble_2015, florios_forecasting_2018}, stellar variability identification \citep{richards_construction_2012, armstrong_k2_2016}, and star-galaxy separation \citep{kim_hybrid_2015}.
+
+The Brier score is an attractive option because it both rewards classifiers assigning high probability to the true class and penalizes classifiers for assigning high probability to classes other than the true class.
+We expect this difference to significantly distinguish the Brier score from the log-loss.
+
+However, its interpretation is less obvious, as its dimensions depend on those of the probability space upon which the posterior estimates are defined (classes, in the case of \plasticc).
+Furthermore, modifying it with weights requires choosing whether to weight only \textit{per-object} values $B_{n}$ or also the individual terms in the metric above.
+We leave to fuiture work the thorough investigation of a nontrivial weighting scheme on the Brier metric.
+
+%\textbf{RH: this isnt super clear, we should discuss}
+%\aim{I'm not sure if there's time to actually investigate the latter, nor how forthcoming to be about that being a nontrivial concern that drove the final decision about a metric for Kaggle.}
+
+% \subsubsection{Conditional density estimation loss}
+% \label{sec:cdeloss}
+%
+% \aim{The CDE Loss should also be included in the paper (and sent to Kaggle, if there's still time) if I can figure out how to make it work for non-ordered domains, i.e. classes.}
+
+\subsection{Weights}
+\label{sec:weights}
+
+% TODO: motivate weights as opposed to flat
+% TODO: rename section
+
+The underlying causes of the most troubling of the systematics of Section~\ref{sec:mockdata}, tunnel vision and cruise control, are the a nonrepresentative training set and an extreme imbalance of class membership rates.
+Both of these problems are anticipated for \lsst\ and thus featured in \plasticc; class prevalence will differ by orders of magnitude, and there will be classes that are not present in the training set at all.
+% This can be problematic because our science needs might require accurate classifications of uncommon classes as well.
+Because tunnel vision is actually strong performance, it is common for tunnel classifiers to dominate challenges.
+Under a ``winner takes all'' challenge and with equal weight per lightcurve, \plasticc\ would be particularly vulnerable to a tunnel vision classifier winning despite not meeting the needs of those studying less common classes.
+
+One option is to apply a threshold of classification of all classes in order to assign an overall winner, though it would require reducing the classification probabilities to point estimates of class.
+When doing binary classification with a method that reduces probabilities to point estimates of class, each object is assigned the class of higher probability, even if the two probabilities are quite similar.
+This situation is particularly likely if the object, in fact, belongs to a third class or if the two classes are subclasses of a single physical phenomenon.
+We thus anticipate it to be a more severe issue for \plasticc\ and other realistic multi-class challenges as well as any challenges with multiple subclasses.
+% RRc/RRd?
+
+A simple reduction to a point estimate would in general be inappropriate but possibly salvageable with a threshold mechanism.
+For example, requiring a minimum difference in probability density between the maximum probability class and the next highest probability class would help avert this degeneracy.
+% (e.g. a newly discovered supernova with a very small number of points may be indistinguishable from a Cataclysmic variable going through a brightening).
+
+The alternative we systematically investigate in this paper is to use a ``flat'' average of per-class metrics
+\begin{eqnarray}
+  \label{eq:perclassavg}
+Q_{m} &=& \frac{1}{N_{M}}\sum_{n}Q_{n}
+\end{eqnarray}
+resulting from first averaging the metric values $Q_{n}$ for each member $n$ of the class $m$.
+For this study, we consider a general weighted average
+\begin{eqnarray}
+  \label{eq:weightavg}
+Q_{tot} &=& \frac{1}{M}\sum_{m=1}^{M}w_{m}Q_{m}
+\end{eqnarray}
+of the per-class metrics.
+Non-flat weights may be chosen to encourage challenge participants to direct more attention to classes with less active classification literature or those that have been historically more difficult to classify due to the concerning systematics.
+The weights for the \plasticc\ metric, however, must be determined before the knowledge of which systematics affect which classes exists.
+Because of this, the choice of weights is an inherently human problem dictated by the value placed on the scientific merits of knowledge of each class.
+This paper, on the other hand, can only quantify the impact of weights in relation to the systematics.

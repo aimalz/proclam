@@ -1,4 +1,9 @@
 
+# PLAsTiCC metrics selection paper
+
+## How to compile the LaTeX version
+Install [desc-tex](https://github.com/LSSTDESC/desc-tex) and run `make apj`.
+
 # start_paper
 ### Jumpstart your DESC paper or note
 
