@@ -1,5 +1,3 @@
-\RequirePackage[switch, columnwise, running, mathlines, displaymath,
-mathlines]{lineno}
 \RequirePackage{docswitch}
 % \flag is set by the user, through the makefile:
 %    make note
@@ -20,31 +18,20 @@ mathlines]{lineno}
 \bibliographystyle{apj}
 
 % Add your own macros here:
-\newcommand{\aim}[1]{\textcolor{red}{#1}}
 
-% in case I can think of some fancy formatting later\dots
-\newcommand{\lsst}{LSST}
-\newcommand{\plasticc}{PLAsTiCC}
-\newcommand{\proclam}{ProClaM}
-\newcommand{\snphotcc}{SNPhotCC}
-\newcommand{\changes}[1]{\textcolor{blue}{#1}}
+
 
 % ======================================================================
 
 \begin{document}
-\linenumbers
 
-\title{The Photometric LSST Astronomical Time-series Classification Challenge (PLAsTiCC): Selection of a performance metric for classification probabilities balancing diverse science goals}
+\title{Write Title Here}
 
 \maketitlepre
 
 \begin{abstract}
 
-  Open challenges have become a popular and effective route to promoting the development of novel techniques in astronomical data analysis.
-  However, the probabilistic data products appropriate to upcoming deep surveys are incompatible with the traditional metrics used on deterministic classifications.
-  Furthermore, large survey collaborations such as the Large Synoptic Survey Telescope (LSST) may use the products of these challenges for diverse science objectives, indicating a need for a metric that balances a variety of goals.
-  We describe the process used to develop an appropriate global performance metric for a challenge affected by both these issues in the context of the Photometric LSST Astronomical Time-series Classification Challenge (PLAsTiCC), a Kaggle competition aiming to identify promising methods for obtaining classification probabilities of transient and variable objects by engaging the broader community outside astronomy.
-  We suggest some guiding principles for approaching the choice of a metric of probabilistic classifications and propose extensions of our procedure to ever more complex challenges.
+  Write abstract here.
 
 \end{abstract}
 
@@ -56,17 +43,36 @@ mathlines]{lineno}
 % ----------------------------------------------------------------------
 % {% raw %}
 
-\input{./tex/introduction}
+\section{Introduction}
+\label{sec:intro}
 
-\input{./tex/data}
 
-\input{./tex/methods}
+% ----------------------------------------------------------------------
 
-\input{./tex/results}
+\section{Methods}
+\label{sec:methods}
 
-\input{./tex/discussion}
 
-\input{./tex/conclusions}
+% ----------------------------------------------------------------------
+
+\section{Results}
+\label{sec:results}
+
+
+
+% ----------------------------------------------------------------------
+
+\section{Discussion}
+\label{sec:discussion}
+
+
+
+% ----------------------------------------------------------------------
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+
 
 % ----------------------------------------------------------------------
 
@@ -82,18 +88,9 @@ mathlines]{lineno}
 
 % Standard papers only: A.B.C. acknowledges support from grant 1234 from ...
 
-AIM is advised by David W. Hogg and was supported by National Science Foundation grant AST-1517237.
-TA is supported in part by STFC.
-
 \input{desc-tex/ack/standard} % also available: key standard_short
 
 % This work used some telescope which is operated/funded by some agency or consortium or foundation ...
-
-% The DESC acknowledges ongoing support from the Institut National de Physique Nucleaire et de Physique des Particules in France; the Science \& Technology Facilities Council in the United Kingdom; and the Department of Energy, the National Science Foundation, and the LSST Corporation in the United States.
-%
-% DESC uses resources of the IN2P3 Computing Center (CC-IN2P3--Lyon/Villeurbanne - France) funded by the Centre National de la Recherche Scientifique; the National Energy Research Scientific Computing Center, a DOE Office of Science User Facility supported by the Office of Science of the U.S. Department of Energy under Contract No. DE-AC02-05CH11231; STFC DiRAC HPC Facilities, funded by UK BIS National E-infrastructure capital grants; and the UK particle physics grid, supported by the GridPP Collaboration.
-%
-% This work was performed in part under DOE Contract DE-AC02-76SF00515.
 
 % We acknowledge the use of An-External-Tool-like-NED-or-ADS.
 

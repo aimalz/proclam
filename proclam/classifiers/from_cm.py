@@ -56,7 +56,7 @@ class FromCM(Classifier):
         M = len(cm)
         if other: M += 1
 
-        prediction = cm[truth] + delta * sps.halfcauchy.rvs(loc=0., scale=delta, size=(N, M))
+        prediction = cm[truth] + delta * sps.halfcauchy.rvs(size=(N, M))
         prediction /= np.sum(prediction, axis=1)[:, np.newaxis]
 
         return prediction

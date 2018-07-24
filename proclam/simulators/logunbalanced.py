@@ -28,7 +28,7 @@ class LogUnbalanced(Simulator):
 
     def simulate(self, M, N):
         """
-        Simulates the truth table as an unbalanced distribution
+        Simulates the truth table as an umbalanced distribution
 
         Parameters
         ----------
@@ -42,9 +42,8 @@ class LogUnbalanced(Simulator):
         truth: numpy.ndarray, int
             array of true class indices
         """
-        seeds = np.random.uniform(M, size=M)
-        # seeds = [max(seeds[i], 10./M) for i in range(M)]
-        counts = 10 ** (np.sort(seeds))
+
+        counts = 10 ** (np.sort(np.random.uniform(M, size=M)))
         prob_classes = counts / np.sum(counts)
         truth = np.random.choice(M, size=N, p=prob_classes)
 

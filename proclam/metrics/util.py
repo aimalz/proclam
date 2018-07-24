@@ -122,15 +122,12 @@ def det_to_cm(dets, truth, per_class_norm=True, vb=False):
     true_classes, true_counts = np.unique(truth, return_counts=True)
     if vb: print((pred_classes, pred_counts), (true_classes, true_counts))
 
-    M = np.int(max(max(pred_classes), max(true_classes)) + 1)
+    M = max(max(pred_classes), max(true_classes)) + 1
 
-    print((np.shape(dets), np.shape(truth)), M)
     cm = np.zeros((M, M), dtype=float)
-    
+    # print((np.shape(dets), np.shape(truth)))
     coords = np.array(list(zip(dets, truth)))
     indices, index_counts = np.unique(coords, axis=0, return_counts=True)
-    index_counts = index_counts.astype(int)
-    print(index_counts)
     # if vb: print(indices, index_counts)
     indices = indices.T
     # if vb: print(np.shape(indices))
@@ -252,7 +249,7 @@ def weight_sum(per_class_metrics, weight_vector, norm=True):
 
     return weight_sum
 
-def check_weights(avg_info, M, chosen=None, truth=None):
+def check_weights(avg_info, M, truth=None):
     """
     Converts standard weighting schemes to weight vectors for weight_sum
 
@@ -262,8 +259,6 @@ def check_weights(avg_info, M, chosen=None, truth=None):
         keyword about how to calculate weighted average metric
     M: int
         number of classes
-    chosen: int, optional
-        which class is to be singled out for down/up-weighting
     truth: numpy.ndarray, int, optional
         true class assignments
 
@@ -271,10 +266,6 @@ def check_weights(avg_info, M, chosen=None, truth=None):
     -------
     weights: numpy.ndarray, float
         relative weights per class
-
-    Notes
-    -----
-    Assumes a random class
     """
     if type(avg_info) != str:
         avg_info = np.asarray(avg_info)
@@ -287,27 +278,11 @@ def check_weights(avg_info, M, chosen=None, truth=None):
         weights = np.zeros(M)
         weights[classes] = counts / float(len(truth))
         assert len(weights) == M
-    elif avg_info == 'flat':
-        weights = np.ones(M)
-    elif avg_info == 'up' or avg_info == 'down':
-        if chosen is None:
-            chosen = np.random.randint(M)
-        if avg_info == 'up':
-            weights = np.ones(M) / np.float(M)
-            weight[chosen] = 1.
-        elif avg_info == 'down':
-            weights = np.ones(M)
-            weight[chosen] = 1./np.float(M)
     return weights
-
 
 def averager(per_object_metrics, truth, M):
     """
     Creates a list with the metrics per object, separated by class
-
-    Notes
-    -----
-    There is currently a kludge for when there are no true class members, causing an improvement when that class is upweighted due to increasing the weight of 0.  
     """
     group_metric = per_object_metrics
     class_metric = np.empty(M)
@@ -321,5 +296,5 @@ def averager(per_object_metrics, truth, M):
             class_metric[m] = np.average(per_class_metric)
         except AssertionError:
             class_metric[m] = 0.
-        print((m, how_many_in_class, class_metric[m]))
+        # print((m, how_many_in_class, class_metric[m]))
     return class_metric
