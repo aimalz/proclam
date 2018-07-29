@@ -55,7 +55,11 @@ In the context of astronomy, concerns about the choice of metric for probabilist
 % TODO cite PSNID
 , with most approaches concentrating on the `standard' metrics of purity and completeness, however metric consistency over a range of classifiers and between different analyses is not always ensured \citep{2018A&C....23...15B}.
 
-This work explores the two-fold problem of how to select a metric of a probabilistic data product that will be used in many science applications and thus lacks a single obvious figure of merit.
+This work explores the two-fold problem of choosing a metric of probabilistic classifications, which will be used in many science applications and thus lack a single obvious figure of merit.
+The winning classifier should be robust to significant class imbalance, both between the training set and test set and within either, and other concerning systematics.
+
+The \plasticc\ metric must be well-defined for non-binary classes, going beyond the positive/negative dichotomy inherent to some traditional metrics.
+It must also respect the information content of probabilistic classifications without reduction to point estimates of class.
 %\aim{I actually preferred the following as a list, although I agree that it could use some pruning.}
 %\begin{itemize}
 %\item    The metric must return a single scalar value.
@@ -66,17 +70,14 @@ This work explores the two-fold problem of how to select a metric of a probabili
 %\item    The metric must be interpretable, meaning it gives a more optimal value for "good" mock classifiers and a less optimal value for mock classifiers plagued by anticipated systematic errors; in other words, it must pass basic tests of intuition.
 %\item    The metric must be reliable, giving consistent results for different instantiations of the same test case.
 %\end{itemize}
-In order for the metric to be useful in such a heterogenous challenge, we require that the metric must return a single, scalar value, while being well-defined for non-binary classes.
-In addition, the metric should balance diverse science use cases in the presence of heavily non-uniform classes.
-This is key given that the rates of astornomical transients of different types varies greatly: any classifier that requires a balance of types will under perform in the \plasticc\ (and other) competitions.
+In order for the metric to satisfy the challenge requirements, the metric must return a single, scalar value.
+It also must be reliable, giving consistent results for different instantiations of the same test case.
+% In addition, the metric should balance diverse science use case needs, particularly in the presence of heavily non-uniform classes.
+% Deterministic classifications must be converted to probabilistic (i.e. returning a ``1'' or a ``0''), that deterministic metric must be readily convertible into a probabilistic classification - and should preserve the relationships between classes accordingly.
+% Similarly, any probabilistic metric much be easily transferred to a deterministic one ( e.g. given a threshold on the most likely classficiation choice).
 
-We impose the restriction that the metric must respect the information content of probabilistic classifications.
-Should a determininstic classifier (i.e. returning a ``1'' or a ``0''), that deterministic metric must be readily convertible into a probabilistic classification - and should preserve the relationships between classes accordingly.
-Similarly, any probabilistic metric much be easily transferred to a deterministic one ( e.g. given a threshold on the most likely classficiation choice).
-
-The metric must pass basic tests of intuition, rewarding classifiers that serve our needs and penalizing those plagued by anticipated systematic errors.
-
-And finally, the metric must be reliable, giving consistent results for different instantiations of the same test case.
-While it is clear that different procedures will happen simultansously, the metric should be stable to these changes, and be able to rank different scenarios given any particular set of rules imposed upon the metric.
-
-The Probabilistic Classification Metric (\proclam) code used in this exploration of performance metrics is publicly available on GitHub.\footnote{\url{https://github.com/aimalz/proclam}}
+We perform a systematic exploration of the sensitivity of metrics of probabilistic classification to anticipated classifier failure modes using the Probabilistic Classification Metric (\proclam) code, which is is publicly available on GitHub.\footnote{\url{https://github.com/aimalz/proclam}}.
+The mock classification results that we use for this exploration are described in Section~\ref{sec:data}.
+The metrics we consider are presented in Section~\ref{sec:methods}.
+The behavior of the metrics as a function of mock classification results is presented in Section~\ref{sec:results}.
+We discuss extensions of this exploratory framework to more complex challenge goals in Section~\ref{sec:discussion}.
