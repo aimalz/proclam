@@ -30,23 +30,21 @@ We take weighted averages of the per-object metrics with per-class weights descr
 \snphotcc\ aimed to identify deterministic classifiers of SN Ia using a metric
 \begin{eqnarray}
   \label{eq:snphotccfom}
-  \mathcal{C}_{FOM-Ia} &\equiv& \epsilon_{Ia} \times PP_{Ia}
+  \mathcal{FOM} &\equiv& \epsilon_{Ia} \times \tilde{P}_{Ia}
   \frac{1}{\mathcal{N}_{Ia}^{TOT}}\times \frac{(N_{Ia}^{\mathrm{true}})^2}{N_{Ia}^\mathrm{true}+W_{Ia}^\mathrm{false}N_{Ia}^\mathrm{false}}
 \end{eqnarray}
-of the ratio of the \textit{efficiency}
+of the ratio of the \textit{efficiency}\footnote{Efficiency is generically defined as $\epsilon = \mathrm{TP} / (\mathrm{TP} + \mathrm{FN})$.}
 \begin{eqnarray}
   \label{eq:efficiency}
   \epsilon_{Ia} &=& \frac{1}{\mathcal{N}_{Ia}^{TOT}}
 \end{eqnarray}
-of SN Ia classification and \textit{pseudo-purity}
+of SN Ia classification and \textit{pseudo-purity}\footnote{Purity, also known as the positive predictive value, is generically defined as $P = \mathrm{TP} / (\mathrm{TP} + \mathrm{FP})$.}
 \begin{eqnarray}
   \label{eq:pseudopurity}
-  PP_{Ia} &=& \frac{(N_{Ia}^{\mathrm{true}})^2} {N_{Ia}^\mathrm{true} + W_{Ia}^\mathrm{false}N_{Ia}^\mathrm{false}}
+  \tilde{P}_{Ia} &=& \frac{(N_{Ia}^{\mathrm{true}})^2} {N_{Ia}^\mathrm{true} + W_{Ia}^\mathrm{false}N_{Ia}^\mathrm{false}}
 \end{eqnarray}
-with an additive penalty term with weight $W_{Ia}^\mathrm{false}$ for false positives, motivated by the expense of squandering SN Ia follow-up resources on an object of a different class.
-%\aim{Renee, what is this in terms of the notation of the rest of the paper, or, at minimum, in terms of true/false positive/negative?}
-Equation~\ref{eq:snphotccfom} reduces to $\mathcal{C}_{FOM-Ia}  = \epsilon_{Ia} + PP_{Ia},$ the efficiency and pseudopurity, which can be interpreted as the traditional purity factor in the limit that the weight $W_{Ia}^\mathrm{false} = 1$.
-The efficiency is the ratio of the number of true postives successfully recovered as the fraction of the true classifications or TP/TP+FN, while the purity can itself be related tothe ratio of TP/TP+FP, or the positive predictive valuev.
+with an additive penalty term with weight $W_{Ia}^\mathrm{false}$ motivated by the expense of squandering SN Ia follow-up resources on an object of a different class.
+The pseudo-purity can be interpreted as the traditional purity factor when $W_{Ia}^\mathrm{false} = 1$.
 
 For the \snphotcc\ the false penalty was related to the size of the spectroscopic subsample as roughly $W_{Ia}^\mathrm{false} = 1 + \epsilon_{spec}^{-1} \gg 1$ but the conservative limit of $W_{Ia}^\mathrm{false} = 3$ was chosen to penalize wasted spectroscopic time over rejected SNe.
 For future challenges, a more balanced metric can be used to ensure correct classifications across the range of classes, without focusing or highlighting a specific class as above.
