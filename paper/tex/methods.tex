@@ -17,15 +17,15 @@ Choosing a metric therefore is logically entwined with the question the challeng
 The choice of a metric is not so simple for \plasticc, which has many science goals with few arguments strong enough for meaningful fractions of spectroscopic follow-up.
 The posterior probabilities classifications must be accurate for use in inference as well as for the allocation of follow-up resources, and they must be evaluated in a way that does not excessively favor any one science application.
 
-In Section~\ref{sec:past}, we review the metrics that were used in \snphotcc\ as the most similar previous challenge.
-In Section~\ref{sec:metrics}, we introduce metrics appropriate for probabilistic classifications as opposed to deterministic classifications required of \snphotcc.
+In Section~\ref{sec:science}, we review the metrics that were used in \snphotcc\ as the most similar previous challenge.
+In Section~\ref{sec:deterministic}, we review the metrics that were used in \snphotcc\ as the most similar previous challenge.
+In Section~\ref{sec:probabilistic}, we introduce metrics appropriate for probabilistic classifications as opposed to deterministic classifications required of \snphotcc.
 We take weighted averages of the per-object metrics with per-class weights described in Section~\ref{sec:weights}.
 
-\subsection{Traditional metrics}
-\label{sec:past}
+\subsection{Science-motivated metrics}
+\label{sec:science}
 
 % TODO: Needs work to make consistent with rest of paper!
-%\aim{Needs work to make consistent with rest of paper!}
 
 \snphotcc\ aimed to identify deterministic classifiers of SN Ia using a metric
 \begin{eqnarray}
@@ -49,8 +49,13 @@ The pseudo-purity can be interpreted as the traditional purity factor when $W_{I
 For the \snphotcc\ the false penalty was related to the size of the spectroscopic subsample as roughly $W_{Ia}^\mathrm{false} = 1 + \epsilon_{spec}^{-1} \gg 1$ but the conservative limit of $W_{Ia}^\mathrm{false} = 3$ was chosen to penalize wasted spectroscopic time over rejected SNe.
 For future challenges, a more balanced metric can be used to ensure correct classifications across the range of classes, without focusing or highlighting a specific class as above.
 
+\subsection{Deterministic metrics}
+\label{sec:deterministic}
+
+% TODO: write about AUC
+
 \subsection{Probabilistic metrics}
-\label{sec:metrics}
+\label{sec:probabilistic}
 
 \plasticc\ differs from \snphotcc\ in two major ways.
 First, we do not have a unifying science goal, such as SN cosmology, to provide direction as to a metric motivated directly by physics.

@@ -11,21 +11,22 @@ We simulate mock classifications from linear combinations of the confusion matri
 The limited catalog size induces a small amount of stochasticity, particularly due to the classes with only a handful of members.
 % TODO: repeat for error bars
 
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.5\textwidth]{./fig/systematics_onlyperfect.png}
+% TODO larger labels, ticklabels
+		\caption{The behavior of the metrics when systematic effects added to the perfect classifier.
+		The log-loss (blue, left $y$ axis) and Brier score (green, right $y$ axis) are shown for classifiers that are ``perfect'' aside from the indicated systematic (panels) as a function how many classes are affected by the systematic (on the $x$-axis), beginning with the lowest population classes.
+		The two metrics behave very similarly to one another and have high sensitivity to a subsuming classifier.}
+	\end{center}
+	\label{fig:cruise}
+\end{figure}
+
 In Figure~\ref{fig:cruise}, we illustrate the effect on the metrics of adding to an initially perfect classifier each of four error properties:
 uncertainty (lower left panel, described in Section~\ref{sec:uncertaindata}),
 a class $\tilde{m}$ subsuming class $m'$ (upper right panel, described in Section~\ref{sec:inaccuratedata}),
 and reducing perfection via uniform noise by a factor of $s=2$ to an almost perfect classifier and $s=4$ to a noisy classifier (upper left and bottom right panels, respectively, described in Section~\ref{sec:accuratedata}).
 Flat weights are used for each of these tests.
-
-\begin{figure}
-	\begin{center}
-		\label{fig:cruise}
-		\includegraphics[width=0.5\textwidth]{./fig/systematics_onlyperfect.png}
-		\caption{The behavior of the metrics when systematic effects added to the perfect classifier.
-		The log-loss (blue, left $y$ axis) and Brier score (green, right $y$ axis) are shown for classifiers that are ``perfect'' aside from the indicated systematic (panels) as a function how many classes are affected by the systematic (on the $x$-axis), beginning with the lowest population classes.
-		The two metrics behave very similarly to one another and have high sensitivity to a subsuming classifier.}
-	\end{center}
-\end{figure}
 
 The roughly constant slopes of the metric values as a function of the number of classes affected by the systematics indicates that both the log-loss and Brier score are stable to the prevalence of each systematic.
 The peak value of the metric when every class is thoroughly affected by a sytematic is also consistent with our intuitive ranking of how badly the classifiers should be penalized for each systematic; the subsuming classifier is penalized more than the uncertain classifier, the uncertain classifier is penalized more than the noisy classifier, and the noisy classifier is penalized more than the almost perfect classifier.
@@ -52,13 +53,13 @@ Conversely, the cruise control classifier and, to a lesser degree the noisy clas
 
 \begin{figure}
 	\begin{center}
-		\label{fig:popweight}
 		\includegraphics[width=0.5\textwidth]{./fig/all_effects_isolated.png}
 		\caption{Population-weighted log-loss and Brier scores for classifiers with one class affected by a systematic, as a function of the population of the affected class.
 		Each point corresponds to an almost perfect classifier that with one class instead affected by a systematic (shape), with log-loss on the $y$ axis and Brier score on the $x$ axis.
 		The metrics are calculated with a weighting (color and size) proportional to the log of its weight in a weighted average following Equation~\ref{eq:weightavg}.
 		}
 	\end{center}
+	\label{fig:popweight}
 \end{figure}
 
 The tunnel vision classifier has a consistently low value under the Brier score and log-loss metric (bottom left corner of the plot), only increasing its Brier score once the weighting drops (less blue).
@@ -81,19 +82,57 @@ This finding suggests that weighting alone may not be sufficient to counter the 
 \subsection{Representative classifications}
 \label{sec:realresults}
 
-We also present the values of our metrics and the \snphotcc\ metric for classification probabilities derived from running the algorithms of \cite{lochner_photometric_2016} on the \snphotcc\ data presented in Section~\ref{sec:realdata}.
+We also present in Table~\ref{tab:snmachinevals} the values of all metrics we considered, under equal weight per object, for classification probabilities derived from running the algorithms of \cite{lochner_photometric_2016} on the \snphotcc\ data presented in Section~\ref{sec:realdata}.
+Table~\ref{tab:snmachinerank} shows the ranking of classifier performance under each metric.
 
-\begin{figure*}
-	\begin{center}
-		\includegraphics[width=0.75\textwidth]{./fig/SNPhotCC_res.png}
-	  \includegraphics[width=0.75\textwidth]{./fig/fom_vs_brier.png}
-		\caption{The metric values for the representative classifications.
-		Left: the Brier score (green squares, left $y$ axis) and log-loss (blue circles, right $y$ axis) for each classifier.
-		Right: the Brier score (green triangles) and \snphotcc\ FOM (blue circles) for each classifier.
-%		\aim{Note: These figures will be consolidated and made consistent with one another.}
-		\label{fig:real_metric_compare}}
-	\end{center}
-\end{figure*}
+\begin{table}[]
+\begin{tabular}{lllll}
+                           & AUC    & Brier   & FoM   & Logloss            \\
+templates\_bf  						 & 0.982 & 0.0486  & 0.635  & 0.0907  \\
+templates\_knn             & 0.942 & 0.0787  & 0.384 & 0.146  \\
+templates\_nb              & 0.879 & 0.105  & 0.340  & 0.251 \\
+templates\_nn							 & 0.954 & 0.0650  & 0.496   & 0.125 \\
+templates\_svm             & 0.969 & 0.0583 & 0.514  & 0.113 \\
+wavelets\_bf   						 & 0.978 & 0.0689  & 0.591  & 0.1321 \\
+wavelets\_knn              & 0.894 & 0.132  & 0.114 & 0.228 \\
+wavelets\_nb               & 0.850 & 0.178  & 0.0365 & 0.443  \\
+wavelets\_nn 							 & 0.946 & 0.0750  & 0.480  & 0.152 \\
+wavelets\_svm              & 0.968  & 0.0730  & 0.499  & 0.1316 \\
+\end{tabular}
+\caption{The values of four metrics for each of ten \snmachine\ classifiers with equal weight per object.}
+	\label{tab:snmachinevals}
+\end{table}
+
+\begin{table}[]
+\begin{tabular}{lllll}
+  & AUC             & Brier           & FoM             & Logloss       \\
+1 & templates\_bf 	& templates\_bf	 	& templates\_bf 	& templates\_bf \\
+2 & wavelets\_bf	 	& templates\_svm 	& wavelets\_bf		& templates\_svm \\
+3 & templates\_svm 	& templates\_nn 	& templates\_svm	& templates\_nn \\
+4 & wavelets\_svm 	& wavelets\_bf 		& wavelets\_svm		& wavelets\_svm \\
+5 & templates\_nn 	& wavelets\_svm 	& templates\_nn		& wavelets\_bf \\
+6 & wavelets\_nn 		& wavelets\_nn 		& wavelets\_nn		& templates\_knn \\
+7 & templates\_knn 	& templates\_knn 	& templates\_knn	& wavelets\_nn \\
+8 & wavelets\_knn 	& templates\_nb 	& templates\_nb		& wavelets\_knn \\
+9 & templates\_nb 	& wavelets\_knn 	& wavelets\_knn		& templates\_nb \\
+10 & wavelets\_nb 	& wavelets\_nb 		& wavelets\_nb		& wavelets\_nb \\
+\end{tabular}
+\caption{The ranking of the classifiers of Table~\ref{tab:snmachine} under each metric.}
+\label{tab:snmachinerank}
+\end{table}
+% TODO tell Michelle there's definitely a bug in her logloss!
+
+% \begin{figure*}
+% 	\begin{center}
+% 		\includegraphics[width=0.75\textwidth]{./fig/SNPhotCC_res.png}
+% 	  \includegraphics[width=0.75\textwidth]{./fig/fom_vs_brier.png}
+% 		\caption{The metric values for the representative classifications.
+% 		Left: the Brier score (green squares, left $y$ axis) and log-loss (blue circles, right $y$ axis) for each classifier.
+% 		Right: the Brier score (green triangles) and \snphotcc\ FOM (blue circles) for each classifier.
+% %		\aim{Note: These figures will be consolidated and made consistent with one another.}
+% 		\label{fig:real_metric_compare}}
+% 	\end{center}
+% \end{figure*}
 
 The FOM of Equation~\ref{eq:snphotcc} closely tracks the Brier score for the same entries, suggesting its applicability to the problem of photometric transient classification.
 %TODO: work on this section to smooth/clarify
