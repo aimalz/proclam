@@ -7,20 +7,21 @@ The Large Synoptic Survey Telescope (\lsst) has the potential to advance time-do
 % Bright astrophysical transients like RR Lyrae give insight into the structure and evolution of stars.
 % Active galactic nuclei probe the evolution of large massive galaxies.
 % These are but some of the physical principles that are testable with the many different kinds of transients that will be delivered with the Large Synoptic Survey Telescope (LSST).
-With its rapid scan strategy, exquisite depth, and many photometric filters, \lsst\ will deliver millions of transient detections, enabling unprecedented population-level studies of time-varying astrophysical sources.
+With its rapid scan strategy, exquisite depth, and many photometric filters, \lsst\ will deliver millions of multi-band time-series, generically called lightcurves, enabling unprecedented population-level studies of time-varying astrophysical sources.
 % , in some cases across cosmic time.
 
 Science output from the \lsst\ dataset is contingent on distinguishing classes of astrophysical sources from one another.
 From obtaining population statistics of variable stars in the Milky Way to constraining the cosmological parameters with supernovae to discovering optical counterparts to multi-messenger events, accurate classifications are necessary to take advantage of the \lsst\ data volume.
 The gold standard for such identification in astronomy has traditionally been based on the spectrum of the source.
-However, the volume of discovered objects in the \lsst, as well as their potentially challenging noise properties, likely exceeds the availability of spectroscopic follow-up resources; the great majority of \lsst's time-varying discoveries will never be spectroscopically confirmed.
+However, the volume of objects anticipated of \lsst, as well as their potentially low signal-to-noise ratios, likely exceeds the availability of spectroscopic follow-up resources; the great majority of \lsst's time-varying discoveries will never be spectroscopically confirmed.
 % Thus several science cases (such as SN cosmology) will actively depend om classification of astrophysical sources based on the photometric light curve, and possibly a much smaller training sample/model based on a spectroscopic sub-sample.
-As such, there is an acute need for photometric lightcurve classifiers that can perform well on datasets that include a wide variety of sources, and where classification over the range of objects is desired, rather than challenges that focus on only one class.
+As such, there is an acute need for classifiers of photometric lightcurves that can perform well on datasets that include a wide variety of sources, and where classification over the range of objects is desired, rather than challenges that focus on only one class.
 
-The Photometric \lsst\ Astronomical Time-series Classification Challenge (\plasticc) aims to identify classification techniques that serve the astronomical community by engaging the broader community outside astronomy.
-Unlike previous challenges, \plasticc\ differs in that the more comprehensive dataset includes models for well-understood classes, newly observed classes, and classes that have only been proposed to exist, to simulate serendipitous discovery anticipated of \lsst.
-Additionally, \plasticc\ will join the ranks of a handful of past astronomy classification challenges hosted on \href{https://www.kaggle.com/competitions}{Kaggle}, a platform for predictive modeling, that hosts data analytics competitions where seasoned professionals and amateurs alike can compete to classify, model and predict large data sets uploaded by companies or scientific collaborations.
-It attracts a broad user base, and those without domain knowledge may provide novel approaches to the problem at hand.
+The Photometric \lsst\ Astronomical Time-series Classification Challenge (\plasticc) aims to identify and motivate the development of classification techniques that serve the astronomical community by engaging the broader community outside astronomy.
+\plasticc's dataset is comprehensive and intended to encompass all the observations \lsst\ will provide in the coming years.
+The simulation includes models for well-understood classes, newly observed classes, and classes that have only been proposed to exist, to simulate serendipitous discoveries anticipated of \lsst.
+Additionally, \plasticc\ will join the ranks of a handful of past astronomy classification challenges hosted on \href{https://www.kaggle.com/competitions}{Kaggle}, a platform for predictive modeling, that hosts data analytics competitions where seasoned professionals and amateurs alike can compete to classify, model, and predict large data sets uploaded by companies or scientific collaborations.
+Kaggle attracts a broad user base, and those without domain knowledge may provide novel approaches to the problem at hand.
 
 Classification in astronomy is often done based on images e.g. galaxy classification \citep{2016A&C....16...34H}, supernova classification \citep{2017ApJ...836...97C}
 % TODO cite PSNID
@@ -30,18 +31,20 @@ Classification in astronomy is often done based on images e.g. galaxy classifica
 The most well-studied classification problems are often binary, with only two classes.
 % The last such challenge, \snphotcc \citep{kessler_supernova_2010}, was also restricted to a subset of classes, all types of supernovae.
 
-Classifaction is intrinsically \textit{probabilistic} in that the goal is to \textit{constrain} the class \textit{conditioned} on limited data, thereby defining a \textit{posterior probability density} over possible classes for each classified object.
+Classifaction is intrinsically \textit{probabilistic} in that the goal is to \textit{constrain} the class \textit{conditioned} on limited data, thereby defining a \textit{posterior probability density}, or \textit{classification posterior} for short, over possible classes for each classified object.
 Probabilities of classification that are reduced to point estimates of class become \textit{deterministic} classifications.
-Such a reduction of a probability density to a point estimate discards information whose value depends on how the classification results are subsequently used.
+As an example, an object with probability $0.9$ of being in a certain class $m$ might be assigned a deterministic classification of being of class $m$, effectively rounting up the probability to $1$, yielding a point estimate of $m$ for that object.
+Such a reduction of a probability density to a point estimate discards information whose impact depends on how the classification results are subsequently used.
 
 For example, the decision of how to allocate limited spectroscopic follow-up resources could benefit from probabilistic information if provided early enough.
-To reduce wasting follow-up resources dedicated to common class whose science use requires spectra, one might only attempt follow-up observations of the objects with the highest classification probabilities.
+To reduce wasting spectroscopic resources dedicated to common class whose science use requires spectra, one might only attempt follow-up observations of the objects with the highest classification probabilities.
 Spectroscopic follow-up of a rare class, on the other hand, may merit less conservative allocation; an object with even a moderate probability of being of a very rare class could be worth the risk.
 % While the knowlege that an object has been identified to be a particular type with an overwhelming probability is likely different from a situation where an object is simply slightly more likely to be a particular class than the remaining classes of objects is important but could be appropriately reflected in a deterministic classifier.
 % If follow-up resources were sufficiently abundant to warrant the optimization of follow-up of less well classified objects, the information in the probabilities could be useful in resource allocation.
 
 Classification probabilities can also be propagated through a hierarchical inference of population-level parameters, enabling scientific investigations to proceed even when spectra are unavailable.
 The efficacy of this application of classification probabilities has been demonstrated in the context of supernova cosmology \citep{roberts_zbeams:_2017}.
+% TODO Cite all the BEAMS papers and Malz, Peters, Hlozek in prep
 % Considering the different case of supernova cosmology from a photometrically classified sample of SNe, such probabilistic classifications can be propagated to subsequent analyses of cosmological parameters allowing one to extract information from the (large) part of the sample where photometric classification failed to identify a particular type with overwhelming probability \cite{roberts_zbeams:_2017}.
 Thus the impact of a photometric-only survey like \lsst\ can be greatly enhanced by probabilistic classifications.
 %Because of the low-signal-to-noise expected of \lsst, probabilistic classifications are more appropriate (Roberts+17) than the point estimates of previous challenges.
@@ -52,15 +55,15 @@ In light of the aforementioned benefits of classification probabilities, \plasti
 
 However, probabilistic classifications are incompatible with the metrics of deterministic class assignments used in previous classification challenges \citep{kessler_supernova_2010, kessler_results_2010} and efforts to develop supernova classifiers \citep{2018ApJS..236....9N}.
 In this context, a metric is simply a quantification of the performance of a classifier.
-Notions of accuracy, purity, completeness, and other terms endemic in science are examples of traditional metrics appropriate to classification point estimates.
-Many traditional classification metrics may be modified for evaluation on probabilistic classifications \citep{lochner_photometric_2016, moller_photometric_2016, hon_deep_2017, hon_detecting_2018, 2011arXiv1108.4696G} but only by reducing class probabilities to point estimates of class and evaluating those at discrete cutoffs that can affect the conclusions of the study.
+Notions of accuracy, purity, completeness, and other metrics endemic to science are examples of deterministic metrics appropriate to classification point estimates.
+Many deterministic classification metrics can be modified for evaluation on probabilistic classifications \citep{lochner_photometric_2016, moller_photometric_2016, hon_deep_2017, hon_detecting_2018, 2011arXiv1108.4696G} but only by reducing class probabilities to point estimates of class and evaluating those at discrete cutoffs, the choice of which may ultimately affect the conclusions of the study.
 
 If the data are simulated using a fully self-consistent forward model, a metric of the accuracy of classification probabilities relative to the true, underlying probabilities would be straightforward.
 However, such a simulation procedure would require beginning with a fully populated probability space over all classes and all possible lightcurves, which is an insurmountable challenge.
 Therefore, attention must be directed toward the no longer straightforward matter of defining the criterion for a winning classifier.
 In the context of astronomy, concerns about the choice of metric for probabilistic classifications have been investigated only to a limited degree thus far \citep{2018SoPh..293...28F, 2017MNRAS.464.4463K}
 % TODO cite PSNID
-, with most approaches concentrating on the `standard' metrics of purity and completeness, however metric consistency over a range of classifiers and between different analyses is not always ensured \citep{2018A&C....23...15B}.
+, with most approaches concentrating on the standard metrics of purity and completeness, however metric consistency over a range of classifiers and between different analyses is not always ensured \citep{2018A&C....23...15B}.
 
 This work explores the problem of choosing a metric of probabilistic classifications, which will be used in many science applications and thus lack a single obvious figure of merit.
 The winning classifier should be robust to significant class imbalance, both between the training set and test set and within either, and other concerning systematics.
