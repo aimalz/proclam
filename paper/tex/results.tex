@@ -82,62 +82,69 @@ This finding suggests that weighting alone may not be sufficient to counter the 
 \subsection{Representative classifications}
 \label{sec:realresults}
 
-We also present in Table~\ref{tab:snmachinevals} the values of all metrics we considered, under equal weight per object, for classification probabilities derived from running the algorithms of \cite{lochner_photometric_2016} on the \snphotcc\ data presented in Section~\ref{sec:realdata}.
+We also present in Table~\ref{tab:snmachinevals} the values of all metrics we considered, under equal weight per object, for classification probabilities derived from running the algorithms of \cite{lochner_photometric_2016} on the \snphotcc\ data of Section~\ref{sec:realdata}.
 Table~\ref{tab:snmachinerank} shows the ranking of classifier performance under each metric.
 
 \begin{table}[]
-\begin{tabular}{lllll}
-                           & AUC    & Brier   & FoM   & Logloss            \\
-templates\_bf  						 & 0.982 & 0.0486  & 0.635  & 0.0907  \\
-templates\_knn             & 0.942 & 0.0787  & 0.384 & 0.146  \\
-templates\_nb              & 0.879 & 0.105  & 0.340  & 0.251 \\
-templates\_nn							 & 0.954 & 0.0650  & 0.496   & 0.125 \\
-templates\_svm             & 0.969 & 0.0583 & 0.514  & 0.113 \\
-wavelets\_bf   						 & 0.978 & 0.0689  & 0.591  & 0.1321 \\
-wavelets\_knn              & 0.894 & 0.132  & 0.114 & 0.228 \\
-wavelets\_nb               & 0.850 & 0.178  & 0.0365 & 0.443  \\
-wavelets\_nn 							 & 0.946 & 0.0750  & 0.480  & 0.152 \\
-wavelets\_svm              & 0.968  & 0.0730  & 0.499  & 0.1316 \\
+\begin{tabular}{llll}
+%                            & AUC    & Brier   & FoM   & Logloss            \\
+% templates\_bf  						 & 0.982 & 0.0486  & 0.635  & 0.0907  \\
+% templates\_knn             & 0.942 & 0.0787  & 0.384 & 0.146  \\
+% templates\_nb              & 0.879 & 0.105  & 0.340  & 0.251 \\
+% templates\_nn							 & 0.954 & 0.0650  & 0.496   & 0.125 \\
+% templates\_svm             & 0.969 & 0.0583 & 0.514  & 0.113 \\
+% wavelets\_bf   						 & 0.978 & 0.0689  & 0.591  & 0.1321 \\
+% wavelets\_knn              & 0.894 & 0.132  & 0.114 & 0.228 \\
+% wavelets\_nb               & 0.850 & 0.178  & 0.0365 & 0.443  \\
+% wavelets\_nn 							 & 0.946 & 0.0750  & 0.480  & 0.152 \\
+% wavelets\_svm              & 0.968  & 0.0730  & 0.499  & 0.1316
+& Brier   & FoM   & Logloss            \\
+templates\_bf  						 & 0.0486  & 0.635  & 0.0907  \\
+templates\_knn             & 0.0787  & 0.384 & 0.146  \\
+templates\_nb              & 0.105  & 0.340  & 0.251 \\
+templates\_nn							 & 0.0650  & 0.496   & 0.125 \\
+templates\_svm             & 0.0583 & 0.514  & 0.113 \\
+wavelets\_bf   						 & 0.0689  & 0.591  & 0.1321 \\
+wavelets\_knn              & 0.132  & 0.114 & 0.228 \\
+wavelets\_nb               & 0.178  & 0.0365 & 0.443  \\
+wavelets\_nn 							 & 0.0750  & 0.480  & 0.152 \\
+wavelets\_svm              & 0.0730  & 0.499  & 0.1316 \\
 \end{tabular}
-\caption{The values of four metrics for each of ten \snmachine\ classifiers with equal weight per object.}
+\caption{The values of three metrics for each of ten \snmachine\ classifiers with equal weight per object.}
 	\label{tab:snmachinevals}
 \end{table}
 
 \begin{table}[]
-\begin{tabular}{lllll}
-  & AUC             & Brier           & FoM             & Logloss       \\
-1 & templates\_bf 	& templates\_bf	 	& templates\_bf 	& templates\_bf \\
-2 & wavelets\_bf	 	& templates\_svm 	& wavelets\_bf		& templates\_svm \\
-3 & templates\_svm 	& templates\_nn 	& templates\_svm	& templates\_nn \\
-4 & wavelets\_svm 	& wavelets\_bf 		& wavelets\_svm		& wavelets\_svm \\
-5 & templates\_nn 	& wavelets\_svm 	& templates\_nn		& wavelets\_bf \\
-6 & wavelets\_nn 		& wavelets\_nn 		& wavelets\_nn		& templates\_knn \\
-7 & templates\_knn 	& templates\_knn 	& templates\_knn	& wavelets\_nn \\
-8 & wavelets\_knn 	& templates\_nb 	& templates\_nb		& wavelets\_knn \\
-9 & templates\_nb 	& wavelets\_knn 	& wavelets\_knn		& templates\_nb \\
-10 & wavelets\_nb 	& wavelets\_nb 		& wavelets\_nb		& wavelets\_nb \\
+\begin{tabular}{llll}
+%   & AUC             & Brier           & FoM             & Logloss       \\
+% 1 & templates\_bf 	& templates\_bf	 	& templates\_bf 	& templates\_bf \\
+% 2 & wavelets\_bf	 	& templates\_svm 	& wavelets\_bf		& templates\_svm \\
+% 3 & templates\_svm 	& templates\_nn 	& templates\_svm	& templates\_nn \\
+% 4 & wavelets\_svm 	& wavelets\_bf 		& wavelets\_svm		& wavelets\_svm \\
+% 5 & templates\_nn 	& wavelets\_svm 	& templates\_nn		& wavelets\_bf \\
+% 6 & wavelets\_nn 		& wavelets\_nn 		& wavelets\_nn		& templates\_knn \\
+% 7 & templates\_knn 	& templates\_knn 	& templates\_knn	& wavelets\_nn \\
+% 8 & wavelets\_knn 	& templates\_nb 	& templates\_nb		& wavelets\_knn \\
+% 9 & templates\_nb 	& wavelets\_knn 	& wavelets\_knn		& templates\_nb \\
+% 10 & wavelets\_nb 	& wavelets\_nb 		& wavelets\_nb		& wavelets\_nb \\
+& Brier           & FoM             & Logloss       \\
+1 & templates\_bf	 	& templates\_bf 	& templates\_bf \\
+2 & templates\_svm 	& wavelets\_bf		& templates\_svm \\
+3 & templates\_nn 	& templates\_svm	& templates\_nn \\
+4 & wavelets\_bf 		& wavelets\_svm		& wavelets\_svm \\
+5 & wavelets\_svm 	& templates\_nn		& wavelets\_bf \\
+6 & wavelets\_nn 		& wavelets\_nn		& templates\_knn \\
+7 & templates\_knn 	& templates\_knn	& wavelets\_nn \\
+8 & templates\_nb 	& templates\_nb		& wavelets\_knn \\
+9 & wavelets\_knn 	& wavelets\_knn		& templates\_nb \\
+10 & wavelets\_nb 		& wavelets\_nb		& wavelets\_nb \\
 \end{tabular}
-\caption{The ranking of the classifiers of Table~\ref{tab:snmachine} under each metric.}
+\caption{The ranking of the classifiers of Table~\ref{tab:snmachinevals} under each metric.}
 \label{tab:snmachinerank}
 \end{table}
 % TODO tell Michelle there's definitely a bug in her logloss!
 
-% \begin{figure*}
-% 	\begin{center}
-% 		\includegraphics[width=0.75\textwidth]{./fig/SNPhotCC_res.png}
-% 	  \includegraphics[width=0.75\textwidth]{./fig/fom_vs_brier.png}
-% 		\caption{The metric values for the representative classifications.
-% 		Left: the Brier score (green squares, left $y$ axis) and log-loss (blue circles, right $y$ axis) for each classifier.
-% 		Right: the Brier score (green triangles) and \snphotcc\ FOM (blue circles) for each classifier.
-% %		\aim{Note: These figures will be consolidated and made consistent with one another.}
-% 		\label{fig:real_metric_compare}}
-% 	\end{center}
-% \end{figure*}
-
-The FOM of Equation~\ref{eq:snphotcc} closely tracks the Brier score for the same entries, suggesting its applicability to the problem of photometric transient classification.
-%TODO: work on this section to smooth/clarify
-
-%\aim{[Needs work]}
+The FOM of Equation~\ref{eq:snphotccfom} differs more from the Brier and log-loss metrics than they do from one another, but all three metrics are in agreement over the winners and losers, indicating that both of the potential \plasticc\ metrics are roughly consistent with our intuition about what makes a good classifier.
 
 %\textbf{Current plan is that we compute the SNPhotCC metric for Michelle's contributions and also turn the binary classifications into probabilities - Renee will flesh this out}
 %\aim{We are still iterating on the most informative tests to conduct on the \snphotcc\ data.
