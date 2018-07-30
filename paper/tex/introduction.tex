@@ -22,13 +22,13 @@ Classification in astronomy is often done based on images e.g. galaxy classifica
 % TODO find Abbot+ paper
 , \citet{2017CQGra..34f4003Z, 2018PhRvD..97j1501G}.
 The most well-studied classification problems are often binary, with only two classes.
-The last such challenge, \snphotcc \citep{kessler_supernova_2010}, was also restricted to a subset of classes, all types of supernovae.
+% The last such challenge, \snphotcc \citep{kessler_supernova_2010}, was also restricted to a subset of classes, all types of supernovae.
 
 Classifaction is intrinsically \textit{probabilistic} in that the goal is to \textit{constrain} the class \textit{conditioned} on limited data, thereby defining a \textit{posterior probability density} over possible classes for each classified object.
 Probabilities of classification that are reduced to point estimates of class become \textit{deterministic} classifications.
 Such a reduction of a probability density to a point estimate discards information whose value depends on how the classification results are subsequently used.
 
-For example, the decision of how to allocate limited spectroscopic follow-up resources could benefit from probabilistic information.
+For example, the decision of how to allocate limited spectroscopic follow-up resources could benefit from probabilistic information if provided early enough.
 To reduce wasting follow-up resources dedicated to common class whose science use requires spectra, one might only attempt follow-up observations of the objects with the highest classification probabilities.
 Spectroscopic follow-up of a rare class, on the other hand, may merit less conservative allocation; an object with even a moderate probability of being of a very rare class could be worth the risk.
 % While the knowlege that an object has been identified to be a particular type with an overwhelming probability is likely different from a situation where an object is simply slightly more likely to be a particular class than the remaining classes of objects is important but could be appropriately reflected in a deterministic classifier.
@@ -43,7 +43,7 @@ Thus the impact of a photometric-only survey like \lsst\ can be greatly enhanced
 
 The Photometric \lsst\ Astronomical Time-series Classification Challenge (\plasticc) aims to identify classification techniques that serve the astronomical community by engaging the broader community outside astronomy.
 Unlike previous challenges, \plasticc\ differs in that the more comprehensive dataset includes models for well-understood classes, newly observed classes, and classes that have only been proposed to exist, to simulate serendipitous discovery anticipated of \lsst.
-Additionally, \plasticc\ will join the ranks of a handful of past astronomy classification challenges hosted on \href{https://www.kaggle.com/competitions}{Kaggle}, a platform for predictive modelling, that hosts data analytics competitions where seasoned professionals and amateurs alike can compete to classify, model and predict large data sets uploaded by companies or scientific collaborations.
+Additionally, \plasticc\ will join the ranks of a handful of past astronomy classification challenges hosted on \href{https://www.kaggle.com/competitions}{Kaggle}, a platform for predictive modeling, that hosts data analytics competitions where seasoned professionals and amateurs alike can compete to classify, model and predict large data sets uploaded by companies or scientific collaborations.
 It attracts a broad user base, and those without domain knowledge may provide novel approaches to the problem at hand.
 
 % A classification posterior can be propagated through population-level inference without a separate error propagation pipeline, and a probability can always be reduced to a point estimate for the purposes of decision-making (such as for allocation of follow-up resources), but a deterministic classification cannot in general be used to reconstruct a probability density for an individual object.
