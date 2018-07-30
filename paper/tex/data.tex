@@ -33,7 +33,6 @@ with $x_{0}=0$.
 
 % TODO: sequential color scheme?
 % TODO: letters for panels, refer to them in text
-
 \begin{figure*}
 	\begin{center}
     \includegraphics[width=0.8\textwidth]{./fig/all_sim_cm.png}
@@ -55,7 +54,7 @@ For each case, we address:
 \begin{enumerate}
   \item What defines this error property?
   \item Under what conditions is this error property relevant?
-  \item What are our expectations and desires for this error property's effect on metric behavior?
+  \item What are our expectations of and desires for this error property's effect on metric behavior?
 \end{enumerate}
 
 \subsubsection{Uncertain classification}
@@ -79,7 +78,7 @@ In addition to a perfect classifier, we test linear combinations
   \label{eq:lincomb}
   \mathbb{C}^{\mathrm{acc}; s} &=& \frac{1}{M+s-1} \left(s\mathbb{I} + \mathbb{U}\right)
 \end{eqnarray}
-of the perfect and uncertain classifier confusion matrices where the contribution of the perfect classifier is greater that of the uncertain classifier by a factor of $s$.
+of the perfect and uncertain classifier confusion matrices where the contribution of the perfect classifier is greater than that of the uncertain classifier by a factor of $s$.
 Deterministic classifications drawn from such a confusion matrix would be correct $s$ times as often as they are wrong, and the incorrect guesses would be uncorrelated across classes.
 The probability vectors drawn from such confusion matrices would have some variability but still mostly have their peak value at the truth.
 We consider the case of the \textit{almost perfect} classifier with $s=4$ (left-center top panel of Figure~\ref{fig:mock_cm}) and the \textit{noisy} classifier with $s=2$ (left-center bottom panel of Figure~\ref{fig:mock_cm}), which correspond to $p(m' \mid d)\approx0.82$ and $p(m' \mid d)\approx0.62$ respectively.
@@ -131,7 +130,8 @@ Though we defend against this systematic by employing per-class weights, describ
 %\aim{This would be more meaningful if we were given the confusion matrices of actual submissions to \snphotcc\ and then checked whether the \plasticc\ metric would have designated a different winner.
 %Also, it may be more interpretable if we instead use Ashish's confusion matrices that have more classes.}
 
-\snphotcc\ \citep{kessler_supernova_2010} focused on separating the lightcurves of a heterogenous population into a limited number of subclasses, with a goal of identifying one particular type of object for a single scientific application, and attracted diverse classification approaches, including $\chi^{2}$ fits of the SN data to publicly available templates \citep{2002PASP..114..803N} physical models \citep{2008ApJ...681..482C}, and empirical models as well as alternatives to curve-fitting such as
+The Supernova Photometric Classification Challenge (\snphotcc) \citep{kessler_supernova_2010} focused on classifying the lightcurves of a heterogenous population into a limited number of subclasses, with a goal of identifying one particular type of object for a single scientific application.
+The \snphotcc\ attracted diverse classification approaches, including $\chi^{2}$ fits of the SN data to publicly available templates \citep{2002PASP..114..803N} physical models \citep{2008ApJ...681..482C}, and empirical models as well as alternatives to curve-fitting such as
 %, and a linear slope to magnitudes per day was used for the non-Ia sample.
 outier identification on the training set Hubble diagram, dimensionality reduction,
 % TODO cite InCA?
@@ -142,7 +142,6 @@ For more information on these methods and their success within the \snphotcc, we
 In short, \snphotcc\ attracted physically motivated template-based methods sensitive to the differences between the test data and the template set
 %, which are prone to bias given non-representativity of the test data and agnostic
 as well as those based on decomposition of the light curves into generic features at risk of neglecting available physical information.
-
 
 After the \snphotcc\ concluded, the lightcurves became a testbed for a suite of machine learning classifiers.
 We consider one such compilation of methods, as presented in \cite{lochner_photometric_2016}, whose confusion matrices are shown in Figure~\ref{fig:snphotcc_cm}.

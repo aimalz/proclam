@@ -57,13 +57,10 @@ For future challenges, a more balanced metric can be used to ensure correct clas
 \subsection{Probabilistic metrics}
 \label{sec:probabilistic}
 
-\plasticc\ differs from \snphotcc\ in two major ways.
-First, we do not have a unifying science goal, such as SN cosmology, to provide direction as to a metric motivated directly by physics.
-Second, we aim to identify classifiers that produce discrete posterior probability distributions $p(m \mid d)$ over $M$ classes $m$ given their photometric lightcurves $d$, not deterministic classifications.\footnote{Many classifiers, including some of the most prevalent classifiers in the time-domain astronomy field, that only provide deterministic classifications (probabilities of 0 or 1) and/or binary classifications (``yes'' vs. ``no'' for a particular class without addressing others) will have to convert their results to probability vectors.}
-The first difference will be discussed in Section~\ref{sec:weights}.
-
+\plasticc\ aims to identify classifiers that produce discrete posterior probability distributions $p(m \mid d)$ over $M$ classes $m$ given their photometric lightcurves $d$, not deterministic classifications.
+% The first difference will be discussed in Section~\ref{sec:weights}.
 % TODO: discuss ROC/AUC, etc. here as well?
-To address the second difference, we consider two metrics of classification probabilities that avoid reducing probabilities to point estimates.
+We consider two metrics of classification probabilities that avoid reducing probabilities to point estimates of class.
 Both our metrics make use of the indicator variable
 \begin{eqnarray}
   \label{eq:indicator}
@@ -78,13 +75,13 @@ for each possibile class $m$ for the $n^{\mathrm{th}}$ lightcurve which in truth
 \label{sec:logloss}
 
 The log-loss, also known as the cross-entropy, originates in the field of information theory.
-In that context, entropy
+In that context,
 \begin{eqnarray}
   \label{eq:entropy}
   H_{n} &=& -\sum_{m=1}^{M}p(m \mid d_{n})\ln[p(m \mid d_{n})]
 \end{eqnarray}
 is a measure of the entropy of the state space of classes based on the lightcurve data, independent of knowledge of the true class.
-Any deterministic classification, regardless of accuracy, minimizes the entropy, and the uncertain classifier of Section~\ref{sec:uncertaindata} provably maximizes the entropy (Murphy12).
+Any deterministic classification, regardless of accuracy, minimizes the entropy, and the uncertain classifier of Section~\ref{sec:uncertaindata} can be proven to maximize the entropy (Murphy12).
 % TODO: fix this citation!
 The cross-entropy
 \begin{eqnarray}
