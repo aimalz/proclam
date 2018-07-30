@@ -11,10 +11,16 @@ With its rapid scan strategy, exquisite depth, and many photometric filters, \ls
 % , in some cases across cosmic time.
 
 Science output from the \lsst\ dataset is contingent on distinguishing classes of astrophysical sources from one another.
+From obtaining population statistics of variable stars in the Milky Way to constraining the cosmological parameters with supernovae to discovering optical counterparts to multi-messenger events, accurate classifications are necessary to take advantage of the \lsst\ data volume.
 The gold standard for such identification in astronomy has traditionally been based on the spectrum of the source.
 However, the volume of discovered objects in the \lsst, as well as their potentially challenging noise properties, likely exceeds the availability of spectroscopic follow-up resources; the great majority of \lsst's time-varying discoveries will never be spectroscopically confirmed.
 % Thus several science cases (such as SN cosmology) will actively depend om classification of astrophysical sources based on the photometric light curve, and possibly a much smaller training sample/model based on a spectroscopic sub-sample.
 As such, there is an acute need for photometric lightcurve classifiers that can perform well on datasets that include a wide variety of sources, and where classification over the range of objects is desired, rather than challenges that focus on only one class.
+
+The Photometric \lsst\ Astronomical Time-series Classification Challenge (\plasticc) aims to identify classification techniques that serve the astronomical community by engaging the broader community outside astronomy.
+Unlike previous challenges, \plasticc\ differs in that the more comprehensive dataset includes models for well-understood classes, newly observed classes, and classes that have only been proposed to exist, to simulate serendipitous discovery anticipated of \lsst.
+Additionally, \plasticc\ will join the ranks of a handful of past astronomy classification challenges hosted on \href{https://www.kaggle.com/competitions}{Kaggle}, a platform for predictive modeling, that hosts data analytics competitions where seasoned professionals and amateurs alike can compete to classify, model and predict large data sets uploaded by companies or scientific collaborations.
+It attracts a broad user base, and those without domain knowledge may provide novel approaches to the problem at hand.
 
 Classification in astronomy is often done based on images e.g. galaxy classification \citep{2016A&C....16...34H}, supernova classification \citep{2017ApJ...836...97C}
 % TODO cite PSNID
@@ -40,11 +46,6 @@ The efficacy of this application of classification probabilities has been demons
 Thus the impact of a photometric-only survey like \lsst\ can be greatly enhanced by probabilistic classifications.
 %Because of the low-signal-to-noise expected of \lsst, probabilistic classifications are more appropriate (Roberts+17) than the point estimates of previous challenges.
 %Such posteriors are more valuable than point estimates, which we call deterministic classifications in this work, because of their versatility in application and encapsulation of observational and systematic error that may propagate through inference.
-
-The Photometric \lsst\ Astronomical Time-series Classification Challenge (\plasticc) aims to identify classification techniques that serve the astronomical community by engaging the broader community outside astronomy.
-Unlike previous challenges, \plasticc\ differs in that the more comprehensive dataset includes models for well-understood classes, newly observed classes, and classes that have only been proposed to exist, to simulate serendipitous discovery anticipated of \lsst.
-Additionally, \plasticc\ will join the ranks of a handful of past astronomy classification challenges hosted on \href{https://www.kaggle.com/competitions}{Kaggle}, a platform for predictive modeling, that hosts data analytics competitions where seasoned professionals and amateurs alike can compete to classify, model and predict large data sets uploaded by companies or scientific collaborations.
-It attracts a broad user base, and those without domain knowledge may provide novel approaches to the problem at hand.
 
 % A classification posterior can be propagated through population-level inference without a separate error propagation pipeline, and a probability can always be reduced to a point estimate for the purposes of decision-making (such as for allocation of follow-up resources), but a deterministic classification cannot in general be used to reconstruct a probability density for an individual object.
 In light of the aforementioned benefits of classification probabilities, \plasticc\ will thus accept classifiers producing classification posteriors.\footnote{Many classifiers, including some of the most prevalent classifiers in the time-domain astronomy field, that only provide deterministic and/or binary classifications will have to convert their results to probability vectors to compete in \plasticc.}
