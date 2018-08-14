@@ -23,13 +23,8 @@ The simulation includes models for well-understood classes, newly observed class
 Additionally, \plasticc\ will join the ranks of a handful\footnote{https://www.kaggle.com/c/DarkWorlds, https://www.kaggle.com/c/galaxy-zoo-the-galaxy-challenge} of past astronomy classification challenges hosted on Kaggle\footnote{https://www.kaggle.com/competitions}, a platform for predictive modeling, that hosts data analytics competitions where seasoned professionals and amateurs alike can compete to classify, model, and predict large data sets uploaded by companies or scientific collaborations.
 Kaggle attracts a broad user base, and those without domain knowledge may provide novel approaches to the problem at hand.
 
-Classification in astronomy is increasingly done based on images e.g. galaxy classification \citep{2016A&C....16...34H}, supernova classification \citep{2017ApJ...836...97C}
-% TODO cite PSNID
-, identifying bars in galaxies \citep{2018MNRAS.477..894A}, separating Near Earth Asteroids from artifacts in images \citep{2016PASJ...68..104M}, as well as light curves e.g. \citet{2016PASJ...68..104M, 2017arXiv170906257M, 2017CQGra..34f4003Z}, and even noise classification e.g. Abbot et al
-% TODO find Abbot+ paper
-, \citet{2017CQGra..34f4003Z, 2018PhRvD..97j1501G}.
-The most well-studied classification problems are often binary, with only two classes.
-% The last such challenge, \snphotcc \citep{kessler_supernova_2010}, was also restricted to a subset of classes, all types of supernovae.
+Classification in astronomy is increasingly done based on images e.g. galaxy classification \citep{2016A&C....16...34H}, supernova classification \citep{2017ApJ...836...97C}, identifying bars in galaxies \citep{2018MNRAS.477..894A}, separating Near Earth Asteroids from artifacts in images \citep{2016PASJ...68..104M}, as well as light curves e.g. \citet{2016PASJ...68..104M, 2017arXiv170906257M, 2017CQGra..34f4003Z}, and even noise classification \citet{2017CQGra..34f4003Z, 2018PhRvD..97j1501G}.
+Automated classification \cite{2011arXiv1110.4655D, 2012arXiv1209.1681D, 2018ApJS..236....9N,2012PASP..124.1175B} is becoming increasingly important in astronomy as the sooner one can make follow-up observations of an interesting object, the more one can learn about its underlying physical processes and nature.
 
 Classifaction is intrinsically \textit{probabilistic} in that the goal is to \textit{constrain} the class \textit{conditioned} on limited data, thereby defining a \textit{posterior probability density}, or \textit{classification posterior} for short, over possible classes for each classified object.
 Probabilities of classification that are reduced to point estimates of class become \textit{deterministic} classifications.
