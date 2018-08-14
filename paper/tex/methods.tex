@@ -11,10 +11,8 @@
 %\item    The metric must be reliable, giving consistent results for different instantiations of the same test case.
 %\end{itemize}
 
-\plasticc\ aims to identify the most promising classification techniques, meaning there must be a performance metric, a single scalar value quantifying how appropriate a classifier is for the task at hand.
-Choosing a metric therefore is logically entwined with the question the challenge aims to answer.
-\snphotcc, for example, sought the best classifier of SN Ia for the purpose of devoting precious follow-up resources to spectroscopically confirm likely candidates and use the spectroscopic data for cosmology investigations, a specific goal from which a well-defined metric easily followed.
-The choice of a metric is not so simple for \plasticc, which has many science goals with few arguments strong enough for meaningful fractions of spectroscopic follow-up.
+\plasticc\ aims to identify the most promising classification techniques, meaning there must be a performance metric, a single scalar value quantifying how appropriate a classifier is for the task at hand. Choosing a metric therefore is logically entwined with the question the challenge aims to answer.
+\snphotcc, for example, sought the best classifier of SN Ia for the purpose of devoting precious follow-up resources to spectroscopically confirm likely candidates and use the spectroscopic data for cosmology investigations, a specific goal from which a well-defined metric easily followed. The choice of a metric is not so simple for \plasticc, which has many science goals with few arguments strong enough for meaningful fractions of spectroscopic follow-up.
 
 The initial \plasticc\ challenge presents the entirety of the lightcurve for classification. While classification of the earliest part of the lightcurve will be valued by the science team itself, the challenge is not overtly restrictive by giving classifiers only the first few points, something that will be included explicitly in upcoming versions of the challenge, to simulate the needs of early brokers for LSST.
 
@@ -130,17 +128,18 @@ We leave to future work the thorough investigation of a nontrivial weighting sch
 % TODO: motivate weights as opposed to flat
 % TODO: rename section
 
-The underlying causes of the most troubling of the systematics of Section~\ref{sec:mockdata}, tunnel vision and cruise control, are the a nonrepresentative training set and an extreme imbalance of class membership rates.
-Both of these problems are anticipated for \lsst\ and thus featured in \plasticc; class prevalence will differ by orders of magnitude, and there will be classes that are not present in the training set at all.
+The underlying causes of the most troubling of the systematics of Section~\ref{sec:mockdata}, tunnel vision and cruise control, are the nonrepresentative training set and an extreme imbalance of class membership rates.
+Nonrepresentativity is a common problem in astronomy, as different objects naturally occur with different frequency in the universe. Something that complicates matters even further is that classes often look alike in different scenarios. For example, supernovae (stars that are completely destroyed in their explosions) often look like cataclysmic variables or CVs (stars that are not destroyed and whose brightness changes in a repeated way) given only the first few lightcurve points. Similarly tidal disruption events (TDEs) that occur when stars get sufficiently close to the central black hole of a galaxy to be destroyed can look much like supernovae that are located close to the center of the galaxy. Over longer periods of time, variations in the output from the central source of a galaxy, the active galactic nucleus (AGN) can mimic the output of a CV. 
+
+As mentioned in the previous section, subclasses often look similar but are useful in understanding very different science cases, so a metric that rewards a nuanced classifier is desireable.
+
+\lsst\ will suffer from nonrepresentative training sets, an imbalance of classes and will see many subclasses. These features are therefore present in \plasticc; class prevalence will differ by orders of magnitude, and there will be classes that are not present in the training set at all.
 % This can be problematic because our science needs might require accurate classifications of uncommon classes as well.
 Because tunnel vision is actually strong performance, it is common for tunnel classifiers to dominate challenges.
 Under a ``winner takes all'' challenge and with equal weight per lightcurve, \plasticc\ would be particularly vulnerable to a tunnel vision classifier winning despite not meeting the needs of those studying less common classes.
 
-One option is to apply a threshold of classification of all classes in order to assign an overall winner, though it would require reducing the classification probabilities to point estimates of class.
-When doing binary classification with a method that reduces probabilities to point estimates of class, each object is assigned the class of higher probability, even if the two probabilities are quite similar.
-This situation is particularly likely if the object, in fact, belongs to a third class or if the two classes are subclasses of a single physical phenomenon.
-We thus anticipate it to be a more severe issue for \plasticc\ and other realistic multi-class challenges as well as any challenges with multiple subclasses.
-% RRc/RRd?
+One option is to apply a threshold of classification of all classes in order to assign an overall winner, though it would require reducing the classification probabilities to point estimates of class. When doing binary classification with a method that reduces probabilities to point estimates of class, each object is assigned the class of higher probability, even if the two probabilities are quite similar. This situation is particularly likely if the object, in fact, belongs to a third class or if the two classes are subclasses of a single physical phenomenon.
+%We thus anticipate it to be a more severe issue for \plasticc\ and other realistic multi-class challenges as well as any challenges with multiple subclasses.
 
 A simple reduction to a point estimate would in general be inappropriate but possibly salvageable with a threshold mechanism.
 For example, requiring a minimum difference in probability density between the maximum probability class and the next highest probability class would help avert this degeneracy.
@@ -151,7 +150,7 @@ The alternative we systematically investigate in this paper is to use a ``flat''
   \label{eq:perclassavg}
 Q_{m} &=& \frac{1}{N_{M}}\sum_{n}Q_{n}
 \end{eqnarray}
-resulting from first averaging the metric values $Q_{n}$ for each member $n$ of the class $m$.
+resulting from first averaging the metric values $Q_{n}$ for each member $n$ (i.e. each observed transient) of the class $m$ (e.g. AGN, SN Ia, RRLyrae in the astronomical example).
 For this study, we consider a general weighted average
 \begin{eqnarray}
   \label{eq:weightavg}
