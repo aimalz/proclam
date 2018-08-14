@@ -18,18 +18,19 @@ with a lognormal distribution of the number $N_{m}$ of members of each class, wh
 
 We present eight mock classifiers, each of whose efficacy is described by its confusion matrix $\mathbb{C}$.
 Each classifier derives classification posteriors $p(m \mid m')$ based on the true classes as a proxy for the information contained in the lightcurves.
-The posterior probability vector $p(m \mid m')$ for a given object is proportional to a perturbation of the row $\mathbb{C}_{m'}$ of the confusion matrix $\mathbb{C}$ corresponding to its true class $m'$, with a perturbation factor of $\delta=0.1$, following
+The posterior probability vector $p(m \mid m')$ for a given object is proportional to a perturbation of the row $\mathbb{C}_{m'}$ of the confusion matrix $\mathbb{C}$ corresponding to its true class $m'$, with a perturbation factor of $\delta=0.1$, following the Dirichlet distribution:
 \begin{eqnarray}
   \label{eq:cmtoprob}
-  p(m \mid m') &\propto& \mathbb{C}_{m'} + \delta\vec{\epsilon},
+  p(m \mid m') &\propto& \Gamma{\mathbb{C}_{m'}\delta}/\sum_m'{\Gamma{\mathbb{C}_{m'}\delta}},
 \end{eqnarray}
-where the perturbation vector $\vec{\epsilon}$ has components drawn from a half-Cauchy distribution
-\begin{eqnarray}
-  \label{eq:cauchy}
-  f(x) &=& \frac{2}{\delta\pi} \left(1+\left(\frac{x+x_{0}}{\delta}\right)^{2}\right)^{-1}
-\end{eqnarray}
-with $x_{0}=0$.
-Only nonnegative values can be drawn from the half-Cauchy distribution, and the constant of proportionality for Equation~\ref{eq:cmtoprob} is chosen to ensure normalization, i.e. $\sum_{m}p(m \mid m')=1$.
+
+%where the perturbation vector $\vec{\epsilon}$ has components drawn from a half-Cauchy distribution
+%\begin{eqnarray}
+%  \label{eq:cauchy}
+%  f(x) &=& \frac{2}{\delta\pi} \left(1+\left(\frac{x+x_{0}}{\delta}\right)^{2}\right)^{-1}
+%\end{eqnarray}
+%with $x_{0}=0$.
+%Only nonnegative values can be drawn from the half-Cauchy distribution, and the constant of proportionality for Equation~\ref{eq:cmtoprob} is chosen to ensure normalization, i.e. $\sum_{m}p(m \mid m')=1$.
 % \aim{[Rahul: Might be good to have a plot of the pdf when x0 takes values close to 0., something like 0.4, 0.8 and close to 1.0]}
 
 % TODO: sequential color scheme?
@@ -89,9 +90,8 @@ We expect that the response to variation in $s$ may differ across metrics.
 A classifier with different accuracy for each class may be considered a systematic in its own right.
 An extreme example of such a classifier could be one with perfect classification performance on one class and uncertain classification on all others; its confusion matrix would be uniform except for one row, which would take a value of unity on the diagonal and zero elsewhere.
 Such a classifier would have high value to those who study the class with perfect performance and should still be used in the context of \lsst.
-However favoritism is inappropriate for the overall \plasticc\ metric, which must serve the needs of those who study all the classes and for different purposes.
-From the perspective of \plasticc, such a \textit{tunnel vision} classifier (right-center panel of Figure~\ref{fig:mock_cm}) is a major concern.
-
+For the purposes of \plasticc, we take a more measured approach, and require that the \plasticc\ metric must serve the needs of those who study a wide variety of classes for different purposes. Hence, from the perspective of \plasticc, such a \textit{tunnel vision} classifier (right-center panel of Figure~\ref{fig:mock_cm}) is a major concern.
+%However favoritism is inappropriate for the overall \plasticc\ metric, which must serve the needs of those who study all the classes and for different purposes.
 \subsection{Inaccurate classification}
 \label{sec:inaccuratedata}
 
@@ -106,10 +106,10 @@ Class $m'$ is said to be \textit{subsumed} by class $\tilde{m}$ for such a class
 The asymmetric relationship between $m'$ and $\tilde{m}$ is illustrated in the rightmost top and bottom panels of Figure~\ref{fig:mock_cm} for class $m'$ being subsumed by class $m'-1$ and class $m'$ subsuming class $m'+1$, respectively.
 
 Subsuming is particularly expected when distinguishing between subtypes of some class, and it is of utmost importance when the subtypes have wholly different science applications.
-The most well-known example of subtypes with completely different science uses is that of supernova classification.
-SN Ia and SN Ibc are challenging to distinguish, and the former often subsumes the latter in common classifiers, an effect that can be exacerbated by underrepresentation of SN Ibc in available training sets.
-However, using SN Ibc in the traditional cosmology analysis done with SN Ia can bias estimates of the cosmological parameters, so the distinction is critical.
-We would like the \plasticc\ metric to identify the strength of a classifier that successfully prevents this kind of error.
+Classification subtypes that are useful for completely different science cases are found in supernova classification, through e.g. the differences between SN Ia and SN Ibc. SN Ia and SN Ibc are challenging to distinguish, and the former often subsumes the latter in common classifiers, an effect that can be exacerbated by underrepresentation of SN Ibc in available training sets.
+However, using SN Ibc in the traditional cosmology analysis done with SN Ia can bias estimates of the cosmological parameters, so the distinction is critical. 
+
+Similarly RRc and RRd Lyrae stars have different pulsation modes (RRc stars pulsate in the first overtone, while RRd stars pulsate simultaneously in the fundamental mode and first overtone, and are much more rare than RRc stars), and yet are challenging to separate observationally. We would like the \plasticc\ metric to identify the strength of a classifier that successfully prevents this kind of error.
 
 An extreme case of inaccurate classification is to classify all objects as the most common class, a particular concern for \plasticc\ given the potential for population imbalance between classes.
 For our purposes, it matters not whether the subsuming class is actually the most common or only the most common in the training set.
