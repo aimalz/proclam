@@ -15,8 +15,10 @@
 Choosing a metric therefore is logically entwined with the question the challenge aims to answer.
 \snphotcc, for example, sought the best classifier of SN Ia for the purpose of devoting precious follow-up resources to spectroscopically confirm likely candidates and use the spectroscopic data for cosmology investigations, a specific goal from which a well-defined metric easily followed.
 The choice of a metric is not so simple for \plasticc, which has many science goals with few arguments strong enough for meaningful fractions of spectroscopic follow-up.
-Moreover, \plasticc\ focuses on a longer portion of the lightcurve, rather than the earliest portions that are used to motivate spectroscopic follow-up.
-Rather, the posterior probabilities of class must be accurate for use in inference, and they must be evaluated in a way that does not excessively favor any one science application.
+
+The initial \plasticc\ challenge presents the entirety of the lightcurve for classification. While classification of the earliest part of the lightcurve will be valued by the science team itself, the challenge is not overtly restrictive by giving classifiers only the first few points, something that will be included explicitly in upcoming versions of the challenge, to simulate the needs of early brokers for LSST.
+
+%he posterior probabilities of class must be accurate for use in inference, and they must be evaluated in a way that does not excessively favor any one science application.
 
 In Section~\ref{sec:science}, we review the metrics that were used in \snphotcc\ as the most similar previous challenge.
 % In Section~\ref{sec:deterministic}, we review the metrics that were used in \snphotcc\ as the most similar previous challenge.
@@ -74,21 +76,21 @@ for each possibile class $m$ for the $n^{\mathrm{th}}$ lightcurve which in truth
 \subsubsection{Log-loss}
 \label{sec:logloss}
 
-The log-loss, also known as the cross-entropy, originates in the field of information theory.
-In that context,
+\textbf{[This section needs rewriting to remove jargon and clarify the discrepancies raised by Kaisey/Ashish/Tom]}
+The log-loss (which is related to the cross-entropy as defined below) is a measure of how a classification algorithm performs in the case where the prediction \textbf{input} is a probability value between zero and unity.
+
 \begin{eqnarray}
   \label{eq:entropy}
-  H_{n} &=& -\sum_{m=1}^{M}p(m \mid d_{n})\ln[p(m \mid d_{n})]
+  H_{n} &=& -\sum_{m=1}^{M}\tau(m \mid d_{n})\ln[\tau(m \mid d_{n})].
 \end{eqnarray}
-is a measure of the entropy of the state space of classes based on the lightcurve data, independent of knowledge of the true class.
-Any deterministic classification, regardless of accuracy, minimizes the entropy, and the uncertain classifier of Section~\ref{sec:uncertaindata} can be proven to maximize the entropy (Murphy12).
+Hence $H_n$ is a measure of the entropy of the \textit{state space} of classes based on the lightcurve data, independent of knowledge of the true class. Any deterministic classification, regardless of accuracy, minimizes the entropy, and the uncertain classifier of Section~\ref{sec:uncertaindata} can be proven to maximize the entropy \cite{murphy2012}.
 % TODO: fix this citation!
-The cross-entropy
+In an information theory context, the cross-entropy between two distributions (or in this case classes) over the same set of light curve data, describes the average number of bits needed to identify an event (lightcurve) from the set $d_n$, assuming a classification scheme is used that is optimized for an ``unnatural'' probability distribution $p$ rather than the true distribution $\tau_{n,m}$:
 \begin{eqnarray}
   \label{eq:logloss}
-  L_{n} &=& -\sum_{m=1}^{M}\tau_{n, m}\ln[p(m \mid d_{n})]
+  L_{n} &=& -\sum_{m=1}^{M}\tau_{n, m}\ln[p(m \mid d_{n})].
 \end{eqnarray}
-is the disorder of using $p(m \mid d_{n})$ in place of $\tau_{n, m}$.
+So $L_n$ measures the \textit{disorder} of using $p(m \mid d_{n})$ in place of $\tau_{n, m}$.
 A difference between $L_{n}$ and $H_{n}$ evaluated at $\tau_{n}$ would be the information \textit{lost} to disorder in using $p(m \mid d_{n})$ in place of $\tau_{n, m}$, also known as the Kullback-Leibler Divergence (KLD).
 See \cite{2018AJ....156...35M} for a comprehensive exploration of the KLD for a continuous 1-dimensional probability space.
 The log-loss has only recently established a presence in the astronomy literature \citep{hon_deep_2017, hon_deep_2018}.
