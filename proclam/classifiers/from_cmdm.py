@@ -24,7 +24,7 @@ class FromCMDM(Classifier):
             the random seed to use, handy for testing
         """
 
-        super(FromCM, self).__init__(scheme, seed)
+        super(FromCMDM, self).__init__(scheme, seed)
         np.random.seed(seed=self.seed)
 
     def classify(self, cm, truth, delta=0.1, other=False):
@@ -54,14 +54,17 @@ class FromCMDM(Classifier):
 
         N = len(truth)
         M = len(cm)
-        
-        alpha_m = delta*cm
-        prediction =  np.zeros(M)
 
+        alpha = delta * cm
+        alpha[alpha == 0.] = 1.e-6
+        prediction =  np.empty((N, M))
+
+        funcs = []
         for m in range(M):
-            x[m] =  sts.gamma(alpha_m[truth], 1)
+            func_m = sps.dirichlet(alpha[m])
+            inds_m = np.where(truth == m)
+            prediction[inds_m] = func_m.rvs(len(inds_m))
 
-        for i in range(M):
-            prediction[m] = x[m]/np.sum(x) 
-            
+        prediction /= np.sum(prediction, axis=1)[:, np.newaxis]
+
         return prediction

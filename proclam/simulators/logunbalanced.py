@@ -13,7 +13,7 @@ class LogUnbalanced(Simulator):
 
     def __init__(self, scheme='log-unbalanced', seed=0):
         """
-        An object that simulates unbalanced true class assignments such that the probability of an object being in class 'x' (with 0<=x<=M) is proportional to 10**y, where y is a draw from a uniform distribution U(0,M).
+        An object that simulates unbalanced true class assignments such that the probability of an object being in class 'x' (with 0<=x<=M) is proportional to 2**y, where y is a draw from a uniform distribution U(0,M).
 
         Parameters
         ----------
@@ -26,7 +26,7 @@ class LogUnbalanced(Simulator):
         super(LogUnbalanced, self).__init__(scheme, seed)
         np.random.seed(seed=self.seed)
 
-    def simulate(self, M, N):
+    def simulate(self, M, N, base=10):
         """
         Simulates the truth table as an unbalanced distribution
 
@@ -36,6 +36,8 @@ class LogUnbalanced(Simulator):
             the number of true classes
         N: int
             the number of items
+        base: int, optional
+            the base for the log-distributed class populations
 
         Returns
         -------
@@ -44,8 +46,12 @@ class LogUnbalanced(Simulator):
         """
         seeds = np.random.uniform(M, size=M)
         # seeds = [max(seeds[i], 10./M) for i in range(M)]
-        counts = 10 ** (np.sort(seeds))
+        counts = base ** (np.sort(seeds))
         prob_classes = counts / np.sum(counts)
+        # assert(np.all(prob_classes > 0))
+
         truth = np.random.choice(M, size=N, p=prob_classes)
+        if not len(np.sort(np.unique(truth))) == M:
+            print('warning: some classes not represented! try lowering base')
 
         return truth

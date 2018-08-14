@@ -124,18 +124,18 @@ def det_to_cm(dets, truth, per_class_norm=True, vb=False):
 
     M = np.int(max(max(pred_classes), max(true_classes)) + 1)
 
-    print((np.shape(dets), np.shape(truth)), M)
+    if vb: print((np.shape(dets), np.shape(truth)), M)
     cm = np.zeros((M, M), dtype=float)
-    
+
     coords = np.array(list(zip(dets, truth)))
     indices, index_counts = np.unique(coords, axis=0, return_counts=True)
     index_counts = index_counts.astype(int)
-    print(index_counts)
+    if vb: print(index_counts)
     # if vb: print(indices, index_counts)
     indices = indices.T
     # if vb: print(np.shape(indices))
     cm[indices[0], indices[1]] = index_counts
-    if vb: print(cm)
+    # if vb: print(cm)
 
     if per_class_norm:
         # print(type(cm))
@@ -307,7 +307,7 @@ def averager(per_object_metrics, truth, M):
 
     Notes
     -----
-    There is currently a kludge for when there are no true class members, causing an improvement when that class is upweighted due to increasing the weight of 0.  
+    There is currently a kludge for when there are no true class members, causing an improvement when that class is upweighted due to increasing the weight of 0.
     """
     group_metric = per_object_metrics
     class_metric = np.empty(M)
