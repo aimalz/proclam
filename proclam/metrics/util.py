@@ -120,17 +120,17 @@ def det_to_cm(dets, truth, per_class_norm=True, vb=False):
     """
     pred_classes, pred_counts = np.unique(dets, return_counts=True)
     true_classes, true_counts = np.unique(truth, return_counts=True)
-    if vb: print((pred_classes, pred_counts), (true_classes, true_counts))
+    if vb: print('by request '+str((pred_classes, pred_counts), (true_classes, true_counts)))
 
     M = np.int(max(max(pred_classes), max(true_classes)) + 1)
 
-    if vb: print((np.shape(dets), np.shape(truth)), M)
+    if vb: print('by request '+str((np.shape(dets), np.shape(truth)), M))
     cm = np.zeros((M, M), dtype=float)
 
     coords = np.array(list(zip(dets, truth)))
     indices, index_counts = np.unique(coords, axis=0, return_counts=True)
     index_counts = index_counts.astype(int)
-    if vb: print(index_counts)
+    if vb: print('by request '+str(index_counts))
     # if vb: print(indices, index_counts)
     indices = indices.T
     # if vb: print(np.shape(indices))
@@ -144,7 +144,7 @@ def det_to_cm(dets, truth, per_class_norm=True, vb=False):
         # cm /= true_counts[:, np.newaxis] #
         cm = cm / true_counts[np.newaxis, :]
 
-    if vb: print(cm)
+    if vb: print('by request '+str(cm))
 
     return cm
 
@@ -195,21 +195,21 @@ def cm_to_rate(cm, vb=False):
     BROKEN!
     This can be done with a mask to weight the classes differently here.
     """
-    if vb: print(cm)
+    if vb: print('by request '+str(cm))
     diag = np.diag(cm)
-    if vb: print(diag)
+    if vb: print('by request '+str(diag))
 
     TP = np.sum(diag)
     FN = np.sum(np.sum(cm, axis=0) - diag)
     FP = np.sum(np.sum(cm, axis=1) - diag)
     TN = np.sum(cm) - TP
-    if vb: print((TP, FN, FP, TN))
+    if vb: print('by request '+str((TP, FN, FP, TN)))
 
     T = TP + TN
     F = FP + FN
     P = TP + FP
     N = TN + FN
-    if vb: print((T, F, P, N))
+    if vb: print('by request '+str((T, F, P, N)))
 
     TPR = TP / P
     FPR = FP / N
@@ -217,7 +217,7 @@ def cm_to_rate(cm, vb=False):
     TNR = TN / N
 
     rates = RateMatrix(TPR=TPR, FPR=FPR, FNR=FNR, TNR=TNR)
-    if vb: print(rates)
+    if vb: print('by request '+str(rates))
 
     return rates
 
@@ -301,7 +301,7 @@ def check_weights(avg_info, M, chosen=None, truth=None):
     return weights
 
 
-def averager(per_object_metrics, truth, M):
+def averager(per_object_metrics, truth, M, vb=False):
     """
     Creates a list with the metrics per object, separated by class
 
@@ -321,5 +321,5 @@ def averager(per_object_metrics, truth, M):
             class_metric[m] = np.average(per_class_metric)
         except AssertionError:
             class_metric[m] = 0.
-        print((m, how_many_in_class, class_metric[m]))
+        if vb: print('by request '+str((m, how_many_in_class, class_metric[m])))
     return class_metric
