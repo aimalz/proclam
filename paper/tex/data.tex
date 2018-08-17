@@ -6,15 +6,16 @@ Troughout the paper, ```data'' always refers to classification results, not ligh
 Data is in the form of catalogs of posterior probability vectors $p(m \mid d)$ over $M$ classes with labels $m$ conditioned on the observed lightcurve $d$, with each probability vector normalized to sum to unity.
 We describe below the way in which mock data is synthesized.
 
-First, we propose that the class populations are distributed according to a logarithmic distribution spanning many orders of magnitude, as is anticipated for the real \lsst\ dataset.
+First, we propose that the class populations are logarithmically distributed such that they span many orders of magnitude, as is anticipated for the real \lsst\ dataset.
 We take $M$ draws $u_{m} \sim \mathcal{U}(0, 1)$ from the standard continuous uniform distribution and establish a discrete probability distribution $p(m) = b^{u_{m}}\ Z^{-1}$ where $Z = \sum_{m} b^{u_{m}}$, i.e. such that $\sum_{m=1}^{M} p(m) = 1$.
 $N = 10^{b}$ instances $\{m'_{n}\}$ of a true class $m'$ for each lightcurve $n$ in the catalog are then drawn from $p(m')$.
-The distribution of true classes with $M = 13$ and $b = 6$ used in our tests is shown in Figure~\ref{fig:classdist}.
+The distribution of true classes with $M = 13$ and $b = 6$ used in our tests is shown in Figure~\ref{fig:classdist}, with the class labels ordered by their prevalence.
+Though the class labels for \plasticc\ will presumably be randomized, we use this ordering to ease visual inspection of our results.
 
 \begin{figure}
 	\begin{center}
     \includegraphics[width=0.5\textwidth]{./fig/complete_counts.png}
-		\caption{Our catalog of true classes following a logarithmic distribution.}
+		\caption{Our true classes are logarithmically distributed, and the labels are ordered.}
 		\label{fig:classdist}
 	\end{center}
 \end{figure}
@@ -54,7 +55,7 @@ Figure~\ref{fig:mock_cm} shows the conditional probability matrices correspondin
 \begin{figure*}
 	\begin{center}
     \includegraphics[width=0.8\textwidth]{./fig/all_sim_cm.png}
-		\caption{conditional probability matrices for eight mock classifiers.
+		\caption{Conditional probability matrices for eight mock classifiers.
     leftmost top: uncertain classification,
     leftmost bottom: perfect classifications,
     left-center top: almost perfect classification,
