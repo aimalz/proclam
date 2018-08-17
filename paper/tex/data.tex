@@ -12,11 +12,10 @@ Though probabilistic classifications are not truly compatible with the confusion
 \label{sec:mockdata}
 
 The test cases of this section are devised to determine if a metric aligns with our intuitive understanding of what constitutes a good classifier, that it should not reward classifications suffering from the most concerning failure modes, which we will refer to as \textit{systematics} throughout the paper.
-We consider a data set with $M=13$ classes
-% (nominally $12$ with one designated as ``other,'' meaning not represe) and
-with a lognormal distribution of the number $N_{m}$ of members of each class, where $N_{m}$ spans six orders of of magnitude.
+We consider a data set with $M=13$ classes with a lognormal distribution of the number $N_{m}$ of members of each class, where $N_{m}$ spans six orders of of magnitude.
 
-We present eight mock classifiers, each of whose efficacy is described by its confusion matrix $\mathbb{C}$.
+\textbf{[RH: need to clear up confusion matrix stuff here]}
+We present eight different `mock classifiers', each of whose efficacy is described by its psuedo confusion matrix $\mathbb{C}$.
 Each classifier derives classification posteriors $p(m \mid m')$ based on the true classes as a proxy for the information contained in the lightcurves.
 The posterior probability vector $p(m \mid m')$ for a given object is proportional to a perturbation of the row $\mathbb{C}_{m'}$ of the confusion matrix $\mathbb{C}$ corresponding to its true class $m'$, with a perturbation factor of $\delta=0.1$, following the Dirichlet distribution:
 \begin{eqnarray}
@@ -51,8 +50,7 @@ The posterior probability vector $p(m \mid m')$ for a given object is proportion
 	\end{center}
 \end{figure*}
 
-Figure~\ref{fig:mock_cm} shows the confusion matrices corresponding to each systematic considered, discussed in detail below.
-For each case, we address:
+Figure~\ref{fig:mock_cm} shows the confusion matrices corresponding to each systematic considered, discussed in detail below. For each case, we address:
 \begin{enumerate}
   \item What defines this error property?
   \item Under what conditions is this error property relevant?
