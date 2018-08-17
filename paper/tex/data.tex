@@ -32,9 +32,9 @@ Under a binary deterministic classification between positive and negative possib
 
 Though probabilistic classifications are not compatible with the normalized confusion matrix per se, we design tests around proposed normalized confusion matrices exhibiting various symptoms that we anticipate being problematic for \lsst.
 Under a deterministic classification scheme, an object with true class $m'$ would have an assigned class $\tilde{m}$ drawn from $p(\tilde{m} \mid m') = p(\tilde{m}, m') / p(m')$, via Bayes' Rule.
-We note that the elements of the confusion matrix have values of $N p(\tilde{m}, m')$ and that $N_{m'} / N$ must be known in order to produce a confusion matrix, so we can easily obtain $p(\tilde{m} \mid m')$ to use as the basis for classification probability submissions resulting from a confusion matrix; given its provenance, we refer to the matrix $\mathbb{C}$ comprised of $p(\tilde{m} \mid m')$ as the \textit{pseudo-confusion matrix}.
+We note that the elements of the confusion matrix have values of $N p(\tilde{m}, m')$ and that $N_{m'} / N$ must be known in order to produce a confusion matrix, so we can easily obtain $p(\tilde{m} \mid m')$ to use as the basis for classification probability submissions resulting from a confusion matrix; given its provenance, we refer to the matrix $\mathbb{C}$ comprised of $p(\tilde{m} \mid m')$ as the \textit{conditional probability matrix}.
 
-Since we believe the data contain information about the true class, we can use the appropriate row $\mathbb{C}_{m'}$ of the pseudo-confusion matrix as a proxy for $p(m \mid d)$, without ever having to touch lightcurves or classification codes.
+Since we believe the data contain information about the true class, we can use the appropriate row $\mathbb{C}_{m'}$ of the conditional probability matrix as a proxy for $p(m \mid d)$, without ever having to touch lightcurves or classification codes.
 To emulate the effect of natural variation of information content in different lightcurves, we generate a posterior probability vector $p(m \mid d_{n})$ by taking a Dirichlet-distributed draw
 \begin{eqnarray}
   \label{eq:cmtoprob}
@@ -47,14 +47,14 @@ about $\mathbb{C}_{m_{n}'}$, with a small nonnegative perturbation factor $\delt
 % \end{eqnarray}
 % \aim{[Rahul: Might be good to have a plot of the pdf when x0 takes values close to 0., something like 0.4, 0.8 and close to 1.0]}
 
-We consider eight mock classifiers, each of whose effectiveness is described by its pseudo-confusion matrix.
-Figure~\ref{fig:mock_cm} shows the pseudo-confusion matrices corresponding to each systematic considered, discussed in detail below.
+We consider eight mock classifiers, each of whose effectiveness is described by its conditional probability matrix.
+Figure~\ref{fig:mock_cm} shows the conditional probability matrices corresponding to each systematic considered, discussed in detail below.
 % TODO: sequential color scheme?
 % TODO: letters for panels, refer to them in text
 \begin{figure*}
 	\begin{center}
     \includegraphics[width=0.8\textwidth]{./fig/all_sim_cm.png}
-		\caption{Pseudo-confusion matrices for eight mock classifiers.
+		\caption{conditional probability matrices for eight mock classifiers.
     leftmost top: uncertain classification,
     leftmost bottom: perfect classifications,
     left-center top: almost perfect classification,
@@ -84,9 +84,9 @@ We can consider the \textit{uncertain} classifier as an experimental control for
 \subsubsection{Accurate classification}
 \label{sec:accuratedata}
 
-The \textit{perfect} classifier has a diagonal pseudo-confusion matrix $\mathbb{I}$ (leftmost bottom panel of Figure~\ref{fig:mock_cm}), which would correspond to deterministic classifications that are always correct.
+The \textit{perfect} classifier has a diagonal conditional probability matrix $\mathbb{I}$ (leftmost bottom panel of Figure~\ref{fig:mock_cm}), which would correspond to deterministic classifications that are always correct.
 In terms of probabilistic classifications, a perfect result would be a probability vector with 1 for the true class and 0 for all other classes.
-Due to our addition of the random perturbation factor $\vec{e}$, the probability vectors drawn from the perfectly diagonal pseudo-confusion matrix are randomly perturbed away from perfect classifications by the small factor $\delta$, but the class with maximum probability is almost always still the true class, to the tune of $\sim0.96$ with our choice of $\delta$.
+Due to our addition of the random perturbation factor $\vec{e}$, the probability vectors drawn from the perfectly diagonal conditional probability matrix are randomly perturbed away from perfect classifications by the small factor $\delta$, but the class with maximum probability is almost always still the true class, to the tune of $\sim0.96$ with our choice of $\delta$.
 This case is also a control, in that \plasticc\ would not be necessary if we believed the perfect classifier were realistically achievable.
 
 In addition to a perfect classifier, we test linear combinations
@@ -94,15 +94,15 @@ In addition to a perfect classifier, we test linear combinations
   \label{eq:lincomb}
   \mathbb{C}^{\mathrm{acc}; s} &=& \frac{1}{M+s-1} \left(s\mathbb{I} + \mathbb{U}\right)
 \end{eqnarray}
-of the perfect and uncertain classifier pseudo-confusion matrices where the contribution of the perfect classifier is greater than that of the uncertain classifier by a factor of $s$.
-Deterministic classifications drawn from such a pseudo-confusion matrix would be correct $s$ times as often as they are wrong, and the incorrect guesses would be uncorrelated across classes.
-The probability vectors drawn from such pseudo-confusion matrices would have some variability but still mostly have their peak value at the truth.
+of the perfect and uncertain classifier conditional probability matrices where the contribution of the perfect classifier is greater than that of the uncertain classifier by a factor of $s$.
+Deterministic classifications drawn from such a conditional probability matrix would be correct $s$ times as often as they are wrong, and the incorrect guesses would be uncorrelated across classes.
+The probability vectors drawn from such conditional probability matrices would have some variability but still mostly have their peak value at the truth.
 We consider the case of the \textit{almost perfect} classifier with $s=4$ (left-center top panel of Figure~\ref{fig:mock_cm}) and the \textit{noisy} classifier with $s=2$ (left-center bottom panel of Figure~\ref{fig:mock_cm}), which correspond to $p(m' \mid d)\approx0.82$ and $p(m' \mid d)\approx0.62$ respectively.
 We expect that the response to variation in $s$ may differ across metrics.
 (Though $s$ would realistically be expected to vary for each class, we do not conduct a systematic investigation of this possibility at this time.)
 
 A classifier with different accuracy for each class may be considered a systematic in its own right.
-An extreme example of such a classifier could be one with perfect classification performance on one class and uncertain classification on all others; its pseudo-confusion matrix would be uniform except for one row, which would take a value of unity on the diagonal and zero elsewhere.
+An extreme example of such a classifier could be one with perfect classification performance on one class and uncertain classification on all others; its conditional probability matrix would be uniform except for one row, which would take a value of unity on the diagonal and zero elsewhere.
 Such a classifier would have high value to those who study the class with perfect performance and should still be used in the context of \lsst.
 For the purposes of \plasticc, we take a more measured approach, and require that the \plasticc\ metric must serve the needs of those who study a wide variety of classes for different purposes. Hence, from the perspective of \plasticc, such a \textit{tunnel vision} classifier (right-center panel of Figure~\ref{fig:mock_cm}) is a major concern.
 %However favoritism is inappropriate for the overall \plasticc\ metric, which must serve the needs of those who study all the classes and for different purposes.
@@ -110,8 +110,8 @@ For the purposes of \plasticc, we take a more measured approach, and require tha
 \label{sec:inaccuratedata}
 
 Inaccurate classification in the context of a deterministic classifier is self-explanatory.
-If a classifier is \textit{systematically} inaccurate, its pseudo-confusion matrix has significant probability on off-diagonal elements.
-We model inaccurate probabilistic classifications of class $m'$ by using the row of the pseudo-confusion matrix corresponding to class $\tilde{m}$ as the basis for the perturbed probability vector
+If a classifier is \textit{systematically} inaccurate, its conditional probability matrix has significant probability on off-diagonal elements.
+We model inaccurate probabilistic classifications of class $m'$ by using the row of the conditional probability matrix corresponding to class $\tilde{m}$ as the basis for the perturbed probability vector
 \begin{eqnarray}
   \label{eq:subsume}
   p(m\ \mid\ m') = p(m\ \mid\ \tilde{m}).
@@ -143,8 +143,8 @@ Though we dampen this systematic by employing per-class weights, described in Se
 
 \subsection{Representative classifications}
 \label{sec:realdata}
-%\aim{This would be more meaningful if we were given the pseudo-confusion matrices of actual submissions to \snphotcc\ and then checked whether the \plasticc\ metric would have designated a different winner.
-%Also, it may be more interpretable if we instead use Ashish's pseudo-confusion matrices that have more classes.}
+%\aim{This would be more meaningful if we were given the conditional probability matrices of actual submissions to \snphotcc\ and then checked whether the \plasticc\ metric would have designated a different winner.
+%Also, it may be more interpretable if we instead use Ashish's conditional probability matrices that have more classes.}
 
 In addition to our mock classifiers, we test our metric candidates on realistic classification results unrelated to \plasticc.
 The Supernova Photometric Classification Challenge (\snphotcc) \citep{kessler_supernova_2010} focused on classifying the lightcurves of a heterogenous population into a limited number of subclasses, with a goal of identifying one particular type of object for a single scientific application.
@@ -161,7 +161,7 @@ In short, \snphotcc\ attracted physically motivated template-based methods sensi
 as well as those based on decomposition of the light curves into generic features at risk of neglecting available physical information.
 
 After the \snphotcc\ concluded, the lightcurves became a testbed for a suite of machine learning classifiers.
-We consider one such compilation of methods, as presented in \citet{lochner_photometric_2016}, whose pseudo-confusion matrices are shown in Figure~\ref{fig:snphotcc_cm}.
+We consider one such compilation of methods, as presented in \citet{lochner_photometric_2016}, whose conditional probability matrices are shown in Figure~\ref{fig:snphotcc_cm}.
 % TODO what are the 3 classes?
 These classification algorithms include a wavelet decomposition of the spectra to construct the features over which to classify (\citet{2011MNRAS.414.1987N}, bottom row) and template-based classification procedures (\citet{2011ApJ...738..162S}, top row), each paired with Boosted Random Forest, K-Nearest Neighbors, Naive Bayes, Support Vector Machine, and Neural Network machine learning algorithms (columns).
 While the complexity of entries to the \snphotcc\ was greater than this subset, we use these illustrative examples as a useful comparison set over which to assess the performance of the approaches under our metric scheme.
@@ -169,7 +169,7 @@ While the complexity of entries to the \snphotcc\ was greater than this subset, 
 \begin{figure*}
 	\begin{center}
     \includegraphics[width=\textwidth]{./fig/all_snphotcc_cm.png}
-		\caption{pseudo-confusion matrices of the \citet{lochner_photometric_2016} methods applied to the \snphotcc\ dataset.
+		\caption{conditional probability matrices of the \citet{lochner_photometric_2016} methods applied to the \snphotcc\ dataset.
     Top row: five machine learning methods applied to template decompositions.
     Bottom row: the same five machine learning methods applied to wavelet features.}
 		\label{fig:snphotcc_cm}
