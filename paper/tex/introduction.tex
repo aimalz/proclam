@@ -7,33 +7,28 @@ The Large Synoptic Survey Telescope (\lsst) has the potential to advance time-do
 % Bright astrophysical transients like RR Lyrae give insight into the structure and evolution of stars.
 % Active galactic nuclei probe the evolution of large massive galaxies.
 % These are but some of the physical principles that are testable with the many different kinds of transients that will be delivered with the Large Synoptic Survey Telescope (LSST).
-With its rapid scan strategy, exquisite depth, and many photometric filters, \lsst\ will deliver millions of multi-band time-series, generically called lightcurves, enabling unprecedented population-level studies of time-varying astrophysical sources.
+With its rapid scan strategy, exquisite depth, and many photometric filters, \lsst\ will deliver millions of time-series observations in multiple electromagnetic wavelength ranges (bands, or filters), centered on specific wavelengths of light. These are called `lightcurves' in astronomy, enabling unprecedented population-level studies of time-varying astrophysical sources.
 % , in some cases across cosmic time.
 
 Science output from the \lsst\ dataset is contingent on distinguishing classes of astrophysical sources from one another.
 From obtaining population statistics of variable stars in the Milky Way to constraining the cosmological parameters with supernovae to discovering optical counterparts to multi-messenger events, accurate classifications are necessary to take advantage of the \lsst\ data volume.
 The gold standard for such identification in astronomy has traditionally been based on the spectrum of the source.
-However, the volume of objects anticipated of \lsst, as well as their potentially low signal-to-noise ratios, likely exceeds the availability of spectroscopic follow-up resources; the great majority of \lsst's time-varying discoveries will never be spectroscopically confirmed.
+However, the volume of objects anticipated of LSST, as well as potentially low signal-to-noise ratios for most sources, likely exceeds the availability of spectroscopic follow-up resources; the great majority of \lsst's time-varying discoveries will never be spectroscopically confirmed.
 % Thus several science cases (such as SN cosmology) will actively depend om classification of astrophysical sources based on the photometric light curve, and possibly a much smaller training sample/model based on a spectroscopic sub-sample.
 As such, there is an acute need for classifiers of photometric lightcurves that can perform well on datasets that include a wide variety of sources, and where classification over the range of objects is desired, rather than challenges that focus on only one class.
 
 The Photometric \lsst\ Astronomical Time-series Classification Challenge (\plasticc) aims to identify and motivate the development of classification techniques that serve the astronomical community by engaging the broader community outside astronomy.
 \plasticc's dataset is comprehensive and intended to encompass all the observations \lsst\ will provide in the coming years.
 The simulation includes models for well-understood classes, newly observed classes, and classes that have only been proposed to exist, to simulate serendipitous discoveries anticipated of \lsst.
-Additionally, \plasticc\ will join the ranks of a handful of past astronomy classification challenges hosted on \href{https://www.kaggle.com/competitions}{Kaggle}, a platform for predictive modeling, that hosts data analytics competitions where seasoned professionals and amateurs alike can compete to classify, model, and predict large data sets uploaded by companies or scientific collaborations.
+Additionally, \plasticc\ will join the ranks of a handful\footnote{https://www.kaggle.com/c/DarkWorlds, https://www.kaggle.com/c/galaxy-zoo-the-galaxy-challenge} of past astronomy classification challenges hosted on Kaggle\footnote{https://www.kaggle.com/competitions}, a platform for predictive modeling, that hosts data analytics competitions where seasoned professionals and amateurs alike can compete to classify, model, and predict large data sets uploaded by companies or scientific collaborations.
 Kaggle attracts a broad user base, and those without domain knowledge may provide novel approaches to the problem at hand.
 
-Classification in astronomy is often done based on images e.g. galaxy classification \citep{2016A&C....16...34H}, supernova classification \citep{2017ApJ...836...97C}
-% TODO cite PSNID
-, identifying bars in galaxies \citep{2018MNRAS.477..894A}, separating Near Earth Asteroids from artifacts in images \citep{2016PASJ...68..104M}, as well as light curves e.g. \citet{2016PASJ...68..104M, 2017arXiv170906257M, 2017CQGra..34f4003Z}, and even noise classification e.g. Abbot et al
-% TODO find Abbot+ paper
-, \citet{2017CQGra..34f4003Z, 2018PhRvD..97j1501G}.
-The most well-studied classification problems are often binary, with only two classes.
-% The last such challenge, \snphotcc \citep{kessler_supernova_2010}, was also restricted to a subset of classes, all types of supernovae.
+Classification in astronomy is increasingly done based on images e.g. galaxy classification \citep{2016A&C....16...34H}, supernova classification \citep{2017ApJ...836...97C}, identifying bars in galaxies \citep{2018MNRAS.477..894A}, separating Near Earth Asteroids from artifacts in images \citep{2016PASJ...68..104M}, as well as light curves e.g. \citet{2016PASJ...68..104M, 2017arXiv170906257M, 2017CQGra..34f4003Z}, and even noise classification \citet{2017CQGra..34f4003Z, 2018PhRvD..97j1501G}.
+Automated classification \cite{2011arXiv1110.4655D, 2012arXiv1209.1681D, 2018ApJS..236....9N,2012PASP..124.1175B} is becoming increasingly important in astronomy as the sooner one can make follow-up observations of an interesting object, the more one can learn about its underlying physical processes and nature.
 
 Classifaction is intrinsically \textit{probabilistic} in that the goal is to \textit{constrain} the class \textit{conditioned} on limited data, thereby defining a \textit{posterior probability density}, or \textit{classification posterior} for short, over possible classes for each classified object.
 Probabilities of classification that are reduced to point estimates of class become \textit{deterministic} classifications.
-As an example, an object with probability $0.9$ of being in a certain class $m$ might be assigned a deterministic classification of being of class $m$, effectively rounting up the probability to $1$, yielding a point estimate of $m$ for that object.
+As an example, an object with probability $0.9$ of being in a certain class $m$ might be assigned a deterministic classification of being of class $m$, effectively rounding up the probability to $1$, yielding a point estimate of $m$ for that object.
 Such a reduction of a probability density to a point estimate discards information whose impact depends on how the classification results are subsequently used.
 
 For example, the decision of how to allocate limited spectroscopic follow-up resources could benefit from probabilistic information if provided early enough.
