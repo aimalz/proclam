@@ -26,8 +26,8 @@ Once the true classes have been set, mock classification probabilities are deriv
 
 The cases of this section are devised to test if a metric is congruent with our intuitive understanding of what constitutes a good classifier, that it should not reward classifications suffering from the most concerning failure modes, which we will refer to as \textit{systematics} throughout the paper.
 % TODO change systematics to symptoms?
-Our impressions of systematics can be seen as reflections of the confusion matrix, a familiar metric of deterministic classification \citep{2012PASP..124.1175B}.
-The confusion matrix is an $M \times M$ table of observed counts (or, if normalized, frequencies $p(\tilde{m}, m')$) of pairs of estimated class labels $\tilde{m}$ (columns) and true classes $m'$ (rows) computed after a deterministic classification has been performed on some data set with $N$ objects.
+Our impressions of systematics can be seen as reflections of the conditional probability matrix, a familiar metric of deterministic classification \citep{2012PASP..124.1175B}.
+The conditional probability matrix is an $M \times M$ table of observed counts (or, if normalized, frequencies $p(\tilde{m}, m')$) of pairs of estimated class labels $\tilde{m}$ (columns) and true classes $m'$ (rows) computed after a deterministic classification has been performed on some data set with $N$ objects.
 Under a binary deterministic classification between positive and negative possibilities, it is natural to count the numbers of true positives $TP$, false positive $FP$, true negative $TN$, and false negative $FN$, which can be turned into rates relative to the true numbers of positive and negative instances; these rates may serve as building blocks for more sophisticated metrics of multi-class deterministic classifiers that will be addressed in Section~\ref{sec:methods}.
 
 Though probabilistic classifications are not compatible with the normalized confusion matrix per se, we design tests around proposed normalized confusion matrices exhibiting various symptoms that we anticipate being problematic for \lsst.
