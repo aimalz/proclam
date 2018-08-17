@@ -56,7 +56,7 @@ class FromCMDM(Classifier):
         M = len(cm)
 
         alpha = delta * cm
-        alpha[alpha == 0.] = 1.e-6
+        alpha[alpha == 0.] = 1.e-8
         prediction =  np.empty((N, M))
 
         funcs = []
