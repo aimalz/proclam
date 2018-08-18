@@ -294,10 +294,12 @@ def check_weights(avg_info, M, chosen=None, truth=None):
             chosen = np.random.randint(M)
         if avg_info == 'up':
             weights = np.ones(M) / np.float(M)
-            weight[chosen] = 1.
+            weights[chosen] = 1.
         elif avg_info == 'down':
             weights = np.ones(M)
-            weight[chosen] = 1./np.float(M)
+            weights[chosen] = 1./np.float(M)
+    else:
+        print('something has gone wrong with avg_info '+str(avg_info))
     return weights
 
 def averager(per_object_metrics, truth, M, vb=False):
