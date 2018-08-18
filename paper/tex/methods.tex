@@ -70,6 +70,7 @@ Both our metrics make use of the indicator variable
   \end{cases}
 \end{eqnarray}
 for each possibile class $m$ for the $n^{\mathrm{th}}$ lightcurve which in truth belongs to class $m'$.
+Both of our metrics are strictly nonnegative and approach zero for a truly perfect classifier.
 
 \subsubsection{Log-loss}
 \label{sec:logloss}
@@ -79,7 +80,7 @@ The log-loss (which is related to the cross-entropy as defined below) is a measu
 
 \begin{eqnarray}
   \label{eq:entropy}
-  H_{n} &=& -\sum_{m=1}^{M}\tau(m \mid d_{n})\ln[\tau(m \mid d_{n})].
+  H_{n} &=& -\sum_{m=1}^{M} \tau(m \mid d_{n}) \ln[\tau(m \mid d_{n})].
 \end{eqnarray}
 Hence $H_n$ is a measure of the entropy of the \textit{state space} of classes based on the lightcurve data, independent of knowledge of the true class. Any deterministic classification, regardless of accuracy, minimizes the entropy, and the uncertain classifier of Section~\ref{sec:uncertaindata} can be proven to maximize the entropy \cite{murphy2012}.
 % TODO: fix this citation!

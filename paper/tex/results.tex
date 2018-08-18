@@ -1,33 +1,51 @@
 \section{Results}
 \label{sec:results}
 
-In the following sections, we explore the response of the log-loss and Brier score metrics to the prevalence of classifier error properties and as a function of the weighting scheme on the class(es) affected by each systematic.
-Both of our metrics are strictly nonnegative and vanish for a truly perfect classifier.
+In the following sections, we explore the response of the log-loss and Brier score metrics to the presence of classifier error properties and as a function of the weighting scheme on the class(es) affected by each systematic.
 
 \subsection{Mock classifier systematics}
 \label{sec:mockresults}
 
-We simulate mock classifications from linear combinations of the confusion matrices of Section~\ref{sec:mockdata} using a log-normal distribution of class populations to make a catalog of $10^{5}$ posterior probability vectors for every test case.
+We simulate mock classifications from linear combinations of the conditional probability matrices using logarithmically distributed class populations to make a catalog of $10^{6}$ posterior probability vectors for every conditional probability matrix, as described in of Section~\ref{sec:mockdata}.
 The limited catalog size induces a small amount of stochasticity, particularly due to the classes with only a handful of members.
 % TODO: repeat for error bars
 
+% \begin{figure}
+% 	\begin{center}
+% 		\includegraphics[width=0.5\textwidth]{./fig/systematics_onlyperfect.png}
+% % TODO larger labels, ticklabels
+% 		\caption{The behavior of the metrics when systematic effects added to the perfect classifier.
+% 		The log-loss (blue, left $y$ axis) and Brier score (green, right $y$ axis) are shown for classifiers that are ``perfect'' aside from the indicated systematic (panels) as a function how many classes are affected by the systematic (on the $x$-axis), beginning with the lowest population classes.
+% 		The two metrics behave very similarly to one another and have high sensitivity to a subsuming classifier.}
+% 	\end{center}
+% 	\label{fig:cruise}
+% \end{figure}
+In Figure~\ref{fig:all_combined}, we demonstrate the behavior of the metrics with conditional probability matrices composed of pairs of baseline classifier error properties.
+
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.5\textwidth]{./fig/systematics_onlyperfect.png}
-% TODO larger labels, ticklabels
-		\caption{The behavior of the metrics when systematic effects added to the perfect classifier.
-		The log-loss (blue, left $y$ axis) and Brier score (green, right $y$ axis) are shown for classifiers that are ``perfect'' aside from the indicated systematic (panels) as a function how many classes are affected by the systematic (on the $x$-axis), beginning with the lowest population classes.
-		The two metrics behave very similarly to one another and have high sensitivity to a subsuming classifier.}
+		\includegraphics[width=0.5\textwidth]{./fig/test_combo.png}
+		\caption{Weighted log-loss and Brier scores for classifiers with combinations of systematics.
+		Each point represents a classifier with baseline behavior (regular polygon marker) for all but one class with a particular systematic (asterisk markers).
+		The color of the systematic effect and baseline behavior markers indicates the weight on the class affected by the systematic and the integrated weight evenly distributed over other classes with baseline behavior, respectively.
+		The $x$-axis is the Brier score and the $y$-axis is the log-loss. corresponds to an almost perfect classifier that with one class instead affected by a systematic (shape), with log-loss on the $y$ axis and Brier score on the $x$ axis.
+		}
 	\end{center}
-	\label{fig:cruise}
+	\label{fig:all_combined}
 \end{figure}
 
-In Figure~\ref{fig:cruise}, we illustrate the effect on the metrics of adding to an initially perfect classifier each of four error properties:
-uncertainty (lower left panel, described in Section~\ref{sec:uncertaindata}),
-a class $\tilde{m}$ subsuming class $m'$ (upper right panel, described in Section~\ref{sec:inaccuratedata}),
-and reducing perfection via uniform noise by a factor of $s=2$ to an almost perfect classifier and $s=4$ to a noisy classifier (upper left and bottom right panels, respectively, described in Section~\ref{sec:accuratedata}).
-Flat weights are used for each of these tests.
+The baselines considered are the uncertain, perfect, almost perfect, and noisy conditional probability matrices described in Section~\ref{sec:mockdata}.
+The systematics introduced to each baselines are those that we intuitively expect to worsen performance, as considering all combinations would be redundant;
+the uncertain, almost perfect, noisy, and subsuming classifiers are anticipated to worsen an otherwise perfect classifier;
+the uncertain, noisy, and subsuming classifiers are anticipated to worsen an otherwise almost perfect classifier;
+the uncertain and subsuming classifiers are anticipated to worsen an otherwise noisy classifier;
+and the subsuming classifier is anticipated to worsen an otherwise uncertain classifier.
 
+We also vary the weights placed on the class affected by the worsening systematic and the integrated weight of all other classes with baseline behavior.
+We observe linear relationships between the log-loss and Brier score metrics for each pair of baseline and systematic as the weights are varied.
+Though the linearity is not surprising, there is information to be gleaned from the slopes.
+
+\aim{Still propagating changes below here!}
 The roughly constant slopes of the metric values as a function of the number of classes affected by the systematics indicates that both the log-loss and Brier score are stable to the prevalence of each systematic.
 The peak value of the metric when every class is thoroughly affected by a sytematic is also consistent with our intuitive ranking of how badly the classifiers should be penalized for each systematic; the subsuming classifier is penalized more than the uncertain classifier, the uncertain classifier is penalized more than the noisy classifier, and the noisy classifier is penalized more than the almost perfect classifier.
 
@@ -51,16 +69,16 @@ Figure~\ref{fig:popweight} shows the impact of weighting the per-class metrics b
 The points show different classification schemes, and all points are coloured by the change in the weighting, dependent on the size of the population class being classified.
 Conversely, the cruise control classifier and, to a lesser degree the noisy classifier, always has high log-loss and Brier score values regardless of the weight on the affected class.
 
-\begin{figure}
-	\begin{center}
-		\includegraphics[width=0.5\textwidth]{./fig/all_effects_isolated.png}
-		\caption{Population-weighted log-loss and Brier scores for classifiers with one class affected by a systematic, as a function of the population of the affected class.
-		Each point corresponds to an almost perfect classifier that with one class instead affected by a systematic (shape), with log-loss on the $y$ axis and Brier score on the $x$ axis.
-		The metrics are calculated with a weighting (color and size) proportional to the log of its weight in a weighted average following Equation~\ref{eq:weightavg}.
-		}
-	\end{center}
-	\label{fig:popweight}
-\end{figure}
+% \begin{figure}
+% 	\begin{center}
+% 		\includegraphics[width=0.5\textwidth]{./fig/all_effects_isolated.png}
+% 		\caption{Population-weighted log-loss and Brier scores for classifiers with one class affected by a systematic, as a function of the population of the affected class.
+% 		Each point corresponds to an almost perfect classifier that with one class instead affected by a systematic (shape), with log-loss on the $y$ axis and Brier score on the $x$ axis.
+% 		The metrics are calculated with a weighting (color and size) proportional to the log of its weight in a weighted average following Equation~\ref{eq:weightavg}.
+% 		}
+% 	\end{center}
+% 	\label{fig:popweight}
+% \end{figure}
 
 The tunnel vision classifier has a consistently low value under the Brier score and log-loss metric (bottom left corner of the plot), only increasing its Brier score once the weighting drops (less blue).
 In this view, the Brier score appears to be more susceptible to tunnel vision than the log-loss, demonstrating a more significant decrease as the size of the affected class increases, but both metrics have concerning behavior in this regard.

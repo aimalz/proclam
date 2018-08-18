@@ -39,7 +39,7 @@ Since we believe the data contain information about the true class, we can use t
 To emulate the effect of natural variation of information content in different lightcurves, we generate a posterior probability vector $p(m \mid d_{n})$ by taking a Dirichlet-distributed draw
 \begin{eqnarray}
   \label{eq:cmtoprob}
-  p(m \mid d_{n}) &\sim& \frac{\Gamma(\mathbb{C}_{m_{n}'} \delta)}{\sum_{m'} \Gamma(\mathbb{C}_{m'} \delta)}.
+  p(m \mid d_{n}) &\sim& \frac{\Gamma(\mathbb{C}_{m_{n}'} \delta)}{\sum_{m'} \Gamma(\mathbb{C}_{m'} \delta)}
 \end{eqnarray}
 about $\mathbb{C}_{m_{n}'}$, with a small nonnegative perturbation factor $\delta$ and in terms of the gamma function.
 % \begin{eqnarray}
