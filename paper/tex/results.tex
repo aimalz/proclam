@@ -20,7 +20,14 @@ The limited catalog size induces a small amount of stochasticity, particularly d
 % 	\end{center}
 % 	\label{fig:cruise}
 % \end{figure}
-In Figure~\ref{fig:all_combined}, we demonstrate the behavior of the metrics with conditional probability matrices composed of pairs of baseline classifier error properties.
+In Figure~\ref{fig:all_combined}, we demonstrate the behavior of the metrics with classification posteriors derived from conditional probability matrices composed of pairs of baseline classifier error properties.
+The baselines considered are the uncertain, perfect, almost perfect, and noisy conditional probability matrices described in Section~\ref{sec:mockdata}.
+The systematics introduced to each baselines are those that we intuitively expect to worsen performance, as considering all combinations would be redundant;
+the uncertain, almost perfect, noisy, and subsuming classifiers are anticipated to worsen an otherwise perfect classifier;
+the uncertain, noisy, and subsuming classifiers are anticipated to worsen an otherwise almost perfect classifier;
+the uncertain and subsuming classifiers are anticipated to worsen an otherwise noisy classifier;
+and the subsuming classifier is anticipated to worsen an otherwise uncertain classifier.
+We also vary the weights placed on the class affected by the worsening systematic and the integrated weight of all other classes with baseline behavior, with values ranging from 0 (all weight on the baseline) to 1 (all weight on the systematic).
 
 \begin{figure}
 	\begin{center}
@@ -34,19 +41,13 @@ In Figure~\ref{fig:all_combined}, we demonstrate the behavior of the metrics wit
 	\label{fig:all_combined}
 \end{figure}
 
-The baselines considered are the uncertain, perfect, almost perfect, and noisy conditional probability matrices described in Section~\ref{sec:mockdata}.
-The systematics introduced to each baselines are those that we intuitively expect to worsen performance, as considering all combinations would be redundant;
-the uncertain, almost perfect, noisy, and subsuming classifiers are anticipated to worsen an otherwise perfect classifier;
-the uncertain, noisy, and subsuming classifiers are anticipated to worsen an otherwise almost perfect classifier;
-the uncertain and subsuming classifiers are anticipated to worsen an otherwise noisy classifier;
-and the subsuming classifier is anticipated to worsen an otherwise uncertain classifier.
-
-We also vary the weights placed on the class affected by the worsening systematic and the integrated weight of all other classes with baseline behavior.
 We observe linear relationships between the log-loss and Brier score metrics for each pair of baseline and systematic as the weights are varied.
-Though the linearity is not surprising, there is information to be gleaned from the slopes.
+We note that for all weight on the perfect classifier, the values of both metrics vanish to zero.
+It is immediately evident that the log-loss has more dynamic range than the Brier score overall.
+Though the linearity is not surprising, there is information to be gleaned from the slopes and extents.
+
 
 \aim{Still propagating changes below here!}
-The roughly constant slopes of the metric values as a function of the number of classes affected by the systematics indicates that both the log-loss and Brier score are stable to the prevalence of each systematic.
 The peak value of the metric when every class is thoroughly affected by a sytematic is also consistent with our intuitive ranking of how badly the classifiers should be penalized for each systematic; the subsuming classifier is penalized more than the uncertain classifier, the uncertain classifier is penalized more than the noisy classifier, and the noisy classifier is penalized more than the almost perfect classifier.
 
 Both the log-loss and Brier score are appropriate for singling out a classifier that enables any class to subsume other classes, thereby confirming that the cruise control classifier will not in general outscore a classifier that avoids subsuming.
