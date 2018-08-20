@@ -77,7 +77,7 @@ For each case, we address:
 \subsubsection{Uncertain classification}
 \label{sec:uncertaindata}
 
-An entirely uniform  matrix $\mathbb{U}$ (leftmost top panel of Figure~\ref{fig:mock_cm}) would correspond to uniform random guesses for deterministic classification, but the probability vectors drawn from it are more nuanced.
+An entirely uniform conditional probability matrix $\mathbb{U}$ (leftmost top panel of Figure~\ref{fig:mock_cm}) would correspond to uniform random guesses for deterministic classification, but the probability vectors drawn from it are more nuanced.
 In accordance with Equation~\ref{eq:cmtoprob}, the probability vectors are perturbations away from a uniform distribution across all classes.
 The peak values of these probability vectors will correspond to uniform random classifications, however, with $p(m' \mid d)\approx M^{-1}$.
 We can consider the \textit{uncertain} classifier as an experimental control for the worst possible classifier, bearing in mind that if classifications were anticorrelated with true classes (i.e. consistently misclassifying A as B and B as A), the experimenter would simply reassign the classification labels to improve performance.
@@ -107,6 +107,7 @@ An extreme example of such a classifier could be one with perfect classification
 Such a classifier would have high value to those who study the class with perfect performance and should still be used in the context of \lsst.
 For the purposes of \plasticc, we take a more measured approach, and require that the \plasticc\ metric must serve the needs of those who study a wide variety of classes for different purposes. Hence, from the perspective of \plasticc, such a \textit{tunnel vision} classifier (right-center panel of Figure~\ref{fig:mock_cm}) is a major concern.
 %However favoritism is inappropriate for the overall \plasticc\ metric, which must serve the needs of those who study all the classes and for different purposes.
+
 \subsection{Inaccurate classification}
 \label{sec:inaccuratedata}
 
@@ -119,12 +120,14 @@ We model inaccurate probabilistic classifications of class $m'$ by using the row
 \end{eqnarray}
 Class $m'$ is said to be \textit{subsumed} by class $\tilde{m}$ for such a classifier.
 The asymmetric relationship between $m'$ and $\tilde{m}$ is illustrated in the rightmost top and bottom panels of Figure~\ref{fig:mock_cm} for class $m'$ being subsumed by class $m'-1$ and class $m'$ subsuming class $m'+1$, respectively.
+However, one or more classes could be mutually subsuming if one already has significant off-diagonal probability, as is true for the uncertain classifier.
 
 Subsuming is particularly expected when distinguishing between subtypes of some class, and it is of utmost importance when the subtypes have wholly different science applications.
 Classification subtypes that are useful for completely different science cases are found in supernova classification, through e.g. the differences between SN Ia and SN Ibc. SN Ia and SN Ibc are challenging to distinguish, and the former often subsumes the latter in common classifiers, an effect that can be exacerbated by underrepresentation of SN Ibc in available training sets.
 However, using SN Ibc in the traditional cosmology analysis done with SN Ia can bias estimates of the cosmological parameters, so the distinction is critical.
 
-Similarly RRc and RRd Lyrae stars have different pulsation modes (RRc stars pulsate in the first overtone, while RRd stars pulsate simultaneously in the fundamental mode and first overtone, and are much more rare than RRc stars), and yet are challenging to separate observationally. We would like the \plasticc\ metric to identify the strength of a classifier that successfully prevents this kind of error.
+Similarly RRc and RRd Lyrae stars have different pulsation modes (RRc stars pulsate in the first overtone, while RRd stars pulsate simultaneously in the fundamental mode and first overtone, and are much more rare than RRc stars), and yet are challenging to separate observationally.
+We would like the \plasticc\ metric to identify the strength of a classifier that successfully prevents this kind of error.
 
 An extreme case of inaccurate classification is to classify all objects as the most common class, a particular concern for \plasticc\ given the potential for population imbalance between classes.
 For our purposes, it matters not whether the subsuming class is actually the most common or only the most common in the training set.
