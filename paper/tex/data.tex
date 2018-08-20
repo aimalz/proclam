@@ -32,7 +32,7 @@ These systematics can be seen as modifications to the confusion matrix, a famili
 erministic classification \citep{2012PASP..124.1175B}. The confusion matrix is an $M \times M$ table of observed counts (or, if normalized, frequencies $p(\tilde{m}, m')$) of pairs of estimated class labels $\tilde{m}$ (columns) and true classes $m'$ (rows) computed after a deterministic classification has been performed on some data set with $N$ objects.
 Under a binary deterministic classification between positive and negative possibilities, it is natural to count the numbers of true positives $TP$, false positive $FP$ (or Type 1 error), true negative $TN$, and false negative $FN$ (Type 2 error), which can be turned into rates relative to the true numbers of positive and negative instances; these rates may serve as building blocks for more sophisticated metrics of multi-class deterministic classifiers that will be addressed in Section~\ref{sec:methods}.
 
-Though probabilistic classifications are not compatible with the normalized confusion matrix \textit{per se}, we design tests around proposed normalized confusion matrices exhibiting various symptoms that we anticipate being problematic for \lsst.
+Though probabilistic classifications are not compatible with the normalized confusion matrix per se, we design tests around proposed normalized confusion matrices exhibiting various symptoms that we anticipate being problematic for \lsst.
 Under a deterministic classification scheme, an object with true class $m'$ would have an assigned class $\tilde{m}$ drawn from $p(\tilde{m} \mid m') = p(\tilde{m}, m') / p(m')$, via Bayes' Rule.
 We note that the elements of the confusion matrix have values of $N p(\tilde{m}, m')$ and that $N_{m'} / N$ must be known in order to produce a confusion matrix, so we can easily obtain $p(\tilde{m} \mid m')$ to use as the basis for classification probability submissions resulting from a confusion matrix; given its provenance, we refer to the matrix $\mathbb{C}$ comprised of $p(\tilde{m} \mid m')$ as the \textit{conditional probability matrix}.
 
@@ -100,7 +100,7 @@ Indeed, a classifier with different accuracy for each class may be considered a 
 \label{sec:inaccuratedata}
 
 Inaccurate classification in the context of a deterministic classifier is self-explanatory.
-If a classifier is \textit{systematically} inaccurate, its conditional probability matrix has significant probability on off-diagonal elements.
+If a classifier is \textul{ssystematically} inaccurate, its conditional probability matrix has significant probability on off-diagonal elements.
 We model inaccurate probabilistic classifications of class $m'$ by using the row of the conditional probability matrix corresponding to class $\tilde{m}$ as the basis for the perturbed probability vector
 \begin{eqnarray}
   \label{eq:subsume}
@@ -135,19 +135,25 @@ Though we dampen this systematic by employing per-class weights, described in Se
 
 \subsection{Representative classifications}
 \label{sec:realdata}
+
 %\aim{This would be more meaningful if we were given the conditional probability matrices of actual submissions to \snphotcc\ and then checked whether the \plasticc\ metric would have designated a different winner.
 %Also, it may be more interpretable if we instead use Ashish's conditional probability matrices that have more classes.}
-The issue of \textit{representative} data is one that concerns classification challenges across a wide range of disciplines. The magnitude-limited nature of \lsst\ means that our test data will always be non-representative. Hence the \plasticc\ data will follow the real world as closely as possible. In order to understand the performance of classifiers on simulated data sets approximating reality, we test our metric candidates on realistic classification of a precursor supernova classification challenge. The Supernova Photometric Classification Challenge (\snphotcc) \citep{kessler_supernova_2010} focused on classifying the lightcurves of a heterogenous population into a limited number of subclasses, with a goal of identifying one particular type of object for a single scientific application.
-\snphotcc\ provided a data set of three types, SN Ia, Type II, and Type Ibc. The original metric was based solely on getting Ia correct (deterministic), with no penalty in confusing Type IIs for Type Ibc and vice versa. The \snphotcc\ attracted diverse classification approaches, including $\chi^{2}$ fits of the supernova lightcurves to publicly available templates \citep{2002PASP..114..803N} physical models \citep{2008ApJ...681..482C}, and empirical models, as well as alternatives to curve-fitting such as outlier identification on the training set Hubble diagram, dimensionality reduction, and clustering.
+%\aim{This is about representative \textit{training sets} and is irrelevant to this paper.}
+% The issue of representative mock classification data is one that concerns classification challenges across a wide range of disciplines.
+% The magnitude-limited nature of \lsst\ means that our test data will always be non-representative.
+% Hence the \plasticc\ data will follow the real world as closely as possible.
+
+In order to understand the performance of classifiers on simulated data sets approximating reality, we calculate the values of our metric candidates on realistic classification of a precursor supernova classification challenge.
+The Supernova Photometric Classification Challenge (\snphotcc) \citep{kessler_supernova_2010} focused on classifying the lightcurves of a heterogenous population into a limited number of subclasses, with a goal of identifying one particular type of object for a single scientific application.
+\snphotcc\ provided a data set of three types, SN Ia, SN II, and SN Ibc.
+The original metric was based solely on correctly classifying SN Ia deterministically, with no penalty for confusing SN II for SN Ibc and vice versa, nor was there any notion of a confidence in a classification.
+The \snphotcc\ attracted diverse classification approaches, including $\chi^{2}$ fits of the supernova lightcurves to publicly available templates \citep{2002PASP..114..803N} physical models \citep{2008ApJ...681..482C}, and empirical models, as well as alternatives to curve-fitting such as outlier identification on the training set Hubble diagram, dimensionality reduction, and clustering.
 % TODO cite InCA?
-
 % A general light curve shape (rather than one motivated by the physical differences between SNeIa and core collapse SNe) was assumed by some competitors and then a kernel density estimation was performed over the fit parameters, with various approaches employed including boosting over the feature space.
-Machine learning was also employed, using features such as the light-curve slopes to produce a predictive model for the training data. In short, \snphotcc\ attracted physically motivated template-based methods sensitive to the differences between the test data and the template set as well as those based on decomposition of the light curves into generic features at risk of neglecting available physical information.
-
+Machine learning was also employed, using features such as the light-curve slopes to produce a predictive model for the training data.
+In short, \snphotcc\ attracted physically motivated template-based methods sensitive to the differences between the test data and the template set as well as those based on decomposition of the light curves into generic features at risk of neglecting available physical information.
 % TODO need citations of ML submissions to SNPhotCC
-
 %, which are prone to bias given non-representativity of the test data and agnostic
-
 After the \snphotcc\ concluded, the lightcurves became a testbed for a suite of machine learning classifiers.
 We consider one such compilation of methods, as presented in \citet{lochner_photometric_2016}, whose conditional probability matrices are shown in Figure~\ref{fig:snphotcc_cm}.
 % TODO what are the 3 classes?
@@ -167,6 +173,7 @@ While the complexity of entries to the \snphotcc\ was greater than this subset, 
 We draw attention to the presence of the systematics introduced in Section~\ref{sec:mockdata} in these realistic classification results.
 Note that the ``WaveletsNN'' and ``WaveletsNB'' methods both suffer from the cruise control systematic.
 Nearly all the others exhibit classifications that are almost perfect for the first class, perfect for the second class, and noisy for the third.
+\aim{What are these classes?}
 
 % \subsubsection{Unknown dataset}
 % \label{sec:mystery}
