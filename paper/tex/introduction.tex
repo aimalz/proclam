@@ -56,9 +56,9 @@ Many deterministic classification metrics can be modified for evaluation on prob
 If the data are simulated using a fully self-consistent forward model, a metric of the accuracy of classification probabilities relative to the true, underlying probabilities would be straightforward.
 However, such a simulation procedure would require beginning with a fully populated probability space over all classes and all possible lightcurves, which is an insurmountable challenge.
 Therefore, attention must be directed toward the no longer straightforward matter of defining the criterion for a winning classifier.
-In the context of astronomy, concerns about the choice of metric for probabilistic classifications have been investigated only to a limited degree thus far \citep{2018SoPh..293...28F, 2017MNRAS.464.4463K}
+In the context of astronomy, concerns about the choice of metric for probabilistic classifications have been investigated only to a limited degree thus far \citep{2018SoPh..293...28F, 2017MNRAS.464.4463K}, 
 % TODO cite PSNID
-, with most approaches concentrating on the standard metrics of purity and completeness, however metric consistency over a range of classifiers and between different analyses is not always ensured \citep{2018A&C....23...15B}.
+with most approaches concentrating on the standard metrics of purity and completeness, however metric consistency over a range of classifiers and between different analyses is not always ensured \citep{2018A&C....23...15B}.
 
 This work explores the problem of choosing a metric of probabilistic classifications, which will be used in many science applications and thus lack a single obvious figure of merit.
 The winning classifier should be robust to significant class imbalance, both between the training set and test set and within either, and other concerning systematics.
