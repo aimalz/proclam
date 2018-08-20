@@ -11,17 +11,20 @@
 %\item    The metric must be reliable, giving consistent results for different instantiations of the same test case.
 %\end{itemize}
 
-\plasticc\ aims to identify the most promising classification techniques, meaning there must be a performance metric, a single scalar value quantifying how appropriate a classifier is for the task at hand.
+\plasticc\ aims to motivate development of improved techniques.
+In order to discriminate between techniques, there must be a performance metric, a single scalar value quantifying how appropriate a classifier is for the task at hand.
 Choosing a metric therefore is logically entwined with the question the challenge aims to answer.
-\snphotcc, for example, sought the best classifier of SN Ia for the purpose of devoting precious follow-up resources to spectroscopically confirm likely candidates and use the spectroscopic data for cosmology investigations, a specific goal from which a well-defined metric easily followed.
-The choice of a metric is not so simple for \plasticc, which has many science goals with few arguments strong enough for meaningful fractions of spectroscopic follow-up.
+The goal of \snphotcc\ was to identify good classifiers of SN Ia used for a photometric cosmology analysis, which lends itself to a metric that optimizes the purity of any resultant data set.
+The issue of ``early classification'' for the purpose of decisionmaking regarding allocation of precious follow-up resources to spectroscopically confirm likely candidates was not addressed by the challenge participants, though it was (and remains) key to using spectroscopic resources wisely.
+\plasticc, on the other hand, differs from \snphotcc\ in that its goals are not tied to one application or even one type of transient or variable class.
+As such, the choice of a metric is not so simple, which has many diverse science goals with few arguments strong enough for meaningful fractions of spectroscopic follow-up.
 
 The initial \plasticc\ challenge presents the entirety of the lightcurve for classification.
 While classification of the earliest part of the lightcurve will be valued by the science team itself, the challenge is not overtly restrictive by giving classifiers only the first few points, something that will be included explicitly in upcoming versions of the challenge, to simulate the needs of early brokers for LSST.
 
 %he posterior probabilities of class must be accurate for use in inference, and they must be evaluated in a way that does not excessively favor any one science application.
 
-In Section~\ref{sec:science}, we review the metrics that were used in \snphotcc\ as the most similar previous challenge.
+In Section~\ref{sec:science}, we review the metrics that were used in \snphotcc.
 % In Section~\ref{sec:deterministic}, we review the metrics that were used in \snphotcc\ as the most similar previous challenge.
 In Section~\ref{sec:probabilistic}, we introduce metrics appropriate for probabilistic classification.
 We take weighted averages of the per-object metrics with per-class weights described in Section~\ref{sec:weights}.
@@ -36,7 +39,7 @@ We take weighted averages of the per-object metrics with per-class weights descr
   \label{eq:snphotccfom}
   \mathcal{FOM} &\equiv& \epsilon_{Ia} \times \tilde{P}_{Ia}
 \end{eqnarray}
-of the ratio of the \textit{efficiency}\footnote{Efficiency is generically defined as $\epsilon = \mathrm{TP} / (\mathrm{TP} + \mathrm{FN})$.}
+which is the product of the \textit{efficiency}\footnote{Efficiency is generically defined as $\epsilon = \mathrm{TP} / (\mathrm{TP} + \mathrm{FN})$.}
 \begin{eqnarray}
   \label{eq:efficiency}
   \epsilon_{Ia} &=& \frac{N_{Ia}^{\mathrm{true}}}{N_{Ia}^{TOT}}
@@ -46,10 +49,11 @@ of SN Ia classification and \textit{pseudo-purity}\footnote{Purity, also known a
   \label{eq:pseudopurity}
   \tilde{P}_{Ia} &=& \frac{N_{Ia}^{\mathrm{true}}}{N_{Ia}^\mathrm{true} + W_{Ia}^\mathrm{false}N_{Ia}^\mathrm{false}}
 \end{eqnarray}
-with an additive penalty term with weight $W_{Ia}^\mathrm{false}$ motivated by the expense of squandering SN Ia follow-up resources on an object of a different class.
+with an additive penalty term with weight $W_{Ia}^\mathrm{false}$ motivated by the potential cosmology-parameter biases from  CC contamination.
 The pseudo-purity can be interpreted as the traditional purity factor when $W_{Ia}^\mathrm{false} = 1$.
 
-For the \snphotcc\ the false penalty was related to the size of the spectroscopic subsample as roughly $W_{Ia}^\mathrm{false} = 1 + \epsilon_{spec}^{-1} \gg 1$ but the conservative limit of $W_{Ia}^\mathrm{false} = 3$ was chosen to penalize wasted spectroscopic time over rejected SNe.
+For the \snphotcc\ the penalty was related to the size of the spectroscopic subsample as roughly $W_{Ia}^\mathrm{false} = 1 + \epsilon_{spec}^{-1} \gg 1$ but the conservative limit of $W_{Ia}^\mathrm{false} = 3$ was chosen.
+% to penalize wasted spectroscopic time over rejected SNe.
 For future challenges, a more balanced metric can be used to ensure correct classifications across the range of classes, without focusing or highlighting a specific class as above.
 
 % \subsection{Deterministic metrics}

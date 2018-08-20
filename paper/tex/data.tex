@@ -24,19 +24,19 @@ Once the true classes have been set, mock classification probabilities are deriv
 
 \subsection{Mock classification schemes}
 \label{sec:mockdata}
+In order to test how metrics perform on different classification schemes, we develop `mock classifications', designed to reproduce general responses to a classification challenge. In particular we will use these mock classifications to investigate how the performance changes when we introduce certain types of failure modes, or \textit{systematics} to these classificaation schemes. A robust metric should not reward classification schemes that display these systematic effects. In other words, we want a metric that is savvy enough to penalize `gaming the system' as much as possible.
+%The cases of this section are devised to test if a metric is congruent with our intuitive understanding of what constitutes a good classifier, that it should not reward classifications suffering from the most concerning failure modes, which we will refer to as \textit{systematics} throughout the paper.
+%% TODO change systematics to symptoms?
+%Our impressions of systematics can be seen as reflections of the conditional probability matrix, a familiar metric of deterministic classification \citep{2012PASP..124.1175B}.
+These systematics can be seen as modifications to the confusion matrix, a familiar metric of det\
+erministic classification \citep{2012PASP..124.1175B}. The confusion matrix is an $M \times M$ table of observed counts (or, if normalized, frequencies $p(\tilde{m}, m')$) of pairs of estimated class labels $\tilde{m}$ (columns) and true classes $m'$ (rows) computed after a deterministic classification has been performed on some data set with $N$ objects.
+Under a binary deterministic classification between positive and negative possibilities, it is natural to count the numbers of true positives $TP$, false positive $FP$ (or Type 1 error), true negative $TN$, and false negative $FN$ (Type 2 error), which can be turned into rates relative to the true numbers of positive and negative instances; these rates may serve as building blocks for more sophisticated metrics of multi-class deterministic classifiers that will be addressed in Section~\ref{sec:methods}.
 
-The cases of this section are devised to test if a metric is congruent with our intuitive understanding of what constitutes a good classifier, that it should not reward classifications suffering from the most concerning failure modes, which we will refer to as \textit{systematics} throughout the paper.
-% TODO change systematics to symptoms?
-Our impressions of systematics can be seen as reflections of the confusion matrix, a familiar metric of deterministic classification \citep{2012PASP..124.1175B}.
-The confusion matrix is an $M \times M$ table of observed counts (or, if normalized, frequencies $p(\tilde{m}, m')$) of pairs of estimated class labels $\tilde{m}$ (columns) and true classes $m'$ (rows) computed after a deterministic classification has been performed on some data set with $N$ objects.
-Under a binary deterministic classification between positive and negative possibilities, it is natural to count the numbers of true positives $TP$, false positive $FP$, true negative $TN$, and false negative $FN$, which can be turned into rates relative to the true numbers of positive and negative instances; these rates may serve as building blocks for more sophisticated metrics of multi-class deterministic classifiers that will be addressed in Section~\ref{sec:methods}.
-
-Though probabilistic classifications are not compatible with the normalized confusion matrix per se, we design tests around proposed normalized confusion matrices exhibiting various symptoms that we anticipate being problematic for \lsst.
+Though probabilistic classifications are not compatible with the normalized confusion matrix \textit{per se}, we design tests around proposed normalized confusion matrices exhibiting various symptoms that we anticipate being problematic for \lsst.
 Under a deterministic classification scheme, an object with true class $m'$ would have an assigned class $\tilde{m}$ drawn from $p(\tilde{m} \mid m') = p(\tilde{m}, m') / p(m')$, via Bayes' Rule.
 We note that the elements of the confusion matrix have values of $N p(\tilde{m}, m')$ and that $N_{m'} / N$ must be known in order to produce a confusion matrix, so we can easily obtain $p(\tilde{m} \mid m')$ to use as the basis for classification probability submissions resulting from a confusion matrix; given its provenance, we refer to the matrix $\mathbb{C}$ comprised of $p(\tilde{m} \mid m')$ as the \textit{conditional probability matrix}.
 
-Since we believe the data contain information about the true class, we can use the appropriate row $\mathbb{C}_{m'}$ of the conditional probability matrix as a proxy for $p(m \mid d)$, without ever having to touch lightcurves or classification codes.
-To emulate the effect of natural variation of information content in different lightcurves, we generate a posterior probability vector $p(m \mid d_{n})$ by taking a Dirichlet-distributed draw
+Since we believe the data contain information about the true class, we can use the appropriate row $\mathbb{C}_{m'}$ of the conditional probability matrix as a proxy for $p(m \mid d)$, without directly classifying lightcurves themselves (this enabled this paper to be written without knowledge of the simulation specifics of the \plasticc\ data). To emulate the effect of natural variation of information content in different lightcurves, we generate a posterior probability vector $p(m \mid d_{n})$ by taking a Dirichlet-distributed draw
 \begin{eqnarray}
   \label{eq:cmtoprob}
   p(m \mid d_{n}) &\sim& \frac{\Gamma(\mathbb{C}_{m_{n}'} \delta)}{\sum_{m'} \Gamma(\mathbb{C}_{m'} \delta)}
@@ -48,8 +48,7 @@ about $\mathbb{C}_{m_{n}'}$, with a small nonnegative perturbation factor $\delt
 % \end{eqnarray}
 % \aim{[Rahul: Might be good to have a plot of the pdf when x0 takes values close to 0., something like 0.4, 0.8 and close to 1.0]}
 
-We consider eight mock classifiers, each of whose effectiveness is described by its conditional probability matrix.
-Figure~\ref{fig:mock_cm} shows the conditional probability matrices corresponding to each systematic considered, discussed in detail below.
+We consider eight `mock classifiers', each of whose effectiveness is described by its conditional probability matrix. Figure~\ref{fig:mock_cm} shows the conditional probability matrices corresponding to each systematic considered, discussed in detail below.
 % TODO: sequential color scheme?
 % TODO: letters for panels, refer to them in text
 \begin{figure*}
@@ -60,52 +59,41 @@ Figure~\ref{fig:mock_cm} shows the conditional probability matrices correspondin
     leftmost bottom: perfect classifications,
     left-center top: almost perfect classification,
     left-center bottom: unbiased classifications,
-    right-center top: perfect classification (type 1 and type 2 errors) for one class and uniform for all others,
+    right-center top: perfect classification generating Type 1 (FP) and Type 2 (FN) errors for one class and uniform for all others,
     right-center bottom: assigning all objects the same class,
     rightmost top: consistently assign one class to another,
     rightmost bottom: consistently assign another class to one class}
 		\label{fig:mock_cm}
 	\end{center}
 \end{figure*}
+
 For each case, we address:
 \begin{enumerate}
-  \item What defines this error property?
+  \item What defines the classification error property of this classifier?
   \item Under what conditions is this error property relevant?
-  \item What are our expectations of and desires for this error property's effect on metric behavior?
+  \item What are our expectations of and desires for the way this error property will affect the metric result?}
 \end{enumerate}
 
 \subsubsection{Uncertain classification}
 \label{sec:uncertaindata}
 
-An entirely uniform conditional probability matrix $\mathbb{U}$ (leftmost top panel of Figure~\ref{fig:mock_cm}) would correspond to uniform random guesses for deterministic classification, but the probability vectors drawn from it are more nuanced.
-In accordance with Equation~\ref{eq:cmtoprob}, the probability vectors are perturbations away from a uniform distribution across all classes.
+An entirely uniform conditional probability matrix $\mathbb{U}$ (leftmost top panel of Figure~\ref{fig:mock_cm}) would correspond to uniform random guesses for deterministic classification, but, in accordance with Equation~\ref{eq:cmtoprob}, the probability vectors are perturbations away from a uniform distribution across all classes.
 The peak values of these probability vectors will correspond to uniform random classifications, however, with $p(m' \mid d)\approx M^{-1}$.
-We can consider the \textit{uncertain} classifier as an experimental control for the worst possible classifier, bearing in mind that if classifications were anticorrelated with true classes (i.e. consistently misclassifying A as B and B as A), the experimenter would simply reassign the classification labels to improve performance.
+We can consider the \textit{uncertain} classifier as an experimental control for the worst possible classification scheme, bearing in mind that if classifications were somehow anticorrelated with true classes (i.e. consistently misclassifying A as B and B as A), the experimenter could simply reassign the classification labels to improve performance.
 
 \subsubsection{Accurate classification}
 \label{sec:accuratedata}
 
-The \textit{perfect} classifier has a diagonal conditional probability matrix $\mathbb{I}$ (leftmost bottom panel of Figure~\ref{fig:mock_cm}), which would correspond to deterministic classifications that are always correct.
-In terms of probabilistic classifications, a perfect result would be a probability vector with 1 for the true class and 0 for all other classes.
-Due to our addition of the random perturbation factor $\vec{e}$, the probability vectors drawn from the perfectly diagonal conditional probability matrix are randomly perturbed away from perfect classifications by the small factor $\delta$, but the class with maximum probability is almost always still the true class, to the tune of $\sim0.96$ with our choice of $\delta$.
-This case is also a control, in that \plasticc\ would not be necessary if we believed the perfect classifier were realistically achievable.
-
-In addition to a perfect classifier, we test linear combinations
+The \textit{perfect} classifier has a diagonal conditional probability matrix $\mathbb{I}$ (leftmost bottom panel of Figure~\ref{fig:mock_cm}), which would correspond to deterministic classifications that are always correct. In terms of probabilistic classifications, a perfect result would be a probability vector with 1 for the true class and 0 for all other classes. Due to our addition of the random perturbation factor $\vec{e}$, the probability vectors drawn from the perfectly diagonal conditional probability matrix are randomly perturbed away from perfect classifications by the small factor $\delta$, but the class with maximum probability is almost always still the true class, to the tune of $\sim0.96$ with our choice of $\delta$. This case is also a control, in that \plasticc\ would not be necessary if we believed the perfect classifier were realistically achievable. In addition to a perfect classifier, we test linear combinations
 \begin{eqnarray}
   \label{eq:lincomb}
   \mathbb{C}^{\mathrm{acc}; s} &=& \frac{1}{M+s-1} \left(s\mathbb{I} + \mathbb{U}\right)
 \end{eqnarray}
-of the perfect and uncertain classifier conditional probability matrices where the contribution of the perfect classifier is greater than that of the uncertain classifier by a factor of $s$.
-Deterministic classifications drawn from such a conditional probability matrix would be correct $s$ times as often as they are wrong, and the incorrect guesses would be uncorrelated across classes.
-The probability vectors drawn from such conditional probability matrices would have some variability but still mostly have their peak value at the truth.
-We consider the case of the \textit{almost perfect} classifier with $s=4$ (left-center top panel of Figure~\ref{fig:mock_cm}) and the \textit{noisy} classifier with $s=2$ (left-center bottom panel of Figure~\ref{fig:mock_cm}), which correspond to $p(m' \mid d)\approx0.82$ and $p(m' \mid d)\approx0.62$ respectively.
-We expect that the response to variation in $s$ may differ across metrics.
-(Though $s$ would realistically be expected to vary for each class, we do not conduct a systematic investigation of this possibility at this time.)
+of the perfect and uncertain classifier conditional probability matrices where the contribution of the perfect classifier is greater than that of the uncertain classifier by a factor of $s$. Deterministic classifications drawn from such a conditional probability matrix would be correct $s$ times as often as they are wrong, and the incorrect guesses would be uncorrelated across classes. The probability vectors drawn from such conditional probability matrices would have some variability but still mostly have their peak value at the truth.
 
-A classifier with different accuracy for each class may be considered a systematic in its own right.
-An extreme example of such a classifier could be one with perfect classification performance on one class and uncertain classification on all others; its conditional probability matrix would be uniform except for one row, which would take a value of unity on the diagonal and zero elsewhere.
-Such a classifier would have high value to those who study the class with perfect performance and should still be used in the context of \lsst.
-For the purposes of \plasticc, we take a more measured approach, and require that the \plasticc\ metric must serve the needs of those who study a wide variety of classes for different purposes. Hence, from the perspective of \plasticc, such a \textit{tunnel vision} classifier (right-center panel of Figure~\ref{fig:mock_cm}) is a major concern.
+We consider the case of the \textit{almost perfect} classifier with $s=4$ (left-center top panel of Figure~\ref{fig:mock_cm}) and the \textit{noisy} classifier with $s=2$ (left-center bottom panel of Figure~\ref{fig:mock_cm}), which correspond to $p(m' \mid d)\approx0.82$ and $p(m' \mid d)\approx0.62$ respectively. We expect that the response to variation in $s$ may differ across metrics. While $s$ would realistically be expected to vary for each class, we do not conduct a systematic investigation of this possibility at this time, and fix $s$ as constant for any given mock classifier.
+
+Indeed, a classifier with different accuracy for each class may be considered a systematic in its own right. An extreme example of such a classifier could be one with perfect classification performance on one class and uncertain classification on all others; its conditional probability matrix would be uniform except for one row, which would take a value of unity on the diagonal and zero elsewhere. Such a classifier would have high value to those who study the class with perfect performance and should still be used in the context of \lsst. For many specific science cases, this type of classifier is desirable, but given the balancing of science cases within \lsst, we take a more measured approach, and require that the \plasticc\ metric must serve the needs of those who study a wide variety of classes for different purposes. Hence, from the perspective of \plasticc, such a \textit{tunnel vision} classifier (right-center panel of Figure~\ref{fig:mock_cm}) is not something we want to favour with the metric.
 %However favoritism is inappropriate for the overall \plasticc\ metric, which must serve the needs of those who study all the classes and for different purposes.
 
 \subsection{Inaccurate classification}
@@ -149,25 +137,21 @@ Though we dampen this systematic by employing per-class weights, described in Se
 \label{sec:realdata}
 %\aim{This would be more meaningful if we were given the conditional probability matrices of actual submissions to \snphotcc\ and then checked whether the \plasticc\ metric would have designated a different winner.
 %Also, it may be more interpretable if we instead use Ashish's conditional probability matrices that have more classes.}
-
-In addition to our mock classifiers, we test our metric candidates on realistic classification results unrelated to \plasticc.
-The Supernova Photometric Classification Challenge (\snphotcc) \citep{kessler_supernova_2010} focused on classifying the lightcurves of a heterogenous population into a limited number of subclasses, with a goal of identifying one particular type of object for a single scientific application.
-The \snphotcc\ attracted diverse classification approaches, including $\chi^{2}$ fits of the supernova lightcurves to publicly available templates \citep{2002PASP..114..803N} physical models \citep{2008ApJ...681..482C}, and empirical models, as well as alternatives to curve-fitting such as
-%, and a linear slope to magnitudes per day was used for the non-Ia sample.
-outier identification on the training set Hubble diagram, dimensionality reduction,
+The issue of \textit{representative} data is one that concerns classification challenges across a wide range of disciplines. The magnitude-limited nature of \lsst\ means that our test data will always be non-representative. Hence the \plasticc\ data will follow the real world as closely as possible. In order to understand the performance of classifiers on simulated data sets approximating reality, we test our metric candidates on realistic classification of a precursor supernova classification challenge. The Supernova Photometric Classification Challenge (\snphotcc) \citep{kessler_supernova_2010} focused on classifying the lightcurves of a heterogenous population into a limited number of subclasses, with a goal of identifying one particular type of object for a single scientific application.
+\snphotcc\ provided a data set of three types, SN Ia, Type II, and Type Ibc. The original metric was based solely on getting Ia correct (deterministic), with no penalty in confusing Type IIs for Type Ibc and vice versa. The \snphotcc\ attracted diverse classification approaches, including $\chi^{2}$ fits of the supernova lightcurves to publicly available templates \citep{2002PASP..114..803N} physical models \citep{2008ApJ...681..482C}, and empirical models, as well as alternatives to curve-fitting such as outlier identification on the training set Hubble diagram, dimensionality reduction, and clustering.
 % TODO cite InCA?
-and clustering.
+
 % A general light curve shape (rather than one motivated by the physical differences between SNeIa and core collapse SNe) was assumed by some competitors and then a kernel density estimation was performed over the fit parameters, with various approaches employed including boosting over the feature space.
-Machine learning was also employed, using features such as the light-curve slopes to produce a predictive model for the training data.
+Machine learning was also employed, using features such as the light-curve slopes to produce a predictive model for the training data. In short, \snphotcc\ attracted physically motivated template-based methods sensitive to the differences between the test data and the template set as well as those based on decomposition of the light curves into generic features at risk of neglecting available physical information.
+
 % TODO need citations of ML submissions to SNPhotCC
-In short, \snphotcc\ attracted physically motivated template-based methods sensitive to the differences between the test data and the template set
+
 %, which are prone to bias given non-representativity of the test data and agnostic
-as well as those based on decomposition of the light curves into generic features at risk of neglecting available physical information.
 
 After the \snphotcc\ concluded, the lightcurves became a testbed for a suite of machine learning classifiers.
 We consider one such compilation of methods, as presented in \citet{lochner_photometric_2016}, whose conditional probability matrices are shown in Figure~\ref{fig:snphotcc_cm}.
 % TODO what are the 3 classes?
-These classification algorithms include a wavelet decomposition of the spectra to construct the features over which to classify (\citet{2011MNRAS.414.1987N}, bottom row) and template-based classification procedures (\citet{2011ApJ...738..162S}, top row), each paired with Boosted Random Forest, K-Nearest Neighbors, Naive Bayes, Support Vector Machine, and Neural Network machine learning algorithms (columns).
+These classification algorithms include a wavelet decomposition of the lightcurves to construct the features over which to classify (\citet{2011MNRAS.414.1987N}, bottom row) and template-based classification procedures (\citet{2011ApJ...738..162S}, top row), each paired with Boosted Random Forest, K-Nearest Neighbors, Naive Bayes, Support Vector Machine, and Neural Network machine learning algorithms (columns).
 While the complexity of entries to the \snphotcc\ was greater than this subset, we use these illustrative examples as a useful comparison set over which to assess the performance of the approaches under our metric scheme.
 
 \begin{figure*}
