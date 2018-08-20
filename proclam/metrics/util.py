@@ -16,7 +16,7 @@ import sys
 
 RateMatrix = collections.namedtuple('rates', 'TPR FPR FNR TNR')
 
-def sanitize_predictions(predictions, epsilon=sys.float_info.epsilon):
+def sanitize_predictions(predictions, epsilon=1.e-8):
     """
     Replaces 0 and 1 with 0+epsilon, 1-epsilon
 
@@ -294,12 +294,13 @@ def check_weights(avg_info, M, chosen=None, truth=None):
             chosen = np.random.randint(M)
         if avg_info == 'up':
             weights = np.ones(M) / np.float(M)
-            weight[chosen] = 1.
+            weights[chosen] = 1.
         elif avg_info == 'down':
             weights = np.ones(M)
-            weight[chosen] = 1./np.float(M)
+            weights[chosen] = 1./np.float(M)
+    else:
+        print('something has gone wrong with avg_info '+str(avg_info))
     return weights
-
 
 def averager(per_object_metrics, truth, M, vb=False):
     """

@@ -50,19 +50,19 @@ class FromCMDM(Classifier):
         Notes
         -----
         other keyword doesn't actually work right now
+        Larger delta means larger scatter, smaller delta means smaller scatter
         """
 
         N = len(truth)
         M = len(cm)
 
-        alpha = delta * cm
-        alpha[alpha == 0.] = 1.e-6
+        cm[cm == 0.] = 1.e-8
+        alpha = cm / delta
         prediction =  np.empty((N, M))
 
-        funcs = []
         for m in range(M):
             func_m = sps.dirichlet(alpha[m])
-            inds_m = np.where(truth == m)
+            inds_m = np.where(truth == m)[0]
             prediction[inds_m] = func_m.rvs(len(inds_m))
 
         prediction /= np.sum(prediction, axis=1)[:, np.newaxis]
