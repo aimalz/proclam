@@ -8,7 +8,7 @@ In the following sections, we explore the response of the log-loss and Brier sco
 
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=0.5\textwidth]{./fig/test_combo.png}
+		\includegraphics[width=0.45\textwidth]{./fig/test_combo.png}
 		\caption{Weighted log-loss and Brier scores for classifiers with combinations of systematics.
 		Each point represents a classifier with baseline behavior (regular polygon marker) for all but one class with a particular systematic (asterisk markers).
 		The color of the systematic effect and baseline behavior markers indicates the weight on the class affected by the systematic and the integrated weight evenly distributed over other classes with baseline behavior, respectively.
@@ -36,8 +36,8 @@ Because the combination of a subsuming classifier with a perfect baseline is so 
 
 \begin{figure*}
 	\begin{center}
-		\includegraphics[width=0.49\textwidth]{./fig/middle_zoom.png}
-		\includegraphics[width=0.49\textwidth]{./fig/lower_zoom.png}
+		\includegraphics[width=0.45\textwidth]{./fig/middle_zoom.png}
+		\includegraphics[width=0.45\textwidth]{./fig/lower_zoom.png}
 		\caption{Weighted log-loss and Brier scores for classifiers with combinations of systematics; as in Figure~\ref{fig:all_combined} but without the subsuming systematic on an otherwise perfect classifier.
 		Left panel: the subsuming systematic on baselines of almost perfect, noisy, and uncertain classifiers.
 		Right panel: all baseline-plus-systematic pairs that do not include the subsuming systematic.
@@ -136,7 +136,7 @@ This finding suggests that weighting alone may not be sufficient to counter the 
 \subsection{Representative classifications}
 \label{sec:realresults}
 
-We also present in Table~\ref{tab:snmachinevals} the values of all metrics we considered, under equal weight per object, for classification probabilities derived from running the algorithms of \cite{lochner_photometric_2016} on the \snphotcc\ data of Section~\ref{sec:realdata}.
+We also present in Table~\ref{tab:snmachinevals} the values of all metrics we considered, under equal weight per object, for classification probabilities derived from running the algorithms of \citet{lochner_photometric_2016} on the \snphotcc\ data of Section~\ref{sec:realdata}.
 Table~\ref{tab:snmachinerank} shows the ranking of classifier performance under each metric.
 
 \begin{table}[]

@@ -2,7 +2,7 @@
 \label{sec:data}
 
 We explore the behavior of the metrics on mock classifications with well-understood weaknesses as well as realistic mock classifications from past challenges.
-Troughout the paper, ```data'' always refers to classification results, not lightcurves; no lightcurves were simulated, viewed, or classified in the preparation of this paper.
+Throughout the paper, ``data'' always refers to classification results, not lightcurves; no lightcurves were simulated, viewed, or classified in the preparation of this paper.
 Data is in the form of catalogs of posterior probability vectors $p(m \mid d)$ over $M$ classes with labels $m$ conditioned on the observed lightcurve $d$, with each probability vector normalized to sum to unity.
 We describe below the way in which mock data is synthesized.
 
@@ -14,7 +14,7 @@ Though the class labels for \plasticc\ will presumably be randomized, we use thi
 
 \begin{figure}
 	\begin{center}
-    \includegraphics[width=0.5\textwidth]{./fig/complete_counts.png}
+    \includegraphics[width=0.45\textwidth]{./fig/complete_counts.png}
 		\caption{Our true classes are logarithmically distributed, and the labels are ordered.}
 		\label{fig:classdist}
 	\end{center}
@@ -24,12 +24,13 @@ Once the true classes have been set, mock classification probabilities are deriv
 
 \subsection{Mock classification schemes}
 \label{sec:mockdata}
+
 In order to test how metrics perform on different classification schemes, we develop `mock classifications', designed to reproduce general responses to a classification challenge. In particular we will use these mock classifications to investigate how the performance changes when we introduce certain types of failure modes, or \textit{systematics}, to these classificaation schemes. A robust metric should not reward classification schemes that display these systematic effects. In other words, we want a metric that is savvy enough to penalize `gaming the system' as much as possible.
 %The cases of this section are devised to test if a metric is congruent with our intuitive understanding of what constitutes a good classifier, that it should not reward classifications suffering from the most concerning failure modes, which we will refer to as \textit{systematics} throughout the paper.
 %% TODO change systematics to symptoms?
 %Our impressions of systematics can be seen as reflections of the conditional probability matrix, a familiar metric of deterministic classification \citep{2012PASP..124.1175B}.
 These systematics can be seen as modifications to the confusion matrix, a familiar metric of det\
-erministic classification \citep{2012PASP..124.1175B}. The confusion matrix is an $M \times M$ table of observed counts (or, if normalized, frequencies $p(\tilde{m}, m')$) of pairs of estimated class labels $\tilde{m}$ (columns) and true classes $m'$ (rows) computed after a deterministic classification has been performed on some data set with $N$ objects.
+erministic classification \citep{bloom_automating_2012}. The confusion matrix is an $M \times M$ table of observed counts (or, if normalized, frequencies $p(\tilde{m}, m')$) of pairs of estimated class labels $\tilde{m}$ (columns) and true classes $m'$ (rows) computed after a deterministic classification has been performed on some data set with $N$ objects.
 Under a binary deterministic classification between positive and negative possibilities, it is natural to count the numbers of true positives $TP$, false positive $FP$ (or Type 1 error), true negative $TN$, and false negative $FN$ (Type 2 error), which can be turned into rates relative to the true numbers of positive and negative instances; these rates may serve as building blocks for more sophisticated metrics of multi-class deterministic classifiers that will be addressed in Section~\ref{sec:methods}.
 
 Though probabilistic classifications are not compatible with the normalized confusion matrix per se, we design tests around proposed normalized confusion matrices exhibiting various symptoms that we anticipate being problematic for \lsst.
@@ -71,7 +72,7 @@ For each case, we address:
 \begin{enumerate}
   \item What defines the classification error property of this classifier?
   \item Under what conditions is this error property relevant?
-  \item What are our expectations of and desires for the way this error property will affect the metric result?}
+  \item What are our expectations of and desires for the way this error property will affect the metric result?
 \end{enumerate}
 
 \subsubsection{Uncertain classification}
@@ -147,7 +148,7 @@ In order to understand the performance of classifiers on simulated data sets app
 The Supernova Photometric Classification Challenge (\snphotcc) \citep{kessler_supernova_2010} focused on classifying the lightcurves of a heterogenous population into a limited number of subclasses, with a goal of identifying one particular type of object for a single scientific application.
 \snphotcc\ provided a data set of three types, SN Ia, SN II, and SN Ibc.
 The original metric was based solely on correctly classifying SN Ia deterministically, with no penalty for confusing SN II for SN Ibc and vice versa, nor was there any notion of a confidence in a classification.
-The \snphotcc\ attracted diverse classification approaches, including $\chi^{2}$ fits of the supernova lightcurves to publicly available templates \citep{2002PASP..114..803N}, physical models \citep{2008ApJ...681..482C}, and empirical models, as well as alternatives to curve-fitting such as outlier identification on the training set Hubble diagram, dimensionality reduction, and clustering.
+The \snphotcc\ attracted diverse classification approaches, including $\chi^{2}$ fits of the supernova lightcurves to publicly available templates \citep{nugent_kcorrections_2002}, physical models \citep{conley_sifto:_2008}, and empirical models, as well as alternatives to curve-fitting such as outlier identification on the training set Hubble diagram, dimensionality reduction, and clustering.
 % TODO cite InCA?
 % A general light curve shape (rather than one motivated by the physical differences between SNeIa and core collapse SNe) was assumed by some competitors and then a kernel density estimation was performed over the fit parameters, with various approaches employed including boosting over the feature space.
 Machine learning was also employed, using features such as the light-curve slopes to produce a predictive model for the training data.
@@ -157,7 +158,7 @@ In short, \snphotcc\ attracted physically motivated template-based methods sensi
 After the \snphotcc\ concluded, the lightcurves became a testbed for a suite of machine learning classifiers.
 We consider one such compilation of methods, as presented in \citet{lochner_photometric_2016}, whose conditional probability matrices are shown in Figure~\ref{fig:snphotcc_cm}.
 % TODO what are the 3 classes?
-These classification algorithms include a wavelet decomposition of the lightcurves to construct the features over which to classify (\citet{2011MNRAS.414.1987N}, bottom row) and template-based classification procedures (\citet{2011ApJ...738..162S}, top row), each paired with Boosted Random Forest, K-Nearest Neighbors, Naive Bayes, Support Vector Machine, and Neural Network machine learning algorithms (columns).
+These classification algorithms include a wavelet decomposition of the lightcurves to construct the features over which to classify (\citet{newling_statistical_2011}, bottom row) and template-based classification procedures (\citet{sako_photometric_2011}, top row), each paired with Boosted Random Forest, K-Nearest Neighbors, Naive Bayes, Support Vector Machine, and Neural Network machine learning algorithms (columns).
 While the complexity of entries to the \snphotcc\ was greater than this subset, we use these illustrative examples as a useful comparison set over which to assess the performance of the approaches under our metric scheme.
 
 \begin{figure*}
