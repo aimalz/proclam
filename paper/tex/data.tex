@@ -132,25 +132,21 @@ Though we dampen this systematic by employing per-class weights, described in Se
 \label{sec:realdata}
 %\aim{This would be more meaningful if we were given the conditional probability matrices of actual submissions to \snphotcc\ and then checked whether the \plasticc\ metric would have designated a different winner.
 %Also, it may be more interpretable if we instead use Ashish's conditional probability matrices that have more classes.}
-
-In addition to our mock classifiers, we test our metric candidates on realistic classification results unrelated to \plasticc.
-The Supernova Photometric Classification Challenge (\snphotcc) \citep{kessler_supernova_2010} focused on classifying the lightcurves of a heterogenous population into a limited number of subclasses, with a goal of identifying one particular type of object for a single scientific application.
-The \snphotcc\ attracted diverse classification approaches, including $\chi^{2}$ fits of the supernova lightcurves to publicly available templates \citep{2002PASP..114..803N} physical models \citep{2008ApJ...681..482C}, and empirical models, as well as alternatives to curve-fitting such as
-%, and a linear slope to magnitudes per day was used for the non-Ia sample.
-outier identification on the training set Hubble diagram, dimensionality reduction,
+The issue of \textit{representative} data is one that concerns classification challenges across a wide range of disciplines. The magnitude-limited nature of \lsst\ means that our test data will always be non-representative. Hence the \plasticc\ data will follow the real world as closely as possible. In order to understand the performance of classifiers on simulated data sets approximating reality, we test our metric candidates on realistic classification of a precursor supernova classification challenge. The Supernova Photometric Classification Challenge (\snphotcc) \citep{kessler_supernova_2010} focused on classifying the lightcurves of a heterogenous population into a limited number of subclasses, with a goal of identifying one particular type of object for a single scientific application.
+\snphotcc\ provided a data set of three types, SN Ia, Type II, and Type Ibc. The original metric was based solely on getting Ia correct (deterministic), with no penalty in confusing Type IIs for Type Ibc and vice versa. The \snphotcc\ attracted diverse classification approaches, including $\chi^{2}$ fits of the supernova lightcurves to publicly available templates \citep{2002PASP..114..803N} physical models \citep{2008ApJ...681..482C}, and empirical models, as well as alternatives to curve-fitting such as outlier identification on the training set Hubble diagram, dimensionality reduction, and clustering.
 % TODO cite InCA?
-and clustering.
+
 % A general light curve shape (rather than one motivated by the physical differences between SNeIa and core collapse SNe) was assumed by some competitors and then a kernel density estimation was performed over the fit parameters, with various approaches employed including boosting over the feature space.
-Machine learning was also employed, using features such as the light-curve slopes to produce a predictive model for the training data.
+Machine learning was also employed, using features such as the light-curve slopes to produce a predictive model for the training data. In short, \snphotcc\ attracted physically motivated template-based methods sensitive to the differences between the test data and the template set as well as those based on decomposition of the light curves into generic features at risk of neglecting available physical information.
+
 % TODO need citations of ML submissions to SNPhotCC
-In short, \snphotcc\ attracted physically motivated template-based methods sensitive to the differences between the test data and the template set
+
 %, which are prone to bias given non-representativity of the test data and agnostic
-as well as those based on decomposition of the light curves into generic features at risk of neglecting available physical information.
 
 After the \snphotcc\ concluded, the lightcurves became a testbed for a suite of machine learning classifiers.
 We consider one such compilation of methods, as presented in \citet{lochner_photometric_2016}, whose conditional probability matrices are shown in Figure~\ref{fig:snphotcc_cm}.
 % TODO what are the 3 classes?
-These classification algorithms include a wavelet decomposition of the spectra to construct the features over which to classify (\citet{2011MNRAS.414.1987N}, bottom row) and template-based classification procedures (\citet{2011ApJ...738..162S}, top row), each paired with Boosted Random Forest, K-Nearest Neighbors, Naive Bayes, Support Vector Machine, and Neural Network machine learning algorithms (columns).
+These classification algorithms include a wavelet decomposition of the lightcurves to construct the features over which to classify (\citet{2011MNRAS.414.1987N}, bottom row) and template-based classification procedures (\citet{2011ApJ...738..162S}, top row), each paired with Boosted Random Forest, K-Nearest Neighbors, Naive Bayes, Support Vector Machine, and Neural Network machine learning algorithms (columns).
 While the complexity of entries to the \snphotcc\ was greater than this subset, we use these illustrative examples as a useful comparison set over which to assess the performance of the approaches under our metric scheme.
 
 \begin{figure*}
