@@ -7,20 +7,22 @@ Data is in the form of catalogs of posterior probability vectors $p(m \mid d)$ o
 We describe below the way in which mock data is synthesized.
 
 First, we propose that the class populations are logarithmically distributed such that they span many orders of magnitude, as is anticipated for the real \lsst\ dataset.
-We take $M$ draws $u_{m} \sim \mathcal{U}(0, 1)$ from the standard continuous uniform distribution and establish a discrete probability distribution $p(m) = b^{u_{m}}\ Z^{-1}$ where $Z = \sum_{m} b^{u_{m}}$, i.e. such that $\sum_{m=1}^{M} p(m) = 1$.
-$N = 10^{b}$ instances $\{m'_{n}\}$ of a true class $m'$ for each lightcurve $n$ in the catalog are then drawn from $p(m')$.
-The distribution of true classes with $M = 13$ and $b = 6$ used in our tests is shown in Figure~\ref{fig:classdist}, with the class labels ordered by their prevalence.
+%We then take $M$ draws $u_{m} \sim \mathcal{U}(0, 1)$ from the standard continuous uniform distribution and establish a discrete probability distribution $p(m) = b^{u_{m}}\ Z^{-1}$ where $Z = \sum_{m} b^{u_{m}}$, i.e. such that $\sum_{m=1}^{M} p(m) = 1$.
+We then take $M$ draws $u_{m} \sim \mathcal{U}(0, 1)$ from the standard continuous uniform distribution. These coefficients $u_m$ define the discrete probability distribution for each class $m$ in $M:$ \begin{equation}p(m) = \frac{b^{u_{m}}}{\sum_{m} b^{u_{m}}},\end{equation} such that $\sum_{m=1}^{M} p(m) = 1$.
+% was the b in 10^b really related to the b above? This was not clear.
+We draw $N = 10^{b}$ instances $\{m'_{n}\}$ of a true class $m'$ for each lightcurve $n$ in the catalog from $p(m')$.
+We used a distribution of $M=13$ true classes and chose $b=6$ used in our tests is shown in Figure~\ref{fig:classdist}, with the class labels ordered by their size. \textbf{[RH removed excess variables/symbols that made things more wordy than they need to be]}
 Though the class labels for \plasticc\ will presumably be randomized, we use this ordering to ease visual inspection of our results.
 
 \begin{figure}
 	\begin{center}
     \includegraphics[width=0.45\textwidth]{./fig/complete_counts.png}
-		\caption{Our true classes are logarithmically distributed, and the labels are ordered.}
+		\caption{The numner of objects in a given class as shown as a function of class label, in increasing class size. As expected, the true classes are logarithmically distributed.}
 		\label{fig:classdist}
 	\end{center}
 \end{figure}
 
-Once the true classes have been set, mock classification probabilities are derived using the procedure described in Section~\ref{sec:mockdata}.
+Once the true classes have been set, mock classification probabilities for each class are derived using the procedure described in Section~\ref{sec:mockdata}.
 
 \subsection{Mock classification schemes}
 \label{sec:mockdata}
