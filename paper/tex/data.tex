@@ -62,16 +62,16 @@ Figure~\ref{fig:mock_cm} shows the conditional probability matrices correspondin
 \begin{figure*}
 	\begin{center}
     \includegraphics[width=0.8\textwidth]{./fig/all_sim_cm.png}
-		\caption{Conditional probability matrices for eight mock classifiers.
-    leftmost top: uncertain classification,
-    leftmost bottom: perfect classifications,
-    left-center top: almost perfect classification,
-    left-center bottom: unbiased classifications,
-    right-center top: perfect classification generating Type 1 (FP) and Type 2 (FN) errors for one class and uniform for all others,
-    right-center bottom: assigning all objects the same class,
-    rightmost top: consistently assign one class to another,
-    rightmost bottom: consistently assign another class to one class}
-		\label{fig:mock_cm}
+		\caption{Conditional probability matrices for eight mock classifiers. The left panels show uncertain (top) and perfect (bottom) classifications, while the second panel from the left shows the almost perfect (top) and unbiased but noise (bottom) classifications. The third panel from the left illustrate the perfect classifications that generate Type 1 (False Positive) and Type 2 (False Negative) errors for one class and uniform for all others (the `tunnel classifier', top row), while the bottom row illustrates the classification where all objects are assigned to the same class (the `cruise' classifier). Finally, the panels on the far right show classifications where one class is consistently assigned to another class (subsumed to, top row), and where one consistently assigns another class to one particular class (subsumed from, bottom row). Such classifications arise when one is optimising for a particular science case (e.g., one might prioritize a tunnel classification scheme), or where one object is considered much more `valuable' to classify than others (in which case one would employ a cruise classification scheme.)
+%    leftmost top: uncertain classification,
+%    leftmost bottom: perfect classifications,
+%    left-center top: almost perfect classification,
+%    left-center bottom: unbiased classifications,
+%    right-center top: 
+%    right-center bottom: assigning all objects the same class,
+%    rightmost top: consistently assign one class to another,
+%    rightmost bottom: consistently assign another class to one class}
+		\label{fig:mock_cm}}
 	\end{center}
 \end{figure*}
 
@@ -130,7 +130,7 @@ The asymmetric relationship between $m'$ and $\tilde{m}$ is illustrated in the r
 However, one or more classes could be mutually subsuming if one already has significant off-diagonal probability, as is true for the uncertain classifier.
 
 Subsuming is particularly expected when distinguishing between subtypes of some class, and it is of utmost importance when the subtypes have wholly different science applications.
-Classification subtypes that are useful for completely different science cases are found in supernova classification, through e.g. the differences between SN Ia and SN Ibc. SN Ia and SN Ibc are challenging to distinguish, and the former often subsumes the latter in common classifiers, an effect that can be exacerbated by underrepresentation of SN Ibc in available training sets.
+Classification subtypes that are useful for completely different science cases are found in supernova classification, through e.g., the differences between SN Ia and SN Ibc. SN Ia and SN Ibc are challenging to distinguish, and the former often subsumes the latter in common classifiers, an effect that can be exacerbated by underrepresentation of SN Ibc in available training sets.
 However, using SN Ibc in the traditional cosmology analysis done with SN Ia can bias estimates of the cosmological parameters, so the distinction is critical.
 
 Similarly RRc and RRd Lyrae stars have different pulsation modes (RRc stars pulsate in the first overtone, while RRd stars pulsate simultaneously in the fundamental mode and first overtone, and are much more rare than RRc stars), and yet are challenging to separate observationally.
@@ -182,7 +182,7 @@ While the complexity of entries to the \snphotcc\ was greater than this subset, 
 \begin{figure*}
 	\begin{center}
     \includegraphics[width=\textwidth]{./fig/all_snphotcc_cm.png}
-		\caption{conditional probability matrices of the \citet{lochner_photometric_2016} methods applied to the \snphotcc\ dataset.
+		\caption{Conditional probability matrices of the \citet{lochner_photometric_2016} methods applied to the \snphotcc\ dataset.
     Top row: five machine learning methods applied to template decompositions.
     Bottom row: the same five machine learning methods applied to wavelet features.}
 		\label{fig:snphotcc_cm}
