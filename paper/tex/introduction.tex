@@ -29,16 +29,16 @@ Automated classification \citep{djorgovski_towards_2011, djorgovski_flashes_2012
 Classifaction is intrinsically \textit{probabilistic} in that the goal is to constrain the class \textit{conditioned} on limited data, thereby defining a \textit{posterior probability density}, or \textit{classification posterior} for short, over possible classes for each classified object.
 Probabilities of classification that are reduced to point estimates of class become \textit{deterministic} classifications.
 As an example, an object with probability $0.9$ of being in a certain class $m$ might be assigned a deterministic classification of being of class $m$, effectively rounding up the probability to $1$, yielding a point estimate of $m$ for that object.
-Such a reduction of a probability density to a point estimate discards information whose impact depends on how the classification results are subsequently used.
+Such a reduction of a probability density to a point estimate discards information whose impact depends on how the classification results are subsequently used. While commonly-used metrics like Receiver Operator Characteristic (ROC) curve (which maps the true positive rate against the false positive rate) and the area under the curve (AUC) can be used to infer probabilities from such classifiers, the fact tht \plasticc\ is by construction simulating multiple types of objects makes the extension of ROC as a metric infeasible.
 
-For example, the decision of how to allocate limited spectroscopic follow-up resources could benefit from probabilistic information if provided early enough.
+Probabilistic classifications are also useful for e.g., making decisions about how to allocate limited spectroscopic follow-up resources could benefit from probabilistic information if provided early enough.
 To reduce wasting spectroscopic resources dedicated to common class whose science use requires spectra, one might only attempt follow-up observations of the objects with the highest classification probabilities.
-Spectroscopic follow-up of a rare class, on the other hand, may merit less conservative allocation; an object with even a moderate probability of being of a very rare class could be worth the risk.
+Spectroscopic follow-up of a rare class, on the other hand, may be useful enough that an object with even a moderate probability of being of a very rare class could be worth the risk.
 % While the knowlege that an object has been identified to be a particular type with an overwhelming probability is likely different from a situation where an object is simply slightly more likely to be a particular class than the remaining classes of objects is important but could be appropriately reflected in a deterministic classifier.
 % If follow-up resources were sufficiently abundant to warrant the optimization of follow-up of less well classified objects, the information in the probabilities could be useful in resource allocation.
 
 Classification probabilities can also be propagated through a hierarchical inference of population-level parameters, enabling scientific investigations to proceed even when spectra are unavailable.
-The efficacy of this application of classification probabilities has been demonstrated in the context of supernova cosmology \citep{roberts_zbeams:_2017}.
+The efficacy of this application of classification probabilities has been demonstrated in the context of supernova cosmology most recently in \citep{roberts_zbeams:_2017}.
 % TODO Cite all the BEAMS papers and Malz, Peters, Hlozek in prep
 % Considering the different case of supernova cosmology from a photometrically classified sample of SNe, such probabilistic classifications can be propagated to subsequent analyses of cosmological parameters allowing one to extract information from the (large) part of the sample where photometric classification failed to identify a particular type with overwhelming probability \cite{roberts_zbeams:_2017}.
 Thus the impact of a photometric-only survey like \lsst\ can be greatly enhanced by probabilistic classifications.
