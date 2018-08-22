@@ -6,17 +6,18 @@ In the following sections, we explore the response of the log-loss and Brier sco
 \subsection{Mock classifier systematics}
 \label{sec:mockresults}
 
-\begin{figure}
+\begin{figure*}
 	\begin{center}
-		\includegraphics[width=0.45\textwidth]{./fig/test_combo.png}
+		\includegraphics[width=0.95\textwidth]{./fig/multipanel_res.png}
 		\caption{Weighted log-loss and Brier scores for classifiers with combinations of systematics.
 		Each point represents a classifier with baseline behavior (regular polygon marker) for all but one class with a particular systematic (asterisk markers).
 		The color of the systematic effect and baseline behavior markers indicates the weight on the class affected by the systematic and the integrated weight evenly distributed over other classes with baseline behavior, respectively.
 		The $x$-axis is the Brier score and the $y$-axis is the log-loss.
+		\aim{TODO: Update caption for new plot.}
 		}
 	\end{center}
 	\label{fig:all_combined}
-\end{figure}
+\end{figure*}
 
 We simulate mock classifications from linear combinations of the conditional probability matrices using logarithmically distributed class populations to make a catalog of $10^{6}$ posterior probability vectors for every conditional probability matrix, as described in of Section~\ref{sec:mockdata}.
 In Figure~\ref{fig:all_combined}, we demonstrate the behavior of the metrics with classification posteriors derived from conditional probability matrices composed of pairs of baseline classifier error properties.
@@ -32,21 +33,9 @@ The variation in weights establishes linear relationships between the log-loss a
 We note that for all weight on the perfect classifier, the values of both metrics vanish to zero.
 It is immediately evident that the log-loss has more dynamic range than the Brier score overall, and that both metrics are acutely sensitive to the subsuming systematic on a baseline of a perfect classifier.
 In fact, the log-loss value for a classifier that subsumes a class into one that is classified perfectly should actually be infinite and only takes a finite value because of the limits of floating point precision and our own restriction that no probabilities be below $10^{-8}$ chosen to ensure numerical stability.
-Because the combination of a subsuming classifier with a perfect baseline is so different from all other combinations, we further separate the subsuming systematic with all other baselines (left panel) from all other systematics (right panel) in Figure~\ref{fig:subsume}.
+Because the combination of a subsuming classifier with a perfect baseline is so different from all other combinations, we further separate the subsuming systematic with all other baselines (lower left panel) from all other systematics (lower right panel) in Figure~\ref{fig:all_combined}.
 
-\begin{figure*}
-	\begin{center}
-		\includegraphics[width=0.45\textwidth]{./fig/middle_zoom.png}
-		\includegraphics[width=0.45\textwidth]{./fig/lower_zoom.png}
-		\caption{Weighted log-loss and Brier scores for classifiers with combinations of systematics; as in Figure~\ref{fig:all_combined} but without the subsuming systematic on an otherwise perfect classifier.
-		Left panel: the subsuming systematic on baselines of almost perfect, noisy, and uncertain classifiers.
-		Right panel: all baseline-plus-systematic pairs that do not include the subsuming systematic.
-		}
-	\end{center}
-	\label{fig:subsume}
-\end{figure*}
-
-The range of the log-loss is greater than that of the Brier score in the two panels of Figure~\ref{fig:subsume}, showing that the dynamic range of the log-loss remains higher even outside the regime where it tends toward infinity.
+The range of the log-loss is greater than that of the Brier score in the two panels of Figure~\ref{fig:all_combined}, showing that the dynamic range of the log-loss remains higher even outside the regime where it tends toward infinity.
 The extent of the values of both metrics is higher in the left panel with the subsuming systematic on various baselines than in the right panel with all other systematics.
 This shows that both metrics are still more sensitive to the subsuming systematic than any other systematic, confirming that both can appropriately penalize the cruise control effect.
 When all weight is on the class affected by a systematic, there is a characteristic limit for each metric's values, shown in Table~\ref{tab:extents}.
