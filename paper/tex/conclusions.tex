@@ -1,14 +1,13 @@
 \section{Conclusion}
 \label{sec:conclusion}
 
-We have presented the investigative approach to selecting an appropriate metric of the performance of classification techniques producing class posterior probability densities in the context of \plasticc.
-We conclude that the Brier and log-loss metrics could both be appropriate metrics for \plasticc.
-Both are sensitive to one class being consistently misclassified as another, but neither is especially robust against a classifier performing well on one class while neglecting the others.
-Therefore both metrics are similarly appropriate for determining a winner of \plasticc, and in both cases some additional mechanism, such as weighted averaging or requiring a threshold on the average metric value in each class to prevent domination by a classifier that does not meet the \plasticc\ goals.
+We have presented the investigative approach to selecting an appropriate metric of the performance of classification techniques producing class posterior probabilities in the context of \plasticc.
+We conclude that the Brier and log-loss metrics could both be appropriate metrics for \plasticc\ on the basis of their responses to the most concerning systematics anticipated of competing classifiers, however, the log-loss is more sensitive to all the systematics we tested.
+Both require an additional mechanism, such as weighted averaging between classes to prevent domination by a classifier that focuses exclusively on the most prevalent class, thereby failing to meet \plasticc's diverse goals.
 
 Even though the Brier score and log-loss metrics take values consistent with one another, they are structurally and conceptually different, with wholly different interpretations.
-The Brier score is a sum of square differences between probabilities, which is not physically meaningful despite having a well-defined notion of a penalty term.
-The log-loss, on the other hand, is interpretable in terms of information, meaning the metric itself can be propagated through forecasting of the constraining power of \lsst\ data.
-We therefore chose the log-loss for the overall \plasticc\ metric.
+The Brier score is a sum of square differences between probabilities, which is not physically meaningful, though the explicit penalty term is an attractive feature.
+The log-loss, on the other hand, is interpretable in terms of information, meaning the metric itself can serve as a quantification of uncertainty to be propagated through forecasting of the constraining power of \lsst\ data.
+We therefore choose the weighted log-loss for the overall \plasticc\ metric, with weights to be chosen on the basis of scientific merit.
 
-We encourage the astronomical community to think carefully about the relationship between the goals of a challenge and the global performance metric as we have done for \plasticc, to ensure that efforts are best directed to achieve the challenge objectives, particularly in the upcoming era of low signal-to-noise data.
+We conclude by encouraging the astronomical community to continue to pursue open challenges but to think carefully about the relationship between the goals of a challenge and the global performance metric, as we have done for \plasticc, to ensure that efforts are best directed to achieve the challenge objectives.
