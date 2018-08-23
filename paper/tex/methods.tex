@@ -129,36 +129,31 @@ We leave to future work the thorough investigation of a nontrivial weighting sch
 % TODO: motivate weights as opposed to flat
 % TODO: rename section
 
-As mentioned in the previous section, subclasses often look similar but are useful in understanding very different science cases, so a metric that rewards a nuanced classifier is desireable.
-
-\lsst\ will suffer from nonrepresentative training sets, an imbalance of classes and will see many subclasses.
-These features are therefore present in \plasticc; class prevalence will differ by orders of magnitude, and there will be classes that are not present in the training set at all.
+The most concerning systematics discussed in Section~\ref{sec:mockdata} are those of tunnel vision and cruise control.
+The actual lightcurve data stream of \lsst\ will be particularly vulnerable to both due to extreme class imbalance and hierarchy punctuated by nonrepresentative training data, so \plasticc\ must include all these effects.
+Any metric under equal weight per lightcurve would incentivize tunnel vision and cruise control focused on the most prevalent class.
+In order to meet the needs of science cases concerning other, rarer classes, \plasticc's metric will obviously have to be more nuanced, even if it complicates the interpretability of the metric.
 % This can be problematic because our science needs might require accurate classifications of uncommon classes as well.
-Because tunnel vision is actually strong performance, it is common for tunnel classifiers to dominate challenges.
-Under a ``winner takes all'' challenge and with equal weight per lightcurve, \plasticc\ would be particularly vulnerable to a tunnel vision classifier winning despite not meeting the needs of those studying less common classes.
+% Because tunnel vision is actually strong performance, it is common for tunnel classifiers to dominate challenges.
+% Under a ``winner takes all'' challenge and with equal weight per lightcurve, \plasticc\ would be particularly vulnerable to a tunnel vision classifier winning despite not meeting the needs of those studying less common classes.
 
-One option is to apply a threshold of classification of all classes in order to assign an overall winner, though it would require reducing the classification probabilities to point estimates of class.
-When doing binary classification with a method that reduces probabilities to point estimates of class, each object is assigned the class of higher probability, even if the two probabilities are quite similar.
-This situation is particularly likely if the object, in fact, belongs to a third class or if the two classes are subclasses of a single physical phenomenon.
+One option is to apply a threshold of classification efficacy on all classes in order to assign an overall winner, though it would require reducing the classification probabilities to deterministic class labels.
+When doing binary classification with a method that reduces probabilities to deterministic class labels, each lightcurve is assigned the class of higher probability, even if the two probabilities are quite similar, a situation that is particularly likely if the lightcurve, in fact, belongs to a third class or if the two classes are subclasses of a single physical phenomenon.
 %We thus anticipate it to be a more severe issue for \plasticc\ and other realistic multi-class challenges as well as any challenges with multiple subclasses.
-
-A simple reduction to a point estimate would in general be inappropriate but possibly salvageable with a threshold mechanism.
+A simple reduction to a deterministic label could be made more palatable with a secondary threshold mechanism.
 For example, requiring a minimum difference in probability density between the maximum probability class and the next highest probability class would help avert this degeneracy.
 % (e.g. a newly discovered supernova with a very small number of points may be indistinguishable from a Cataclysmic variable going through a brightening).
 
-The alternative we systematically investigate in this paper is to use a ``flat'' average of per-class metrics
-\begin{eqnarray}
-  \label{eq:perclassavg}
-Q_{m} &=& \frac{1}{N_{M}}\sum_{n}Q_{n}
-\end{eqnarray}
-resulting from first averaging the metric values $Q_{n}$ for each member $n$ (i.e. each observed T\&V object) of the class $m$ (e.g., AGN, SN Ia, RRLyrae in the astronomical example).
-For this study, we consider a general weighted average
+A simpler alternative that we systematically investigate in this paper is to use a weighted average
 \begin{eqnarray}
   \label{eq:weightavg}
-Q_{tot} &=& \frac{1}{\sum_{m}w_{m}}\sum_{m=1}^{M}w_{m}Q_{m}
+  Q &=& \frac{1}{\sum_{m} w_{m}} \sum_{m=1}^{M} w_{m} Q_{m}
 \end{eqnarray}
-of the per-class metrics.
-Non-flat weights may be chosen to encourage challenge participants to direct more attention to classes with less active classification literature or those that have been historically more difficult to classify due to the concerning systematics.
-The weights for the \plasticc\ metric, however, must be determined before the knowledge of which systematics affect which classes exists.
-Because of this, the choice of weights is an inherently human problem dictated by the value placed on the scientific merits of knowledge of each class.
+of per-class metrics.
+Weights that are not proportional to the number of true class members and are not equal to $M^{-1}$ may be chosen to encourage challenge participants to direct more attention to classes with less active classification efforts or those that have been historically more difficult to classify due to observational limitations.
+
+Downweighting the metrics of classes affected by counterproductive systematics could mitigate the impact of the tunnel vision or cruise control classifiers.
+The weights for the \plasticc\ metric, however, must be determined before there is knowledge of which systematics affect which classes.
+Because of this, the choice of weights is isolated to an inherently human problem dictated by the value placed on the scientific merits of knowledge of each class.
 This paper, on the other hand, can only quantify the impact of weights in relation to the systematics.
+We thus agnostically test weighting schemes where classes affected by a particular systematic take a given weight $0 \leq w \leq 1$ and all other classes have a weight $(1 - w) / (M - 1)$.
