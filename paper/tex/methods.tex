@@ -126,16 +126,8 @@ We leave to future work the thorough investigation of a nontrivial weighting sch
 
 \subsection{Weights}
 \label{sec:weights}
-
 % TODO: motivate weights as opposed to flat
 % TODO: rename section
-
-The underlying causes of the most troubling of the systematics of Section~\ref{sec:mockdata}, tunnel vision and cruise control, are the nonrepresentative training set and an extreme imbalance of class membership rates.
-Nonrepresentativity is a common problem in astronomy, as different objects naturally occur with different frequency in the universe.
-Something that complicates matters even further is that classes often look alike in different scenarios.
-For example, supernovae (stars that are completely destroyed in their explosions) often look like cataclysmic variables or CVs (stars that are not destroyed and whose brightness changes in a repeated way) given only the first few lightcurve points.
-Similarly tidal disruption events (TDEs) that occur when stars get sufficiently close to the central black hole of a galaxy to be destroyed can look much like supernovae that are located close to the center of the galaxy.
-Over longer periods of time, variations in the output from the central source of a galaxy, the active galactic nucleus (AGN) can mimic the output of a CV.
 
 As mentioned in the previous section, subclasses often look similar but are useful in understanding very different science cases, so a metric that rewards a nuanced classifier is desireable.
 
