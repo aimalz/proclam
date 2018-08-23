@@ -34,7 +34,7 @@ We briefly define the \textit{efficiency} $\epsilon \equiv \mathrm{TP} / (\mathr
 \label{sec:science}
 
 As the \snphotcc\ was only concerned with SN Ia cosmology, it was effectively binary, in that the metric did not distinguish between non-Ia classes.
-The \snphotcc metric $\mathcal{FOM} \equiv \epsilon \tilde{\pi}$,
+The \snphotcc\ metric $\mathcal{FOM} \equiv \epsilon \cdot \tilde{\pi}$,
 % \begin{eqnarray}
 %   \label{eq:snphotccfom}
 %   \mathcal{FOM} &\equiv& \epsilon \times \tilde{\pi}
@@ -70,21 +70,25 @@ In contrast to \snphotcc's single goal of optimal deterministic classification o
 % The first difference will be discussed in Section~\ref{sec:weights}.
 % TODO: discuss ROC/AUC, etc. here as well?
 We consider two metrics of classification probabilities that avoid reducing probabilities to deterministic labels.
-Both our metrics make use of the indicator variable
+These metrics are somewhat more involved than those of Section~\ref{sec:deterministic}, requiring additional infrastructure.
+
+% \aim{TODO: will need to fix indexing at 0 in plots!}
+Our probabilistic metrics are composed of quantities defined for each possible class $m$ available to lightcurve $n$, which is a true member of the set $\mathbb{S}_{m'}$ of astrophysical sources of class $m'$.
+The metric value $Q_{n} = \sum_{m=1}^{M} Q_{n, m}$ for a single lightcurve $n$ is a sum of the per-class per-lightcurve metric values $Q_{n, m}$.
+The metric value $Q_{m'} = \sum_{n \in \mathbb{S}_{m'}} Q_{n}$ for an entire class $m'$ is the sum of the per-lightcurve metrics.
+Section~\ref{sec:weights} discusses how the global metrics are derived from the per-class metrics $Q_{m'}$.
+As part of the derivation of the per-class per-lightcurve metrics, we also define the indicator variable
 \begin{eqnarray}
   \label{eq:indicator}
   \tau_{n, m} &\equiv& \begin{cases}
   0 & m' \neq m\\
   1 & m' = m
-  \end{cases}
+  \end{cases}.
 \end{eqnarray}
-for each possibile class $m$ for the $n^{\mathrm{th}}$ lightcurve which in truth belongs to class $m'$.
-Both of our metrics are strictly nonnegative and approach zero for a truly perfect classifier.
 
 \subsubsection{Log-loss}
 \label{sec:logloss}
 
-\aim{This section needs rewriting to remove jargon and clarify the discrepancies raised by Kaisey/Ashish/Tom.}
 The log-loss (which is related to the cross-entropy as defined below) is a measure of how a classification algorithm performs in the case where the prediction input is a probability value between zero and unity.
 
 \begin{eqnarray}
@@ -105,6 +109,7 @@ The log-loss has only recently established a presence in the astronomy literatur
 Its greatest strength is that it is straightforwardly interpretable, enabling the metric itself to directly contribute to uncertainty propagation in an inference problem using the probability densities provided by the classifier.
 % \aim{[Rahul: Are you saying you could rewrite a BEAMs like model in terms of the logloss metric rather than the Probabilities P(m|d)?]}
 % \aim{[Alex: Not rather than, but as the performance metric of how it's doing.  When propagated through a cosmology calculation, we'd be able to say that BEAMS improves the cosmological parameters by preserving X more information than the alternative.]}
+Both of our metrics are strictly nonnegative and approach zero for a truly perfect classifier.
 
 \subsubsection{Brier score}
 \label{sec:brier}
@@ -131,6 +136,7 @@ We leave to future work the thorough investigation of a nontrivial weighting sch
 % \label{sec:cdeloss}
 %
 % \aim{The CDE Loss should also be included in the paper (and sent to Kaggle, if there's still time) if I can figure out how to make it work for non-ordered domains, i.e. classes.}
+Both of our metrics are strictly nonnegative and approach zero for a truly perfect classifier.
 
 \subsection{Weights}
 \label{sec:weights}
