@@ -65,10 +65,11 @@ The \snphotcc\ chose $r = 3$ based on a conservative limit on the acceptable amo
 \subsection{Probabilistic metrics}
 \label{sec:probabilistic}
 
-\plasticc\ aims to identify classifiers that produce discrete posterior probability distributions $p(m \mid d)$ over $M$ classes $m$ given their photometric lightcurves $d$, not deterministic classifications.
+In contrast to \snphotcc's single goal of optimal deterministic classification of a single class, \plasticc\ seeks to identify classifiers that produce classification posteriors.
+% discrete posterior probability distributions $p(m \mid d)$ over $M$ classes $m$ given their photometric lightcurves $d$, not deterministic classifications.
 % The first difference will be discussed in Section~\ref{sec:weights}.
 % TODO: discuss ROC/AUC, etc. here as well?
-We consider two metrics of classification probabilities that avoid reducing probabilities to point estimates of class.
+We consider two metrics of classification probabilities that avoid reducing probabilities to deterministic labels.
 Both our metrics make use of the indicator variable
 \begin{eqnarray}
   \label{eq:indicator}
