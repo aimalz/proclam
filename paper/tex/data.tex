@@ -183,27 +183,29 @@ Machine learning was also employed, using features such as the light-curve slope
 In short, \snphotcc\ attracted physically motivated template-based methods sensitive to the differences between the test data and the template set as well as those based on decomposition of the light curves into generic features at risk of neglecting available physical information.
 % TODO need citations of ML submissions to SNPhotCC
 %, which are prone to bias given non-representativity of the test data and agnostic
-After the \snphotcc\ concluded, the lightcurves became a testbed for a suite of machine learning classifiers.
-We consider one such compilation of methods, as presented in \citet{lochner_photometric_2016}, whose conditional probability matrices are shown in Figure~\ref{fig:snphotcc_cm}.
-% TODO what are the 3 classes?
-These classification algorithms include a wavelet decomposition of the lightcurves to construct the features over which to classify (\citet{newling_statistical_2011}, bottom row) and template-based classification procedures (\citet{sako_photometric_2011}, top row), each paired with Boosted Random Forest (BF), K-Nearest Neighbors (KNN), Naive Bayes (NB), Support Vector Machine (SVM), and Neural Network (NN) machine learning algorithms (columns).
-While the complexity of entries to the \snphotcc\ was greater than this subset, we use these illustrative examples as a useful comparison set over which to assess the performance of the approaches under our metric scheme.
 
 \begin{figure*}
 	\begin{center}
     \includegraphics[width=\textwidth]{./fig/all_snphotcc_cm.png}
 		\caption{Conditional probability matrices of the \citet{lochner_photometric_2016} methods applied to the \snphotcc\ dataset.
     Top row: five machine learning methods applied to template decompositions.
-    Bottom row: the same five machine learning methods applied to wavelet features.}
+    Bottom row: the same five machine learning methods applied to wavelet features.
+		}
 		\label{fig:snphotcc_cm}
 	\end{center}
 \end{figure*}
 
-We draw attention to the presence of the systematics introduced in Section~\ref{sec:mockdata} in these realistic classification results.
-Note that the ``WaveletsNN'' and ``WaveletsNB'' methods both suffer from the cruise control systematic.
-Nearly all the others exhibit classifications that are almost perfect for the first class, perfect for the second class, and noisy for the third.
-\aim{What are these classes?}
+After the \snphotcc\ concluded, the lightcurves became a testbed for a suite of machine learning classifiers.
+We consider one such compilation of methods, as presented in \citet{lochner_photometric_2016}, whose conditional probability matrices are shown in Figure~\ref{fig:snphotcc_cm}.
+(Ironically, we produced these conditional probability matrices by reducing the classification posteriors to their maximum probability labels, constructing a confusion matrix, and normalizing it.)
+The set of classification algorithms includes a wavelet decomposition of the lightcurves to construct the features over which to classify (\citet{newling_statistical_2011}, bottom row) and template-based classification procedures (\citet{sako_photometric_2011}, top row), each paired with Boosted Random Forest (BF), K-Nearest Neighbors (KNN), Naive Bayes (NB), Support Vector Machine (SVM), and Neural Network (NN) machine learning algorithms (columns).
+While the complexity of entries to the \snphotcc\ was greater than this subset, we use these examples to establish the behavior of our metrics on realistic classification submissions.
 
+We draw attention to the marked presence of the systematics introduced in Section~\ref{sec:mockdata} in these realistic classification results.
+Note that the WNN and WNB methods both suffer from the cruise control systematic on SN II.
+It should come as no surprise that SN II are more prevalent in the \snphotcc\ dataset.
+Nearly all the others exhibit classifications that are almost perfect for SN Ia, perfect for SN II, and noisy for SN Ibc.
+A likely cause for this effect is that SN Ibc are poorly represented in training and template sets.
 % \subsubsection{Unknown dataset}
 % \label{sec:mystery}
 %

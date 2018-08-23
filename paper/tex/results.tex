@@ -125,31 +125,32 @@ In a sense, it means that the log-loss is more susceptible to the tunnel vision 
 We also present in Table~\ref{tab:snmachinevals} the values of all metrics we considered, under equal weight per object, for classification probabilities derived from running the algorithms of \citet{lochner_photometric_2016} on the \snphotcc\ data of Section~\ref{sec:realdata}.
 Table~\ref{tab:snmachinerank} shows the ranking of classifier performance under each metric.
 
+% \aim{TODO: combine these tables!}
 \begin{table}[]
 \begin{tabular}{llll}
 %                            & AUC    & Brier   & FoM   & Logloss            \\
-% templates\_bf  						 & 0.982 & 0.0486  & 0.635  & 0.0907  \\
-% templates\_knn             & 0.942 & 0.0787  & 0.384 & 0.146  \\
-% templates\_nb              & 0.879 & 0.105  & 0.340  & 0.251 \\
-% templates\_nn							 & 0.954 & 0.0650  & 0.496   & 0.125 \\
-% templates\_svm             & 0.969 & 0.0583 & 0.514  & 0.113 \\
-% wavelets\_bf   						 & 0.978 & 0.0689  & 0.591  & 0.1321 \\
-% wavelets\_knn              & 0.894 & 0.132  & 0.114 & 0.228 \\
-% wavelets\_nb               & 0.850 & 0.178  & 0.0365 & 0.443  \\
-% wavelets\_nn 							 & 0.946 & 0.0750  & 0.480  & 0.152 \\
-% wavelets\_svm              & 0.968  & 0.0730  & 0.499  & 0.1316
+% TBRF  						 & 0.982 & 0.0486  & 0.635  & 0.0907  \\
+% TKNN             & 0.942 & 0.0787  & 0.384 & 0.146  \\
+% TNB              & 0.879 & 0.105  & 0.340  & 0.251 \\
+% TNN							 & 0.954 & 0.0650  & 0.496   & 0.125 \\
+% TSVM             & 0.969 & 0.0583 & 0.514  & 0.113 \\
+% WBRF   						 & 0.978 & 0.0689  & 0.591  & 0.1321 \\
+% WKNN              & 0.894 & 0.132  & 0.114 & 0.228 \\
+% WNB               & 0.850 & 0.178  & 0.0365 & 0.443  \\
+% WNN 							 & 0.946 & 0.0750  & 0.480  & 0.152 \\
+% WSVM              & 0.968  & 0.0730  & 0.499  & 0.1316
 & Brier   & FoM   & Logloss            \\
 \hline
-templates\_bf  						 & 0.0486  & 0.635  & 0.0907  \\
-templates\_knn             & 0.0787  & 0.384 & 0.146  \\
-templates\_nb              & 0.105  & 0.340  & 0.251 \\
-templates\_nn							 & 0.0650  & 0.496   & 0.125 \\
-templates\_svm             & 0.0583 & 0.514  & 0.113 \\
-wavelets\_bf   						 & 0.0689  & 0.591  & 0.1321 \\
-wavelets\_knn              & 0.132  & 0.114 & 0.228 \\
-wavelets\_nb               & 0.178  & 0.0365 & 0.443  \\
-wavelets\_nn 							 & 0.0750  & 0.480  & 0.152 \\
-wavelets\_svm              & 0.0730  & 0.499  & 0.1316 \\
+TBRF  					& 0.0486  & 0.635  & 0.0907  \\
+TKNN            & 0.0787  & 0.384 & 0.146  \\
+TNB             & 0.105  & 0.340  & 0.251 \\
+TNN							& 0.0650  & 0.496   & 0.125 \\
+TSVM            & 0.0583 & 0.514  & 0.113 \\
+WBRF   					& 0.0689  & 0.591  & 0.1321 \\
+WKNN            & 0.132  & 0.114 & 0.228 \\
+WNB             & 0.178  & 0.0365 & 0.443  \\
+WNN 						& 0.0750  & 0.480  & 0.152 \\
+WSVM            & 0.0730  & 0.499  & 0.1316 \\
 \end{tabular}
 \caption{The values of three metrics for each of ten \snmachine\ classifiers with equal weight per object.}
 	\label{tab:snmachinevals}
@@ -157,29 +158,30 @@ wavelets\_svm              & 0.0730  & 0.499  & 0.1316 \\
 
 \begin{table}[]
 \begin{tabular}{llll}
-%   & AUC             & Brier           & FoM             & Logloss       \\
-% 1 & templates\_bf 	& templates\_bf	 	& templates\_bf 	& templates\_bf \\
-% 2 & wavelets\_bf	 	& templates\_svm 	& wavelets\_bf		& templates\_svm \\
-% 3 & templates\_svm 	& templates\_nn 	& templates\_svm	& templates\_nn \\
-% 4 & wavelets\_svm 	& wavelets\_bf 		& wavelets\_svm		& wavelets\_svm \\
-% 5 & templates\_nn 	& wavelets\_svm 	& templates\_nn		& wavelets\_bf \\
-% 6 & wavelets\_nn 		& wavelets\_nn 		& wavelets\_nn		& templates\_knn \\
-% 7 & templates\_knn 	& templates\_knn 	& templates\_knn	& wavelets\_nn \\
-% 8 & wavelets\_knn 	& templates\_nb 	& templates\_nb		& wavelets\_knn \\
-% 9 & templates\_nb 	& wavelets\_knn 	& wavelets\_knn		& templates\_nb \\
-% 10 & wavelets\_nb 	& wavelets\_nb 		& wavelets\_nb		& wavelets\_nb \\
 Rank & Brier           & FoM             & Logloss       \\
+% would like FoM/AUC/LogLoss/Brier in order of introduction
 \hline
-1 & templates\_bf	 	& templates\_bf 	& templates\_bf \\
-2 & templates\_svm 	& wavelets\_bf		& templates\_svm \\
-3 & templates\_nn 	& templates\_svm	& templates\_nn \\
-4 & wavelets\_bf 		& wavelets\_svm		& wavelets\_svm \\
-5 & wavelets\_svm 	& templates\_nn		& wavelets\_bf \\
-6 & wavelets\_nn 		& wavelets\_nn		& templates\_knn \\
-7 & templates\_knn 	& templates\_knn	& wavelets\_nn \\
-8 & templates\_nb 	& templates\_nb		& wavelets\_knn \\
-9 & wavelets\_knn 	& wavelets\_knn		& templates\_nb \\
-10 & wavelets\_nb 		& wavelets\_nb		& wavelets\_nb \\
+1 & TBRF	& TBRF 	& TBRF \\
+2 & TSVM 	& WBRF	& TSVM \\
+3 & TNN 	& TSVM	& TNN \\
+4 & WBRF 	& WSVM	& WSVM \\
+5 & WSVM 	& TNN		& WBRF \\
+6 & WNN 	& WNN		& TKNN \\
+7 & TKNN 	& TKNN	& WNN \\
+8 & TNB 	& TNB		& WKNN \\
+9 & WKNN 	& WKNN	& TNB \\
+10 & WNB 	& WNB		& WNB \\
+%   & AUC             & Brier           & FoM             & Logloss       \\
+% 1 & TBRF 	& TBRF	 	& TBRF 	& TBRF \\
+% 2 & WBRF	 	& TSVM 	& WBRF		& TSVM \\
+% 3 & TSVM 	& TNN 	& TSVM	& TNN \\
+% 4 & WSVM 	& WBRF 		& WSVM		& WSVM \\
+% 5 & TNN 	& WSVM 	& TNN		& WBRF \\
+% 6 & WNN 		& WNN 		& WNN		& TKNN \\
+% 7 & TKNN 	& TKNN 	& TKNN	& WNN \\
+% 8 & WKNN 	& TNB 	& TNB		& WKNN \\
+% 9 & TNB 	& WKNN 	& WKNN		& TNB \\
+% 10 & WNB 	& WNB 		& WNB		& WNB \\
 \end{tabular}
 \caption{The ranking of the classifiers of Table~\ref{tab:snmachinevals} under each metric.}
 \label{tab:snmachinerank}
