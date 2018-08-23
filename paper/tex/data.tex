@@ -2,7 +2,7 @@
 \label{sec:data}
 
 We explore the behavior of the metrics on mock classifications with well-understood weaknesses as well as realistic mock classifications from past challenges.
-Throughout the paper, ``data'' always refers to classification results, not lightcurves; no lightcurves were simulated, viewed, or classified in the preparation of this paper.
+Throughout the paper, \textit{data} always refers to classification results, not lightcurves; no lightcurves were simulated, viewed, or classified in the preparation of this paper.
 Data is in the form of catalogs of posterior probability vectors $p(m \mid d)$ over $M$ classes with labels $m$ conditioned on the observed lightcurve $d$, with each probability vector normalized to sum to unity.
 We describe below the way in which mock data is synthesized.
 
@@ -55,14 +55,24 @@ about $\mathbb{C}_{m_{n}'}$, with a small nonnegative perturbation factor $\delt
 % \end{eqnarray}
 % \aim{[Rahul: Might be good to have a plot of the pdf when x0 takes values close to 0., something like 0.4, 0.8 and close to 1.0]}
 
-We consider eight `mock classifiers', each of whose effectiveness is described by its conditional probability matrix.
+We consider eight mock classifiers, each characterized by a single systematic affecting their conditional probability matrix.
 Figure~\ref{fig:mock_cm} shows the conditional probability matrices corresponding to each systematic considered, discussed in detail below.
-% TODO: sequential color scheme?
 % TODO: letters for panels, refer to them in text
 \begin{figure*}
 	\begin{center}
     \includegraphics[width=0.8\textwidth]{./fig/all_sim_cm.png}
-		\caption{Conditional probability matrices for eight mock classifiers. The left panels show uncertain (top) and perfect (bottom) classifications, while the second panel from the left shows the almost perfect (top) and unbiased but noise (bottom) classifications. The third panel from the left illustrate the perfect classifications that generate Type 1 (False Positive) and Type 2 (False Negative) errors for one class and uniform for all others (the `tunnel classifier', top row), while the bottom row illustrates the classification where all objects are assigned to the same class (the `cruise' classifier). Finally, the panels on the far right show classifications where one class is consistently assigned to another class (subsumed to, top row), and where one consistently assigns another class to one particular class (subsumed from, bottom row). Such classifications arise when one is optimising for a particular science case (e.g., one might prioritize a tunnel classification scheme), or where one object is considered much more `valuable' to classify than others (in which case one would employ a cruise classification scheme.)
+		\caption{Conditional probability matrices for eight mock classifiers.
+		Top row:
+		the uncertain classifier's uniform conditional probability matrix;
+		the perfect classifier's identity conditional probability matrix;
+		the almost perfect classifier's conditional probability matrix, a linear combination of one part uniform and four parts identity;
+		the noisy classifier's conditional probability matrix, a linear combination of one part uniform and two parts identity.
+		Bottom row:
+		the tunnel vision classifier's conditional probability matrix is uniform except at the row and column corresponding to one class, where it takes the values of the identity matrix;
+		the cruise control classifier's conditional probability matrix, which has the every row equal to a particular row of the identity;
+		the subsuming classifier's conditional probability matrix, which has two or more rows equal to one another;
+		the mutually subsuming classifier's conditional probability matrix, a symmetric case of the subsuming classifier.
+		% The left panels show uncertain (top) and perfect (bottom) classifications, while the second panel from the left shows the almost perfect (top) and unbiased but noise (bottom) classifications. The third panel from the left illustrate the perfect classifications that generate Type 1 (False Positive) and Type 2 (False Negative) errors for one class and uniform for all others (the `tunnel classifier', top row), while the bottom row illustrates the classification where all objects are assigned to the same class (the `cruise' classifier). Finally, the panels on the far right show classifications where one class is consistently assigned to another class (subsumed to, top row), and where one consistently assigns another class to one particular class (subsumed from, bottom row). Such classifications arise when one is optimising for a particular science case (e.g., one might prioritize a tunnel classification scheme), or where one object is considered much more `valuable' to classify than others (in which case one would employ a cruise classification scheme.)
 %    leftmost top: uncertain classification,
 %    leftmost bottom: perfect classifications,
 %    left-center top: almost perfect classification,
@@ -79,7 +89,9 @@ Figure~\ref{fig:mock_cm} shows the conditional probability matrices correspondin
 	\begin{center}
 		\includegraphics[width=0.45\textwidth]{./fig/combined.png}\\
     \includegraphics[width=0.45\textwidth]{./fig/examples.png}
-		\caption{A conditional probability matrix exhibiting all systematics and classification posteriors drawn from it. Top panel: A realistic classifier's conditional probability matrix, characterized by a combination of systematics described on the right.  Bottom panel: Classification posteriors drawn from the conditional probability matrix above, with their true class indicated by a red star as well as on the left.
+		\caption{A conditional probability matrix exhibiting all systematics and classification posteriors drawn from it.
+		Top panel: A realistic classifier's conditional probability matrix, characterized by a combination of systematics described on the right.
+		Bottom panel: Classification posteriors drawn from the conditional probability matrix above, with their true class indicated by a red star as well as on the left.
 		}
 		\label{fig:mock_probs}
 	\end{center}
@@ -87,9 +99,9 @@ Figure~\ref{fig:mock_cm} shows the conditional probability matrices correspondin
 
 For each case, we address:
 \begin{enumerate}
-  \item What defines the classification error property of this classifier?
-  \item Under what conditions is this error property relevant?
-  \item What are our expectations of and desires for the way this error property will affect the metric result?
+  \item What characteristic behavior defines this classifier?
+  \item Under what conditions does this behavior arise in real classifications?
+  \item What are our expectations of and desires for response of the metric to this classifier?
 \end{enumerate}
 
 \subsubsection{Uncertain classification}
@@ -133,7 +145,7 @@ If a classifier is systematically inaccurate, its conditional probability matrix
 We model inaccurate probabilistic classifications of class $m'$ by using the row of the conditional probability matrix corresponding to class $\tilde{m}$ as the basis for the perturbed probability vector
 \begin{eqnarray}
   \label{eq:subsume}
-  p(m\ \mid\ m') = p(m\ \mid\ \tilde{m}).
+  p(m \mid m') = p(m \mid \tilde{m}).
 \end{eqnarray}
 Class $m'$ is said to be \textit{subsumed} by class $\tilde{m}$ for such a classifier.
 The asymmetric relationship between $m'$ and $\tilde{m}$ is illustrated in the rightmost top and bottom panels of Figure~\ref{fig:mock_cm} for class $m'$ being subsumed by class $m'-1$ and class $m'$ subsuming class $m'+1$, respectively.
