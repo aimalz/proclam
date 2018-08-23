@@ -137,7 +137,7 @@ For many specific science cases, this type of classifier is desirable, but given
 Hence, from the perspective of \plasticc, such a \textit{tunnel vision} classifier (right-center panel of Figure~\ref{fig:mock_cm}) is not something we want to favour with the metric.
 %However favoritism is inappropriate for the overall \plasticc\ metric, which must serve the needs of those who study all the classes and for different purposes.
 
-\subsection{Inaccurate classification}
+\subsubsection{Inaccurate classification}
 \label{sec:inaccuratedata}
 
 Inaccurate classification in the context of a deterministic classifier is self-explanatory.
@@ -152,27 +152,22 @@ The asymmetric relationship between $m'$ and $\tilde{m}$ is illustrated in the r
 However, one or more classes could be mutually subsuming if one already has significant off-diagonal probability, as is true for the uncertain classifier.
 
 Subsuming is particularly expected when distinguishing between subtypes of some class, and it is of utmost importance when the subtypes have wholly different science applications.
-Classification subtypes that are useful for completely different science cases are found in supernova classification, through e.g., the differences between SN Ia and SN Ibc. SN Ia and SN Ibc are challenging to distinguish, and the former often subsumes the latter in common classifiers, an effect that can be exacerbated by underrepresentation of SN Ibc in available training sets.
+Classification subtypes that are useful for completely different science cases are found in supernova classification, through e.g., the differences between SN Ia and SN Ibc.
+SN Ia and SN Ibc are challenging to distinguish, and the former often subsumes the latter in common classifiers, an effect that can be exacerbated by underrepresentation of SN Ibc in available training sets.
 However, using SN Ibc in the traditional cosmology analysis done with SN Ia can bias estimates of the cosmological parameters, so the distinction is critical.
 
 Similarly RRc and RRd Lyrae stars have different pulsation modes (RRc stars pulsate in the first overtone, while RRd stars pulsate simultaneously in the fundamental mode and first overtone, and are much more rare than RRc stars), and yet are challenging to separate observationally.
 We would like the \plasticc\ metric to identify the strength of a classifier that successfully prevents this kind of error.
 
+Aside from hierarchical classes, limited data can cause even wholly different physical phenomena to be indistinguishable.
+For example, based on only the first few lightcurve points, it is sometimes impossible to separate cataclysmic variables, which are stars that are not destroyed and can explode many times, from supernovae, which are stars that are completely destroyed in their explosions; over longer periods, it can still be impossible to distinguish cataclysmic variables from active galactic nuclei that result from activity near a galaxy's central black hole.
+Similarly tidal disruption events that occur when stars are destroyed by proximity to the central black hole of a galaxy can look much like supernovae that simply happen to be near a galaxy's center; when the prior information of the location of the source is more informative than the information content of a sparse, noisy, irregularly sampled, or early lightcurve, it may indicate a challenge no classifier can overcome, a fundamental limit on available information about the class.
+
+Class imbalance can severely exacerbate this form of inaccuracy and is a ubiquitous problem in astronomy, as the relative rates of various astrophysical events and objects differ by orders of magnitude from one another.
 An extreme case of inaccurate classification is to classify all objects as the most common class, a particular concern for \plasticc\ given the potential for population imbalance between classes.
 For our purposes, it matters not whether the subsuming class is actually the most common or only the most common in the training set.
 Such a \textit{cruise control} classifier (right-center bottom panel of Figure~\ref{fig:mock_cm}) counters \plasticc's goal of identifying objects belonging to extremely rare classes, particularly if the metric weights all objects equally.
 Though we dampen this systematic by employing per-class weights, described in Section~\ref{sec:weights}, we nonetheless examine its impact under other plausible weighting schemes.
-
-% \subsubsection{Combination of systematics}
-% \label{sec:combo}
-%
-% \begin{figure}
-% 	\begin{center}
-% 		% \includegraphics[width=0.45\textwidth]{./fig/Combined.png}
-% 		\caption{}
-% 		\label{fig:combo_cm}
-% 	\end{center}
-% \end{figure}
 
 \subsection{Representative classifications}
 \label{sec:realdata}

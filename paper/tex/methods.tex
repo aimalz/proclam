@@ -98,7 +98,6 @@ To reconcile the classification posterior with the true class known by those run
 which can be interpreted as the spuriously oversized space of possible states (an increase in disorder) due to using the classification posterior in place of the indicator variable.
 Whereas $H_{n}$ is minimized to a value of $0$ by any deterministic classification, $L_{n}$ is minimized to a value of $0$ only if $\tau_{n}$ and $p(m \mid d_{n})$ are equal to one another.
 It can also be proven that the uncertain classifier of Section~\ref{sec:uncertaindata} maximizes $L_{n}$ \citep{murphy_machine_2012}.
-
 As an aside, a difference between $L_{n}$ and $H_{n}$ evaluated at $\tau_{n, m}$ would be the information lost to disorder in using $p(m \mid d_{n})$ in place of $\tau_{n, m}$, also known as the Kullback-Leibler Divergence (KLD); see \citet{malz_approximating_2018} for a comprehensive exploration of the KLD for a continuous 1-dimensional probability space.
 
 The log-loss has only recently established a presence in the astronomy literature \citep{hon_deep_2017, hon_deep_2018}.
@@ -112,26 +111,18 @@ Its greatest strength is that it is straightforwardly interpretable, enabling th
 The Brier score \citep{brier_verification_1950}, given as
 \begin{eqnarray}
   \label{eq:brier}
-B_{n} &=& \sum_{m=1}^{M}(\tau_{n, m}-p(m \mid d_{n}))^{2}.
+  B_{n} &=& \sum_{m=1}^{M} (\tau_{n, m} - p(m \mid d_{n}))^{2},
 \end{eqnarray}
-is a mean square error calculated between the true class indicator vector and the estimated probability vector.
-It has been used extensively in solar flare forecasting \citep{crown_validation_2012, mays_ensemble_2015, florios_forecasting_2018}, stellar variability identification \citep{richards_construction_2012, armstrong_k2_2016}, and star-galaxy separation \citep{kim_hybrid_2015}.
+is a mean square error calculated between the indicator variable and the classification posterior.
+Unlike the log-loss, the Brier score has been used extensively in solar flare forecasting \citep{crown_validation_2012, mays_ensemble_2015, florios_forecasting_2018}, stellar variability identification \citep{richards_construction_2012, armstrong_k2_2016}, and star-galaxy separation \citep{kim_hybrid_2015}.
 
-The Brier score is an attractive option because it both rewards classifiers assigning high probability to the true class and penalizes classifiers for assigning high probability to classes other than the true class.
+As with the log-loss, the Brier score is minimized to $0$ only for a perfect classifier.
+The Brier score is an attractive option because it both rewards classifiers for  assigning more probability to the true class and penalizes classifiers for assigning any probability to classes other than the true class, in contrast to the log-loss, which only explicitly accounts for probability assigned to the true class.
 We expect this difference to significantly distinguish the Brier score from the log-loss.
 
-However, its interpretation is less obvious, as its dimensions depend on those of the probability space upon which the posterior estimates are defined (classes, in the case of \plasticc).
-In addition, modifying it with weights requires choosing whether to weight only per-object values $B_{n}$ or also the individual terms in the metric above.
-We leave to future work the thorough investigation of a nontrivial weighting scheme on the Brier metric.
-
-%\textbf{RH: this isnt super clear, we should discuss}
-%\aim{I'm not sure if there's time to actually investigate the latter, nor how forthcoming to be about that being a nontrivial concern that drove the final decision about a metric for Kaggle.}
-
-% \subsubsection{Conditional density estimation loss}
-% \label{sec:cdeloss}
-%
-% \aim{The CDE Loss should also be included in the paper (and sent to Kaggle, if there's still time) if I can figure out how to make it work for non-ordered domains, i.e. classes.}
-Both of our metrics are strictly nonnegative and approach zero for a truly perfect classifier.
+The interpretation of the Brier score is less obvious than that of the log-loss, as its dimensions depend on those of the probability space upon which the classification posteriors are defined.
+In addition, modifying it with weights requires choosing whether to weight only per-object values $B_{n}$ or also the individual terms $B_{n, m}$ contributing to it.
+We leave to future work the thorough investigation of a nontrivial weighting scheme on the Brier metric, however, opting to treat both metrics the same, according to the weighting scheme of Section~\ref{sec:weights}, in our implementation.
 
 \subsection{Weights}
 \label{sec:weights}
