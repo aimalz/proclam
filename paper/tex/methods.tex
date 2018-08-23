@@ -14,48 +14,50 @@
 To optimally discriminate between classification techniques, there must be a performance metric, a single scalar value quantifying how appropriate a classifier is for the task at hand.
 Choosing a metric for \plasticc\ therefore is logically entwined with the challenge goals.
 The goal of \snphotcc\ was to identify good classifiers of SN Ia used for a photometric cosmology analysis, which lends itself to a metric that optimizes the purity of any resultant data set.
-\plasticc, on the other hand, differs from \snphotcc\ in that its goals are not tied to one application or even one type of T\&V.
-As such, the choice of a metric is not so simple, which has many diverse science goals with few arguments strong enough for meaningful fractions of spectroscopic follow-up.
-
-The initial \plasticc\ challenge presents the entirety of the lightcurve for classification.
-While classification of the earliest part of the lightcurve will be valued by the science team itself, the challenge is not overtly restrictive by giving classifiers only the first few points, something that will be included explicitly in upcoming versions of the challenge, to simulate the needs of early brokers for LSST.
+\plasticc, on the other hand, differs from \snphotcc\ in that its goals are not tied to one application or even one type of T\&V class.
+As such, the choice of a metric is not so simple for \plasticc's diverse science goals.
 
 %he posterior probabilities of class must be accurate for use in inference, and they must be evaluated in a way that does not excessively favor any one science application.
 
-In Section~\ref{sec:science}, we review the metrics that were used in \snphotcc.
-% In Section~\ref{sec:deterministic}, we review the metrics that were used in \snphotcc\ as the most similar previous challenge.
+In Section~\ref{sec:deterministic}, we review familiar classification metrics in astronomy.
 In Section~\ref{sec:probabilistic}, we introduce metrics appropriate for probabilistic classification.
 We take weighted averages of the per-object metrics with per-class weights described in Section~\ref{sec:weights}.
 
-\subsection{Science-motivated metrics}
+\subsection{Deterministic metrics}
+\label{sec:deterministic}
+
+We begin with a presentation of a subset of classification metrics that have been used in the evaluation of astronomical lightcurve classifiers in the recent past.
+The metrics we highlight make use of the notions of true positive, false positive, and false negative counts from binary deterministic classification.
+We briefly define the \textit{efficiency} $\epsilon \equiv \mathrm{TP} / (\mathrm{TP} + \mathrm{FN})$ and \textit{purity} $\pi \equiv \mathrm{TP} / (\mathrm{TP} + \mathrm{FP})$.
+
+\subsubsection{Science-motivated metrics}
 \label{sec:science}
 
-% TODO: Needs work to make consistent with rest of paper!
-
-\snphotcc\ aimed to identify deterministic classifiers of SN Ia using a metric
-\begin{eqnarray}
-  \label{eq:snphotccfom}
-  \mathcal{FOM} &\equiv& \epsilon_{Ia} \times \tilde{P}_{Ia}
-\end{eqnarray}
-which is the product of the \textit{efficiency}\footnote{Efficiency is generically defined as $\epsilon = \mathrm{TP} / (\mathrm{TP} + \mathrm{FN})$.}
-\begin{eqnarray}
-  \label{eq:efficiency}
-  \epsilon_{Ia} &=& \frac{N_{Ia}^{\mathrm{true}}}{N_{Ia}^{TOT}}
-\end{eqnarray}
-of SN Ia classification and \textit{pseudo-purity}\footnote{Purity, also known as the positive predictive value, is generically defined as $P = \mathrm{TP} / (\mathrm{TP} + \mathrm{FP})$.}
-\begin{eqnarray}
-  \label{eq:pseudopurity}
-  \tilde{P}_{Ia} &=& \frac{N_{Ia}^{\mathrm{true}}}{N_{Ia}^\mathrm{true} + W_{Ia}^\mathrm{false}N_{Ia}^\mathrm{false}}
-\end{eqnarray}
-with an additive penalty term with weight $W_{Ia}^\mathrm{false}$ motivated by the potential cosmology-parameter biases from  CC contamination.
-The pseudo-purity can be interpreted as the traditional purity factor when $W_{Ia}^\mathrm{false} = 1$.
-
-For the \snphotcc\ the penalty was related to the size of the spectroscopic subsample as roughly $W_{Ia}^\mathrm{false} = 1 + \epsilon_{spec}^{-1} \gg 1$ but the conservative limit of $W_{Ia}^\mathrm{false} = 3$ was chosen.
+As the \snphotcc\ was only concerned with SN Ia cosmology, it was effectively binary, in that the metric did not distinguish between non-Ia classes.
+The \snphotcc metric $\mathcal{FOM} \equiv \epsilon \tilde{\pi}$,
+% \begin{eqnarray}
+%   \label{eq:snphotccfom}
+%   \mathcal{FOM} &\equiv& \epsilon \times \tilde{\pi}
+% \end{eqnarray}
+is the product of the efficiency
+% \begin{eqnarray}
+%   \label{eq:efficiency}
+%   \epsilon_{Ia} &=& \frac{N_{Ia}^{\mathrm{true}}}{N_{Ia}^{TOT}}
+% \end{eqnarray}
+of SN Ia classification and a modification $\tilde{\pi} \equiv \mathrm{TP} / (\mathrm{TP} + r \mathrm{FP})$ of the purity in terms of a penalty factor $r$
+% \begin{eqnarray}
+%   \label{eq:pseudopurity}
+%   \tilde{P}_{Ia} &=& \frac{N_{Ia}^{\mathrm{true}}}{N_{Ia}^\mathrm{true} + W_{Ia}^\mathrm{false}N_{Ia}^\mathrm{false}}
+% \end{eqnarray}
+% with an additive penalty term with weight $W_{Ia}^\mathrm{false}$
+motivated by the potential impact on cosmological parameter constraints due to contamination of the SN Ia sample by non-Ia classes.
+The pseudo-purity can be interpreted as the traditional purity when $r = 1$.
+The \snphotcc\ chose $r = 3$ based on a conservative limit on the acceptable amount of spectroscopic follow-up resources to waste on non-Ia targets.
+% on was related to the size of the spectroscopic subsample as roughly $w = 1 + \epsilon_{spec}^{-1} \gg 1$ but the conservative limit of $W_{Ia}^\mathrm{false} = 3$ was chosen.
 % to penalize wasted spectroscopic time over rejected SNe.
-For future challenges, a more balanced metric can be used to ensure correct classifications across the range of classes, without focusing or highlighting a specific class as above.
 
-% \subsection{Deterministic metrics}
-% \label{sec:deterministic}
+% \subsection{Modified deterministic metrics}
+% \label{sec:auc}
 
 % \aim{TODO: write about AUC so it can be included in results since Michelle calculated it for us!}
 % While commonly-used metrics like Receiver Operator Characteristic (ROC) curve (which maps the true positive rate against the false positive rate) and the area under the curve (AUC) can be used to infer probabilities from such classifiers, the fact that \plasticc\ is by construction simulating multiple types of objects makes the extension of ROC as a metric infeasible.

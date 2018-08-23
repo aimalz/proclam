@@ -177,16 +177,26 @@ Though we dampen this systematic by employing per-class weights, described in Se
 \subsection{Representative classifications}
 \label{sec:realdata}
 
+\begin{figure*}
+	\begin{center}
+    \includegraphics[width=\textwidth]{./fig/all_snphotcc_cm.png}
+		\caption{Conditional probability matrices of the \citet{lochner_photometric_2016} methods applied to the \snphotcc\ dataset.
+		Columns: the five machine learning methods of Boosted Random Forest (BRF), K-Nearest Neighbors (KNN), Naive Bayes (NB), Neural Network (NN), and Support Vector Machine (SVM).
+    Top row: five machine learning methods applied to template decompositions as features.
+    Bottom row: the same five machine learning methods applied to wavelet decompositions as features.
+		These conditional probability matrices derived from the dataset of a precursor lightcurve classification challenge by modern methods exhibit some of the systematics identified in Section~\ref{sec:mockdata} and Figure~\ref{fig:mock_cm}, particularly cruise control (WKNN, WNB), noisy (class Ibc in all but TBRF and WKNN), and perfect (class II in all).
+		% \aim{We talked about labeling the classes but also labeling the rows and columns for their groupings, so I chose to do the one that would be done faster.}
+		}
+		\label{fig:snphotcc_cm}
+	\end{center}
+\end{figure*}
+
 %\aim{This would be more meaningful if we were given the conditional probability matrices of actual submissions to \snphotcc\ and then checked whether the \plasticc\ metric would have designated a different winner.
 %Also, it may be more interpretable if we instead use Ashish's conditional probability matrices that have more classes.}
-%\aim{This is about representative \textit{training sets} and is irrelevant to this paper.}
-% The issue of representative mock classification data is one that concerns classification challenges across a wide range of disciplines.
-% The magnitude-limited nature of \lsst\ means that our test data will always be non-representative.
-% Hence the \plasticc\ data will follow the real world as closely as possible.
 
 In order to understand the performance of classifiers on simulated data sets approximating reality, we calculate the values of our metric candidates on realistic classification of a precursor supernova classification challenge.
 The Supernova Photometric Classification Challenge (\snphotcc) \citep{kessler_supernova_2010} focused on classifying the lightcurves of a heterogenous population into a limited number of subclasses, with a goal of identifying one particular type of object for a single scientific application.
-\snphotcc\ provided a data set of three types, SN Ia, SN II, and SN Ibc.
+\snphotcc\ provided a data set of three types: SN Ia, SN II, and SN Ibc.
 The original metric was based solely on correctly classifying SN Ia deterministically, with no penalty for confusing SN II for SN Ibc and vice versa, nor was there any notion of a confidence in a classification.
 The \snphotcc\ attracted diverse classification approaches, including $\chi^{2}$ fits of the supernova lightcurves to publicly available templates \citep{nugent_kcorrections_2002}, physical models \citep{conley_sifto:_2008}, and empirical models, as well as alternatives to curve-fitting such as outlier identification on the training set Hubble diagram, dimensionality reduction, and clustering.
 % TODO cite InCA?
@@ -196,21 +206,10 @@ In short, \snphotcc\ attracted physically motivated template-based methods sensi
 % TODO need citations of ML submissions to SNPhotCC
 %, which are prone to bias given non-representativity of the test data and agnostic
 
-\begin{figure*}
-	\begin{center}
-    \includegraphics[width=\textwidth]{./fig/all_snphotcc_cm.png}
-		\caption{Conditional probability matrices of the \citet{lochner_photometric_2016} methods applied to the \snphotcc\ dataset.
-    Top row: five machine learning methods applied to template decompositions.
-    Bottom row: the same five machine learning methods applied to wavelet features.
-		}
-		\label{fig:snphotcc_cm}
-	\end{center}
-\end{figure*}
-
 After the \snphotcc\ concluded, the lightcurves became a testbed for a suite of machine learning classifiers.
 We consider one such compilation of methods, as presented in \citet{lochner_photometric_2016}, whose conditional probability matrices are shown in Figure~\ref{fig:snphotcc_cm}.
 (Ironically, we produced these conditional probability matrices by reducing the classification posteriors to their maximum probability labels, constructing a confusion matrix, and normalizing it.)
-The set of classification algorithms includes a wavelet decomposition of the lightcurves to construct the features over which to classify (\citet{newling_statistical_2011}, bottom row) and template-based classification procedures (\citet{sako_photometric_2011}, top row), each paired with Boosted Random Forest (BF), K-Nearest Neighbors (KNN), Naive Bayes (NB), Support Vector Machine (SVM), and Neural Network (NN) machine learning algorithms (columns).
+The set of classification algorithms includes a wavelet decomposition of the lightcurves to construct the features over which to classify (\citet{newling_statistical_2011}, bottom row) and template-based classification procedures (\citet{sako_photometric_2011}, top row), each paired with Boosted Random Forest (BRF), K-Nearest Neighbors (KNN), Naive Bayes (NB), Neural Network (NN), and Support Vector Machine (SVM) machine learning algorithms (columns).
 While the complexity of entries to the \snphotcc\ was greater than this subset, we use these examples to establish the behavior of our metrics on realistic classification submissions.
 
 We draw attention to the marked presence of the systematics introduced in Section~\ref{sec:mockdata} in these realistic classification results.
