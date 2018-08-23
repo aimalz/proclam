@@ -11,11 +11,9 @@
 %\item    The metric must be reliable, giving consistent results for different instantiations of the same test case.
 %\end{itemize}
 
-\plasticc\ aims to motivate development of improved techniques.
-In order to discriminate between techniques, there must be a performance metric, a single scalar value quantifying how appropriate a classifier is for the task at hand.
-Choosing a metric therefore is logically entwined with the question the challenge aims to answer.
+To optimally discriminate between classification techniques, there must be a performance metric, a single scalar value quantifying how appropriate a classifier is for the task at hand.
+Choosing a metric for \plasticc\ therefore is logically entwined with the challenge goals.
 The goal of \snphotcc\ was to identify good classifiers of SN Ia used for a photometric cosmology analysis, which lends itself to a metric that optimizes the purity of any resultant data set.
-The issue of ``early classification'' for the purpose of decisionmaking regarding allocation of precious follow-up resources to spectroscopically confirm likely candidates was not addressed by the challenge participants, though it was (and remains) key to using spectroscopic resources wisely.
 \plasticc, on the other hand, differs from \snphotcc\ in that its goals are not tied to one application or even one type of T\&V.
 As such, the choice of a metric is not so simple, which has many diverse science goals with few arguments strong enough for meaningful fractions of spectroscopic follow-up.
 
@@ -59,8 +57,8 @@ For future challenges, a more balanced metric can be used to ensure correct clas
 % \subsection{Deterministic metrics}
 % \label{sec:deterministic}
 
-% TODO: write about AUC
-% While commonly-used metrics like Receiver Operator Characteristic (ROC) curve (which maps the true positive rate against the false positive rate) and the area under the curve (AUC) can be used to infer probabilities from such classifiers, the fact tht \plasticc\ is by construction simulating multiple types of objects makes the extension of ROC as a metric infeasible.
+% \aim{TODO: write about AUC so it can be included in results since Michelle calculated it for us!}
+% While commonly-used metrics like Receiver Operator Characteristic (ROC) curve (which maps the true positive rate against the false positive rate) and the area under the curve (AUC) can be used to infer probabilities from such classifiers, the fact that \plasticc\ is by construction simulating multiple types of objects makes the extension of ROC as a metric infeasible.
 
 \subsection{Probabilistic metrics}
 \label{sec:probabilistic}
