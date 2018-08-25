@@ -8,12 +8,12 @@ In the following sections, we explore the response of the log-loss and Brier sco
 
 \begin{figure*}
 	\begin{center}
-		\includegraphics[width=0.95\textwidth]{./fig/multipanel_res.png}
-		\caption{Weighted log-loss and Brier scores for classifiers with combinations of systematics.
-		\aim{Do this with colored border boxes and axis borders instead, then rewrite caption.  Maybe three panels in sequence?}
+		\includegraphics[width=0.99\textwidth]{./fig/multipanel_res.png}
+		\caption{Weighted log-loss and Brier scores for baseline classifiers with combinations of systematics.
 		Each point represents a classifier with baseline behavior (regular polygon marker) for all but one class with a particular systematic (asterisk markers).
 		The color of the systematic effect and baseline behavior markers indicates the weight on the class affected by the systematic and the integrated weight evenly distributed over other classes with baseline behavior, respectively.
-		The $x$-axis is the Brier score and the $y$-axis is the log-loss.
+		Both metrics are shown in three regimes of sensitivity: to the subsumed systematic on a perfect baseline is highest, all other baselines with the subsumed systematic, and all other systematics.
+		The ranges of Brier score and log-loss values between the panels are in ratios of approximately $10:7:3$ and $100:10:5$, respectively, indicating the log-loss's higher sensitivity to the presence of systematics.
 		}
 	\end{center}
 	\label{fig:all_combined}
@@ -141,16 +141,16 @@ Table~\ref{tab:snmachinerank} shows the ranking of classifier performance under 
 % WSVM              & 0.968  & 0.0730  & 0.499  & 0.1316
 & Brier   & FoM   & Logloss            \\
 \hline
-TBRF  					& 0.0486  & 0.635  & 0.0907  \\
-TKNN            & 0.0787  & 0.384 & 0.146  \\
-TNB             & 0.105  & 0.340  & 0.251 \\
-TNN							& 0.0650  & 0.496   & 0.125 \\
-TSVM            & 0.0583 & 0.514  & 0.113 \\
-WBRF   					& 0.0689  & 0.591  & 0.1321 \\
-WKNN            & 0.132  & 0.114 & 0.228 \\
-WNB             & 0.178  & 0.0365 & 0.443  \\
-WNN 						& 0.0750  & 0.480  & 0.152 \\
-WSVM            & 0.0730  & 0.499  & 0.1316 \\
+TBRF  		& 0.0486  & 0.635   & 0.0907  \\
+TKNN      & 0.0787  & 0.384   & 0.146  \\
+TNB       & 0.105   & 0.340   & 0.251 \\
+TNN				& 0.0650  & 0.496   & 0.125 \\
+TSVM      & 0.0583  & 0.514   & 0.113 \\
+WBRF   		& 0.0689  & 0.591   & 0.1321 \\
+WKNN      & 0.132   & 0.114   & 0.228 \\
+WNB       & 0.178   & 0.0365  & 0.443  \\
+WNN 			& 0.0750  & 0.480   & 0.152 \\
+WSVM      & 0.0730  & 0.499   & 0.1316 \\
 \end{tabular}
 \caption{The values of three metrics for each of ten \snmachine\ classifiers with equal weight per object.}
 	\label{tab:snmachinevals}
