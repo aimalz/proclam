@@ -1,0 +1,58 @@
+\section{Discussion}
+\label{sec:discussion}
+
+The metrics investigated here are specific to \plasticc, in which participants compete to classify complete lightcurves similar to those anticipated of \lsst\ data releases, independent of the propagation of classification efficacy to specific science applications.
+At the conclusion of \plasticc, the identities of the classes will become public, and we will consider science-motivated metrics on a per-class basis to identify ``best in class'' classifiers in addition to Kaggle's required ``best in show'' metric upon which we focus here.
+There exist plans for future extensions of \plasticc, each aiming to address different problems and thus requiring a different metric appropriate to its goals.
+% Additionally, there are other perspectives on what constitutes a good classifier, and those perspectives must be boiled down to a metric in order to identify a classifier that is best for the task.
+We proceed to very broadly discuss approaches to identifying optimal metrics for these variations, which may be developed further in future work.
+
+\subsection{Early classification}
+\label{sec:early}
+
+Spectroscopic follow-up is only expected of a small fraction of \lsst's detected T\&Vs due to limited resources for such observations.
+% , with resources focused towards objects already flagged as novel and interesting (by a classifier), or useful for cosmology, again using classification algorithms on photometric data.
+Prompt follow-up observations are highly informative to fitting models to the lightcurves of familiar source classes and to characterizing anomalous lightcurves that could be signatures of never-before-seen classes that have eluded identification due to rarity or faintness.
+As such, decisions about follow-up resource allocation must be made quickly and under the constraint that resources wasted on a misclassification consume the budget remaining for future follow-up attempts.
+A metric for an early classification challenge might factor in the number of available observations in the lightcurve.
+
+We note that the decision of whether to initiate follow-up observations is in general binary and deterministic\footnote{It is possible to conceive of non-binary decisions about follow-up resources; for example, one could choose between dedicating several hours on a spectroscopic instrument following up on one likely candidate or dedicating an hour each on several less likely candidates.  However, the conversion between classification posteriors and decisions is uncharted territory that we do not explore at this time.}, so deterministic classification may be appropriate for this application.
+Even within the scope of spectroscopic follow-up as a primary motivation for early lightcurve classification, the goals of model-fitting to known classes and discovery of new classes would likely not share an optimally metric.
+The critical question for choosing the most appropriate metric for any specific science goal motivating follow-up observations is to maximize information.
+We provide two concrete examples of the information one might seek to maximize and what kind of deterministic metric might enable it.
+
+Supernova cosmology with spectroscopically confirmed lightcurves benefits from true positives, which contribute to the constraining power of the analysis by including one more data point; when the class we're interested in is as plentiful as SN Ia and our resources limited a priori, we may not be concerned by a high rate of false negatives.
+% requires making a decision balancing the improved constraining power of including another SN Ia in the analysis, thereby constraining the cosmological parameters, so only true positives contribute information, and if we had a perfect classifier and standard follow-up spectroscopy resources, there would be a maximum amount of information about the cosmological parameters that could be gained in this way.
+% Each false positive uses the same resources but adds no information about the cosmological parameters, and each false negative consumes no follow-up resources and deprives the Hubble diagram of one more data point.
+False positives, on the other hand, may not enter the cosmology analysis, but they consume follow-up resources, thereby depriving the endeavor of the constraining power due to a single SN Ia.
+A perfect classifier would lead to a maximum amount of information about the cosmological parameters conditioned on the follow-up resource budget.
+For this scientific application, the metric must be chosen to not only maximize true positives but also to minimize false positives, and their relative impacts on the cosmological constraints can be quantified in terms of the information we'd have about the cosmological parameters under different balances of true and false positives.
+% balance the value of the information forgone by a false positive and the value of information forgone by a false negative, and the value placed on these is effectively weighted by the value we as researchers place on follow-up resources.
+% \aim{Ciite some deterministic metrics relating to TP/FP?}
+
+Anomaly detection also gains information only from true positives, but the cost function is different in that the potential gain of information from a true positive, since there is no information about undiscovered classes ahead of time.
+Resource availability for identifying new classes is more flexible, increasing when new predictions or promising preliminary observations attract attention, and decreasing when a discovery is confirmed and the new class is established.
+In this way, a false positive does not necessarily consume a resource that could otherwise be dedicated to a true positive.
+% A false negative, on the other hand, represents forgoing an unbounded quantity of information, so minimizing the false negative rate is as important as maximizing the true positive rate.
+% For a rare event like a kilonova, a false negative represents an unbounfalse positive does not appreciably reduce the amount of remaining information available to collect, but a false negative represents a large quantity of information forgone.
+% Furthermore, r
+% In this case, the information forgone by a false negative is significant compared to the information forgone by a false positive.
+Thus, a metric tuned to anomaly detection would aim to minimize the false negative rate and maximize the true positive rate.
+% \aim{Cite some deterministic metrics relating to TP/FN?}
+
+% \subsection{Hierarchical classes}
+% \label{sec:hierarchical}
+%
+% \aim{TODO: We would like to at some point add some content on possible ideas for extending metrics to hierarchical classes, namely conditional extensions of log-loss and possible drawbacks of penalization that can be compensated for by weighting, as well as the challenge that could pose for interpretation.}
+
+\subsection{Difficult lightcurve classification}
+\label{sec:difficult}
+
+Photometric lightcurve classification may be challenging for a number of reasons, including the sparsity and regularity of observations, the possible classes and their prevalences, and the distances and brightnesses of the sources of the lightcurves.
+These factors may represent limitations on the information content of the lightcurves, but appropriate classifiers may be able to overcome them to a certain degree.
+
+Though quality cuts can eliminate the most difficult lightcurves from entering samples used for science applications, such a practice discards information that may be of value value under an analysis methodology leveraging the larger number of lightcurves included in a sample without cuts.
+Thus, classification methods that perform well on lightcurves characterized by lower signal-to-noise ratios are specially important for exploiting the full potential of upcoming surveys like \lsst.
+
+This version of \plasticc\ implements quality cuts to homogenize difficulty to some degree, and notions of classification difficulty may depend on information that will not be available until after the challenge concludes.
+While the groundwork for a metric incorporating data quality has been laid by \citet{wu_radio_2018}, we defer to future work an investigation of this possibility.

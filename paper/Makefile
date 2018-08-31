@@ -43,11 +43,11 @@ ifeq ($(localpip),T)
 MKAUTHBIN := bin/mkauthlist
 MKAUTH := PYTHONPATH=$$(ls -d lib/python*/site-packages 2>/dev/null | head -n1):$$PYTHONPATH $(MKAUTHBIN)
 PIPOPTS += --install-option="--prefix=$(PWD)"
-GETMKAUTH := [ -e $(MKAUTHBIN) ] || pip install $(PIPOPTS) mkauthlist
+GETMKAUTH := [ -e $(MKAUTHBIN) ] || pip3 install $(PIPOPTS) mkauthlist
 else
 MKAUTHBIN :=
-MKAUTH := mkauthlist 
-GETMKAUTH := pip list 2>/dev/null | grep -q mkauthlist || pip install $(PIPOPTS) mkauthlist
+MKAUTH := mkauthlist
+GETMKAUTH := pip3 list 2>/dev/null | grep -q mkauthlist || pip3 install $(PIPOPTS) mkauthlist
 endif
 
 # LATEX environment variables
@@ -92,7 +92,7 @@ DIFF = $(DIFPRE)$(THISBRANCH)--$(BASEBRANCH)
 maketargets := all authlist clean copy diff help $(main) update tar templates tidy touch
 .PHONY: $(maketargets)
 
-styleopts := aastex61 apj apjl emulateapj lsstdescnote mnras note prd prl tex 
+styleopts := aastex61 apj apjl emulateapj lsstdescnote mnras note prd prl tex
 help:
 	@echo "Usage: make [style=lsstdescnote] [localpip=F] <target(s)>\n Possible targets: $(maketargets) <style> $(DESCTEX) $(LSSTTEX)\n  all: equivalent to 'make $(main) copy'\n  authlist: use mkauthlist to generate latex author/affiliation listing\n  clean: remove latex temporary files AND compiled outputs\n  copy: copy $(main).pdf to $(outname).pdf\n  diff: if we're in a git repo, use latexdiff to compare the current $(main).tex vs the $(BASEBRANCH) branch, and attempt to compile to $(DIFF).pdf\n  help: what you're looking at\n  $(main): compile $(main).tex\n  update: update desc-tex, mkauthlist, and templates repo\n  tar: tar up latex source files to $(outname).tar.gz\n  templates: download latest templates to templates/\n  tidy: delete latex temporary files\n  touch: touch $(main).tex to force a recompile\n  <style>: equivalent to 'make style=<style> $(main) copy tar' (see style option)\n  $(DESCTEX): download $(DESCTEX), which provides the DESC header logo and latex helper files (done automatically on first latex compilation)\n  $(LSSTTEX): download $(LSSTTEX), providing (among other things) LSST project bib files (not done automatically)\n Options for style: $(styleopts) (Anything else results in generic latex)\n Options for localpip: T or F. Set to T to install mkauthlist in this directory rather than systemwide"
 
@@ -209,7 +209,7 @@ update: templates
 	cd $(DESCTEX) && git pull
 	@echo
 	@echo Updating mkauthlist
-	pip install --upgrade $(PIPOPTS) mkauthlist
+	pip3 install --upgrade $(PIPOPTS) mkauthlist
 #@echo "\nOver-writing LaTeX style files with the latest versions: \n"
 #@mkdir -p .logos figures texmf/styles texmf/bib
 #$(MAKE) $(UPDATES)
@@ -226,7 +226,7 @@ main.tex \
 main.bib \
 Makefile
 #.metadata.json \
-#.travis.yml 
+#.travis.yml
 #figures/example.png
 # #acknowledgments.tex \
 
