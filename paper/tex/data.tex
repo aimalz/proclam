@@ -58,12 +58,14 @@ The CPM $\mathbb{C}$ thus defines the behavior of a classifier.
 
 Since we believe the lightcurves contain information about the true class (an assumption that underlies classification as a whole), we can use the appropriate row $\mathbb{C}_{m'_{n}} = p(\hat{m} \mid m', \mathcal{C})$ of the CPM $\mathbb{C}$ as a proxy for $p(m \mid d_{n}, D, \mathcal{C})$, without directly classifying lightcurves themselves, which enabled this paper to be written without any knowledge of the \plasticc\ dataset's simulation nor validation.
 
-To emulate the effect of natural variation of information content in different lightcurves, we generate a posterior probability vector $p(m \mid m', \mathbb{C})$ by taking a Dirichlet-distributed draw
+To emulate the effect of natural variation of information content in different lightcurves, we generate a posterior probability vector $\vec{p}(m \mid m', \mathbb{C})$ by taking a Dirichlet-distributed draw
 \begin{eqnarray}
   \label{eq:cmtoprob}
-  p(m \mid d_{n}, D, \mathcal{C}) &\sim& \frac{\Gamma(\mathbb{C}_{m_{n}'} \delta)}{\sum_{m'} \Gamma(\mathbb{C}_{m'} \delta)}
+  \vec{p}(m \mid d_{n}, D, \mathcal{C}) &\sim& \mathrm{Dir}[\mathbb{C}_{m'_{n}} \delta]
+	 % \frac{\mathrm{Gamma}(\mathbb{C}_{m_{n}'} \delta)}{\sum_{m'} \mathrm{Gamma}(\mathbb{C}_{m'} \delta)}
 \end{eqnarray}
-about $\mathbb{C}_{m_{n}'}$, with a small nonnegative perturbation factor $\delta = 0.01$ and in terms of the gamma function $\Gamma$.
+about $\mathbb{C}_{m'_{n}}$, with a small nonnegative perturbation factor $\delta = 0.01$.
+In this way, the posterior probability vector has an expected value equal to the appropriate row in the CPM, with a variance set by $\delta$.
 % \begin{eqnarray}
 %  \label{eq:gamma}
 %  \Gamma(\alpha) &=&
