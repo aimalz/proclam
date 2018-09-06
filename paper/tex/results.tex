@@ -33,9 +33,9 @@ Figure~\ref{fig:all_combined} confirms that for all weight on the perfect classi
 It is immediately evident that the log-loss has more dynamic range than the Brier score overall, and that the log-loss is acutely sensitive to the subsuming systematic on a baseline of a perfect classifier.
 In fact, the log-loss value for a classifier that subsumes a class into one that is classified perfectly should actually be infinite if the classes unaffected by the systematic have no weight.
 The finite maximum in our tests is set by the artificial zero point established for numerical stability.
-Because the combination of a subsuming classifier with a perfect baseline is so different from all other combinations, we separate the subsuming systematic on all other baselines (lower left panel) from all other systematics (lower right panel) in Figure~\ref{fig:all_combined}.
-The lower panels of Figure~\ref{fig:all_combined} show that the dynamic range of the log-loss remains higher even outside the regime where it tends toward infinity.
-The extent of the values of both metrics is higher in the lower right panel with the subsuming systematic on various baselines than in the lower left panel with all other systematics.
+Because the combination of a subsuming classifier with a perfect baseline (left panel) is so different from all other combinations, we separate the subsuming systematic on all other baselines (middle panel) from all other systematics (right panel) in Figure~\ref{fig:all_combined}.
+The dynamic range of the log-loss remains higher even outside the regime where it tends toward infinity.
+The extent of the values of both metrics is higher in the middle panel with the subsuming systematic on various baselines than in the right panel with all other systematics.
 This shows that both metrics are still more sensitive to the subsuming systematic than any other systematic, confirming that both can appropriately penalize the cruise control effect.
 
 \begin{table}[]
