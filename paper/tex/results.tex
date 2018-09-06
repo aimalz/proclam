@@ -122,30 +122,45 @@ In a sense, it means that the log-loss is more susceptible to the tunnel vision 
 \subsection{Representative classifications}
 \label{sec:realresults}
 
-We also present in Table~\ref{tab:snmachineresults} the values of all metrics we considered, under equal weight per object, for classification probabilities derived from running the algorithms of \citet{lochner_photometric_2016} on the \snphotcc\ data of Section~\ref{sec:realdata}.
+\begin{centering}
+\begin{table*}[]
+\begin{tabular}{lllllll}%ll}
+Rank $R$ & $R_\mathrm{FoM}$ & (FoM) & %$R_\mathrm{AUC}$ & (AUC) &
+$R_\mathrm{LogLoss}$ & (Logloss) & $R_\mathrm{Brier}$ & (Brier) \\
+\hline
+1  & TBRF & 0.635  %& TBRF & 0.982
+& TBRF & 0.0907 & TBRF & 0.0486 \\
+2  & WBRF & 0.591  %& WBRF & 0.978
+& TSVM & 0.113  & TSVM & 0.0583 \\
+3  & TSVM & 0.514  %& TSVM & 0.969
+& TNN  & 0.125  & TNN  & 0.0650 \\
+4  & WSVM & 0.499  %& WSVM & 0.968
+& WSVM & 0.1316 & WBRF & 0.0689 \\
+5  & TNN  & 0.496  %& TNN  & 0.954
+& WBRF & 0.1321 & WSVM & 0.0730 \\
+6  & WNN  & 0.480  %& WNN  & 0.946
+& TKNN & 0.146  & WNN  & 0.0750 \\
+7  & TKNN & 0.384  %& TKNN & 0.942
+& WNN  & 0.152  & TKNN & 0.0787 \\
+8  & TNB  & 0.340  %& WKNN & 0.894
+& WKNN & 0.228  & TNB  & 0.1050 \\
+9  & WKNN & 0.114  %& TNB  & 0.879
+& TNB  & 0.251  & WKNN & 0.1320 \\
+10 & WNB  & 0.0365 %& WNB  & 0.850
+& WNB  & 0.443  & WNB  & 0.1780 \\
+\end{tabular}
+	\caption{The values of three metrics for each of ten \snmachine\ classifiers with equal weight per object.
+	The metrics broadly agree on the ranking of the classifiers, confirming consistency between a conventional metric of classification performance and the metrics of probabilistic classifications presented here.}
+	\label{tab:snmachineresults}
+\end{table*}
+\end{centering}
+
+We present in Table~\ref{tab:snmachineresults} the values of all metrics we considered, under equal weight per object, for classification probabilities derived from running the algorithms of \citet{lochner_photometric_2016} on the \snphotcc\ data of Section~\ref{sec:realdata}.
 Table~\ref{tab:snmachineresults} also contains the ranking of classifier performance under each metric.
 
-\begin{table}[]
-\begin{tabular}{lllllllll}
-Rank $R$ & $R_\mathrm{FoM}$ & (FoM) & $R_\mathrm{AUC}$ & (AUC) & $R_\mathrm{LogLoss}$ & (Logloss) & $R_\mathrm{Brier}$ & (Brier) \\
-\hline
-1  & TBRF & 0.635  & TBRF & 0.982 & TBRF & 0.0907 & TBRF & 0.0486 \\
-2  & WBRF & 0.591  & WBRF & 0.978 & TSVM & 0.113  & TSVM & 0.0583 \\
-3  & TSVM & 0.514  & TSVM & 0.969 & TNN  & 0.125  & TNN  & 0.0650 \\
-4  & WSVM & 0.499  & WSVM & 0.968 & WSVM & 0.1316 & WBRF & 0.0689 \\
-5  & TNN  & 0.496  & TNN  & 0.954 & WBRF & 0.1321 & WSVM & 0.0730 \\
-6  & WNN  & 0.480  & WNN  & 0.946 & TKNN & 0.146  & WNN  & 0.0750 \\
-7  & TKNN & 0.384  & TKNN & 0.942 & WNN  & 0.152  & TKNN & 0.0787 \\
-8  & TNB  & 0.340  & WKNN & 0.894 & WKNN & 0.228  & TNB  & 0.1050 \\
-9  & WKNN & 0.114  & TNB  & 0.879 & TNB  & 0.251  & WKNN & 0.1320 \\
-10 & WNB  & 0.0365 & WNB  & 0.850 & WNB  & 0.443  & WNB  & 0.1780 \\
-\end{tabular}
-\caption{The values of three metrics for each of ten \snmachine\ classifiers with equal weight per object.}
-	\label{tab:snmachineresults}
-\end{table}
-
 The FOM of Section~\ref{sec:science} differs more from the Brier and log-loss metrics than they do from one another, yet all three metrics are in agreement over the winners and losers, indicating that both of the potential \plasticc\ metrics are roughly consistent with our intuition about what makes a good classifier.
-However, we emphasize that this agreement is not universal; the classifiers do not agree with one another on the entire ranking
+However, this agreement is not universal; the classifiers do not agree with one another on the entire ranking and could thus potentially disagree about the winner .
+
 
 %\textbf{Current plan is that we compute the SNPhotCC metric for Michelle's contributions and also turn the binary classifications into probabilities - Renee will flesh this out}
 %\aim{We are still iterating on the most informative tests to conduct on the \snphotcc\ data.
