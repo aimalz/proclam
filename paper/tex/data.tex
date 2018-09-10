@@ -99,9 +99,9 @@ We impose one restriction in addition to the normalization factor of Equation~\r
 	\begin{center}
 		\includegraphics[width=0.49\textwidth]{./fig/combined.png}\\
     \includegraphics[width=0.49\textwidth]{./fig/examples.png}
-		\caption{A realistically complex conditional probability matrix and classification posteriors drawn from it.
-		Top: A realistic classifier's conditional probability matrix, characterized by a combination of systematics described on the right.
-		Bottom: Classification posteriors drawn from the conditional probability matrix above, with their true class indicated by a red star as well as on the left.
+		\caption{A realistically complex conditional probability matrix and classification posteriors drawn from the probability matrix. The top row shows the conditional probability matrix which contains a combination of the various individual systematics describes in this section, each systematic acting on a subset of the classes. To illustrate what the output of a particular classifier will be, in the bottom row we draw a classification posterior from the conditional probability matrix above. For each row we indicate the true class with a red star (and indicate the class number on the left of the probability matrix). 
+%		Top: A realistic classifier's conditional probability matrix, characterized by a combination of systematics described on the right.
+	%	Bottom: Classification posteriors drawn from the conditional probability matrix above, with their true class indicated by a red star as well as on the left.
 		% \aim{insert a sentence here}
 		}
 		\label{fig:mock_probs}
@@ -160,7 +160,7 @@ Subsuming is not always the mark of a poor classifier and may be insurmountable 
 Real classification posteriors $p(m \mid d_{n}, D, \mathcal{C})$ are conditioned on lightcurves, training data, and assumptions necessary for the classification algorithm, and there may simply not be enough information in a lightcurve and/or training set to distinguish between classes.
 % Aside from hierarchical classes, limited data can cause even wholly different physical phenomena to be indistinguishable.
 
-For example, based on only the first few lightcurve points, it is sometimes impossible to separate cataclysmic variables, which are stars that are not destroyed and can explode many times, from supernovae, which are stars that are completely destroyed in their explosions.
+For example, based on only the first few lightcurve points, it is sometimes impossible to separate cataclysmic variables (stars that are not destroyed and can brighten and fade many times) from supernovae, which are stars that are completely destroyed in their explosions.
 Even with observations over extended periods, it can still be impossible to distinguish cataclysmic variables from active galactic nuclei that result from activity near a galaxy's central black hole.
 Similarly, tidal disruption events that occur when stars are destroyed by proximity to the central black hole of a galaxy can look much like supernovae that simply happen to be near a galaxy's center.
 When the prior information of the location of the source is more informative than its sparse, noisy, irregularly sampled, or short lightcurve, it may present a challenge no classifier can overcome, a fundamental limit on available information about the object.
@@ -186,13 +186,11 @@ We would like the \plasticc\ metric to reward a classifier that successfully pre
 \begin{figure*}
 	\begin{center}
     \includegraphics[width=\textwidth]{./fig/all_snphotcc_cm.png}
-		\caption{Conditional probability matrices of the \citet{lochner_photometric_2016} methods applied to the \snphotcc\ dataset.
+		\caption{Conditional probability matrices of the \citet{lochner_photometric_2016} methods applied to the second post-challenge release of the \snphotcc\ dataset.
 		Columns: the five machine learning methods of Boosted Random Forest (BRF), K-Nearest Neighbors (KNN), Naive Bayes (NB), Neural Network (NN), and Support Vector Machine (SVM).
     Top row: five machine learning methods applied to template decompositions as features.
     Bottom row: the same five machine learning methods applied to wavelet decompositions as features.
-		These CPMs derived from the dataset of a precursor lightcurve classification challenge by modern methods exhibit some of the systematics identified in Section~\ref{sec:mockdata} and Figure~\ref{fig:mock_cm}, particularly cruise control (WKNN, WNB), noisy (class Ibc in all but TBRF and WKNN), and perfect (class II in all).
-		}
-		\label{fig:snphotcc_cm}
+		These CPMs derived from the dataset of a precursor lightcurve classification challenge by modern methods exhibit some of the systematics identified in Section~\ref{sec:mockdata} and Figure~\ref{fig:mock_cm}, particularly cruise control (WKNN, WNB), noisy (class Ibc in all but TBRF and WKNN), and perfect (class II in all). It is worth noting that the \citet{lochner_photometric_2016} applied their classification to a representative sub-sample of the \snphotcc\ data selected once the challenge was complete, and so some of the issues of non-representativity present in the original submissions to the \snphotcc\ were not replicated.\label{fig:snphotcc_cm}}
 	\end{center}
 \end{figure*}
 
@@ -201,7 +199,7 @@ We would like the \plasticc\ metric to reward a classifier that successfully pre
 
 In order to understand the performance of classifiers on simulated datasets approximating reality, we calculate the values of our metric candidates on representative classifiers of a precursor lightcurve classification challenge.
 The Supernova Photometric Classification Challenge (\snphotcc) \citep{kessler_supernova_2010} focused on deterministically classifying a heterogenous population of supernovae into subclasses of SN Ia, SN II, and SN Ibc
-The \snphotcc\ attracted diverse classification approaches, encompassing $\chi^{2}$ fits of the supernova lightcurves to publicly available templates \citep{nugent_kcorrections_2002}, physical models \citep{conley_sifto:_2008}, and empirical models, as well as alternatives to curve-fitting such as outlier identification on the training set Hubble diagram, dimensionality reduction, and clustering.
+The \snphotcc\ attracted diverse classification approaches, encompassing $\chi^{2}$ fits of the supernova lightcurves to publicly available templates \citep{nugent_kcorrections_2002}, physical models \citep{conley_sifto:_2008}, and empirical models, as well as alternatives to curve-fitting such as outlier identification on the training set Hubble diagram\footnote{we give an introduction to both the \plasticc\ data and also the background introduction to the Hubble diagram of distance vs. redshift and its usefulness to cosmology in the \plasticc\ release note: \href{arXiv:XXXX.XXXXX}{arXiv:XXXX.XXXXX}}, dimensionality reduction, and clustering.
 % TODO cite InCA?
 % A general light curve shape (rather than one motivated by the physical differences between SNeIa and core collapse SNe) was assumed by some competitors and then a kernel density estimation was performed over the fit parameters, with various approaches employed including boosting over the feature space.
 Machine learning was also employed, using features such as the light-curve slopes to produce a predictive model for the training data.
@@ -210,7 +208,7 @@ Machine learning was also employed, using features such as the light-curve slope
 \snphotcc\ attracted physically motivated template-based methods as well as those based on decomposition of the lightcurves into generic features at risk of neglecting available physical information.
 
 Since the conclusion of the \snphotcc, the lightcurves became a testbed for a suite of machine learning classifiers.
-We consider a collection of probabilistic classification methods, as presented in \citet{lochner_photometric_2016}, whose CPMs\footnote{The classifiers of \citet{lochner_photometric_2016} are indeed probabilistic but are reduced to confusion matrices via deterministic labels for this visualization and the science-motivated metric of Section~\ref{sec:science}.  In all other instances, the classification posteriors are used directly.} are shown in Figure~\ref{fig:snphotcc_cm}.
+We consider a collection of probabilistic classification methods, as presented in \citet{lochner_photometric_2016}, whose CPMs\footnote{The classifiers of \citet{lochner_photometric_2016} are indeed probabilistic but are reduced to confusion matrices via deterministic labels (by assigning the class label according to the highest probability) for this visualization and the science-motivated metric of Section~\ref{sec:science}.  In all other instances, the classification posteriors are used directly.} are shown in Figure~\ref{fig:snphotcc_cm}.
 The set of classification algorithms includes template-based classification procedures, denoted as T, (\citet{sako_photometric_2011}, top row) and a wavelet decomposition, denoted as W, of the lightcurves to construct the features over which to classify (\citet{newling_statistical_2011}, bottom row), each paired with Boosted Random Forest (BRF), K-Nearest Neighbors (KNN), Naive Bayes (NB), Neural Network (NN), and Support Vector Machine (SVM) machine learning algorithms (columns).
 While the complexity of entries to the \snphotcc\ was greater than this subset, we use these examples to establish the behavior of our metrics on realistic classification submissions.
 
