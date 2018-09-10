@@ -122,11 +122,11 @@ In a sense, it means that the log-loss is more susceptible to the tunnel vision 
 \subsection{Representative classifications}
 \label{sec:realresults}
 
-\begin{centering}
 \begin{table*}[]
+	\begin{centering}
 \begin{tabular}{lllllll}%ll}
 Rank $R$ & $R_\mathrm{FoM}$ & (FoM) & %$R_\mathrm{AUC}$ & (AUC) &
-$R_\mathrm{LogLoss}$ & (Logloss) & $R_\mathrm{Brier}$ & (Brier) \\
+$R_\mathrm{LogLoss}$ & (Log-loss) & $R_\mathrm{Brier}$ & (Brier) \\
 \hline
 1  & TBDT & 0.635  %& TBDT & 0.982
 & TBDT & 0.0907 & TBDT & 0.0486 \\
@@ -143,17 +143,18 @@ $R_\mathrm{LogLoss}$ & (Logloss) & $R_\mathrm{Brier}$ & (Brier) \\
 7  & TKNN & 0.384  %& TKNN & 0.942
 & WNN  & 0.152  & TKNN & 0.0787 \\
 8  & TNB  & 0.340  %& WKNN & 0.894
-& WKNN & 0.228  & TNB  & 0.1050 \\
+& WKNN & 0.228  & TNB  & 0.105  \\
 9  & WKNN & 0.114  %& TNB  & 0.879
-& TNB  & 0.251  & WKNN & 0.1320 \\
+& TNB  & 0.251  & WKNN & 0.132  \\
 10 & WNB  & 0.0365 %& WNB  & 0.850
-& WNB  & 0.443  & WNB  & 0.1780 \\
+& WNB  & 0.443  & WNB  & 0.178  \\
 \end{tabular}
 	\caption{The values of three metrics for each of ten \snmachine\ classifiers with equal weight per object.
-	The metrics broadly agree on the ranking of the classifiers, confirming consistency between a conventional metric of classification performance and the metrics of probabilistic classifications presented here.}
+	The metrics broadly agree on the ranking of the classifiers, confirming consistency between a conventional metric of classification performance and the metrics of probabilistic classifications presented here.
+	However, there are some differences with pairwise swapping between the log-loss and Brier rankings and some significant reordering of ranks 2 through 5 with the FoM metric relative to the probabilistic metrics.}
 	\label{tab:snmachineresults}
+	\end{centering}
 \end{table*}
-\end{centering}
 
 We present in Table~\ref{tab:snmachineresults} the values of all metrics we considered, under equal weight per object, for classification probabilities derived from running the algorithms of \citet{lochner_photometric_2016} on the \snphotcc\ data of Section~\ref{sec:realdata}.
 Table~\ref{tab:snmachineresults} also contains the ranking of classifier performance under each metric.
