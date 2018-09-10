@@ -101,8 +101,8 @@ We impose one restriction in addition to the normalization factor of Equation~\r
     \includegraphics[width=0.49\textwidth]{./fig/examples.png}
 		\caption{A realistically complex conditional probability matrix and classification posteriors drawn from it.
 		Top: A realistic classifier's conditional probability matrix, characterized by a combination of systematics described on the right.
-		Bottom: Classification posteriors drawn from the conditional probability matrix above, with their true class indicated by a red star as well as on the left.
-		The text on the right describes the true class as in the top panel.
+		Bottom: Classification posteriors drawn from the conditional probability matrix above, with their true class indicated by a red star and the systematic affecting that true class described on the right.
+		One can see that classification posteriors that share a true class, and thus a generating row of the CPM, still take different values from one another, due to the Dirichlet process, which emulates the impact of the variation expected among different lightcurves within the same class.
 		}
 		\label{fig:mock_probs}
 	\end{center}
@@ -110,9 +110,10 @@ We impose one restriction in addition to the normalization factor of Equation~\r
 
 We consider eight mock classifiers, each characterized by a single systematic affecting their CPM.
 Figure~\ref{fig:mock_cm} shows the CPMs corresponding to each systematic considered, discussed in detail below.
-An example of a composition thereof is given in Figure~\ref{fig:mock_probs}, along with examples of the mock classification posteriors drawn from it.
+An example of a composition thereof is given in the top panel of Figure~\ref{fig:mock_probs}, as an actual classifier should be more complex than the simplified cases of Figure~\ref{fig:mock_cm}, with different behavior for each class.
+To demonstrate the procedure by which mock classification posteriors are generated from rows of the CPM, we provide 22 examples of such draws in the bottom panel of Figure~\ref{fig:mock_probs}.
 
-For each case, we address:
+For each of our archetypical mock classifiers, we address:
 \begin{enumerate}
   \item What characteristic behavior defines this classifier?
   \item Under what conditions does this behavior arise in real classifications?
