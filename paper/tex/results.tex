@@ -20,7 +20,7 @@ In the following sections, we explore the response of the log-loss and Brier sco
 \end{figure*}
 
 We demonstrate the behavior of the metrics with classification posteriors derived from conditional probability matrices composed of pairs of the characteristic classifiers of Section~\ref{sec:mockdata} is shown in Figure~\ref{fig:all_combined}.
-The systematics introduced to each baselines are those that we intuitively expect to worsen performance of any particular classifier:
+The systematics introduced to each baseline are those that we intuitively expect to worsen performance of any particular classifier:
 \begin{itemize}
 \item the uncertain, \textit{almost perfect}, noisy, and subsuming classifiers are anticipated to worsen an otherwise \textit{perfect} classifier;
 \item the uncertain, noisy, and subsuming classifiers are anticipated to worsen an otherwise \textit{almost perfect} classifier;
@@ -31,7 +31,7 @@ The metrics are evaluated at a number of weights $w$ on the affected class, with
 The weight values range from $0$ (all weight on the baseline) to $1$ (all weight on the systematic) at intervals of $0.1$.
 This variation in weights establishes linear relationships between the log-loss and Brier score metrics for each pair of baseline and systematic.
 
-Figure~\ref{fig:all_combined} confirms that for all weight on the perfect classifier, the values of both metrics vanish to zero.
+Figure~\ref{fig:all_combined} confirms that for all weights on the perfect classifier, the values of both metrics vanish to zero.
 It is immediately evident that the log-loss has more dynamic range than the Brier score overall, and that the log-loss is acutely sensitive to the subsuming systematic on a baseline of a perfect classifier.
 In fact, the log-loss value for a classifier that subsumes a class into one that is classified perfectly should actually be infinite if the classes unaffected by the systematic have no weight.
 The finite maximum in our tests is set by the artificial zero point established for numerical stability.

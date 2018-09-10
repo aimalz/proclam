@@ -19,19 +19,19 @@ Prompt follow-up observations are highly informative for fitting models to the l
 
 % and under the constraint that resources wasted on a misclassification consume the budget remaining for future follow-up attempts. 
 
-We note that the decision of whether to initiate follow-up observations is in general binary and deterministic\footnote{It is possible to conceive of non-binary decisions about follow-up resources; for example, one could choose between dedicating several hours on a spectroscopic instrument following up on one likely candidate or dedicating an hour each on several less likely candidates.  However, the conversion between classification posteriors and decisions is uncharted territory that we do not explore at this time.}, so deterministic classification may be appropriate for this application.
+We note that the decision of whether to initiate follow-up observations is in general binary and deterministic\footnote{It is possible to conceive of non-binary decisions about follow-up resources; for example, one could choose between dedicating several hours on a spectroscopic instrument following up on one likely candidate or dedicating an hour each on several less likely candidates.  However, the conversion between classification posteriors and decisions is uncharted territory that we do not explore at this time.}, so deterministic classification may be appropriate for this application, but the ranked list provided by per-object classifications add more information about the ranking of different objects for follow-up.
 
 Even within the scope of spectroscopic follow-up as a primary motivation for early lightcurve classification, the goals of model-fitting to known classes and discovery of new classes would likely not share an optimally metric. The critical question for choosing the most appropriate metric for any specific science goal motivating follow-up observations is to maximize information.
 
 We provid two examples of cases of the kind of new information one needs to maximize from classification, and the qualities of a deterministic metric might enable it.
 %We provide two examples of the information one seek to maximize and 
 
-Supernova cosmology with spectroscopically confirmed lightcurves benefits from true positives, which contribute to the constraining power of the analysis by including one more data point; when the class we're interested in is as plentiful as SN Ia and our resources limited a priori, we may not be concerned by a high rate of false negatives.
+Supernova cosmology with spectroscopically confirmed lightcurves benefits from true positives, which contribute to the constraining power of the analysis by including one more data point; when the class one is interested in is as plentiful as SN Ia and our resources limited a priori, we may not be concerned by a high rate of false negatives.
 % requires making a decision balancing the improved constraining power of including another SN Ia in the analysis, thereby constraining the cosmological parameters, so only true positives contribute information, and if we had a perfect classifier and standard follow-up spectroscopy resources, there would be a maximum amount of information about the cosmological parameters that could be gained in this way.
 % Each false positive uses the same resources but adds no information about the cosmological parameters, and each false negative consumes no follow-up resources and deprives the Hubble diagram of one more data point.
 False positives, on the other hand, may not enter the cosmology analysis, but they consume follow-up resources, thereby depriving the endeavor of the constraining power due to a single SN Ia.
 A perfect classifier would lead to a maximum amount of information about the cosmological parameters conditioned on the follow-up resource budget.
-For this scientific application, the metric must be chosen to not only maximize true positives but also to minimize false positives, and their relative impacts on the cosmological constraints can be quantified in terms of the information we'd have about the cosmological parameters under different balances of true and false positives.
+For this scientific application, the metric must be chosen to not only maximize true positives but also to minimize false positives, and their relative impacts on the cosmological constraints can be quantified in terms of the information one would have about the cosmological parameters under different balances of true and false positives.
 % balance the value of the information forgone by a false positive and the value of information forgone by a false negative, and the value placed on these is effectively weighted by the value we as researchers place on follow-up resources.
 % \aim{Ciite some deterministic metrics relating to TP/FP?}
 
@@ -54,7 +54,7 @@ Thus, a metric tuned to anomaly detection would aim to minimize the false negati
 \subsection{Difficult lightcurve classification}
 \label{sec:difficult}
 
-Photometric lightcurve classification may be challenging for a number of reasons, including the sparsity and regularity of observations, the possible classes and their prevalences, and the distances and brightnesses of the sources of the lightcurves.
+Photometric lightcurve classification may be challenging for a number of reasons, including the sparsity and irregularity of observations, the possible classes and their prevalences, and the distances and brightnesses of the sources of the lightcurves.
 These factors may represent limitations on the information content of the lightcurves, but appropriate classifiers may be able to overcome them to a certain degree.
 
 Though quality cuts can eliminate the most difficult lightcurves from entering samples used for science applications, such a practice discards information that may be of value under an analysis methodology leveraging the larger number of lightcurves included in a sample without cuts.
