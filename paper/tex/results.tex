@@ -125,8 +125,8 @@ In a sense, it means that the log-loss is more susceptible to the tunnel vision 
 \begin{table*}[]
 	\begin{centering}
 \begin{tabular}{lllllll}%ll}
-Rank $R$ & $R_\mathrm{FoM}$ & (FoM) & %$R_\mathrm{AUC}$ & (AUC) &
-$R_\mathrm{LogLoss}$ & (Log-loss) & $R_\mathrm{Brier}$ & (Brier) \\
+Rank $R$ & $R_\mathrm{FoM}$ & FoM & %$R_\mathrm{AUC}$ & AUC &
+$R_\mathrm{LogLoss}$ & Log-loss & $R_\mathrm{Brier}$ & Brier \\
 \hline
 1  & TBDT & 0.635  %& TBDT & 0.982
 & TBDT & 0.0907 & TBDT & 0.0486 \\
@@ -160,10 +160,4 @@ We present in Table~\ref{tab:snmachineresults} the values of all metrics we cons
 Table~\ref{tab:snmachineresults} also contains the ranking of classifier performance under each metric.
 
 The FOM of Section~\ref{sec:science} differs more from the Brier and log-loss metrics than they do from one another, yet all three metrics are in agreement over the winners and losers, indicating that both of the potential \plasticc\ metrics are roughly consistent with our intuition about what makes a good classifier.
-However, this agreement is not universal; the classifiers do not agree with one another on the entire ranking and could thus potentially disagree about the winner .
-
-
-%\textbf{Current plan is that we compute the SNPhotCC metric for Michelle's contributions and also turn the binary classifications into probabilities - Renee will flesh this out}
-%\aim{We are still iterating on the most informative tests to conduct on the \snphotcc\ data.
-%I would like to have the confusion matrices from a real classification challenge (\snphotcc\ or Ashish Mahabal's) and test different weightings of our metrics on mock classification probabilities derived from those confusion matrices to check whether we choose the same ``winner,'' but the arrangements have not yet been finalized.
-%The ``pipeline,'' however, is complete and ready to run as soon as the test conditions are agreed upon.}
+However, this agreement is not universal; the classifiers do not agree with one another on the entire ranking and could thus potentially disagree about the winner.
