@@ -9,7 +9,7 @@ We motivate $\mathcal{C}$ here before deferring its detailed explanation to late
 If a mock classifier produced $p(m \mid d_{n})$, it would take solely the lightcurve and produce a posterior over classes.
 Since such a situation involves no information besides the lightcurve $d_{n}$, every classifier would produce identical classification submissions $p(m \mid d_{n})$.
 Including the training set $D$ would not remedy the problem, as every classifier has access to the same training set and so would still have no way to produce different classification submissions $p(m \mid d_{n}, D)$.
-Thus there must be some other parameters $\mathcal{C}$ that are specific to each classifier and contribute to the mock classification posteriors it produces.
+Thus there must be some other parameters $\mathcal{C}$ that are specific to each classifier and contribute to the mock classification posteriors it produces.\footnote{It should be noted that classification submissions may not be derived in this way, i.e. the parameters $\mathcal{C}$ may not be explicitly known or may indicate a procedure that does not produce posteriors but, rather, scores of some kind.  However, we assume for these purposes that classifiers produce the classification posteriors \plasticc\ seeks.}
 We describe below the way in which mock data is synthesized and return to the classifier parameters $\mathcal{C}$ later.
 
 \begin{figure}
@@ -55,6 +55,7 @@ We can thus easily obtain classification posteriors $p(\hat{m} \mid m')$ to use 
 Given its provenance, we refer to the matrix $\mathbb{C}$ comprised of $p(\hat{m} \mid m')$ as the \textit{conditional probability matrix} (CPM).
 Without loss of generality, we can decompose $\mathbb{C}$ under some basis functions of parameters $\mathcal{C}$, the same as those introduced above in the definition of a classification posterior $p(m \mid d_{n}, D, \mathcal{C})$.
 The CPM $\mathbb{C}$ thus defines the behavior of a classifier.
+
 
 Since we believe the lightcurves contain information about the true class (an assumption that underlies classification as a whole), we can use the appropriate row $\mathbb{C}_{m'_{n}} = p(\hat{m} \mid m', \mathcal{C})$ of the CPM $\mathbb{C}$ as a proxy for $p(m \mid d_{n}, D, \mathcal{C})$, without directly classifying lightcurves themselves, which enabled this paper to be written without any knowledge of the \plasticc\ dataset's simulation nor validation.
 
@@ -211,7 +212,8 @@ Machine learning was also employed, using features such as the light-curve slope
 \snphotcc\ attracted physically motivated template-based methods as well as those based on decomposition of the light curves into generic features at risk of neglecting available physical information.
 
 Since the conclusion of the \snphotcc, the lightcurves became a testbed for a suite of machine learning classifiers.
-We consider a collection of probabilistic classification methods, as presented in \citet{lochner_photometric_2016}, whose CPMs\footnote{The classifiers of \citet{lochner_photometric_2016} are indeed probabilistic but are reduced to confusion matrices via deterministic labels for this visualization and the science-motivated metric of Section~\ref{sec:science}.  In all other instances, the classification posteriors are used directly.} are shown in Figure~\ref{fig:snphotcc_cm}.
+We consider a collection of probabilistic classification methods, as presented in \citet{lochner_photometric_2016}, whose CPMs\footnote{The classifiers of \citet{lochner_photometric_2016} are indeed probabilistic but are reduced to confusion matrices via deterministic labels for this visualization and the science-motivated metric of Section~\ref{sec:science}.
+In all other instances, the classification posteriors are used directly.} are shown in Figure~\ref{fig:snphotcc_cm}.
 The set of classification algorithms includes template-based classification procedures, denoted as T, (\citet{sako_photometric_2011}, top row) and a wavelet decomposition, denoted as W, of the lightcurves to construct the features over which to classify (\citet{newling_statistical_2011}, bottom row), each paired with Boosted Decision Tree (BDT), K-Nearest Neighbors (KNN), Naive Bayes (NB), Neural Network (NN), and Support Vector Machine (SVM) machine learning algorithms (columns).
 While the complexity of entries to the \snphotcc\ was greater than this subset, we use these examples to establish the behavior of our metrics on realistic classification submissions.
 
