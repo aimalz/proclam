@@ -9,7 +9,7 @@ We motivate $\mathcal{C}$ here before deferring its detailed explanation to late
 If a mock classifier produced $p(m \mid d_{n})$, it would take solely the lightcurve and produce a posterior over classes.
 Since such a situation involves no information besides the lightcurve $d_{n}$, every classifier would produce identical classification submissions $p(m \mid d_{n})$.
 Including the training set $D$ would not remedy the problem, as every classifier has access to the same training set and so would still have no way to produce different classification submissions $p(m \mid d_{n}, D)$.
-Thus there must be some other parameters $\mathcal{C}$ that are specific to each classifier and contribute to the mock classification posteriors it produces.
+Thus there must be some other parameters $\mathcal{C}$ that are specific to each classifier and contribute to the mock classification posteriors it produces.\footnote{It should be noted that classification submissions may not be derived in this way, i.e. the parameters $\mathcal{C}$ may not be explicitly known or may indicate a procedure that does not produce posteriors but, rather, scores of some kind.  However, we assume for these purposes that classifiers produce the classification posteriors \plasticc\ seeks.}
 We describe below the way in which mock data is synthesized and return to the classifier parameters $\mathcal{C}$ later.
 
 \begin{figure}
@@ -56,6 +56,7 @@ Given its provenance, we refer to the matrix $\mathbb{C}$ comprised of $p(\hat{m
 Without loss of generality, we can decompose $\mathbb{C}$ under some basis functions of parameters $\mathcal{C}$, the same as those introduced above in the definition of a classification posterior $p(m \mid d_{n}, D, \mathcal{C})$.
 The CPM $\mathbb{C}$ thus defines the behavior of a classifier.
 
+
 Since we believe the lightcurves contain information about the true class (an assumption that underlies classification as a whole), we can use the appropriate row $\mathbb{C}_{m'_{n}} = p(\hat{m} \mid m', \mathcal{C})$ of the CPM $\mathbb{C}$ as a proxy for $p(m \mid d_{n}, D, \mathcal{C})$, without directly classifying lightcurves themselves, which enabled this paper to be written without any knowledge of the \plasticc\ dataset's simulation nor validation.
 
 To emulate the effect of natural variation of information content in different lightcurves, we generate a posterior probability vector $\vec{p}(m \mid m', \mathbb{C})$ by taking a Dirichlet-distributed draw
@@ -100,9 +101,10 @@ We impose one restriction in addition to the normalization factor of Equation~\r
 		\includegraphics[width=0.49\textwidth]{./fig/combined.png}\\
     \includegraphics[width=0.49\textwidth]{./fig/examples.png}
 		\caption{A realistically complex conditional probability matrix and classification posteriors drawn from it.
-		Top: A realistic classifier's conditional probability matrix, characterized by a combination of systematics described on the right.
-		Bottom: Classification posteriors drawn from the conditional probability matrix above, with their true class indicated by a red star as well as on the left.
-		% \aim{insert a sentence here}
+		Top: An example of a realistically complex conditional probability matrix, constructed by selecting a systematic for each individual class.
+		This illustrates (for example), how a classifier may exhibit multiple systematics from Figure~\ref{fig:mock_cm} for each true class.
+		Bottom: Example classification probabilities, drawn from the above CPM, with their true class indicated by a red star and the systematic, characterized by its row in the CPM, affecting that true class described on the right.
+		The Dirichlet process emulates the variation in classification posteriors due to differences between lightcurves within a given class, leading to different classification posteriors even among rows sharing a true class.
 		}
 		\label{fig:mock_probs}
 	\end{center}
@@ -110,9 +112,10 @@ We impose one restriction in addition to the normalization factor of Equation~\r
 
 We consider eight mock classifiers, each characterized by a single systematic affecting their CPM.
 Figure~\ref{fig:mock_cm} shows the CPMs corresponding to each systematic considered, discussed in detail below.
-An example of a composition thereof is given in Figure~\ref{fig:mock_probs}, along with examples of the mock classification posteriors drawn from it.
+An example of a composition thereof is given in the top panel of Figure~\ref{fig:mock_probs}, as an actual classifier should be more complex than the simplified cases of Figure~\ref{fig:mock_cm}, with different behavior for each class.
+To demonstrate the procedure by which mock classification posteriors are generated from rows of the CPM, we provide 22 examples of such draws in the bottom panel of Figure~\ref{fig:mock_probs}.
 
-For each case, we address:
+For each of our archetypical mock classifiers, we address:
 \begin{enumerate}
   \item What characteristic behavior defines this classifier?
   \item Under what conditions does this behavior arise in real classifications?
@@ -171,7 +174,7 @@ It is nonetheless essential to identify subclasses when they have wholly differe
 As an example, SN Ia and SN Ibc are notorious for being difficult to distinguish.
 In fact, it is more common for SN Ibc to be misclassified as SN Ia than the other way around.
 This asymmetry is due to systematic underrepresentation of SN Ibc in available training sets.
-However, using SN Ibc in the traditional cosmology analysis done with SN Ia can bias estimates of the cosmological parameters, so the distinction is critical.
+However, SN Ibc contaminants in the traditional cosmology analysis done with SN Ia can bias estimates of the cosmological parameters, so the distinction is critical.
 
 Class imbalance is a ubiquitous problem in astronomy that can severely exacerbate this form of inaccuracy, as the relative rates of various astrophysical events and objects differ by orders of magnitude from one another.
 For example, RRc and RRd Lyrae stars are challenging to separate despite having different pulsation modes, and RRd stars are typically subsumed by RRc labels due to their rarity.
@@ -187,10 +190,10 @@ We would like the \plasticc\ metric to reward a classifier that minimizes this k
 	\begin{center}
     \includegraphics[width=\textwidth]{./fig/all_snphotcc_cm.png}
 		\caption{Conditional probability matrices of the \citet{lochner_photometric_2016} methods applied to the \snphotcc\ dataset.
-		Columns: the five machine learning methods of Boosted Random Forest (BRF), K-Nearest Neighbors (KNN), Naive Bayes (NB), Neural Network (NN), and Support Vector Machine (SVM).
+		Columns: the five machine learning methods of Boosted Decision Tree (BDT), K-Nearest Neighbors (KNN), Naive Bayes (NB), Neural Network (NN), and Support Vector Machine (SVM).
     Top row: five machine learning methods applied to template decompositions as features.
     Bottom row: the same five machine learning methods applied to wavelet decompositions as features.
-		These CPMs derived from the dataset of a precursor lightcurve classification challenge by modern methods exhibit some of the systematics identified in Section~\ref{sec:mockdata} and Figure~\ref{fig:mock_cm}, particularly cruise control (WKNN, WNB), noisy (class Ibc in all but TBRF and WKNN), and perfect (class II in all).
+		These CPMs derived from the dataset of a precursor lightcurve classification challenge by modern methods exhibit some of the systematics identified in Section~\ref{sec:mockdata} and Figure~\ref{fig:mock_cm}, particularly cruise control (WKNN, WNB), noisy (class Ibc in all but TBDT and WKNN), and perfect (class II in all).
 		}
 		\label{fig:snphotcc_cm}
 	\end{center}
@@ -210,8 +213,9 @@ Machine learning was also employed, using features such as the light-curve slope
 \snphotcc\ attracted physically motivated template-based methods as well as those based on decomposition of the light curves into generic features at risk of neglecting available physical information.
 
 Since the conclusion of the \snphotcc, the lightcurves became a testbed for a suite of machine learning classifiers.
-We consider a collection of probabilistic classification methods, as presented in \citet{lochner_photometric_2016}, whose CPMs\footnote{The classifiers of \citet{lochner_photometric_2016} are indeed probabilistic but are reduced to confusion matrices via deterministic labels for this visualization and the science-motivated metric of Section~\ref{sec:science}.  In all other instances, the classification posteriors are used directly.} are shown in Figure~\ref{fig:snphotcc_cm}.
-The set of classification algorithms includes template-based classification procedures, denoted as T, (\citet{sako_photometric_2011}, top row) and a wavelet decomposition, denoted as W, of the lightcurves to construct the features over which to classify (\citet{newling_statistical_2011}, bottom row), each paired with Boosted Random Forest (BRF), K-Nearest Neighbors (KNN), Naive Bayes (NB), Neural Network (NN), and Support Vector Machine (SVM) machine learning algorithms (columns).
+We consider a collection of probabilistic classification methods, as presented in \citet{lochner_photometric_2016}, whose CPMs\footnote{The classifiers of \citet{lochner_photometric_2016} are indeed probabilistic but are reduced to confusion matrices via deterministic labels for this visualization and the science-motivated metric of Section~\ref{sec:science}.
+In all other instances, the classification posteriors are used directly.} are shown in Figure~\ref{fig:snphotcc_cm}.
+The set of classification algorithms includes template-based classification procedures, denoted as T, (\citet{sako_photometric_2011}, top row) and a wavelet decomposition, denoted as W, of the lightcurves to construct the features over which to classify (\citet{newling_statistical_2011}, bottom row), each paired with Boosted Decision Tree (BDT), K-Nearest Neighbors (KNN), Naive Bayes (NB), Neural Network (NN), and Support Vector Machine (SVM) machine learning algorithms (columns).
 While the complexity of entries to the \snphotcc\ was greater than this subset, we use these examples to establish the behavior of our metrics on realistic classification submissions.
 
 We draw attention to the marked presence of the systematics introduced in Section~\ref{sec:mockdata} in the CPMs of Figure~\ref{fig:snphotcc_cm}.

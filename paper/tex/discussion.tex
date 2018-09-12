@@ -1,10 +1,10 @@
 \section{Discussion}
 \label{sec:discussion}
 
-\plasticc will use a single metric (log-loss), that we select based on its sensitivity to the systematics discussed and its interpretability. Depending on the specific goal of ths challenge, however, other metrics are possible for \plasticc. Participants will compete to classify complete lightcurves similar to those anticipated of \lsst\ data releases, independent of the propagation of classification efficacy to specific science applications.
-At the conclusion of \plasticc, the identities of the classes will become public, and we will consider science-motivated metrics on a per-class basis to identify ``best in class'' classifiers in addition to Kaggle's required ``best in show'' metric upon which we focus here.
-There exist plans for future extensions of \plasticc, each aiming to address different problems and thus requiring a different metric appropriate to its goals.
-% Additionally, there are other perspectives on what constitutes a good classifier, and those perspectives must be boiled down to a metric in order to identify a classifier that is best for the task.
+\plasticc\ will use a single metric (log-loss), that we select based on its interpretability.
+This choice of metric, however, is specific to the goal of \plasticc, to identify a ``best in show'' classifier of complete lightcurves similar to those anticipated of \lsst\ data releases, independent of the propagation of classification efficacy to specific science applications.
+At the conclusion of \plasticc, the identities of the classes will become public, and we will consider science-motivated metrics on a per-class basis to identify ``best in class'' classifiers as well.
+There exist additional plans for future extensions of \plasticc, each aiming to address different problems and thus requiring a different metric appropriate to its goals.
 We proceed to very broadly discuss approaches to identifying optimal metrics for these variations, which may be developed further in future work.
 
 \subsection{Early classification}
@@ -17,7 +17,7 @@ As such, decisions about follow-up resource allocation must be made quickly and 
 A metric for an early classification challenge might factor in the number of available observations in the lightcurve.
 
 We note that the decision of whether to initiate follow-up observations is in general binary and deterministic\footnote{It is possible to conceive of non-binary decisions about follow-up resources; for example, one could choose between dedicating several hours on a spectroscopic instrument following up on one likely candidate or dedicating an hour each on several less likely candidates.  However, the conversion between classification posteriors and decisions is uncharted territory that we do not explore at this time.}, so deterministic classification may be appropriate for this application.
-Even within the scope of spectroscopic follow-up as a primary motivation for early lightcurve classification, the goals of model-fitting to known classes and discovery of new classes would likely not share an optimally metric.
+Even within the scope of spectroscopic follow-up as a primary motivation for early lightcurve classification, the goals of model-fitting to known classes and discovery of new classes would likely not share an optimal metric.
 The critical question for choosing the most appropriate metric for any specific science goal motivating follow-up observations is to maximize information.
 We provide two concrete examples of the information one might seek to maximize and what kind of deterministic metric might enable it.
 
@@ -51,7 +51,7 @@ Thus, a metric tuned to anomaly detection would aim to minimize the false negati
 Photometric lightcurve classification may be challenging for a number of reasons, including the sparsity and regularity of observations, the possible classes and their prevalences, and the distances and brightnesses of the sources of the lightcurves.
 These factors may represent limitations on the information content of the lightcurves, but appropriate classifiers may be able to overcome them to a certain degree.
 
-Though quality cuts can eliminate the most difficult lightcurves from entering samples used for science applications, such a practice discards information that may be of value value under an analysis methodology leveraging the larger number of lightcurves included in a sample without cuts.
+Though quality cuts can eliminate the most difficult lightcurves from entering samples used for science applications, such a practice discards information that may be of value under an analysis methodology leveraging the larger number of lightcurves included in a sample without cuts.
 Thus, classification methods that perform well on lightcurves characterized by lower signal-to-noise ratios are specially important for exploiting the full potential of upcoming surveys like \lsst.
 
 This version of \plasticc\ implements quality cuts to homogenize difficulty to some degree, and notions of classification difficulty may depend on information that will not be available until after the challenge concludes.
