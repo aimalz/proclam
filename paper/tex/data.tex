@@ -101,9 +101,11 @@ We impose one restriction in addition to the normalization factor of Equation~\r
 		\includegraphics[width=0.49\textwidth]{./fig/combined.png}\\
     \includegraphics[width=0.49\textwidth]{./fig/examples.png}
 		\caption{A realistically complex conditional probability matrix and classification posteriors drawn from it.
-		Top: A realistic classifier's conditional probability matrix, characterized by a combination of systematics described on the right.
-		Bottom: Classification posteriors drawn from the conditional probability matrix above, with their true class indicated by a red star and the systematic affecting that true class described on the right.
-		One can see that classification posteriors that share a true class, and thus a generating row of the CPM, still take different values from one another, due to the Dirichlet process, which emulates the impact of the variation expected among different lightcurves within the same class.
+		Top: An example of a realistically complex conditional probability matrix, constructed by selecting a systematic for each individual class.
+		This illustrates (for example), how a classifier may confuse some classes with high confidence and may be uncertain about others, whilst still classifying still other classes perfectly.
+		Bottom panel: Example classification probabilities, drawn from the above conditional probability matrix, with their true class indicated by a red star and the systematic affecting that true class described on the right.
+		This simulates how a set of objects with different true classes would be classified by the classifier with behaviour characterised by the above conditional probability matrix.
+		One can see that classification posteriors that share a true class, and thus a generating row of the conditional probability matrix, still take different values from one another, due to the Dirichlet process, which emulates the impact of the variation expected among different lightcurves within the same class.
 		}
 		\label{fig:mock_probs}
 	\end{center}
