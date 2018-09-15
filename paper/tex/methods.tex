@@ -14,8 +14,7 @@
 To optimally discriminate between classification techniques, there must be a performance metric, a single scalar value quantifying how appropriate a classifier is for the task at hand.
 Choosing a metric for \plasticc\ therefore is logically entwined with the challenge goals.
 The goal of \snphotcc\ was to identify good classifiers of SN Ia used for a photometric cosmology analysis, which lends itself to a metric that optimizes the purity of any resultant data set.
-\plasticc, on the other hand, differs from \snphotcc\ in that its goals are not tied to one application or even one class of transient or variable star.
-As such, the choice of a metric is not so simple for \plasticc's diverse science goals.
+The goals of \plasticc\ are not tied to one application or even one class of transient or variable star; as such, the choice of a metric is not simple for \plasticc's diverse science goals.
 
 %he posterior probabilities of class must be accurate for use in inference, and they must be evaluated in a way that does not excessively favor any one science application.
 
@@ -30,8 +29,8 @@ We begin with a presentation of a subset of classification metrics that have bee
 The metrics we highlight make use of the notions of true positive, false positive, and false negative counts from binary deterministic classification.
 We briefly define the \textit{efficiency} $\epsilon \equiv \mathrm{TP} / (\mathrm{TP} + \mathrm{FN})$ and \textit{purity} $\pi \equiv \mathrm{TP} / (\mathrm{TP} + \mathrm{FP})$.
 
-\subsubsection{Science-motivated metrics}
-\label{sec:science}
+%\subsubsection{Science-motivated metrics}
+%\label{sec:science}
 
 The goal of the \snphotcc\ was to identify one particular type of astrophysical source, SN Ia, for a single scientific application, cosmology.
 % The original metric was based solely on correctly classifying SN Ia deterministically, with no penalty for confusing SN II for SN Ibc and vice versa, nor was there any notion of a confidence in a classification.
@@ -70,22 +69,22 @@ motivated by the potential impact on cosmological parameter constraints due to c
 
 In contrast to \snphotcc's single goal of optimal deterministic classification of a single class, \plasticc\ seeks to identify classifiers that produce classification posteriors.
 We consider two metrics of classification probabilities that avoid reducing probabilities to deterministic labels.
-These metrics are somewhat more involved than those of Section~\ref{sec:deterministic}, requiring additional infrastructure.
+%These metrics require additioare somewhat more involved than those of Section~\ref{sec:deterministic}, requiring additional infrastructure.
 
 % \aim{TODO: will need to fix indexing at 0 in plots!}
 Our probabilistic metrics are composed of quantities defined for each possible class $m$ available to light curve $n$, which is a true member of the set $\mathbb{S}_{m'}$ of astrophysical sources of class $m'$.
 The metric value $Q_{n} = \sum_{m=1}^{M} Q_{n, m}$ for a single light curve $n$ is a sum of the per-class per-light curve metric values $Q_{n, m}$.
 The metric value $Q_{m'} = \sum_{n \in \mathbb{S}_{m'}} Q_{n}$ for an entire class $m'$ is the sum of the per-light curve metrics.
 Section~\ref{sec:weights} discusses how the global metrics are derived from the per-class metrics $Q_{m'}$.
-As part of the derivation of the per-class per-light curve metrics, we also define the indicator variable
+As part of the derivation of the per-class per-light curve metrics, we also define the indicator (dummy) variable
 \begin{eqnarray}
   \label{eq:indicator}
   \tau_{n, m} &\equiv& \begin{cases}
   0 & m' \neq m\\
   1 & m' = m
-  \end{cases}.
+  \end{cases}
 \end{eqnarray}
-
+that indicates if an object has been correctly classified as its true type.
 \subsubsection{Log-loss}
 \label{sec:logloss}
 
@@ -133,7 +132,7 @@ We leave to future work the thorough investigation of a nontrivial weighting sch
 % TODO: rename section
 
 The most concerning systematics discussed in Section~\ref{sec:mockdata} are those of tunnel vision and cruise control.
-The actual light-curve data stream of \lsst\ will be particularly vulnerable to both due to extreme class imbalance and hierarchy punctuated by nonrepresentative training data, so \plasticc\ must include all these effects.
+The actual light-curve data stream of \lsst\ will be particularly vulnerable to both due to extreme class imbalance, a hierarchy of classes (for example different types of transients under one `umbrella' class). In addition the non-representativity of \plasticc\ reflects the reality of the expected \lsst\ data.
 Any metric under equal weight per light curve would incentivize tunnel vision and cruise control focused on the most prevalent class.
 In order to meet the needs of science cases concerning other, rarer classes, \plasticc's metric will obviously have to be more nuanced, even if it complicates the interpretability of the metric.
 % This can be problematic because our science needs might require accurate classifications of uncommon classes as well.
