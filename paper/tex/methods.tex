@@ -27,7 +27,7 @@ We take weighted averages of the per-object metrics with per-class weights descr
 \subsection{Deterministic metrics}
 \label{sec:deterministic}
 
-We begin with a presentation of a subset of classification metrics that have been used in the evaluation of astronomical lightcurve classifiers in the recent past.
+We begin with a presentation of a subset of classification metrics that have been used in the evaluation of astronomical light curve classifiers in the recent past.
 The metrics we highlight make use of the notions of true positive, false positive, and false negative counts from binary deterministic classification.
 We briefly define the \textit{efficiency} $\epsilon \equiv \mathrm{TP} / (\mathrm{TP} + \mathrm{FN})$ and \textit{purity} $\pi \equiv \mathrm{TP} / (\mathrm{TP} + \mathrm{FP})$.
 
@@ -73,11 +73,11 @@ We consider two metrics of classification probabilities that avoid reducing prob
 These metrics are somewhat more involved than those of Section~\ref{sec:deterministic}, requiring additional infrastructure.
 
 % \aim{TODO: will need to fix indexing at 0 in plots!}
-Our probabilistic metrics are composed of quantities defined for each possible class $m$ available to lightcurve $n$, which is a true member of the set $\mathbb{S}_{m'}$ of astrophysical sources of class $m'$.
-The metric value $Q_{n} = \sum_{m=1}^{M} Q_{n, m}$ for a single lightcurve $n$ is a sum of the per-class per-lightcurve metric values $Q_{n, m}$.
-The metric value $Q_{m'} = \sum_{n \in \mathbb{S}_{m'}} Q_{n}$ for an entire class $m'$ is the sum of the per-lightcurve metrics.
+Our probabilistic metrics are composed of quantities defined for each possible class $m$ available to light curve $n$, which is a true member of the set $\mathbb{S}_{m'}$ of astrophysical sources of class $m'$.
+The metric value $Q_{n} = \sum_{m=1}^{M} Q_{n, m}$ for a single light curve $n$ is a sum of the per-class per-light curve metric values $Q_{n, m}$.
+The metric value $Q_{m'} = \sum_{n \in \mathbb{S}_{m'}} Q_{n}$ for an entire class $m'$ is the sum of the per-light curve metrics.
 Section~\ref{sec:weights} discusses how the global metrics are derived from the per-class metrics $Q_{m'}$.
-As part of the derivation of the per-class per-lightcurve metrics, we also define the indicator variable
+As part of the derivation of the per-class per-light curve metrics, we also define the indicator variable
 \begin{eqnarray}
   \label{eq:indicator}
   \tau_{n, m} &\equiv& \begin{cases}
@@ -89,9 +89,9 @@ As part of the derivation of the per-class per-lightcurve metrics, we also defin
 \subsubsection{Log-loss}
 \label{sec:logloss}
 
-The log-loss is a quantity borrowed from information theory and is related to a notion of \textit{entropy} $H_{n} = - \sum_{m=1}^{M} p(m \mid d_{n}) \ln[p(m \mid d_{n})]$, a measure of the space of possible states a system can have, which is in this case the class of which a lightcurve can be a member.
-A classification posterior $p(m \mid d_{n})$ has minimal entropy if it takes a value of $1$ at some class and values of $0$ at all others, i.e. if it can trivially be reduced to a deterministic classification, because this is the scenario in which there is only one possible state, that the lightcurve has a true class $m$.
-This definition of entropy, however, is a property of the probability $p(m \mid d_{n})$ and has no relation with any concept of the true class of the lightcurve $m'$.
+The log-loss is a quantity borrowed from information theory and is related to a notion of \textit{entropy} $H_{n} = - \sum_{m=1}^{M} p(m \mid d_{n}) \ln[p(m \mid d_{n})]$, a measure of the space of possible states a system can have, which is in this case the class of which a light curve can be a member.
+A classification posterior $p(m \mid d_{n})$ has minimal entropy if it takes a value of $1$ at some class and values of $0$ at all others, i.e. if it can trivially be reduced to a deterministic classification, because this is the scenario in which there is only one possible state, that the light curve has a true class $m$.
+This definition of entropy, however, is a property of the probability $p(m \mid d_{n})$ and has no relation with any concept of the true class of the light curve $m'$.
 
 To reconcile the classification posterior with the true class known by those running a challenge, we define the cross-entropy
 \begin{eqnarray}
@@ -133,15 +133,15 @@ We leave to future work the thorough investigation of a nontrivial weighting sch
 % TODO: rename section
 
 The most concerning systematics discussed in Section~\ref{sec:mockdata} are those of tunnel vision and cruise control.
-The actual lightcurve data stream of \lsst\ will be particularly vulnerable to both due to extreme class imbalance and hierarchy punctuated by nonrepresentative training data, so \plasticc\ is designed to include these effects.
-Any metric under equal weight per lightcurve would incentivize tunnel vision and cruise control focused on the most prevalent class.
+The actual light curve data stream of \lsst\ will be particularly vulnerable to both due to extreme class imbalance and hierarchy punctuated by nonrepresentative training data, so \plasticc\ is designed to include these effects.
+Any metric under equal weight per light curve would incentivize tunnel vision and cruise control focused on the most prevalent class.
 In order to meet the needs of science cases concerning other, rarer classes, \plasticc's metric will be more nuanced, even if it complicates the interpretability of the metric.
 % This can be problematic because our science needs might require accurate classifications of uncommon classes as well.
 % Because tunnel vision is actually strong performance, it is common for tunnel classifiers to dominate challenges.
-% Under a ``winner takes all'' challenge and with equal weight per lightcurve, \plasticc\ would be particularly vulnerable to a tunnel vision classifier winning despite not meeting the needs of those studying less common classes.
+% Under a ``winner takes all'' challenge and with equal weight per light curve, \plasticc\ would be particularly vulnerable to a tunnel vision classifier winning despite not meeting the needs of those studying less common classes.
 
 One option is to apply a threshold of classification efficacy on all classes in order to assign an overall winner, though it would require reducing the classification probabilities to deterministic class labels.
-When doing binary classification with a method that reduces probabilities to deterministic class labels, each lightcurve is assigned the class of higher probability, even if the two probabilities are quite similar, a situation that is particularly likely if the lightcurve, in fact, belongs to a third class or if the two classes are subclasses of a single physical phenomenon.
+When doing binary classification with a method that reduces probabilities to deterministic class labels, each light curve is assigned the class of higher probability, even if the two probabilities are quite similar, a situation that is particularly likely if the light curve, in fact, belongs to a third class or if the two classes are subclasses of a single physical phenomenon.
 %We thus anticipate it to be a more severe issue for \plasticc\ and other realistic multi-class challenges as well as any challenges with multiple subclasses.
 A simple reduction to a deterministic label could be made more palatable with a secondary threshold mechanism.
 For example, requiring a minimum difference in probability density between the maximum probability class and the next highest probability class would help avert this degeneracy.

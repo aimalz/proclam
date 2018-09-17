@@ -1,13 +1,13 @@
 \section{Data}
 \label{sec:data}
 
-We explore the behavior of metrics on mock classification probabilities with isolated strengths and weaknesses as well as realistic mock classification probabilities from a publicly available lightcurve catalog.
-Throughout this paper, \textit{data} always refers to mock classification submissions to \plasticc, not the \plasticc\ lightcurves; no lightcurves were simulated, viewed, or classified in the preparation of this paper.
+We explore the behavior of metrics on mock classification probabilities with isolated strengths and weaknesses as well as realistic mock classification probabilities from a publicly available light curve catalog.
+Throughout this paper, \textit{data} always refers to mock classification submissions to \plasticc, not the \plasticc\ light curves; no light curves were simulated, viewed, or classified in the preparation of this paper.
 
-Our data is in the form of catalogs of $N$ posterior probability vectors $p(m \mid d_{n}, D, \mathcal{C})$ over $M$ classes with labels $m$ conditioned on each observed lightcurve $d_{n}$, the training set $D$, and some parameters $\mathcal{C}$ concerning the behavior of the classifier.
+Our data is in the form of catalogs of $N$ posterior probability vectors $p(m \mid d_{n}, D, \mathcal{C})$ over $M$ classes with labels $m$ conditioned on each observed light curve $d_{n}$, the training set $D$, and some parameters $\mathcal{C}$ concerning the behavior of the classifier.
 We motivate $\mathcal{C}$ here before deferring its detailed explanation to later in Section~\ref{sec:mockdata}.
-If a mock classifier produced $p(m \mid d_{n})$, it would take solely the lightcurve and produce a posterior over classes.
-Since such a situation involves no information besides the lightcurve $d_{n}$, every classifier would produce identical classification submissions $p(m \mid d_{n})$.
+If a mock classifier produced $p(m \mid d_{n})$, it would take solely the light curve and produce a posterior over classes.
+Since such a situation involves no information besides the light curve $d_{n}$, every classifier would produce identical classification submissions $p(m \mid d_{n})$.
 Including the training set $D$ would not remedy the problem, as every classifier has access to the same training set and so would still have no way to produce different classification submissions $p(m \mid d_{n}, D)$.
 Thus there must be some other parameters $\mathcal{C}$ that are specific to each classifier and contribute to the mock classification posteriors it produces.\footnote{It should be noted that classification submissions may not be derived in this way, i.e. the parameters $\mathcal{C}$ may not be explicitly known or may indicate a procedure that does not produce posteriors but, rather, scores of some kind.  However, we assume for these purposes that classifiers produce the classification posteriors \plasticc\ seeks.}
 We describe below the way in which mock data is synthesized and return to the classifier parameters $\mathcal{C}$ later.
@@ -26,7 +26,7 @@ As is anticipated of the real \lsst\ dataset, we use class populations that are 
 We take $M$ draws $u_{m'} \sim \mathcal{U}(0, 1)$ from the standard continuous uniform distribution.
 These coefficients $u_{m'}$ define the discrete probability distribution $p(m') = b^{u_{m'}} / \sum_{m'} b^{u_{m'}}$ for each class $m'$ such that $\sum_{m'=1}^{M} p(m') = 1$.
 % was the b in 10^b really related to the b above? This was not clear. \aim{Yes, it is the same b}
-From $p(m')$ we draw $N = 10^{b}$ instances $\{m'_{n}\}$ of a true class $m'$ for each lightcurve $n$ in the catalog.
+From $p(m')$ we draw $N = 10^{b}$ instances $\{m'_{n}\}$ of a true class $m'$ for each light curve $n$ in the catalog.
 The true class membership distribution of our tests with $M = 13$ and $b = 6$ is shown in Figure~\ref{fig:classdist}.
 Though the class labels for \plasticc\ are expected to be randomized, we artificially order our mock class labels by their prevalence for ease of visual interpretation.
 Once the true classes have been set, mock classification probabilities for each class are derived using the procedure described in Section~\ref{sec:mockdata}.
@@ -34,7 +34,7 @@ Once the true classes have been set, mock classification probabilities for each 
 \subsection{Mock classification schemes}
 \label{sec:mockdata}
 
-In order to observe metric performance on different classification schemes, we develop archetypical mock classifiers, devised to produce generic responses to a classification challenge without any interaction with lightcurves, images, or any other test set or training set from any challenge.
+In order to observe metric performance on different classification schemes, we develop archetypical mock classifiers, devised to produce generic responses to a classification challenge without any interaction with light curves, images, or any other test set or training set from any challenge.
 We use these mock classifiers to investigate how the performance under each metric changes in the presence of certain types of failure modes, or \textit{systematics}.
 A robust metric should not reward classification schemes that display these systematic effects.
 % In other words, we want a metric that deters ``gaming the system'' as much as possible.
@@ -57,9 +57,9 @@ Without loss of generality, we can decompose $\mathbb{C}$ under some basis funct
 The CPM $\mathbb{C}$ thus defines the behavior of a classifier.
 
 
-Since we believe the lightcurves contain information about the true class (an assumption that underlies classification as a whole), we can use the appropriate row $\mathbb{C}_{m'_{n}} = p(\hat{m} \mid m', \mathcal{C})$ of the CPM $\mathbb{C}$ as a proxy for $p(m \mid d_{n}, D, \mathcal{C})$, without directly classifying lightcurves themselves, which enabled this paper to be written without any knowledge of the \plasticc\ dataset's simulation nor validation.
+Since we believe the light curves contain information about the true class (an assumption that underlies classification as a whole), we can use the appropriate row $\mathbb{C}_{m'_{n}} = p(\hat{m} \mid m', \mathcal{C})$ of the CPM $\mathbb{C}$ as a proxy for $p(m \mid d_{n}, D, \mathcal{C})$, without directly classifying light curves themselves, which enabled this paper to be written without any knowledge of the \plasticc\ dataset's simulation nor validation.
 
-To emulate the effect of natural variation of information content in different lightcurves, we generate a posterior probability vector $\vec{p}(m \mid m', \mathbb{C})$ by taking a Dirichlet-distributed draw
+To emulate the effect of natural variation of information content in different light curves, we generate a posterior probability vector $\vec{p}(m \mid m', \mathbb{C})$ by taking a Dirichlet-distributed draw
 \begin{eqnarray}
   \label{eq:cmtoprob}
   \vec{p}(m \mid d_{n}, D, \mathcal{C}) &\sim& \mathrm{Dir}[\mathbb{C}_{m'_{n}} \delta]
@@ -104,7 +104,7 @@ We impose one restriction in addition to the normalization factor of Equation~\r
 		Top: An example of a realistically complex conditional probability matrix, constructed by selecting a systematic for each individual class.
 		This illustrates (for example), how a classifier may exhibit multiple systematics from Figure~\ref{fig:mock_cm} for each true class.
 		Bottom: Example classification probabilities, drawn from the above CPM, with their true class indicated by a red star and the systematic, characterized by its row in the CPM, affecting that true class described on the right.
-		The Dirichlet process emulates the variation in classification posteriors due to differences between lightcurves within a given class, leading to different classification posteriors even among rows sharing a true class.
+		The Dirichlet process emulates the variation in classification posteriors due to differences between light curves within a given class, leading to different classification posteriors even among rows sharing a true class.
 		}
 		\label{fig:mock_probs}
 	\end{center}
@@ -160,16 +160,16 @@ Class $m'$ is said to be subsumed by class $\tilde{m}$ for such a \textit{subsum
 The subsuming classifier may be asymmetric, or the classes may be mutually subsumed (rightmost bottom panel of Figure~\ref{fig:mock_cm}) if one already has significant off-diagonal probability, as is true for the uncertain classifier.
 
 Subsuming is not always the mark of a poor classifier and may be insurmountable by more sophisticated classification techniques.
-Real classification posteriors $p(m \mid d_{n}, D, \mathcal{C})$ are conditioned on lightcurves, training data, and assumptions necessary for the classification algorithm, and there may simply not be enough information in a lightcurve and/or training set to distinguish between classes.
+Real classification posteriors $p(m \mid d_{n}, D, \mathcal{C})$ are conditioned on light curves, training data, and assumptions necessary for the classification algorithm, and there may simply not be enough information in a light curve and/or training set to distinguish between classes.
 % Aside from hierarchical classes, limited data can cause even wholly different physical phenomena to be indistinguishable.
 
-For example, based on only the first few lightcurve points, it is sometimes impossible to separate cataclysmic variables, which are stars that are not destroyed and can explode many times, from supernovae, which are stars that are completely destroyed in their explosions.
+For example, based on only the first few light curve points, it is sometimes impossible to separate cataclysmic variables, which are stars that are not destroyed and can explode many times, from supernovae, which are stars that are completely destroyed in their explosions.
 Even with observations over extended periods, it can still be impossible to distinguish cataclysmic variables from active galactic nuclei that result from activity near a galaxy's central black hole.
 Similarly, tidal disruption events that occur when stars are destroyed by proximity to the central black hole of a galaxy can look much like supernovae that simply happen to be near a galaxy's center.
-When the prior information of the location of the source is more informative than its sparse, noisy, irregularly sampled, or short lightcurve, it may present a challenge no classifier can overcome, a fundamental limit on available information about the object.
+When the prior information of the location of the source is more informative than its sparse, noisy, irregularly sampled, or short light curve, it may present a challenge no classifier can overcome, a fundamental limit on available information about the object.
 
 % Subsuming is expected when distinguishing between subtypes of some class, though this failure mode is not necessarily the mark of a poor classifier.
-Distinguishing between subclasses of a single phenomenon is subject to limits not only on the lightcurves of the unknown targets but also by the availability of adequate training sets.
+Distinguishing between subclasses of a single phenomenon is subject to limits not only on the light curves of the unknown targets but also by the availability of adequate training sets.
 It is nonetheless essential to identify subclasses when they have wholly different science applications.
 As an example, SN Ia and SN Ibc are notorious for being difficult to distinguish.
 In fact, it is more common for SN Ibc to be misclassified as SN Ia than the other way around.
@@ -193,7 +193,7 @@ We would like the \plasticc\ metric to reward a classifier that minimizes this k
 		Columns: the five machine learning methods of Boosted Decision Tree (BDT), K-Nearest Neighbors (KNN), Naive Bayes (NB), Neural Network (NN), and Support Vector Machine (SVM).
     Top row: five machine learning methods applied to template decompositions as features.
     Bottom row: the same five machine learning methods applied to wavelet decompositions as features.
-		These CPMs derived from the dataset of a precursor lightcurve classification challenge by modern methods exhibit some of the systematics identified in Section~\ref{sec:mockdata} and Figure~\ref{fig:mock_cm}, particularly cruise control (WKNN, WNB), noisy (class Ibc in all but TBDT and WKNN), and perfect (class II in all).
+		These CPMs derived from the dataset of a precursor light curve classification challenge by modern methods exhibit some of the systematics identified in Section~\ref{sec:mockdata} and Figure~\ref{fig:mock_cm}, particularly cruise control (WKNN, WNB), noisy (class Ibc in all but TBDT and WKNN), and perfect (class II in all).
 		}
 		\label{fig:snphotcc_cm}
 	\end{center}
@@ -202,9 +202,9 @@ We would like the \plasticc\ metric to reward a classifier that minimizes this k
 %\aim{This would be more meaningful if we were given the conditional probability matrices of actual submissions to \snphotcc\ and then checked whether the \plasticc\ metric would have designated a different winner.
 %Also, it may be more interpretable if we instead use Ashish's conditional probability matrices that have more classes.}
 
-In order to understand the performance of classifiers on simulated datasets approximating reality, we calculate the values of our metric candidates on representative classifiers of a precursor lightcurve classification challenge.
+In order to understand the performance of classifiers on simulated datasets approximating reality, we calculate the values of our metric candidates on representative classifiers of a precursor light curve classification challenge.
 The Supernova Photometric Classification Challenge (\snphotcc) \citep{kessler_supernova_2010} focused on deterministically classifying a heterogenous population of supernovae into subclasses of SN Ia, SN II, and SN Ibc
-The \snphotcc\ attracted diverse classification approaches, encompassing $\chi^{2}$ fits of the supernova lightcurves to publicly available templates \citep{nugent_kcorrections_2002}, physical models \citep{conley_sifto:_2008}, and empirical models, as well as alternatives to curve-fitting such as outlier identification on the training set Hubble diagram, dimensionality reduction, and clustering.
+The \snphotcc\ attracted diverse classification approaches, encompassing $\chi^{2}$ fits of the supernova light curves to publicly available templates \citep{nugent_kcorrections_2002}, physical models \citep{conley_sifto:_2008}, and empirical models, as well as alternatives to curve-fitting such as outlier identification on the training set Hubble diagram, dimensionality reduction, and clustering.
 % TODO cite InCA?
 % A general light curve shape (rather than one motivated by the physical differences between SNeIa and core collapse SNe) was assumed by some competitors and then a kernel density estimation was performed over the fit parameters, with various approaches employed including boosting over the feature space.
 Machine learning was also employed, using features such as the light-curve slopes to produce a predictive model for the training data.
@@ -212,10 +212,10 @@ Machine learning was also employed, using features such as the light-curve slope
 %, which are prone to bias given non-representativity of the test data and agnostic
 \snphotcc\ attracted physically motivated template-based methods as well as those based on decomposition of the light curves into generic features at risk of neglecting available physical information.
 
-Since the conclusion of the \snphotcc, the lightcurves became a testbed for a suite of machine learning classifiers.
+Since the conclusion of the \snphotcc, the light curves became a testbed for a suite of machine learning classifiers.
 We consider a collection of probabilistic classification methods, as presented in \citet{lochner_photometric_2016}, whose CPMs\footnote{The classifiers of \citet{lochner_photometric_2016} are indeed probabilistic but are reduced to confusion matrices via deterministic labels for this visualization and the science-motivated metric of Section~\ref{sec:science}.
 In all other instances, the classification posteriors are used directly.} are shown in Figure~\ref{fig:snphotcc_cm}.
-The set of classification algorithms includes template-based classification procedures, denoted as T, (\citet{sako_photometric_2011}, top row) and a wavelet decomposition, denoted as W, of the lightcurves to construct the features over which to classify (\citet{newling_statistical_2011}, bottom row), each paired with Boosted Decision Tree (BDT), K-Nearest Neighbors (KNN), Naive Bayes (NB), Neural Network (NN), and Support Vector Machine (SVM) machine learning algorithms (columns).
+The set of classification algorithms includes template-based classification procedures, denoted as T, (\citet{sako_photometric_2011}, top row) and a wavelet decomposition, denoted as W, of the light curves to construct the features over which to classify (\citet{newling_statistical_2011}, bottom row), each paired with Boosted Decision Tree (BDT), K-Nearest Neighbors (KNN), Naive Bayes (NB), Neural Network (NN), and Support Vector Machine (SVM) machine learning algorithms (columns).
 While the complexity of entries to the \snphotcc\ was greater than this subset, we use these examples to establish the behavior of our metrics on realistic classification submissions.
 
 We draw attention to the marked presence of the systematics introduced in Section~\ref{sec:mockdata} in the CPMs of Figure~\ref{fig:snphotcc_cm}.
