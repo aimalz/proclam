@@ -20,10 +20,12 @@ In the following sections, we explore the response of the log-loss and Brier sco
 \end{figure*}
 
 We demonstrate the behavior of the metrics with classification posteriors derived from conditional probability matrices composed of pairs of the characteristic classifiers of Section~\ref{sec:mockdata} is shown in Figure~\ref{fig:all_combined}.
-The systematics introduced to each baseline are those that we intuitively expect to worsen performance;
-the uncertain, almost perfect, noisy, and subsuming classifiers are anticipated to worsen an otherwise perfect classifier;
-the uncertain, noisy, and subsuming classifiers are anticipated to worsen an otherwise almost perfect classifier;
-and the uncertain and subsuming classifiers are anticipated to worsen an otherwise noisy classifier.
+The systematics introduced to each baseline are those that we intuitively expect to worsen classification performance of an arbitrary classifier:
+\begin{itemize}
+\item the uncertain, almost perfect, noisy, and subsuming classifiers are anticipated to worsen an otherwise perfect classifier;
+\item the uncertain, noisy, and subsuming classifiers are anticipated to worsen an otherwise almost perfect classifier;
+\item the uncertain and subsuming classifiers are anticipated to worsen an otherwise noisy classifier.
+\end{itemize}
 In every case, we apply the systematic to one true class, i.e. transforming one row of the baseline conditional probability matrix.
 The metrics are evaluated at a number of weights $w$ on the affected class, with the weights on the remaining baseline classes equal to one another at $(1 - w) / (M - 1)$.
 The weight values range from $0$ (all weight on the baseline) to $1$ (all weight on the systematic) at intervals of $0.1$.
