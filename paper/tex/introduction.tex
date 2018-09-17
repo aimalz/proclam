@@ -19,6 +19,7 @@ Additionally, \plasticc\ will join the ranks of a handful of past astronomy clas
 Kaggle attracts a broad userbase, and those without domain knowledge may provide novel approaches to the problem at hand.
 
 Classification in astronomy is increasingly done based on images e.g., galaxy classification \citep{hoyle_measuring_2016}, supernova classification \citep{cabrera-vives_deep-hits:_2017}, identification of bars in galaxies \citep{abraham_detection_2018}, weak lensing estimation (\citet{mandelbaum_third_2014}\footnote{\url{http://great3challenge.info/}}), separation of Near Earth Asteroids from artifacts in images \citep{morii_machine-learning_2016}, as well as  classification \citep{morii_machine-learning_2016, mahabal_deep-learnt_2017, zevin_gravity_2017}, and even noise classification \citep{zevin_gravity_2017, george_classification_2018}.
+Classification problems are also found in the context of time-series or spectral data rather than images \citep[e.g.]{richards_construction_2012,newling_statistical_2011,armstrong_k2_2016,moller_photometric_2016,2015ApJS..219...39R, 2013MNRAS.430..509I}.
 Automated classification \citep{djorgovski_towards_2011, djorgovski_flashes_2012, narayan_machine_2018, bloom_automating_2012} is becoming increasingly important in time-domain astronomy due to its potential for speed relative to visual inspection by an expert; the sooner one can make follow-up observations of an interesting object, the more one can learn about its underlying physical processes and nature.
 
 Classification is intrinsically \textit{probabilistic} in that the goal is to constrain the class \textit{conditioned} on limited data, thereby defining a \textit{posterior probability density}, or \textit{classification posterior} for short, over all classes for each classified light curve.
@@ -27,7 +28,7 @@ Probabilities of classification that are reduced to an estimated class label (sa
 Such a reduction of a probability density to a deterministic label discards information, the impact of which depends on how the classification results are subsequently used.
 
 Probabilistic classifications could inform decision making regarding allocation of limited spectroscopic follow-up resources.
-To reduce wasting spectroscopic resources dedicated to common class whose science use requires spectra, one might only attempt follow-up observations of the objects with the highest classification probabilities.
+To reduce wasting spectroscopic resources dedicated to a common class whose science use requires spectra, one might only attempt follow-up observations of the objects with the highest classification probabilities.
 Spectroscopic follow-up of a rare class, on the other hand, may be useful enough that an object with even a moderate probability of being of a very rare class could be worth the risk.
 % While the knowlege that an object has been identified to be a particular type with an overwhelming probability is likely different from a situation where an object is simply slightly more likely to be a particular class than the remaining classes of objects is important but could be appropriately reflected in a deterministic classifier.
 % If follow-up resources were sufficiently abundant to warrant the optimization of follow-up of less well classified objects, the information in the probabilities could be useful in resource allocation.
@@ -50,9 +51,9 @@ Furthermore, many such metrics are restricted to binary classifications (``yes''
 If the data are simulated using a fully self-consistent forward model, a metric of the accuracy of classification posteriors relative to the true, underlying probabilities would be straightforward.
 However, such a simulation procedure would require beginning with a fully populated probability space over all classes and all possible light curves, which is an insurmountable challenge.
 Therefore, attention must be directed toward the no longer straightforward matter of defining the criterion for identifying a winning classifier.
-In the context of astronomy, concerns about the choice of metric for probabilistic classifications have been investigated only to a limited degree thus far \citep{florios_forecasting_2018, kim_stargalaxy_2017},
+In the context of astronomy, the choice of metric for probabilistic classifications has been investigated to a limited degree \citep{florios_forecasting_2018, kim_stargalaxy_2017},
 % TODO cite PSNID
-with most approaches concentrating on the standard metrics of purity and completeness.
+with a focus on the standard metrics of purity and completeness.
 Even within that subset, metric consistency over a range of classifiers and between different analyses is not always ensured \citep{bethapudi_separation_2018}, indicating a need for further study.
 
 This work explores the problem of how to choose a metric of probabilistic classifications with intended application to many science applications.
