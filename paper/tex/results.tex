@@ -10,7 +10,7 @@ In the following sections, we explore the response of the log-loss and Brier sco
 	\begin{center}
 		\includegraphics[width=0.99\textwidth]{./fig/multipanel_res.png}
 		\caption{Weighted log-loss and Brier scores for baseline classifiers with combinations of systematics.
-		Each point represents a classifier with baseline behavior (regular polygon marker) for all but one class with a particular systematic (asterisk markers).
+		Each point represents a classifier with baseline behavior (regular polygon marker; triangle for perfect behavior, square for noisy behavior, diamond for almost perfect behavior) for all but one class with a particular systematic (asterisk markers; ).
 		The color of the systematic effect and baseline behavior markers indicates the weight on the class affected by the systematic and the integrated weight evenly distributed over other classes with baseline behavior, respectively.
 		Both metrics are shown in three regimes of sensitivity: to the subsumed systematic on a perfect baseline is highest, all other baselines with the subsumed systematic, and all other systematics.
 		The ranges of Brier score and log-loss values between the panels are in ratios of approximately $10:7:3$ and $100:10:5$, respectively, indicating the log-loss's higher sensitivity to the presence of systematics.
