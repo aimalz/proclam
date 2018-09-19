@@ -2,7 +2,8 @@
 \label{sec:intro}
 
 The Large Synoptic Survey Telescope (\lsst) has the potential to advance time-domain astronomy, with anticipated impacts on the study of transient and variable objects within and beyond the Milky Way.
-With its rapid scan strategy, exquisite depth, and multiple optical filters, \lsst\ will deliver millions of time-series observations (\textit{light curves}) in six electromagnetic wavelength ranges (\textit{photometric bands}) in the visible regime.
+
+With its rapid scan strategy, exquisite depth, and multiple optical filters, \lsst\ will deliver millions of time-series observations (\textit{light curves}) in six electromagnetic wavelength ranges (\textit{photometric bands}).
 \lsst's expansive catalog of light curves will enable unprecedented population-level studies of time-varying astrophysical sources, from asteroids to variable stars to active galactic nuclei, deepening our understanding of stellar aging processes, the evolution of the most massive galaxies, and the expansion history of the universe, to name but a few.
 
 Science output from the \lsst\ dataset is, however, contingent on distinguishing classes of astrophysical sources from one another.
@@ -10,57 +11,62 @@ Science output from the \lsst\ dataset is, however, contingent on distinguishing
 Though photometric light curves like those of \lsst\ can be used for classification, costly observations of a high-resolution spectrum have traditionally served as the gold standard for classification.
 % observations The gold standard for such identification in astronomy has traditionally been based on the spectrum of the source.
 The volume of objects anticipated of LSST, as well as the potentially low signal-to-noise ratios of the faintest sources, likely exceeds the availability of spectroscopic follow-up resources; the great majority of \lsst's time-varying discoveries will never be spectroscopically confirmed.
-% Thus several science cases (such as SN cosmology) will actively depend om classification of astrophysical sources based on the photometric , and possibly a much smaller training sample/model based on a spectroscopic sub-sample.
+
 As such, there is an acute need for classifiers of photometric light curves that can perform well on datasets that include a wide variety of sources including those that are at the limits of detection.
 
 The Photometric \lsst\ Astronomical Time-series Classification Challenge (\plasticc\footnote{\url{http://plasticcblog.wordpress.com/}}) aims to identify and motivate the development of classification techniques that serve astronomical science goals by engaging the broader community outside astronomy.
 \plasticc's dataset is comprehensive, including models for well-understood classes, newly observed classes, and classes that have only been proposed to exist, to simulate serendipitous discoveries anticipated of \lsst.
-Additionally, \plasticc\ will join the ranks of a handful of past astronomy classification challenges (\citet{kitching_gravitational_2011}\footnote{\url{https://www.kaggle.com/c/mdm}}, \citet{harvey_observing_2013}\footnote{\url{https://www.kaggle.com/c/DarkWorlds}},  \citet{dieleman_rotation-invariant_2015}\footnote{\url{https://www.kaggle.com/c/galaxy-zoo-the-galaxy-challenge}}) hosted on Kaggle\footnote{\url{https://www.kaggle.com/}}, a platform that hosts data analytics competitions where seasoned professionals and amateurs alike can compete to classify, model, and predict large data sets uploaded by companies or scientific collaborations.
+Additionally, \plasticc\ will join the ranks of a handful of past astronomy classification challenges including \citep[MDM\footnote{\url{https://www.kaggle.com/c/mdm}}]{kitching_gravitational_2011}, \citep[the Dark Worlds challenge\footnote{\url{https://www.kaggle.com/c/DarkWorlds}}]{harvey_observing_2013} \citep[and the Galaxy Zoo challenge\footnote{\url{https://www.kaggle.com/c/galaxy-zoo-the-galaxy-challenge}}]{dieleman_rotation-invariant_2015}, all hosted on Kaggle\footnote{\url{https://www.kaggle.com/}}, a platform that hosts data analytics competitions where seasoned professionals and amateurs alike can compete to classify, model, and predict large data sets uploaded by companies or scientific collaborations.
 Kaggle attracts a broad userbase, and those without domain knowledge may provide novel approaches to the problem at hand.
 
-Classification in astronomy is increasingly done based on images e.g., galaxy classification \citep{hoyle_measuring_2016}, supernova classification \citep{cabrera-vives_deep-hits:_2017}, identification of bars in galaxies \citep{abraham_detection_2018}, weak lensing estimation (\citet{mandelbaum_third_2014}\footnote{\url{http://great3challenge.info/}}), separation of Near Earth Asteroids from artifacts in images \citep{morii_machine-learning_2016}, as well as  classification \citep{morii_machine-learning_2016, mahabal_deep-learnt_2017, zevin_gravity_2017}, and even noise classification \citep{zevin_gravity_2017, george_classification_2018}.
-Classification problems are also found in the context of time-series or spectral data rather than images \citep[e.g.]{richards_construction_2012,newling_statistical_2011,armstrong_k2_2016,moller_photometric_2016,2015ApJS..219...39R, 2013MNRAS.430..509I}.
-Automated classification \citep{djorgovski_towards_2011, djorgovski_flashes_2012, narayan_machine_2018, bloom_automating_2012} is becoming increasingly important in time-domain astronomy due to its potential for speed relative to visual inspection by an expert; the sooner one can make follow-up observations of an interesting object, the more one can learn about its underlying physical processes and nature.
-
+Classification in astronomy can proceed through images e.g., galaxy classification \citep{hoyle_measuring_2016}, supernova classification \citep{cabrera-vives_deep-hits:_2017}, identification of bars in galaxies \citep{abraham_detection_2018}, \citep[weak lensing estimation\footnote{\url{http://great3challenge.info/}}]{mandelbaum_third_2014}, separation of Near Earth Asteroids from artifacts in images \citep{morii_machine-learning_2016}, as well as light-curve classification \citep{morii_machine-learning_2016, mahabal_deep-learnt_2017, zevin_gravity_2017}, and even noise classification \citep{zevin_gravity_2017, george_classification_2018}. Classification can also proceed from time-series or spectrum data rather than images \citep[e.g.]{richards_construction_2012,newling_statistical_2011,armstrong_k2_2016,moller_photometric_2016,2015ApJS..219...39R, 2013MNRAS.430..509I}. Automated classification \citep{djorgovski_towards_2011, djorgovski_flashes_2012, narayan_machine_2018, bloom_automating_2012} is becoming increasingly important in time-domain astronomy due to its potential for speed relative to visual inspection by an expert; the sooner one can make follow-up observations of an interesting object, the more one can learn about its underlying physical processes and nature.
+%=======
+%Classification in astronomy is increasingly done based on images e.g., galaxy classification \citep{hoyle_measuring_2016}, supernova classification \citep{cabrera-vives_deep-hits:_2017}, identification of bars in galaxies \citep{abraham_detection_2018}, weak lensing estimation (\citet{mandelbaum_third_2014}\footnote{\url{http://great3challenge.info/}}), separation of Near Earth Asteroids from artifacts in images \citep{morii_machine-learning_2016}, as well as  classification \citep{morii_machine-learning_2016, mahabal_deep-learnt_2017, zevin_gravity_2017}, and even noise classification \citep{zevin_gravity_2017, george_classification_2018}.
+%Classification problems are also found in the context of time-series or spectral data rather than images \citep[e.g.]{richards_construction_2012,newling_statistical_2011,armstrong_k2_2016,moller_photometric_2016,2015ApJS..219...39R, 2013MNRAS.430..509I}.
+%Automated classification \citep{djorgovski_towards_2011, djorgovski_flashes_2012, narayan_machine_2018, bloom_automating_2012} is becoming increasingly important in time-domain astronomy due to its potential for speed relative to visual inspection by an expert; the sooner one can make follow-up observations of an interesting object, the more one can learn about its underlying physical processes and nature.
+%
 Classification is intrinsically \textit{probabilistic} in that the goal is to constrain the class \textit{conditioned} on limited data, thereby defining a \textit{posterior probability density}, or \textit{classification posterior} for short, over all classes for each classified light curve.
 Probabilities of classification that are reduced to an estimated class label (say, by rounding a probability $0 \leq p \leq 1$ up or down) without a notion of confidence become \textit{deterministic} classifications.
 % As an example, a light curve with probability $0.99$ of having originated from a certain class of astrophysical source might be assigned a deterministic classification label for that class, effectively rounding up the probability to $1$.
 Such a reduction of a probability density to a deterministic label discards information, the impact of which depends on how the classification results are subsequently used.
 
-Probabilistic classifications could inform decision making regarding allocation of limited spectroscopic follow-up resources.
-To reduce wasting spectroscopic resources dedicated to a common class whose science use requires spectra, one might only attempt follow-up observations of the objects with the highest classification probabilities.
+
+Probabilistic classifications could inform decisionmaking regarding allocation of limited spectroscopic follow-up resources.
+To reduce wasting spectroscopic resources dedicated to the most common class whose science use requires spectra, one might only attempt follow-up observations of the objects with the highest classification probabilities.
+
+%Probabilistic classifications could inform decision making regarding allocation of limited spectroscopic follow-up resources.
+%To reduce wasting spectroscopic resources dedicated to a common class whose science use requires spectra, one might only attempt follow-up observations of the objects with the highest classification probabilities.
 Spectroscopic follow-up of a rare class, on the other hand, may be useful enough that an object with even a moderate probability of being of a very rare class could be worth the risk.
 % While the knowlege that an object has been identified to be a particular type with an overwhelming probability is likely different from a situation where an object is simply slightly more likely to be a particular class than the remaining classes of objects is important but could be appropriately reflected in a deterministic classifier.
 % If follow-up resources were sufficiently abundant to warrant the optimization of follow-up of less well classified objects, the information in the probabilities could be useful in resource allocation.
 
-Perhaps more significantly, classification probabilities may also be propagated through a hierarchical inference of population-level parameters, enabling scientific investigations to proceed even when spectra are unavailable.
-The efficacy of this application of classification probabilities in the context of supernova cosmology is an active field of research (\citet{roberts_zbeams:_2017}, Malz, Hlo\v{z}ek \& Peters, in preparation).
+Additionally, classification probabilities may be propagated through a hierarchical inference of population-level parameters, enabling scientific investigations to proceed even when spectra are unavailable.
+The efficacy of this application of classification probabilities in the context of supernova cosmology is an active field of research (\citet{roberts_zbeams:_2017, scippr,2015ApJ...813..137R, 2018ApJ...857...51J}.
 % TODO Cite all the BEAMS papers and Malz, Peters, Hlozek in prep
 % Considering the different case of supernova cosmology from a photometrically classified sample of SNe, such probabilistic classifications can be propagated to subsequent analyses of cosmological parameters allowing one to extract information from the (large) part of the sample where photometric classification failed to identify a particular type with overwhelming probability \cite{roberts_zbeams:_2017}.
 Thus the impact of a photometric-only survey like \lsst\ can be greatly enhanced by probabilistic classifications.
 %Because of the low-signal-to-noise expected of \lsst, probabilistic classifications are more appropriate (Roberts+17) than the point estimates of previous challenges.
 %Such posteriors are more valuable than point estimates, which we call deterministic classifications in this work, because of their versatility in application and encapsulation of observational and systematic error that may propagate through inference.
 
-In light of the aforementioned benefits of classification probabilities, \plasticc\ will thus accept classifiers producing classification posteriors.\footnote{Many classifiers, including some of the most prevalent classifiers in the field of time-domain astronomy, that only provide deterministic and/or binary classifications will have to convert their results to probability vectors to compete in \plasticc.}
+In light of the aforementioned benefits of classification probabilities, \plasticc\ will thus accept classifiers producing classification posteriors.\footnote{Classifiers that only provide deterministic or binary classifications (including some of the most prevalent classifiers in the field of time-domain astronomy) will have to convert their results to probability vectors to compete in \plasticc.}
 However, probabilistic classifications are incompatible with the \textit{metrics}, any quantification of the performance of a classifier, of deterministic label assignments used in previous classification challenges \citep{kessler_supernova_2010, kessler_results_2010} and efforts to develop supernova classifiers \citep{narayan_machine_2018}.
 Notions of accuracy, purity, completeness, and others endemic to science are examples of metrics appropriate to deterministic classification estimates.
 
-Many deterministic classification metrics can be modified for evaluation on classification posteriors \citep{lochner_photometric_2016, moller_photometric_2016, hon_deep_2017, hon_detecting_2018, gieseke_detecting_2010} but only by reducing class probabilities to deterministic labels via evaluation at different cutoffs, the choice of which may ultimately affect the value of the metric and thus assessment of the classifier.
+Many deterministic classification metrics can be modified for evaluation on classification posteriors \citep{lochner_photometric_2016, moller_photometric_2016, hon_deep_2017, hon_detecting_2018, gieseke_detecting_2010}, but only by reducing class probabilities to deterministic labels via evaluation at different cutoffs, the choice of which may ultimately affect the value of the metric and thus assessment of the classifier.
 Furthermore, many such metrics are restricted to binary classifications (``yes'' or ``no'') and thus do not meet the diverse needs of \plasticc.
 
 If the data are simulated using a fully self-consistent forward model, a metric of the accuracy of classification posteriors relative to the true, underlying probabilities would be straightforward.
 However, such a simulation procedure would require beginning with a fully populated probability space over all classes and all possible light curves, which is an insurmountable challenge.
-Therefore, attention must be directed toward the no longer straightforward matter of defining the criterion for identifying a winning classifier.
-In the context of astronomy, the choice of metric for probabilistic classifications has been investigated to a limited degree \citep{florios_forecasting_2018, kim_stargalaxy_2017},
-% TODO cite PSNID
-with a focus on the standard metrics of purity and completeness.
+
+Therefore, attention must be directed toward defining the criterion for identifying a winning classifier.
+In the context of astronomy, concerns about the choice of metric for probabilistic classifications have been investigated \citep{florios_forecasting_2018, kim_stargalaxy_2017} mostly focusing on the standard metrics of purity and completeness.
 Even within that subset, metric consistency over a range of classifiers and between different analyses is not always ensured \citep{bethapudi_separation_2018}, indicating a need for further study.
 
 This work explores the problem of how to choose a metric of probabilistic classifications with intended application to many science applications.
 The \plasticc\ metric must respect the information content of probabilistic classifications without reduction to point estimates of class;
-it must be well-defined for non-binary classes, going beyond the positive/negative dichotomy inherent to some traditional metrics.
-In order for the metric to satisfy the challenge requirements, the metric must return a single, scalar value.
+it must be well-defined for non-binary classes, going beyond a positive/negative dichotomy inherent to some traditional metrics.
 The winning classifier should not favor one science application above all others, necessitating robustness against significant class imbalance, both between and within the training set and test set, as well as other concerning systematics.
+Finally, in order for the metric to satisfy the challenge requirements, the metric must return a single, scalar value.
 % It also must be reliable, giving consistent results for different instantiations of the same test case.
 % In addition, the metric should balance diverse science use case needs, particularly in the presence of heavily non-uniform classes.
 % Deterministic classifications must be converted to probabilistic (i.e. returning a ``1'' or a ``0''), that deterministic metric must be readily convertible into a probabilistic classification - and should preserve the relationships between classes accordingly.
