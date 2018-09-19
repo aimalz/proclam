@@ -1,6 +1,7 @@
 \section{Data}
 \label{sec:data}
 
+
 We explore the behavior of metrics on mock classification probabilities with isolated strengths and weaknesses as well as realistic mock classification probabilities from a publicly available light-curve catalog.
 Throughout this paper, \textit{data} always refers to mock classification submissions to \plasticc, not the \plasticc\ light curves; no light curves were simulated, viewed, or classified in the preparation of this paper.
 
@@ -9,7 +10,7 @@ We motivate $\mathcal{C}$ here before deferring its detailed explanation to late
 If a mock classifier produced $p(m \mid d_{n})$, it would take solely the light curve and produce a posterior over classes.
 Since such a situation involves no information besides the light curve $d_{n}$, every classifier would produce identical classification submissions $p(m \mid d_{n})$.
 Including the training set $D$ would not remedy the problem, as every classifier has access to the same training set and so would still have no way to produce different classification submissions $p(m \mid d_{n}, D)$.
-Thus there must be some other parameters $\mathcal{C}$ that are specific to each classifier and contribute to the mock classification posteriors it produces.
+Thus there must be some other parameters $\mathcal{C}$ that are specific to each classifier and contribute to the mock classification posteriors it produces.\footnote{It should be noted that classification submissions may not be derived in this way, i.e. the parameters $\mathcal{C}$ may not be explicitly known or may indicate a procedure that does not produce posteriors but, rather, scores of some kind.  However, we assume for these purposes that classifiers produce the classification posteriors \plasticc\ seeks.}
 We describe below the way in which mock data is synthesized and return to the classifier parameters $\mathcal{C}$ later.
 
 \begin{figure}
@@ -36,6 +37,7 @@ Once the true classes have been set, mock classification probabilities for each 
 \subsection{Mock classification schemes}
 \label{sec:mockdata}
 
+
 In order to observe metric performance on different classification schemes, we simulate some archetypical mock classifiers, devised to produce generic responses to a classification challenge, without any interaction with actual challenge data.
 We use these mock classifiers to investigate how the performance under each metric changes in the presence of certain types of failure modes, or \textit{systematics}.
 A robust metric should not reward classification schemes that display these systematic effects.
@@ -53,6 +55,7 @@ Though probabilistic classifications are not compatible with the confusion matri
 Under a deterministic classification scheme with a normalized confusion matrix with elements $p(\hat{m}, m')$, an object with true class $m'$ would have an assigned class $\hat{m}$ drawn from $p(\hat{m} \mid m') = p(\hat{m}, m') / p(m')$, via Bayes' Rule.
 We note that the elements of the confusion matrix have values of $N p(\hat{m}, m')$ and that $p(m') = N_{m'} / N$, where $N_{m'}$ is the number of true members of class $m'$, must be known in order to produce a confusion matrix.
 
+
 Using the above, we can construct classification posteriors $p(\hat{m} \mid m')$ which we will use to make example `draws' of classificaation probability submissions. We refer to the matrix $\mathbb{C}$ comprised of $p(\hat{m} \mid m')$ as the \textit{conditional probability matrix} (CPM).
 
 % Removed the paragraph below since we really want to keep this simple and non-confusing - and isn't used again.
@@ -60,6 +63,14 @@ Using the above, we can construct classification posteriors $p(\hat{m} \mid m')$
 %The CPM $\mathbb{C}$ thus defines the behavior of a classifier.
 
 Assuming the light curves contain information about the true class (an assumption that underlies classification as a whole), we can use the appropriate row $\mathbb{C}_{m'_{n}} = p(\hat{m} \mid m', \mathcal{C})$ of the CPM $\mathbb{C}$ as a proxy for $p(m \mid d_{n}, D, \mathcal{C})$, without directly classifying light curves themselves\footnote{This was important given that this paper should be general and not contain any knowledge of the \plasticc\ dataset simulation procedure.}. To emulate the effect of natural variation of information content in different light curves using the above, we generate a posterior probability vector $\vec{p}(m \mid m', \mathbb{C})$ by taking a Dirichlet-distributed draw
+%=======
+%Given its provenance, we refer to the matrix $\mathbb{C}$ comprised of $p(\hat{m} \mid m')$ as the \textit{conditional probability matrix} (CPM).
+%Without loss of generality, we can decompose $\mathbb{C}$ under some basis functions of parameters $\mathcal{C}$, the same as those introduced above in the definition of a classification posterior $p(m \mid d_{n}, D, \mathcal{C})$.
+%The CPM $\mathbb{C}$ thus defines the behavior of a classifier.
+%Since we believe the light curves contain information about the true class (an assumption that underlies classification as a whole), we can use the appropriate row $\mathbb{C}_{m'_{n}} = p(\hat{m} \mid m', \mathcal{C})$ of the CPM $\mathbb{C}$ as a proxy for $p(m \mid d_{n}, D, \mathcal{C})$, without directly classifying light curves themselves.\footnote{The introduction of the CPM permits this study to be conducted without any knowledge of the \plasticc\ dataset's simulation nor validation.}
+
+%To emulate the effect of natural variation of information content in different light curves, we generate a posterior probability vector $\vec{p}(m \mid m', \mathbb{C})$ by taking a Dirichlet-distributed draw
+
 \begin{eqnarray}
   \label{eq:cmtoprob}
   \vec{p}(m \mid d_{n}, D, \mathcal{C}) &\sim& \mathrm{Dir}[\mathbb{C}_{m'_{n}} \delta]
@@ -100,18 +111,28 @@ We impose one restriction in addition to the normalization factor of Equation~\r
 	\begin{center}
 		\includegraphics[width=0.49\textwidth]{./fig/combined.png}\\
     \includegraphics[width=0.49\textwidth]{./fig/examples.png}
-		\caption{A realistically complex conditional probability matrix and classification posteriors drawn from the probability matrix. The top row shows the conditional probability matrix which contains a combination of the various individual systematics describes in this section, each systematic acting on a subset of the classes. To illustrate what the output of a particular classifier will be, in the bottom row we draw a classification posterior from the conditional probability matrix above, for 27 randomly simulated objects. For each row we indicate the true class with a red star (and indicate the class number on the left of the probability matrix). 
+%		\caption{A realistically complex conditional probability matrix and classification posteriors drawn from the probability matrix. The top row shows the conditional probability matrix which contains a combination of the various individual systematics describes in this section, each systematic acting on a subset of the classes. To illustrate what the output of a particular classifier will be, in the bottom row we draw a classification posterior from the conditional probability matrix above, for 27 randomly simulated objects. For each row we indicate the true class with a red star (and indicate the class number on the left of the probability matrix). 
 %		Top: A realistic classifier's conditional probability matrix, characterized by a combination of systematics described on the right.
 	%	Bottom: Classification posteriors drawn from the conditional probability matrix above, with their true class indicated by a red star as well as on the left.
 		% \aim{insert a sentence here}
+		\caption{A realistically complex conditional probability matrix and classification posteriors drawn from it.
+		Top: An example of a realistically complex conditional probability matrix, constructed by selecting a systematic for each individual class.
+		This illustrates (for example), how a classifier may exhibit multiple systematics from Figure~\ref{fig:mock_cm} for each true class.
+		Bottom: Example classification probabilities, drawn from the above CPM, with their true class indicated by a red star and the systematic, characterized by its row in the CPM, affecting that true class described on the right.
+		The Dirichlet process emulates the variation in classification posteriors due to differences between light curves within a given class, leading to different classification posteriors even among rows sharing a true class.
 		}
 		\label{fig:mock_probs}
 	\end{center}
 \end{figure}
 
-We consider eight mock classifiers, each characterized by a single systematic affecting their CPM. Figure~\ref{fig:mock_cm} shows the CPMs corresponding to each systematic considered, discussed in detail below. 
+We consider eight mock classifiers, each characterized by a single systematic affecting their CPM.
+Figure~\ref{fig:mock_cm} shows the CPMs corresponding to each systematic considered, discussed in detail below.
+An example of a combined CPM across different classes and systematics is given in the top panel of Figure~\ref{fig:mock_probs}. 
+An actual classifier should be more complex than the simplified cases of Figure~\ref{fig:mock_cm}, with different behavior for each class.
+To demonstrate the procedure by which mock classification posteriors are generated from rows of the CPM, 
+we provide 22 examples of draws of the posterior CPM in the bottom panel of Figure~\ref{fig:mock_probs}.
 
-For each case, we address:
+For each of our archetypical mock classifiers, we address:
 \begin{enumerate}
   \item What characteristic behavior defines this classifier?
   \item Under what conditions does this behavior arise in real classifications?
@@ -169,6 +190,7 @@ Subsuming is not always the mark of a poor classifier and may be insurmountable 
 Real classification posteriors $p(m \mid d_{n}, D, \mathcal{C})$ are conditioned on light curves, training data, and assumptions necessary for the classification algorithm, and there may simply not be enough information in a light curve and/or training set to distinguish between classes.
 % Aside from hierarchical classes, limited data can cause even wholly different physical phenomena to be indistinguishable.
 
+
 For example, based on only the first few light curve points, it is sometimes impossible to separate cataclysmic variables (stars that are not destroyed and can brighten and fade many times) from supernovae, which are stars that are completely destroyed in their explosions.
 Even with observations over extended periods, it can still be impossible to distinguish cataclysmic variables from active galactic nuclei that result from activity near a galaxy's central black hole.
 Similarly, tidal disruption events that occur when stars are destroyed by proximity to the central black hole of a galaxy can look much like supernovae that simply happen to be near a galaxy's center.
@@ -180,12 +202,14 @@ It is nonetheless essential to identify subclasses when they have wholly differe
 As an example, SN Ia and SN Ibc are notorious for being difficult to distinguish.
 Tt is more common for SN Ibc to be misclassified as SN Ia than the other way around.
 This asymmetry is due to systematic underrepresentation of SN Ibc in available training sets.
-However, using SN Ibc in the traditional cosmology analysis done with SN Ia can bias estimates of the cosmological parameters, so the distinction is critical.
+However, SN Ibc contaminants in the traditional cosmology analysis done with SN Ia can bias estimates of the cosmological parameters, so the distinction is critical.
 
 Class imbalance is a ubiquitous problem in astronomy that can severely exacerbate this form of inaccuracy, as the relative rates of various astrophysical events and objects differ by orders of magnitude from one another.
 For example, RRc and RRd Lyrae stars are challenging to separate despite having different pulsation modes, and RRd stars are typically subsumed by RRc labels due to their rarity.
  % (RRc stars pulsate in the first overtone, while RRd stars pulsate simultaneously in the fundamental mode and first overtone, and are much more rare than RRc stars), and yet are challenging to separate observationally.
+
 An extreme case of inaccurate classification is to classify all objects as the most common class (in the training or test set), which is of particular concern given non-representative training data that contains class imbalance. Such a \textit{cruise control} classifier (left-center bottom panel of Figure~\ref{fig:mock_cm}) counters \plasticc's goal of identifying objects belonging to extremely rare classes.
+Such a \textit{cruise control} classifier (left-center bottom panel of Figure~\ref{fig:mock_cm}) counters \plasticc's goal of identifying objects belonging to extremely rare classes.
 We would like the \plasticc\ metric to reward a classifier that successfully prevents this kind of error.
 
 \subsection{Realistic classifications}
@@ -194,31 +218,45 @@ We would like the \plasticc\ metric to reward a classifier that successfully pre
 \begin{figure*}
 	\begin{center}
     \includegraphics[width=\textwidth]{./fig/all_snphotcc_cm.png}
+
 		\caption{Conditional probability matrices of the \citet{lochner_photometric_2016} methods applied to the second post-challenge release of the \snphotcc\ dataset.
 		Columns: the five machine learning methods of Boosted Random Forest (BRF), K-Nearest Neighbors (KNN), Naive Bayes (NB), Neural Network (NN), and Support Vector Machine (SVM).
     Top row: five machine learning methods applied to template decompositions as features.
     Bottom row: the same five machine learning methods applied to wavelet decompositions as features.
 		These CPMs derived from the dataset of a precursor light-curve classification challenge by modern methods exhibit some of the systematics identified in Section~\ref{sec:mockdata} and Figure~\ref{fig:mock_cm}, particularly cruise control (WKNN, WNB), noisy (class Ibc in all but TBRF and WKNN), and perfect (class II in all). It is worth noting that the \citet{lochner_photometric_2016} applied their classification to a representative sub-sample of the \snphotcc\ data selected once the challenge was complete, and so some of the issues of non-representativity present in the original submissions to the \snphotcc\ were not replicated.\label{fig:snphotcc_cm}}
+		\label{fig:snphotcc_cm} }
 	\end{center}
 \end{figure*}
 
 %\aim{This would be more meaningful if we were given the conditional probability matrices of actual submissions to \snphotcc\ and then checked whether the \plasticc\ metric would have designated a different winner.
 %Also, it may be more interpretable if we instead use Ashish's conditional probability matrices that have more classes.}
 
+
 In order to understand the performance of classifiers on simulated datasets approximating reality, we calculate the values of our metric candidates on representative classifiers of a precursor light-curve classification challenge.
 The Supernova Photometric Classification Challenge (\snphotcc) \citep{kessler_supernova_2010} focused on deterministically classifying a heterogenous population of supernovae into subclasses of SN Ia, SN II, and SN Ibc. 
 
 The \snphotcc\ attracted diverse classification approaches, encompassing $\chi^{2}$ fits of the supernova light curves to publicly available templates \citep{nugent_kcorrections_2002}, physical models \citep{conley_sifto:_2008}, and empirical models, as well as alternatives to curve-fitting such as outlier identification on the training set Hubble diagram\footnote{we give an introduction to both the \plasticc\ data and also the background introduction to the Hubble diagram of distance vs. redshift and its usefulness to cosmology in the \plasticc\ release note: \href{arXiv:XXXX.XXXXX}{arXiv:XXXX.XXXXX}}, dimensionality reduction, and clustering.
+
+%In order to understand the performance of classifiers on simulated datasets approximating reality, we calculate the values of our metric candidates on representative classifiers of a precursor light curve classification challenge.
+%The Supernova Photometric Classification Challenge (\snphotcc) \citep{kessler_supernova_2010} focused on deterministically classifying a heterogenous population of supernovae into subclasses of SN Ia, SN II, and SN Ibc
+%The \snphotcc\ attracted diverse classification approaches, encompassing $\chi^{2}$ fits of the supernova light curves to publicly available templates \citep{nugent_kcorrections_2002}, physical models \citep{conley_sifto:_2008}, and empirical models, as well as alternatives to curve-fitting such as outlier identification on the training set Hubble diagram, dimensionality reduction, and clustering.
 % TODO cite InCA?
 % A general light curve shape (rather than one motivated by the physical differences between SNeIa and core collapse SNe) was assumed by some competitors and then a kernel density estimation was performed over the fit parameters, with various approaches employed including boosting over the feature space.
 Machine learning was also employed, using features such as the light-curve slopes to produce a predictive model for the training data.
 % TODO need citations of ML submissions to SNPhotCC
 %, which are prone to bias given non-representativity of the test data and agnostic
-\snphotcc\ attracted physically motivated template-based methods as well as those based on decomposition of the light curves into generic features at risk of neglecting available physical information.
+%\snphotcc\ attracted physically motivated template-based methods as well as those based on decomposition of the light curves into generic features at risk of neglecting available physical information.
 
 Since the conclusion of the \snphotcc, the light curves became a testbed for a suite of machine learning classifiers.
+
 We consider a collection of probabilistic classification methods, as presented in \citet{lochner_photometric_2016}, whose CPMs\footnote{The classifiers of \citet{lochner_photometric_2016} are indeed probabilistic but are reduced to confusion matrices via deterministic labels (by assigning the class label according to the highest probability) for this visualization and the science-motivated metric of Section~\ref{sec:science}.  In all other instances, the classification posteriors are used directly.} are shown in Figure~\ref{fig:snphotcc_cm}.
 The set of classification algorithms includes template-based classification procedures, denoted as T, (\citet{sako_photometric_2011}, top row) and a wavelet decomposition, denoted as W, of the light curves to construct the features over which to classify (\citet{newling_statistical_2011}, bottom row), each paired with Boosted Random Forest (BRF), K-Nearest Neighbors (KNN), Naive Bayes (NB), Neural Network (NN), and Support Vector Machine (SVM) machine learning algorithms (columns). While the complexity of entries to the \snphotcc\ was greater than this subset, we use these examples to establish the behavior of our metrics on realistic classification submissions.
+
+%We consider a collection of probabilistic classification methods, as presented in \citet{lochner_photometric_2016}, whose CPMs\footnote{The classifiers of \citet{lochner_photometric_2016} are indeed probabilistic but are reduced to confusion matrices via deterministic labels for this visualization and the science-motivated metric of Section~\ref{sec:science}.
+%In all other instances, the classification posteriors are used directly.} are shown in Figure~\ref{fig:snphotcc_cm}.
+The set of classification algorithms includes template-based classification procedures, denoted as T, (\citet{sako_photometric_2011}, top row) and a wavelet decomposition, denoted as W, of the light curves to construct the features over which to classify (\citet{newling_statistical_2011}, bottom row), each paired with Boosted Decision Tree (BDT), K-Nearest Neighbors (KNN), Naive Bayes (NB), Neural Network (NN), and Support Vector Machine (SVM) machine learning algorithms (columns).
+While the complexity of entries to the \snphotcc\ was greater than this subset, we use these examples to establish the behavior of our metrics on realistic classification submissions.
+
 
 We draw attention to the marked presence of the systematics introduced in Section~\ref{sec:mockdata} in the CPMs of Figure~\ref{fig:snphotcc_cm}.
 Note that the WNN and WNB methods both suffer from the cruise control systematic on SN II, which were the most prevalent in the \snphotcc\ dataset. Nearly all the other CPMs exhibit classifications that are almost perfect for SN Ia, perfect for SN II, and noisy for SN Ibc.

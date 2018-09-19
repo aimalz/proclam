@@ -20,11 +20,12 @@ In the following sections, we explore the response of the log-loss and Brier sco
 \end{figure*}
 
 We demonstrate the behavior of the metrics with classification posteriors derived from conditional probability matrices composed of pairs of the characteristic classifiers of Section~\ref{sec:mockdata} is shown in Figure~\ref{fig:all_combined}.
+
 The systematics introduced to each baseline are those that we intuitively expect to worsen performance of any particular classifier:
 \begin{itemize}
-\item the uncertain, \textit{almost perfect}, noisy, and subsuming classifiers are anticipated to worsen an otherwise \textit{perfect} classifier;
-\item the uncertain, noisy, and subsuming classifiers are anticipated to worsen an otherwise \textit{almost perfect} classifier;
-\item the uncertain and subsuming classifiers are anticipated to worsen an otherwise \textit{noisy} classifier.
+\item the uncertain, almost perfect, noisy, and subsuming classifiers are anticipated to worsen an otherwise perfect classifier;
+\item the uncertain, noisy, and subsuming classifiers are anticipated to worsen an otherwise almost perfect classifier;
+\item the uncertain and subsuming classifiers are anticipated to worsen an otherwise noisy classifier.
 \end{itemize}
 In every case, we apply the systematic to one true class, i.e. transforming one row of the baseline conditional probability matrix.
 The metrics are evaluated at a number of weights $w$ on the affected class, with the weights on the remaining baseline classes equal to one another at $(1 - w) / (M - 1)$.
@@ -35,9 +36,9 @@ Figure~\ref{fig:all_combined} confirms that for all weights on the perfect class
 It is immediately evident that the log-loss has more dynamic range than the Brier score overall, and that the log-loss is acutely sensitive to the subsuming systematic on a baseline of a perfect classifier.
 In fact, the log-loss value for a classifier that subsumes a class into one that is classified perfectly should actually be infinite if the classes unaffected by the systematic have no weight.
 The finite maximum in our tests is set by the artificial zero point established for numerical stability.
-Because the combination of a subsuming classifier with a perfect baseline is so different from all other combinations, we separate the subsuming systematic on all other baselines (lower left panel) from all other systematics (lower right panel) in Figure~\ref{fig:all_combined}.
-The lower panels of Figure~\ref{fig:all_combined} show that the dynamic range of the log-loss remains higher even outside the regime where it tends toward infinity.
-The extent of the values of both metrics is higher in the lower right panel with the subsuming systematic on various baselines than in the lower left panel with all other systematics.
+Because the combination of a subsuming classifier with a perfect baseline (left panel) is so different from all other combinations, we separate the subsuming systematic on all other baselines (middle panel) from all other systematics (right panel) in Figure~\ref{fig:all_combined}.
+The dynamic range of the log-loss remains higher even outside the regime where it tends toward infinity.
+The extent of the values of both metrics is higher in the middle panel with the subsuming systematic on various baselines than in the right panel with all other systematics.
 This shows that both metrics are still more sensitive to the subsuming systematic than any other systematic, confirming that both can appropriately penalize the cruise control effect.
 
 \begin{table}[]
@@ -124,75 +125,42 @@ In a sense, it means that the log-loss is more susceptible to the tunnel vision 
 \subsection{Representative classifications}
 \label{sec:realresults}
 
-We also present in Table~\ref{tab:snmachinevals} the values of all metrics we considered, under equal weight per object, for classification probabilities derived from running the algorithms of \citet{lochner_photometric_2016} on the \snphotcc\ data of Section~\ref{sec:realdata}.
-Table~\ref{tab:snmachinerank} shows the ranking of classifier performance under each metric.
-
-% \aim{TODO: combine these tables!}
-\begin{table}[]
-\begin{tabular}{llll}
-%                            & AUC    & Brier   & FoM   & Logloss            \\
-% TBRF  						 & 0.982 & 0.0486  & 0.635  & 0.0907  \\
-% TKNN             & 0.942 & 0.0787  & 0.384 & 0.146  \\
-% TNB              & 0.879 & 0.105  & 0.340  & 0.251 \\
-% TNN							 & 0.954 & 0.0650  & 0.496   & 0.125 \\
-% TSVM             & 0.969 & 0.0583 & 0.514  & 0.113 \\
-% WBRF   						 & 0.978 & 0.0689  & 0.591  & 0.1321 \\
-% WKNN              & 0.894 & 0.132  & 0.114 & 0.228 \\
-% WNB               & 0.850 & 0.178  & 0.0365 & 0.443  \\
-% WNN 							 & 0.946 & 0.0750  & 0.480  & 0.152 \\
-% WSVM              & 0.968  & 0.0730  & 0.499  & 0.1316
-& Brier   & FoM   & Logloss            \\
+\begin{table*}[]
+	\begin{centering}
+\begin{tabular}{lllllll}%ll}
+Rank $R$ & $R_\mathrm{FoM}$ & FoM & %$R_\mathrm{AUC}$ & AUC &
+$R_\mathrm{LogLoss}$ & Log-loss & $R_\mathrm{Brier}$ & Brier \\
 \hline
-TBRF  		& 0.0486  & 0.635   & 0.0907  \\
-TKNN      & 0.0787  & 0.384   & 0.146  \\
-TNB       & 0.105   & 0.340   & 0.251 \\
-TNN				& 0.0650  & 0.496   & 0.125 \\
-TSVM      & 0.0583  & 0.514   & 0.113 \\
-WBRF   		& 0.0689  & 0.591   & 0.1321 \\
-WKNN      & 0.132   & 0.114   & 0.228 \\
-WNB       & 0.178   & 0.0365  & 0.443  \\
-WNN 			& 0.0750  & 0.480   & 0.152 \\
-WSVM      & 0.0730  & 0.499   & 0.1316 \\
+1  & TBDT & 0.635  %& TBDT & 0.982
+& TBDT & 0.0907 & TBDT & 0.0486 \\
+2  & WBDT & 0.591  %& WBDT & 0.978
+& TSVM & 0.113  & TSVM & 0.0583 \\
+3  & TSVM & 0.514  %& TSVM & 0.969
+& TNN  & 0.125  & TNN  & 0.0650 \\
+4  & WSVM & 0.499  %& WSVM & 0.968
+& WSVM & 0.1316 & WBDT & 0.0689 \\
+5  & TNN  & 0.496  %& TNN  & 0.954
+& WBDT & 0.1321 & WSVM & 0.0730 \\
+6  & WNN  & 0.480  %& WNN  & 0.946
+& TKNN & 0.146  & WNN  & 0.0750 \\
+7  & TKNN & 0.384  %& TKNN & 0.942
+& WNN  & 0.152  & TKNN & 0.0787 \\
+8  & TNB  & 0.340  %& WKNN & 0.894
+& WKNN & 0.228  & TNB  & 0.105  \\
+9  & WKNN & 0.114  %& TNB  & 0.879
+& TNB  & 0.251  & WKNN & 0.132  \\
+10 & WNB  & 0.0365 %& WNB  & 0.850
+& WNB  & 0.443  & WNB  & 0.178  \\
 \end{tabular}
-\caption{The values of three metrics for each of ten \snmachine\ classifiers with equal weight per object.}
-	\label{tab:snmachinevals}
-\end{table}
+	\caption{The values of three metrics for each of ten \snmachine\ classifiers with equal weight per object.
+	The metrics broadly agree on the ranking of the classifiers, confirming consistency between a conventional metric of classification performance and the metrics of probabilistic classifications presented here.
+	However, there are some differences with pairwise swapping between the log-loss and Brier rankings and some significant reordering of ranks 2 through 5 with the FoM metric relative to the probabilistic metrics.}
+	\label{tab:snmachineresults}
+	\end{centering}
+\end{table*}
 
-\begin{table}[]
-\begin{tabular}{llll}
-Rank & Brier           & FoM             & Logloss       \\
-% would like FoM/AUC/LogLoss/Brier in order of introduction
-\hline
-1 & TBRF	& TBRF 	& TBRF \\
-2 & TSVM 	& WBRF	& TSVM \\
-3 & TNN 	& TSVM	& TNN \\
-4 & WBRF 	& WSVM	& WSVM \\
-5 & WSVM 	& TNN		& WBRF \\
-6 & WNN 	& WNN		& TKNN \\
-7 & TKNN 	& TKNN	& WNN \\
-8 & TNB 	& TNB		& WKNN \\
-9 & WKNN 	& WKNN	& TNB \\
-10 & WNB 	& WNB		& WNB \\
-%   & AUC             & Brier           & FoM             & Logloss       \\
-% 1 & TBRF 	& TBRF	 	& TBRF 	& TBRF \\
-% 2 & WBRF	 	& TSVM 	& WBRF		& TSVM \\
-% 3 & TSVM 	& TNN 	& TSVM	& TNN \\
-% 4 & WSVM 	& WBRF 		& WSVM		& WSVM \\
-% 5 & TNN 	& WSVM 	& TNN		& WBRF \\
-% 6 & WNN 		& WNN 		& WNN		& TKNN \\
-% 7 & TKNN 	& TKNN 	& TKNN	& WNN \\
-% 8 & WKNN 	& TNB 	& TNB		& WKNN \\
-% 9 & TNB 	& WKNN 	& WKNN		& TNB \\
-% 10 & WNB 	& WNB 		& WNB		& WNB \\
-\end{tabular}
-\caption{The ranking of the classifiers of Table~\ref{tab:snmachinevals} under each metric.}
-\label{tab:snmachinerank}
-\end{table}
-% TODO tell Michelle there's definitely a bug in her logloss!
+We present in Table~\ref{tab:snmachineresults} the values of all metrics we considered, under equal weight per object, for classification probabilities derived from running the algorithms of \citet{lochner_photometric_2016} on the \snphotcc\ data of Section~\ref{sec:realdata}.
+Table~\ref{tab:snmachineresults} also contains the ranking of classifier performance under each metric.
 
-The FOM of Section~\ref{sec:science} differs more from the Brier and log-loss metrics than they do from one another, but all three metrics are in agreement over the winners and losers, indicating that both of the potential \plasticc\ metrics are roughly consistent with our intuition about what makes a good classifier.
-
-%\textbf{Current plan is that we compute the SNPhotCC metric for Michelle's contributions and also turn the binary classifications into probabilities - Renee will flesh this out}
-%\aim{We are still iterating on the most informative tests to conduct on the \snphotcc\ data.
-%I would like to have the confusion matrices from a real classification challenge (\snphotcc\ or Ashish Mahabal's) and test different weightings of our metrics on mock classification probabilities derived from those confusion matrices to check whether we choose the same ``winner,'' but the arrangements have not yet been finalized.
-%The ``pipeline,'' however, is complete and ready to run as soon as the test conditions are agreed upon.}
+The FOM of Section~\ref{sec:science} differs more from the Brier and log-loss metrics than they do from one another, yet all three metrics are in agreement over the winners and losers, indicating that both of the potential \plasticc\ metrics are roughly consistent with our intuition about what makes a good classifier.
+However, this agreement is not universal; the classifiers do not agree with one another on the entire ranking and could thus potentially disagree about the winner.
