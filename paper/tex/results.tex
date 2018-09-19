@@ -1,4 +1,4 @@
-\section{Results}
+l\section{Results}
 \label{sec:results}
 
 In the following sections, we explore the response of the log-loss and Brier score metrics to the classifiers of Section~\ref{sec:data} and as a function of the weights on affected classes.
@@ -11,34 +11,41 @@ In the following sections, we explore the response of the log-loss and Brier sco
 		\includegraphics[width=0.99\textwidth]{./fig/multipanel_res.png}
 		\caption{Weighted log-loss and Brier scores for baseline classifiers with combinations of systematics.
 		Each point represents a classifier with baseline behavior (regular polygon marker) for all but one class with a particular systematic (asterisk markers).
-		The color of the systematic effect and baseline behavior markers indicates the weight on the class affected by the systematic and the integrated weight evenly distributed over other classes with baseline behavior, respectively.
+		The color of the baseline behavior marker indicates the weight on the class affected by the systematic, while the color of the systematic marker shows the integrated weight evenly distributed over other classes with baseline behavior: when the systematic is weighted highly the rest of the baselines classes will be lighter (greener) color. The colors of the marker and the systematic marker are thus inversely proportional. They are shown separately as different systematics could affect the same baseline scheme.
 		Both metrics are shown in three regimes of sensitivity: to the subsumed systematic on a perfect baseline is highest, all other baselines with the subsumed systematic, and all other systematics.
-		The ranges of Brier score and log-loss values between the panels are in ratios of approximately $10:7:3$ and $100:10:5$, respectively, indicating the log-loss's higher sensitivity to the presence of systematics.
+		The ranges of Brier score and log-loss values between the panels are in ratios of approximately 10:7:3 and 100:10:5, respectively, indicating the log-loss's higher sensitivity to the presence of systematics.
 		}
 	\end{center}
 	\label{fig:all_combined}
 \end{figure*}
+We simulate entries to the \plasticc\ classification challenge by generating random draws of the combined CPM (composed of classififiers with different systematics) described in Section~\ref{sec:mockdata} is shown in Figure~\ref{fig:all_combined}.
 
-We demonstrate the behavior of the metrics with classification posteriors derived from conditional probability matrices composed of pairs of the characteristic classifiers of Section~\ref{sec:mockdata} is shown in Figure~\ref{fig:all_combined}.
+%We demonstrate the behavior of the metrics with classification posteriors derived from conditional probability matrices composed of pairs of the characteristic classifiers of Section~\ref{sec:mockdata} is shown in Figure~\ref{fig:all_combined}.
 The systematics introduced to each baseline are those that we intuitively expect to worsen classification performance of an arbitrary classifier:
 \begin{itemize}
 \item the uncertain, almost perfect, noisy, and subsuming classifiers are anticipated to worsen an otherwise perfect classifier;
 \item the uncertain, noisy, and subsuming classifiers are anticipated to worsen an otherwise almost perfect classifier;
 \item the uncertain and subsuming classifiers are anticipated to worsen an otherwise noisy classifier.
 \end{itemize}
-In every case, we apply the systematic to one true class, i.e. transforming one row of the baseline conditional probability matrix.
-The metrics are evaluated at a number of weights $w$ on the affected class, with the weights on the remaining baseline classes equal to one another at $(1 - w) / (M - 1)$.
-The weight values range from $0$ (all weight on the baseline) to $1$ (all weight on the systematic) at intervals of $0.1$.
-This variation in weights establishes linear relationships between the log-loss and Brier score metrics for each pair of baseline and systematic.
+In Figure~\ref{fig:all_combined}, we show the overall performance of a given classification algorithm, but highlight how the classification performance of one class changes the combined metric. In every case, we apply the systematic to one true class at a time, i.e. transforming one row of the baseline conditional probability matrix. 
+In order to illustrate the effect each particular systematic has on a given class, and more importantly, how up- (or down-) weighting that class changes the overall performance of the classification algorithm, we evaluate the metric at a number of weights $w$ on the affected class, with the weights on the remaining (baseline/unaffected) classes equal to one another at $(1 - w) / (M - 1)$.
+%The metrics are evaluated 
+The weight values range from $0$ (all weight on the baseline classes) to $1$ (all weight on the class affected by the systematic) at intervals of $0.1$, as shown in Figure~\ref{fig:all_combined}. The more a class affected by the systematic is weighted (shown by baseline markers that are more green, with systematic indicators that are more blue in color), the more the log-loss and Brier scores increase -- the classifications fare poorly in these metrics. The left-most plot shows the largest variations in metric scores, for the combination of perfect baselines (all but one class are perfect) and a `subsumed as' systematic where another class is consistently misclassified into the systematic class. 
 
-Figure~\ref{fig:all_combined} confirms that for all weight on the perfect classifier, the values of both metrics vanish to zero.
-It is immediately evident that the log-loss has more dynamic range than the Brier score overall, and that the log-loss is acutely sensitive to the subsuming systematic on a baseline of a perfect classifier.
-In fact, the log-loss value for a classifier that subsumes a class into one that is classified perfectly should actually be infinite if the classes unaffected by the systematic have no weight.
-The finite maximum in our tests is set by the artificial zero point established for numerical stability.
-Because the combination of a subsuming classifier with a perfect baseline (left panel) is so different from all other combinations, we separate the subsuming systematic on all other baselines (middle panel) from all other systematics (right panel) in Figure~\ref{fig:all_combined}.
-The dynamic range of the log-loss remains higher even outside the regime where it tends toward infinity.
-The extent of the values of both metrics is higher in the middle panel with the subsuming systematic on various baselines than in the right panel with all other systematics.
-This shows that both metrics are still more sensitive to the subsuming systematic than any other systematic, confirming that both can appropriately penalize the cruise control effect.
+This variation in weights establishes linear relationships between the log-loss and Brier score metrics for each pair of baseline and systematic. In addition, Figure~\ref{fig:all_combined} confirms that for all weight on the perfect classifier, the values of both metrics vanish to zero. It is worth noting that the log-loss has more dynamic range than the Brier score overall, and that the log-loss is acutely sensitive to the subsuming systematic on a baseline of a perfect classifier. In fact, the log-loss value for a classifier that subsumes a class into one that is classified perfectly should actually be infinite if the classes unaffected by the systematic have no weight.
+
+The middle plot illustrates a narrower range of log-loss and Brier scores for two baseline scenarios: almost perfect and noisy.
+In both cases, the systematic effect shown is again `subsumed as', and the relationship between the weight of the systematic and the weight of the baseline is again roughly linear with a large slope. 
+The slope of the line is smaller in the third panel, where a range of baselines and of systematics are shown. This highlights that both the log-loss and Brier scores are most sensitive to the subsuming systematic than any other systematic, and that strongly up-weighting one particular class has a detrimental affect on the global performance of a classifier.
+\textbf{[RH added the above to make sure that folks take away two messages: weighting objects with a particular systematic can dramatically change your result for both metrics; and the log-loss is a bit more sensitive to systematics than the Brier - penalising them.}
+
+%  confirming that both can appropriately penalize the cruise control effect.
+
+%%The finite maximum in our tests is set by the artificial zero point established for numerical stability.
+%Because the combination of a subsuming classifier with a perfect baseline (left panel) is so different from all other combinations, we separate the subsuming systematic on all other baselines (middle panel) from all other systematics (right panel) in Figure~\ref{fig:all_combined}.
+
+%The extent of the values of both metrics is higher in the middle panel with the subsuming systematic on various baselines than in the right panel with all other systematics.
+
 
 \begin{table}[]
 \begin{tabular}{lll}
@@ -52,14 +59,16 @@ Subsumed from Noisy & 0.447 & 1.109\\
 Subsumed from Almost & 0.641 & 1.629\\
 Subsumed from Perfect & 1.0 & 18.421\footnote{The entry for the log-loss of a classifier that subsumes a class into one that is otherwise perfectly classified should be infinite but is bounded by the numerical precision of our calculations.}
 \end{tabular}
-\caption{The value of each metric when the weight is entirely on the class(es) with the indicated characteristic.}
+\caption{Weighting changes the metric performance: the value of each metric when the weight is entirely on the class(es) with the indicated characteristic (correponsding to a $w=1$ case in Figure~\ref{fig:all_combined}). The log-loss is more sensitive than te Brier score, with larger values of the score (indicating poor classification performance), particularly for the subsumed from systematics.}
 \label{tab:extents}
 \end{table}
 
-When all weight is on the class affected by a systematic, there is a characteristic limit for each metric's values, shown in Table~\ref{tab:extents}.
-Because a subsumed class takes the conditional probability vector of the subsuming class, the metric values depend on what systematics may be affecting the subsuming class as well.
-Based on Table~\ref{tab:extents}, both metrics would agree on the ranking of these classifiers, though this agreement is not in general guaranteed.
-Furthermore, this invariant ranking is consistent with our intuition about the severity of anticipated faults of classifiers.
+When all weight is on the class affected by a systematic, there is a characteristic limit for each metric's values, shown in Table~\ref{tab:extents}. Because a subsumed class takes the conditional probability vector of the subsuming class, the metric values depend on what systematics may be affecting the subsuming class as well. While the precise values of the scores are not equal (the slopes between the two metrics are given in Table~\ref{tab:slopes}), the two metrics rank the classification scenarios in the same order. In general, one would hope for metrics that exhibit this behaviour, but this is not guaranteed.
+
+
+%Based on Table~\ref{tab:extents}, both metrics would agree on the ranking of these classifiers, though this agreement is not in general guaranteed.
+
+%Furthermore, this invariant ranking is consistent with our intuition about the severity of anticipated faults of classifiers.
 
 \begin{table}[]
 \begin{tabular}{l|llll}
@@ -70,15 +79,17 @@ Perfect & 18.421 & 2.763 & 3.601 & 5.387\\
 Almost perfect & 2.343 & 2.246 & 2.556 & \\
 Noisy & 2.102 & 2.085 & &
 \end{tabular}
-\caption{The slopes for each baseline-plus-systematic pair in the space of log-loss  versus Brier score.
+\caption{The slopes for each baseline-plus-systematic pair in the space of log-loss versus Brier score.
 A higher slope corresponds to increased sensitivity of the log-loss.}
 \label{tab:slopes}
 \end{table}
 
 The relative sensitivity ratios of the log-loss to the Brier score are the slopes in the trends of Figure~\ref{fig:all_combined} and are given in Table~\ref{tab:slopes}.
-The log-loss always has higher sensitivity than the Brier score, particularly to the difference between the perfect classifier and any lesser classifier.
+The log-loss always has higher sensitivity than the Brier score (i.e. it responds more strongly to up-weighting classes whose clasification displays a systematic), particularly to the difference between the perfect classifier and any lesser classifier.
 A possible implication of this behavior is that the log-loss may have an enhanced ability to distinguish between multiple high-performing classifiers that might not have meaningfully different metric values under the Brier score.
-In a sense, it means that the log-loss is more susceptible to the tunnel vision classifier, with a significant response to any move toward perfection.
+
+On the other hand, the log-loss is more susceptible to the tunnel vision classifier \textbf{[RH: why? this isn't clear - link this to weights discussion earlier]}, with a significant response to any move toward perfection.
+Now that we have investigated how the metrics respond to idealized classifications with known/expected systematics, we can investigate the performance of both the Brier metric and the log-loss metric on a more representative classification method as applied in an astronomical context.
 % Heavily unequal weighting can incentivize tunnel vision classification.
 % However, the slope is higher for the almost perfect systematic than the noisy systematic, and higher for the noisy systematic than the uncertain systematic; this means that a tunnel vision classifier is deprived of the metric's favor more if it neglects other classes than if it already does fairly well for them, a case in which we would not call it much of a systematic.
 
@@ -123,6 +134,10 @@ In a sense, it means that the log-loss is more susceptible to the tunnel vision 
 
 \subsection{Representative classifications}
 \label{sec:realresults}
+We apply the log-loss and Brier metrics to the classification output from \textsc{snmachine}. While the classification methods described in \citet{lochner_photometric_2016} refer to the idealized subset of the \snphotcc\ data, these approaches are the state-of-the-art in classification of extragalactic transients. We present in Table~\ref{tab:snmachineresults} the log-loss and Brier scores assuming an equal weight per object. 
+%, for classification probabilities derived from running the algorithms of \citet{lochner_photometric_2016} on the \snphotcc\ data of Section~\ref{sec:realdata}.
+Table~\ref{tab:snmachineresults} also contains the ranking of classifier performance under each metric.
+
 
 \begin{table*}[]
 	\begin{centering}
@@ -151,15 +166,13 @@ $R_\mathrm{LogLoss}$ & Log-loss & $R_\mathrm{Brier}$ & Brier \\
 10 & WNB  & 0.0365 %& WNB  & 0.850
 & WNB  & 0.443  & WNB  & 0.178  \\
 \end{tabular}
-	\caption{The values of three metrics for each of ten \snmachine\ classifiers with equal weight per object.
+	\caption{Metric performance: the values of three metrics for each of ten \snmachine\ classifiers with equal weight per object.
 	The metrics broadly agree on the ranking of the classifiers, confirming consistency between a conventional metric of classification performance and the metrics of probabilistic classifications presented here.
 	However, there are some differences with pairwise swapping between the log-loss and Brier rankings and some significant reordering of ranks 2 through 5 with the FoM metric relative to the probabilistic metrics.}
 	\label{tab:snmachineresults}
 	\end{centering}
 \end{table*}
 
-We present in Table~\ref{tab:snmachineresults} the values of all metrics we considered, under equal weight per object, for classification probabilities derived from running the algorithms of \citet{lochner_photometric_2016} on the \snphotcc\ data of Section~\ref{sec:realdata}.
-Table~\ref{tab:snmachineresults} also contains the ranking of classifier performance under each metric.
+For the first- and last-ranked methods, the Brier and log-loss scores are in agreement. 
+The FoM for the \snphotcc\, as described in Section~\ref{sec:science} differs more from the Brier and log-loss metrics than they do from one another. This is perhaps not that surprising, given that the \snphotcc\ was specifically looking to value classification algorithms that were pure (that yielded a large number of SNIa classifications and few interlopers from the other classes), as opposed to metric that rewards good performance across classes. All three metrics are in agreement over the winners and losers, indicating that both of the potential \plasticc\ metrics are roughly consistent with our intuition about what makes a good classifier. One should be careful not to generalize howwver, thee classifiers do not agree with one another on the entire ranking and could thus potentially disagree about the winner.
 
-The FOM of Section~\ref{sec:science} differs more from the Brier and log-loss metrics than they do from one another, yet all three metrics are in agreement over the winners and losers, indicating that both of the potential \plasticc\ metrics are roughly consistent with our intuition about what makes a good classifier.
-However, this agreement is not universal; the classifiers do not agree with one another on the entire ranking and could thus potentially disagree about the winner.
