@@ -11,35 +11,42 @@
 #   - Try to make your one-sentence contribution statement as
 #     informative as possible, so that it's clear who did what.
 #   - The contribution statement is a _summary of your impact on the
-#     project_, not a _timecard_. So, if you spent 90% of your time
-#     debugging, but 10% of your time designing and implementing the
+#     project_, not a _timecard_. So,if you spent 90% of your time
+#     debugging,but 10% of your time designing and implementing the
 #     framework that then needed debugging, your statement should
 #     emphasize the design and implementation rather than the debugging.
 #   - BUG: mkauthlist cannot deal with empty rows, so please avoid them!
-#   - BUG: contributions are re-formatted by mkauthlist into Title case,
+#   - BUG: contributions are re-formatted by mkauthlist into Title case
 #     removing all other capitalizations. Sorry about this!
 #
 # Example rows for you to adapt:
 #
 # Drlica-Wagner,Alex,A.~Drlica-Wagner,Contact,"Fermi National Accelerator Laboratory, P. O. Box 500, Batavia, IL 60510, USA","Developed algorithms for switching between document styles and generating author lists, implemented and tested software.",kadrlica@fnal.gov
-# Marshall,Phil,P.~Marshall,Contributor,"SLAC National Accelerator Laboratory, Menlo Park, CA 94025, USA","Initiated and led project.",dr.phil.marshall@gmail.com
+# Marshall,Phil,P.~Marshall,Contributor,"SLAC National Accelerator Laboratory, Menlo Park, CA 94025, USA",Initiated and led project.,dr.phil.marshall@gmail.com
 # Marshall,Phil,P.~Marshall,Contributor,"Kavli Institute for Particle Astrophysics \& Cosmology, P. O. Box 2450, Stanford University, Stanford, CA 94305, USA","Initiated and led project, designed templates, tested system.",dr.phil.marshall@gmail.com
-# Digel,Seth,S.~Digel,Builder,"SLAC National Accelerator Laboratory, Menlo Park, CA 94025, USA","Advised on LSST DESC publication system requirements.",digel@stanford.edu
-# Digel,Seth,S.~Digel,Builder,"Kavli Institute for Particle Astrophysics \& Cosmology, P. O. Box 2450, Stanford University, Stanford, CA 94305, USA","Advised on LSST DESC publication system requirements.",digel@stanford.edu
+# Digel,Seth,S.~Digel,Builder,"SLAC National Accelerator Laboratory, Menlo Park, CA 94025, USA",Advised on LSST DESC publication system requirements.,digel@stanford.edu
+# Digel,Seth,S.~Digel,Builder,"Kavli Institute for Particle Astrophysics \& Cosmology, P. O. Box 2450, Stanford University, Stanford, CA 94305, USA",Advised on LSST DESC publication system requirements.,digel@stanford.edu
 #
 # ======================================================================
 Lastname,Firstname,Authorname,AuthorType,Affiliation,Contribution,Email
-Malz,Alex,A.I.~Malz,Contact,"Center for Cosmology and Particle Physics, New York University, 726 Broadway, New York, NY 10004, USA","conceptualization, data curation, formal analysis, investigation, methodology, project administration, software, supervision, validation, visualization, writing - editing, writing - original draft","aimalz@nyu.edu"
-Malz,Alex,A.I.~Malz,Contact,"Department of Physics, New York University, 726 Broadway, New York, NY 10004, USA","conceptualization, data curation, formal analysis, investigation, methodology, project administration, software, supervision, validation, visualization, writing - editing, writing - original draft","aimalz@nyu.edu"
-Hlozek,Ren\'ee,R.~Hlo\v{z}ek,Contributor,"Department of Astronomy and Astrophysics \& Dunlap Institute for Astronomy and Astrophysics,  University of Toronto, 50 St. George St., Toronto, ON M5S 3H4, Canada","data curation, formal analysis, funding acquisition, investigation, project administration, software, supervision, validation, visualization, writing - editing, writing - original draft","hlozek@dunlap.utoronto.ca"
+Malz,Alex,A.I.~Malz,Contact,"Center for Cosmology and Particle Physics, New York University, 726 Broadway, New York, NY 10004, USA","conceptualization, data curation, formal analysis, investigation, methodology, project administration, software, supervision, validation, visualization, writing - editing, writing - original draft",aimalz@nyu.edu
+Malz,Alex,A.I.~Malz,Contact,"Department of Physics, New York University, 726 Broadway, New York, NY 10004, USA","conceptualization, data curation, formal analysis, investigation, methodology, project administration, software, supervision, validation, visualization, writing - editing, writing - original draft",aimalz@nyu.edu
+Hlo\v{z}ek,Ren\'ee,R.~Hlo\v{z}ek,Contributor,"Department of Astronomy and Astrophysics \& Dunlap Institute for Astronomy and Astrophysics,  University of Toronto, 50 St. George St., Toronto, ON M5S 3H4, Canada","data curation, formal analysis, funding acquisition, investigation, project administration, software, supervision, validation, visualization, writing - editing, writing - original draft",hlozek@dunlap.utoronto.ca
 Allam,Tarek,T.~Allam Jr,Contributor,"Mullard Space Science Laboratory, Department of Space and Climate Physics, University College London, Holmbury Hill Rd, Dorking RH5 6NT, UK","investigation, software, validation, writing - original draft",[email]
 Bahmanyar,Anita,A.~Bahmanyar,Contributor,"Department of Astronomy and Astrophysics \& Dunlap Institute for Astronomy and Astrophysics,  University of Toronto, 50 St. George St., Toronto, ON M5S 3H4, Canada","formal analysis, investigation, methodology, software, writing - editing, writing - original draft",[email]
 Biswas,Rahul,R.~Biswas,Contributor,"The Oskar Klein Centre for Cosmoparticle Physics, Department of Physics, Stockholm University, AlbaNova, Stockholm, SE-106 91, Sweden","conceptualization, methodology, software, writing - original draft",[email]
+Galbany,Llu\'is,L.~Galbany,Contributor,"University of Pittsburgh, 300 Allen Hall, 3941 O'Hara St, Pittsburgh, PA 15260","writing - editing",[email]
 Ishida,Emille,E.E.O.~Ishida,Contributor,"Universit\'e Clermont Auvergne, CNRS/IN2P3, LPC, F-63000 Clermont-Ferrand, France","conceptualization, project administration, supervision, writing - editing",[email]
+Jha,Saurabh,S.~Jha,Contributor,"Rutgers, the State University of New Jersey, 136 Frelinghuysen Road, Piscataway, NJ 08854 USA","writing - editing",[email]
 Jones,David,D.~Jones,Contributor,"University of Santa Cruz, 1156 High St, Santa Cruz, CA 95064, USA","software",[email]
+Kessler,Rick,R.~Kessler,Contributor,"KICP, 5640 S Ellis Ave, Chicago, IL 60637","writing - editing",[email]
 Lochner,Michelle,M.~Lochner,Contributor,"African Institute for Mathematical Sciences, 6 Melrose Road, Muizenberg, 7945","conceptualizaton, data curation, formal analysis, visualization, writing - editing",[email]
 Mahabal,Ashish,A.~Mahabal,Contributor,"California Institute of Technology, Pasadena, CA 91125, USA","data curation, software, writing - editing, writing - original draft",[email]
 Mart\'inez-Galarza,Rafael,J.R.~Mart\'inez-Galarza,Contributor,"Harvard Smithsonian Center for Astrophysics, 60 Garden Street,Mail Stop 66 Cambridge, MA 02138","data curation, software, visualization, writing - original draft",[email]
 McEwen,Jason,J.D.~McEwen,Contributor,"Mullard Space Science Laboratory, Department of Space and Climate Physics, University College London, Holmbury Hill Rd, Dorking RH5 6NT, UK","conceptualization, investigation, supervision",[email]
 Narayan,Gautham,G.~Narayan,Contributor,"Space Telescope Science Institute, 3700 San Martin Dr, Baltimore, MD 21218, USA","data curation, formal analysis",[email]
-Setzer,Christian,C.N.~Setzer,Contributor,"The Oskar Klein Centre for Cosmoparticle Physics, Department of Physics, Stockholm University, AlbaNova, Stockholm, SE-106 91, Sweden","conceptualization, software","christian.setzer@fysik.su.se"
+Peiris,Hiranya,H.~Peiris,Contributor,"The Oskar Klein Centre for Cosmoparticle Physics, Department of Physics, Stockholm University, AlbaNova, Stockholm, SE-106 91, Sweden","conceptualization, funding acquisition, supervision",[email]
+Setzer,Christian,C.N.~Setzer,Contributor,"The Oskar Klein Centre for Cosmoparticle Physics, Department of Physics, Stockholm University, AlbaNova, Stockholm, SE-106 91, Sweden","conceptualization, software",christian.setzer@fysik.su.se
+Dai,Mi,M.~Dai,Contributor,"Rutgers, the State University of New Jersey, 136 Frelinghuysen Road, Piscataway, NJ 08854 USA","PLAsTiCC team member",[email]
+# Waiting for confirmation
+# Peters,Christina~M.,C.M.~Peters,Contributor,"Dunlap Institute for Astronomy and Astrophysics,  University of Toronto, 50 St. George St., Toronto, ON M5S 3H4, Canada","PLAsTiCC team member",[email]
