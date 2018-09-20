@@ -1,22 +1,27 @@
 \section{Discussion}
 \label{sec:discussion}
-The goal of this work was to identify the metric most suited to \plasticc, which is a challenge focused on complete light curves similar to those anticipated from \lsst, with an emphasis on classification over all types, rather than focusing on any one class of scientific interest\footnote{At the conclusion of \plasticc, other metrics which reward accurate classification of particular classes or combinations of classes will be used to identify classification schemes that will be useful for more targeted science cases.}
 
-
-As such, the \textit{log-loss metric} is the most well suited to the current \plasticc\ release. Future releases of \plasticc\ will focus on different challenges in transient classification, with metrics appropriate to rewarding those who address those challenges.
+The goal of this work was to identify the metric most suited to \plasticc, which is a challenge focused on 
+complete light curves similar to those anticipated from \lsst, with an emphasis on classification over all types 
+(rewarding a ``best in show'' classifier), 
+rather than focusing on any one class of scientific interest\footnote{At the conclusion of \plasticc, other metrics 
+which reward accurate classification of particular classes or combinations of classes will be used to identify 
+classification schemes that will be useful for more targeted science cases.}
+As such, the \textit{log-loss metric} is the most well suited to the current \plasticc\ release. 
+Future releases of \plasticc\ will focus on different challenges in transient classification, 
+with metrics appropriate to rewarding those who address those challenges.
 
 %The metrics investigated here are specific to \plasticc, in which participants compete to classify complete lightcurves similar to those anticipated of \lsst\ data releases, independent of the propagation of classification efficacy to specific science applications.
 
 %There exist plans for future extensions of \plasticc, each aiming to address different problems and thus requiring a different metric appropriate to its goals.
 % Additionally, there are other perspectives on what constitutes a good classifier, and those perspectives must be boiled down to a metric in order to identify a classifier that is best for the task.
 We discuss approaches to identifying optimal metrics for these variations, which may be developed further in future work.
-%=======
 %\plasticc\ will use a single metric (log-loss), that we select based on its interpretability.
 %This choice of metric, however, is specific to the goal of \plasticc, to identify a ``best in show'' classifier of complete light curves similar to those anticipated of \lsst\ data releases, independent of the propagation of classification efficacy to specific science applications.
 %At the conclusion of \plasticc, the identities of the classes will become public, and we will consider science-motivated metrics on a per-class basis to identify ``best in class'' classifiers as well.
 %There exist additional plans for future extensions of \plasticc, each aiming to address different problems and thus requiring a different metric appropriate to its goals.
 %We proceed to very broadly discuss approaches to identifying optimal metrics for these variations, which may be developed further in future work.
-%>>>>>>> issue/65/2nddraftfeedback
+
 
 \subsection{Early classification}
 \label{sec:early}
