@@ -14,6 +14,12 @@ In the following sections, we explore the response of the log-loss and Brier sco
 		The color of the marker for the systematic effect indicates the weight on the one class affected by that systematic, while the color of the baseline behavior marker indicates the integrated weight evenly distributed over other classes with baseline behavior. The `subsumed as' systematic on a perfect baseline (triangle with `y-shaped' marker) is the classification example that is most sensitive to changes in the class weight, as can be seen by the changes in log-loss score in the left hand panel.
 %		Both metrics are shown in three regimes of sensitivity: to the subsumed systematic on a perfect baseline is highest, all other baselines with the subsumed systematic, and all other systematics.
 		The ranges of Brier score and log-loss values between the panels are in ratios of approximately 10:7:3 and 100:10:5, respectively, indicating the log-loss's higher sensitivity to the presence of systematics.
+
+%Each point represents a classifier with baseline behavior (regular polygon marker; triangle for perfect, diamond for almost perfect, square for noisy) for all but one class with a particular systematic (asterisk markers; plus for almost perfect, cross for noisy, dot for uncertain, and Y-shape for subsumed).
+%		The color of the systematic effect and baseline behavior markers indicate the weight on the class affected by that systematic and the integrated weight evenly distributed over other classes with baseline behavior, respectively.
+%		From left to right, we zoom in on a particular range of Brier/log-loss scores, to highlight the effect of systematics on the scores for well-behaved methods with low Brier/log-loss scores.
+%		The ranges of Brier score and log-loss values between the panels are in ratios of approximately $10:7:3$ and $100:10:5$, respectively, indicating the log-loss's higher sensitivity to the presence of systematics.
+%		Both metrics are shown in three regimes of sensitivity: to the subsumed systematic on a perfect baseline is highest (Y-shape asterisk on triangle polygon), all other baselines with the subsumed systematic, and all other systematics.
 		}
 	\end{center}
 	\label{fig:all_combined}
@@ -29,6 +35,7 @@ The systematics introduced to each baseline are those that we intuitively expect
 
 In every case, we apply the systematic to one true class, i.e. transforming one row of the baseline conditional probability matrix.
 The metrics are evaluated at a number of weights $w$ on the affected class, with the weights on the remaining baseline classes equal to one another at $(1 - w) / (M - 1)$.
+
 
 %The weight values range from $0$ (all weight on the baseline) to $1$ (all weight on the systematic) at intervals of $0.1$.
 %This variation in weights establishes linear relationships between the log-loss and Brier score metrics for each pair of baseline and systematic.
@@ -62,6 +69,17 @@ The slope of the line is smaller in the third panel, where a range of baselines 
 %The extent of the values of both metrics is higher in the middle panel with the subsuming systematic on various baselines than in the right panel with all other systematics.
 
 
+%The weight values range from $0$ (all weight on the baseline) to $1$ (all weight on the systematic) at intervals of $0.1$.
+%This variation in weights establishes linear relationships between the log-loss and Brier score metrics for each pair of baseline and systematic.
+
+%Figure~\ref{fig:all_combined} confirms that when all weight is on the perfect classifier, the values of both metrics vanish to zero.
+%It is immediately evident that the log-loss has more dynamic range than the Brier score overall, and that the log-loss is acutely sensitive to the subsuming systematic on a baseline of a perfect classifier.
+%In fact, the log-loss value for a classifier that subsumes a class into one that is classified perfectly should actually be infinite if the classes unaffected by the systematic have no weight.
+%The finite maximum in our tests is set by the artificial zero point established for numerical stability.
+%Because the combination of a subsuming classifier with a perfect baseline (left panel) is so different from all other combinations, we separate the subsuming systematic on all other baselines (middle panel) from all other systematics (right panel) in Figure~\ref{fig:all_combined}.
+%The dynamic range of the log-loss remains higher even outside the regime where it tends toward infinity.
+%The extent of the values of both metrics is higher in the middle panel with the subsuming systematic on various baselines than in the right panel with all other systematics.
+%This shows that both metrics are still more sensitive to the subsuming systematic than any other systematic, confirming that both can appropriately penalize the cruise control effect.
 
 \begin{table}[]
 \begin{tabular}{lll}
