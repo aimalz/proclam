@@ -66,24 +66,18 @@ Subsumed from Noisy & 0.447 & 1.109\\
 Subsumed from Almost & 0.641 & 1.629\\
 Subsumed from Perfect & 1.0 & 18.421\footnote{The entry for the log-loss of a classifier that subsumes a class into one that is otherwise perfectly classified should be infinite but is bounded by the numerical precision of our calculations.}
 \end{tabular}
-<<<<<<< HEAD
-\caption{Weighting changes the metric performance: the value of each metric when the weight is entirely on the class(es) with the indicated characteristic (correponsding to a $w=1$ case in Figure~\ref{fig:all_combined}). The log-loss is more sensitive than te Brier score, with larger values of the score (indicating poor classification performance), particularly for the subsumed from systematics.}
-=======
 \caption{
 The value of each metric when the weight is entirely on the class with the indicated characteristic.
 Weighting changes the metric performance: the value of each metric when the weight is entirely on the class with the indicated characteristic (correponsding to a $w=1$ case in Figure~\ref{fig:all_combined}).
 The log-loss is more sensitive than te Brier score, with larger values of the score (indicating poor classification performance), particularly for the subsuming systematic.
 }
->>>>>>> issue/65/2nddraftfeedback
 \label{tab:extents}
 \end{table}
 
-When all weight is on the class affected by a systematic, there is a characteristic limit for each metric's values, shown in Table~\ref{tab:extents}. Because a subsumed class takes the conditional probability vector of the subsuming class, the metric values depend on what systematics may be affecting the subsuming class as well. While the precise values of the scores are not equal (the slopes between the two metrics are given in Table~\ref{tab:slopes}), the two metrics rank the classification scenarios in the same order.
-In general, one would hope for metrics that exhibit this behaviour, but this is not guaranteed.
-
-%Based on Table~\ref{tab:extents}, both metrics would agree on the ranking of these classifiers, though this agreement is not in general guaranteed.
-
-%Furthermore, this invariant ranking is consistent with our intuition about the severity of anticipated faults of classifiers.
+When all weight is on the class affected by a systematic, there is a characteristic limit for each metric's values, shown in Table~\ref{tab:extents}.
+Because a subsumed class takes the conditional probability vector of the subsuming class, the metric values depend on what systematics may be affecting the subsuming class as well.
+While the two metrics obviously take different values, in accordance with their slopes given in Table~\ref{tab:slopes}, they do agree on the ranking of these classifiers.
+Though this agreement is not in general guaranteed, it is a desirable behavior, indicating that these metrics would lead to the same conclusion about the severity of each systematic.
 
 \begin{table}[]
 \begin{tabular}{l|llll}
@@ -103,13 +97,12 @@ The contrast between log-loss and Brier score is highest on a baseline of the pe
 \end{table}
 
 The relative sensitivity ratios of the log-loss to the Brier score are the slopes in the trends of Figure~\ref{fig:all_combined} and are given in Table~\ref{tab:slopes}.
-The log-loss always has higher sensitivity than the Brier score (i.e. it responds more strongly to up-weighting classes whose clasification displays a systematic), particularly to the difference between the perfect classifier and any lesser classifier.
+The log-loss always has higher sensitivity than the Brier score (i.e. it responds more strongly to up-weighting classes affected by a systematic), particularly to the difference between the perfect classifier and any lesser classifier.
 A possible implication of this behavior is that the log-loss may have an enhanced ability to distinguish between multiple high-performing classifiers that might not have meaningfully different metric values under the Brier score.
 
-On the other hand, the log-loss is more susceptible to the tunnel vision classifier \textbf{[RH: why? this isn't clear - link this to weights discussion earlier]}, with a significant response to any move toward perfection.
-Now that we have investigated how the metrics respond to idealized classifications with known/expected systematics, we can investigate the performance of both the Brier metric and the log-loss metric on a more representative classification method as applied in an astronomical context.
-% Heavily unequal weighting can incentivize tunnel vision classification.
-% However, the slope is higher for the almost perfect systematic than the noisy systematic, and higher for the noisy systematic than the uncertain systematic; this means that a tunnel vision classifier is deprived of the metric's favor more if it neglects other classes than if it already does fairly well for them, a case in which we would not call it much of a systematic.
+On the other hand, the log-loss can be seen as more susceptible to the tunnel vision classifier because its value improves sharply with any move toward perfection.
+If the subsumed class has little weight, the metric values are quite low, moreso for the log-loss than the Brier score.
+This means that under a population-proportional weighting scheme, it would not be penalized for subsuming an uncommon class if it performed well for a more common class, a situation that would not serve the needs of the astronomical community.
 
 % \aim{Still reworking past here.}
 % Consider a weighting of $\sim0.8$ for a class affected by tunnel vision, leaving $\sim0.2$ to be shared evenly among all other classes uniformly affected by the other systematics.
@@ -184,12 +177,22 @@ $R_\mathrm{LogLoss}$ & Log-loss & $R_\mathrm{Brier}$ & Brier \\
 10 & WNB  & 0.0365 %& WNB  & 0.850
 & WNB  & 0.443  & WNB  & 0.178  \\
 \end{tabular}
-	\caption{Metric performance: the values of three metrics for each of ten \snmachine\ classifiers with equal weight per object.
+	\caption{
+	The values of three metrics for each of ten \snmachine\ classifiers with equal weight per object.
 	The metrics broadly agree on the ranking of the classifiers, confirming consistency between a conventional metric of classification performance and the metrics of probabilistic classifications presented here.
-	However, there are some differences with pairwise swapping between the log-loss and Brier rankings and some significant reordering of ranks 2 through 5 with the FoM metric relative to the probabilistic metrics.}
+	However, there are some differences with pairwise swapping between the log-loss and Brier rankings and some significant reordering of ranks 2 through 5 with the FoM metric relative to the probabilistic metrics.
+	}
 	\label{tab:snmachineresults}
 	\end{centering}
 \end{table*}
 
-For the first- and last-ranked methods, the Brier and log-loss scores are in agreement.
-The FoM for the \snphotcc\, as described in Section~\ref{sec:science} differs more from the Brier and log-loss metrics than they do from one another. This is perhaps not that surprising, given that the \snphotcc\ was specifically looking to value classification algorithms that were pure (that yielded a large number of SNIa classifications and few interlopers from the other classes), as opposed to metric that rewards good performance across classes. All three metrics are in agreement over the winners and losers, indicating that both of the potential \plasticc\ metrics are roughly consistent with our intuition about what makes a good classifier. One should be careful not to generalize howwver, thee classifiers do not agree with one another on the entire ranking and could thus potentially disagree about the winner.
+We apply our metrics to the classification output from \textsc{snmachine} applied to the \snphotcc\ dataset as an example of representative light curves and representative classifiers used in extragalactic astronomy.
+We present in Table~\ref{tab:snmachineresults} the log-loss and Brier scores assuming an equal weight per object, as well as the original \snphotcc\ metric described in Section~\ref{sec:science}.
+Table~\ref{tab:snmachineresults} also contains the ranking of classifier performance under each metric.
+
+The Brier score, log-loss, and \snphotcc\ FoM are in agreement as to the first- and last-ranked classifiers.
+This consensus indicates that both of the potential \plasticc\ metrics are roughly consistent with our intuition about what makes a good classifier, providing an anchor between accepted notions of an appropriate metric and the metrics of probabilistic classifications under consideration here.
+One should be careful not to generalize, however, as the rankings under the three metrics are not identical.
+
+We note that the FoM differs more from the Brier score and log-loss metrics than they do from one another.
+This is perhaps unsurprising, given that the \snphotcc\ was specifically looking to value classification algorithms that were pure (that yielded a large number of SNIa classifications and few interlopers from the other classes), as opposed to metric that rewards good performance across classes.
