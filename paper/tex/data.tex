@@ -56,13 +56,20 @@ Under a deterministic classification scheme with a normalized confusion matrix w
 We note that the elements of the confusion matrix have values of $N p(\hat{m}, m')$ and that $p(m') = N_{m'} / N$, where $N_{m'}$ is the number of true members of class $m'$, must be known in order to produce a confusion matrix.
 
 
-Using the above, we can construct classification posteriors $p(\hat{m} \mid m')$ which we will use to make example `draws' of classificaation probability submissions. We refer to the matrix $\mathbb{C}$ comprised of $p(\hat{m} \mid m')$ as the \textit{conditional probability matrix} (CPM).
+Using the above, we can construct classification posteriors $p(\hat{m} \mid m')$ which we will use to make example `draws' of classificaation probability submissions. We refer to the matrix $\mathbb{C}$ composed of $p(\hat{m} \mid m')$ as the \textit{conditional probability matrix} (CPM).
 
 % Removed the paragraph below since we really want to keep this simple and non-confusing - and isn't used again.
 %Without loss of generality, we can decompose $\mathbb{C}$ under some basis functions of parameters $\mathcal{C}$, the same as those introduced above in the definition of a classification posterior $p(m \mid d_{n}, D, \mathcal{C})$.
 %The CPM $\mathbb{C}$ thus defines the behavior of a classifier.
 
 Assuming the light curves contain information about the true class (an assumption that underlies classification as a whole), we can use the appropriate row $\mathbb{C}_{m'_{n}} = p(\hat{m} \mid m', \mathcal{C})$ of the CPM $\mathbb{C}$ as a proxy for $p(m \mid d_{n}, D, \mathcal{C})$, without directly classifying light curves themselves\footnote{This was important given that this paper should be general and not contain any knowledge of the \plasticc\ dataset simulation procedure.}. To emulate the effect of natural variation of information content in different light curves using the above, we generate a posterior probability vector $\vec{p}(m \mid m', \mathbb{C})$ by taking a Dirichlet-distributed draw
+
+%we generate a posterior probability vector $\mathbf{p}$, with elements $p_m \equiv p(m | m', \mathbb{C})$, by taking a draw from a Dirichlet distribution:
+%\begin{equation}
+%\mathbf{p} | d_n, D, \mathcal{C} \sim \text{Dir}[\mathcal{C}_{m'_n} \delta]
+%\end{equation}
+
+%
 %=======
 %Given its provenance, we refer to the matrix $\mathbb{C}$ comprised of $p(\hat{m} \mid m')$ as the \textit{conditional probability matrix} (CPM).
 %Without loss of generality, we can decompose $\mathbb{C}$ under some basis functions of parameters $\mathcal{C}$, the same as those introduced above in the definition of a classification posterior $p(m \mid d_{n}, D, \mathcal{C})$.
@@ -233,7 +240,7 @@ We would like the \plasticc\ metric to reward a classifier that successfully pre
 In order to understand the performance of classifiers on simulated datasets approximating reality, we calculate the values of our metric candidates on representative classifiers of a precursor light-curve classification challenge.
 The Supernova Photometric Classification Challenge (\snphotcc) \citep{kessler_supernova_2010} focused on deterministically classifying a heterogenous population of supernovae into subclasses of SN Ia, SN II, and SN Ibc. 
 
-The \snphotcc\ attracted diverse classification approaches, encompassing $\chi^{2}$ fits of the supernova light curves to publicly available templates \citep{nugent_kcorrections_2002}, physical models \citep{conley_sifto:_2008}, and empirical models, as well as alternatives to curve-fitting such as outlier identification on the training set Hubble diagram\footnote{we give an introduction to both the \plasticc\ data and also the background introduction to the Hubble diagram of distance vs. redshift and its usefulness to cosmology in the \plasticc\ release note: \href{arXiv:XXXX.XXXXX}{arXiv:XXXX.XXXXX}}, dimensionality reduction, and clustering.
+The \snphotcc\ attracted diverse classification approaches, encompassing $\chi^{2}$ fits of the supernova light curves to publicly available templates \citep{nugent_kcorrections_2002}, empirical models \citep{conley_sifto:_2008}, as well as alternatives to curve-fitting such as outlier identification on the training set Hubble diagram\footnote{we give an introduction to both the \plasticc\ data and also the background introduction to the Hubble diagram of distance vs. redshift and its usefulness to cosmology in the \plasticc\ release note: \href{arXiv:XXXX.XXXXX}{arXiv:XXXX.XXXXX}}, dimensionality reduction, and clustering.
 
 %In order to understand the performance of classifiers on simulated datasets approximating reality, we calculate the values of our metric candidates on representative classifiers of a precursor light curve classification challenge.
 %The Supernova Photometric Classification Challenge (\snphotcc) \citep{kessler_supernova_2010} focused on deterministically classifying a heterogenous population of supernovae into subclasses of SN Ia, SN II, and SN Ibc
