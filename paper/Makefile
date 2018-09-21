@@ -55,10 +55,10 @@ export TEXINPUTS:=./$(DESCTEX)/styles/:./tables/:
 export BSTINPUTS:=./$(DESCTEX)/bst/:
 export BIBINPUTS:=./$(DESCTEX)/bib/:./$(LSSTTEX)/texmf/bibtex/bib/:
 
-# LaTeX journal class switcher flags
+# LaTeX juournal class switcher flags
 # apj=\def\flag{apj}
 # apjl=\def
-# mnras=\def\flag{mnras}
+# mnras=\dtef\flag{mnras}
 
 # Submission flags (these need some thought)
 # arxiv=\def\flag{emulateapj}
