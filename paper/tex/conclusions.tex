@@ -11,9 +11,9 @@ The Brier score is a sum of square differences between probabilities, is harder 
  
 %to be propagated through forecasting of the constraining power of \lsst\ data.
 
-We perform a weighted averaging between classes to prevent domination by a classifier that focuses exclusively on the most prevalent class, thereby failing to meet \plasticc's diverse goals. \textbf{[check that this matches Sohier's screenshot (added here)]}. 
+We perform a weighted averaging between classes to prevent domination by a classifier that focuses exclusively on the most prevalent class, thereby failing to meet \plasticc's diverse goals.  We choose the weighted log-loss for the overall \plasticc\ metric because it is both sensitive to our concerning systematics, and because it is more easily interpretable, with weights to be chosen on the basis of scientific merit (to reward classifications of particular objects). Care must be taken to ensure that the weights between classes are not so severe that they reward classifying all objects as the one particular object of interested.
 
-We choose the weighted log-loss for the overall \plasticc\ metric because it is both sensitive to our concerning systematics, and because it is more easily interpretable, with weights to be chosen on the basis of scientific merit (to reward classifications of particular objects). Care must be taken to ensure that the weights between classes are not so severe that they reward classifying all objects as the one particular object of interested.
+We note that in order to map on to the Kaggle evaluation platform, a metric weighted only by class was used for the general challenge, while a log-loss with more complicated weighting procedure will be used for the science competition (which will continue for an additional month after the main Kaggle release).
 
 We hope that by investigating metric performance across a range of systematic effects and for a range of weights, we have highlighted both the robustness of the log-loss metric, but also highlighted potential pitfalls of this (and other) metrics.
 
