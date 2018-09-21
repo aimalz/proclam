@@ -218,13 +218,11 @@ We would like the \plasticc\ metric to reward a classifier that successfully pre
 \begin{figure*}
 	\begin{center}
     \includegraphics[width=\textwidth]{./fig/all_snphotcc_cm.png}
-
 		\caption{Conditional probability matrices of the \citet{lochner_photometric_2016} methods applied to the second post-challenge release of the \snphotcc\ dataset.
 		Columns: the five machine learning methods of Boosted Random Forest (BRF), K-Nearest Neighbors (KNN), Naive Bayes (NB), Neural Network (NN), and Support Vector Machine (SVM).
     Top row: five machine learning methods applied to template decompositions as features.
     Bottom row: the same five machine learning methods applied to wavelet decompositions as features.
 		These CPMs derived from the dataset of a precursor light-curve classification challenge by modern methods exhibit some of the systematics identified in Section~\ref{sec:mockdata} and Figure~\ref{fig:mock_cm}, particularly cruise control (WKNN, WNB), noisy (class Ibc in all but TBRF and WKNN), and perfect (class II in all). It is worth noting that the \citet{lochner_photometric_2016} applied their classification to a representative sub-sample of the \snphotcc\ data selected once the challenge was complete, and so some of the issues of non-representativity present in the original submissions to the \snphotcc\ were not replicated.\label{fig:snphotcc_cm}}
-		\label{fig:snphotcc_cm} }
 	\end{center}
 \end{figure*}
 
@@ -249,7 +247,7 @@ Machine learning was also employed, using features such as the light-curve slope
 
 Since the conclusion of the \snphotcc, the light curves became a testbed for a suite of machine learning classifiers.
 
-We consider a collection of probabilistic classification methods, as presented in \citet{lochner_photometric_2016}, whose CPMs\footnote{The classifiers of \citet{lochner_photometric_2016} are indeed probabilistic but are reduced to confusion matrices via deterministic labels (by assigning the class label according to the highest probability) for this visualization and the science-motivated metric of Section~\ref{sec:science}.  In all other instances, the classification posteriors are used directly.} are shown in Figure~\ref{fig:snphotcc_cm}.
+We consider a collection of probabilistic classification methods, as presented in \citet{lochner_photometric_2016}, whose CPMs\footnote{The classifiers of \citet{lochner_photometric_2016} are indeed probabilistic but are reduced to confusion matrices via deterministic labels (by assigning the class label according to the highest probability) for this visualization and the science-motivated metric of Section~\ref{sec:deterministic}.  In all other instances, the classification posteriors are used directly.} are shown in Figure~\ref{fig:snphotcc_cm}.
 The set of classification algorithms includes template-based classification procedures, denoted as T, (\citet{sako_photometric_2011}, top row) and a wavelet decomposition, denoted as W, of the light curves to construct the features over which to classify (\citet{newling_statistical_2011}, bottom row), each paired with Boosted Random Forest (BRF), K-Nearest Neighbors (KNN), Naive Bayes (NB), Neural Network (NN), and Support Vector Machine (SVM) machine learning algorithms (columns). While the complexity of entries to the \snphotcc\ was greater than this subset, we use these examples to establish the behavior of our metrics on realistic classification submissions.
 
 %We consider a collection of probabilistic classification methods, as presented in \citet{lochner_photometric_2016}, whose CPMs\footnote{The classifiers of \citet{lochner_photometric_2016} are indeed probabilistic but are reduced to confusion matrices via deterministic labels for this visualization and the science-motivated metric of Section~\ref{sec:science}.
