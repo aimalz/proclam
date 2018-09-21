@@ -63,7 +63,7 @@ export BIBINPUTS:=./$(DESCTEX)/bib/:./$(LSSTTEX)/texmf/bibtex/bib/:
 # Submission flags (these need some thought)
 # arxiv=\def\flag{emulateapj}
 # submit=${aastex}
-# draft=\def\linenums{\linenumbers}
+ draft=\def\linenums{} #\linenumbers}
 
 # Files to copy when making tarball
 tardir := tmp
