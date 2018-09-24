@@ -3,7 +3,7 @@ A metric subclass for the log-loss
 """
 
 from __future__ import absolute_import
-__all__ = ['LogLoss']
+__all__ = ['LogLoss', 'LogLossSohier']
 
 import numpy as np
 import sys
@@ -73,3 +73,44 @@ class LogLoss(Metric):
         assert(~np.isnan(logloss))
 
         return logloss
+
+
+class LogLossSohier(Metric):
+
+    def __init__(self, scheme=None):
+        """
+        An object that evaluates the log-loss metric
+
+        Parameters
+        ----------
+        scheme: string
+            the name of the metric
+        """
+
+        super(LogLossSohier, self).__init__(scheme)
+        self.scheme = scheme
+
+    def evaluate(self, prediction, truth, averaging=None):
+        return self.plasticc_log_loss(truth, prediction, relative_class_weights=averaging)
+
+    def plasticc_log_loss(self, y_true, y_pred, relative_class_weights=None):
+        """
+        Verbatim copy of Sohier's implementation of weighted log loss
+        """
+        predictions = y_pred.copy()
+
+        # sanitize predictions
+        epsilon = sys.float_info.epsilon  # on my machine this is 2.2*10**-16, not the 10**-15 used by sklearn
+        predictions = np.clip(predictions, epsilon, 1.0 - epsilon)
+        predictions = predictions / np.sum(predictions, axis=1)[:, np.newaxis]
+
+        predictions = np.log(predictions)
+        # multiplying the arrays is equivalent to a truth mask as y_true only contains zeros and ones
+        class_logloss = []
+        for i in range(predictions.shape[1]):
+            # average column wise log loss with truth mask applied
+            result = np.average(predictions[:, i][y_true[:, i] == 1])
+            class_logloss.append(result)
+        return -1 * np.average(class_logloss, weights=relative_class_weights)
+
+
