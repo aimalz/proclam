@@ -4,3 +4,4 @@ from .metric import *
 from .util import *
 from .brier import *
 from .logloss import *
+from .rocauc import *
