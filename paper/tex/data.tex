@@ -52,7 +52,7 @@ Though probabilistic classifications are not compatible with the confusion matri
 Under a deterministic classification scheme with a normalized confusion matrix with elements $p(\hat{m}, m')$, an object with true class $m'$ would have an assigned class $\hat{m}$ drawn from $p(\hat{m} \mid m') = p(\hat{m}, m') / p(m')$, via Bayes' Rule.
 We note that the elements of the confusion matrix have values of $N p(\hat{m}, m')$ and that $p(m') = N_{m'} / N$, where $N_{m'}$ is the number of true members of class $m'$, must be known in order to produce a confusion matrix.
 % We can thus easily obtain classification posteriors $p(\hat{m} \mid m')$ to use as the basis for classification probability submissions resulting from a confusion matrix.
-We refer to the matrix $\mathbb{C}$ comprised of $p(\hat{m} \mid m')$ as the \textit{conditional probability matrix} (CPM), and we will use it to derive mock classification posteriors.
+We refer to the matrix $\mathbb{C}$ composed of $p(\hat{m} \mid m')$ as the \textit{conditional probability matrix} (CPM), and we use it to derive mock classification posteriors.
 
 % Without loss of generality, we can decompose $\mathbb{C}$ under some basis functions of parameters $\mathcal{C}$, the same as those introduced above in the definition of a classification posterior $p(m \mid d_{n}, D, \mathcal{C})$.
 % The CPM $\mathbb{C}$ thus defines the behavior of a classifier.
@@ -127,7 +127,7 @@ Given a set of true class identities, the mock classification posteriors of the 
 \subsubsection{Uncertain classification}
 \label{sec:uncertaindata}
 
-A CPM with uniform probabilities for all classes (which we will denote with $\mathbb{U}$) as shown in the leftmost top panel of Figure~\ref{fig:mock_cm}, would correspond to uniform random guesses for deterministic classification, but in accordance with Equation~\ref{eq:cmtoprob}, the classification posteriors are perturbations away from a uniform distribution across all classes.
+A CPM with uniform probabilities for all classes, which we denote with $\mathbb{U}$) as shown in the leftmost top panel of Figure~\ref{fig:mock_cm}, would correspond to uniform random guesses for deterministic classification, but in accordance with Equation~\ref{eq:cmtoprob}, the classification posteriors are perturbations away from a uniform distribution across all classes.
 The peak values of one such classification posterior would correspond to random classification drawn from a uniform distribution, with $p(m' \mid d_{n}, D, \mathcal{C}_{\mathbb{U}}) \approx M^{-1}$.
 We can consider the \textit{uncertain} classifier as an experimental control for the least effective possible classification scheme, bearing in mind that if classifications were anticorrelated with true classes, the experimenter could simply reassign the classification labels to improve performance under any metric.
 
@@ -172,7 +172,7 @@ When the prior information of the location of the source is more informative tha
 % Subsuming is expected when distinguishing between subtypes of some class, though this failure mode is not necessarily the mark of a poor classifier.
 Distinguishing between subclasses of a single phenomenon is subject to limits not only on the light curves of the unknown targets but also by the availability of adequate training sets.
 It is nonetheless essential to identify subclasses when they have wholly different science applications.
-As an example, SN Ia and SN Ibc are notorious for being difficult to distinguish.
+As an example, supernovae (SN) Ia and Ibc are notorious for being difficult to distinguish.
 In fact, it is more common for SN Ibc to be misclassified as SN Ia than the other way around.
 This asymmetry is due to systematic underrepresentation of SN Ibc in available training sets.
 However, SN Ibc contaminants in the traditional cosmology analysis done with SN Ia can bias estimates of the cosmological parameters, so the distinction is critical.

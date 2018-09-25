@@ -1,4 +1,4 @@
-\section{Results}
+l\section{Results}
 \label{sec:results}
 
 In the following sections, we explore the response of the log-loss and Brier score metrics to the classifiers of Section~\ref{sec:data} and as a function of the weights on affected classes.
@@ -22,6 +22,7 @@ We simulate probabilistic classifications as potential submissions to \plasticc\
 	\end{center}
 	\label{fig:all_combined}
 \end{figure*}
+We simulate entries to the \plasticc\ classification challenge by generating random draws of the combined CPM (composed of classififiers with different systematics) described in Section~\ref{sec:mockdata} is shown in Figure~\ref{fig:all_combined}.
 
 The systematics introduced to each baseline are those that we intuitively expect to worsen classification performance of an arbitrary classifier:
 \begin{itemize}
@@ -144,6 +145,10 @@ This means that under a population-proportional weighting scheme, it would not b
 
 \subsection{Representative classifications}
 \label{sec:realresults}
+We apply the log-loss and Brier metrics to the classification output from \textsc{snmachine}. While the classification methods described in \citet{lochner_photometric_2016} refer to the idealized subset of the \snphotcc\ data, these approaches are the state-of-the-art in classification of extragalactic transients. We present in Table~\ref{tab:snmachineresults} the log-loss and Brier scores assuming an equal weight per object.
+%, for classification probabilities derived from running the algorithms of \citet{lochner_photometric_2016} on the \snphotcc\ data of Section~\ref{sec:realdata}.
+Table~\ref{tab:snmachineresults} also contains the ranking of classifier performance under each metric.
+
 
 \begin{table*}[]
 	\begin{centering}
@@ -182,7 +187,7 @@ $R_\mathrm{LogLoss}$ & Log-loss & $R_\mathrm{Brier}$ & Brier \\
 \end{table*}
 
 We apply our metrics to the classification output from \textsc{snmachine} applied to the \snphotcc\ dataset as an example of representative light curves and representative classifiers used in extragalactic astronomy.
-We present in Table~\ref{tab:snmachineresults} the log-loss and Brier scores assuming an equal weight per object, as well as the original \snphotcc\ metric described in Section~\ref{sec:science}.
+We present in Table~\ref{tab:snmachineresults} the log-loss and Brier scores assuming an equal weight per object, as well as the original \snphotcc\ metric described in Section~\ref{sec:deterministic}.
 Table~\ref{tab:snmachineresults} also contains the ranking of classifier performance under each metric.
 
 The Brier score, log-loss, and \snphotcc\ FoM are in agreement as to the first- and last-ranked classifiers.
