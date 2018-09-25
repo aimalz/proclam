@@ -52,7 +52,7 @@ Though probabilistic classifications are not compatible with the confusion matri
 Under a deterministic classification scheme with a normalized confusion matrix with elements $p(\hat{m}, m')$, an object with true class $m'$ would have an assigned class $\hat{m}$ drawn from $p(\hat{m} \mid m') = p(\hat{m}, m') / p(m')$, via Bayes' Rule.
 We note that the elements of the confusion matrix have values of $N p(\hat{m}, m')$ and that $p(m') = N_{m'} / N$, where $N_{m'}$ is the number of true members of class $m'$, must be known in order to produce a confusion matrix.
 % We can thus easily obtain classification posteriors $p(\hat{m} \mid m')$ to use as the basis for classification probability submissions resulting from a confusion matrix.
-We refer to the matrix $\mathbb{C}$ comprised of $p(\hat{m} \mid m')$ as the \textit{conditional probability matrix} (CPM), and we will use it to derive mock classification posteriors.
+We refer to the matrix $\mathbb{C}$ composed of $p(\hat{m} \mid m')$ as the \textit{conditional probability matrix} (CPM), and we will use it to derive mock classification posteriors.
 
 % Without loss of generality, we can decompose $\mathbb{C}$ under some basis functions of parameters $\mathcal{C}$, the same as those introduced above in the definition of a classification posterior $p(m \mid d_{n}, D, \mathcal{C})$.
 % The CPM $\mathbb{C}$ thus defines the behavior of a classifier.
