@@ -1,12 +1,20 @@
 \section{Conclusion}
 \label{sec:conclusion}
 
-We have presented an investigative approach to selecting an appropriate metric of the performance of classification techniques producing class posterior probabilities in the context of \plasticc.
-We conclude that the Brier score and log-loss metrics could both be appropriate metrics for \plasticc\ on the basis of their responses to the most concerning systematics anticipated of competing classifiers.
-Even though the Brier score and log-loss metrics take values consistent with one another, they are structurally and conceptually different, with wholly different interpretations.
-The Brier score is a sum of square differences between probabilities, which is not physically meaningful, though the explicit penalty term is an attractive feature.
-The log-loss, on the other hand, is interpretable in terms of information, meaning the metric itself can serve as a quantification of uncertainty to be propagated through forecasting of the constraining power of \lsst\ data.
+As part of the preparation for \plasticc\, we investigated the properties of metrics suitable for a time-series classification, concentrating on how to reward classifications that performed well across classes, rather than requiring good performance on only one or two classes. In particular we compared the Brier score and the log-loss metrics, and show that that while both metrics could be appropriate metrics for the challenge, the log-loss is slightly more sensitive to systematic affects than the Brier score.
 
-Both require an additional mechanism, such as weighted averaging between classes to prevent domination by a classifier that focuses exclusively on the most prevalent class, thereby failing to meet \plasticc's diverse goals.
-We choose the weighted log-loss for the overall \plasticc\ metric less because it is more sensitive to our concerning systematics and more because it is interpretable, with weights to be chosen on the basis of scientific merit.
-We conclude by encouraging the astronomical community to continue to pursue open challenges but to think carefully about the relationship between the goals of a challenge and the global performance metric, as we have done for \plasticc, to ensure that efforts are best directed to achieve the challenge objectives.
+%We have presented an investigative approach to selecting an appropriate metric of the performance of classification techniques producing class posterior probabilities in the context of \plasticc.
+%We conclude that the Brier score and log-loss metrics could both be appropriate metrics for \plasticc\ on the basis of their responses to the most concerning systematics anticipated of competing classifiers.
+% 
+Even though the Brier score and log-loss metrics take values consistent with one another, they are structurally and conceptually different, with wholly different interpretations.
+The Brier score is a sum of square differences between probabilities, is harder to map onto a physical interpretation; the explicit penalty term is an attractive feature. The log-loss on the other hand is readily interpretable, meaning the metric itself might serve as a useful way to evaluate different proposed \lsst\ cadences.
+ 
+%to be propagated through forecasting of the constraining power of \lsst\ data.
+
+We perform a weighted averaging between classes to prevent domination by a classifier that focuses exclusively on the most prevalent class, thereby failing to meet \plasticc's diverse goals.  We choose the weighted log-loss for the overall \plasticc\ metric because it is both sensitive to our concerning systematics, and because it is more easily interpretable, with weights to be chosen on the basis of scientific merit (to reward classifications of particular objects). Care must be taken to ensure that the weights between classes are not so severe that they reward classifying all objects as the one particular object of interested.
+
+We note that in order to map on to the Kaggle evaluation platform, a metric weighted only by class was used for the general challenge, while a log-loss with more complicated weighting procedure will be used for the science competition (which will continue for an additional month after the main Kaggle release).
+
+We hope that by investigating metric performance across a range of systematic effects and for a range of weights, we have highlighted both the robustness of the log-loss metric, but also highlighted potential pitfalls of this (and other) metrics.
+
+%We conclude by encouraging the astronomical community to continue to pursue open challenges but to think carefully about the relationship between the goals of a challenge and the global performance metric, as we have done for \plasticc, to ensure that efforts are best directed to achieve the challenge objectives.

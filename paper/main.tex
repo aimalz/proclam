@@ -1,5 +1,4 @@
-\RequirePackage[switch, columnwise, running, mathlines, displaymath,
-mathlines]{lineno}
+\RequirePackage[switch, columnwise, running, mathlines, displaymath, mathlines]{lineno}
 \RequirePackage{docswitch}
 % \flag is set by the user, through the makefile:
 %    make note
@@ -35,15 +34,15 @@ mathlines]{lineno}
 % ======================================================================
 
 \begin{document}
-\linenumbers
+%\linenumbers
 
-\title{The Photometric \textsc{LSST} Astronomical Time-series Classification Challenge (\textsc{PLAsTiCC}): Selection of a performance metric for classification probabilities balancing diverse science goals}
+\title{The Photometric LSST Astronomical Time-series Classification Challenge (PLAsTiCC): Selection of a performance metric for classification probabilities balancing diverse science goals}
 
 \maketitlepre
 
 \begin{abstract}
-
-  Light curve classification is a high priority for the of transient and variable objects, a key step in any time-domain astronomy analysis.
+  Classification of astronomical sources is a key requirement for developing physical understanding of transient and variable objects through time-domain surveys.
+%  Light curve classification is a high priority for the study of transient and variable objects, a key step in any time-domain astronomy analysis.
   However, upcoming deep photometric surveys, including the Large Synoptic Survey Telescope (\textsc{LSST}), will produce a deluge of lower signal-to-noise data for which traditional labelings are inappropriate.
   Probabilistic classifications are more appropriate for the data but are incompatible with the traditional metrics used on deterministic classifications.
   Furthermore, large survey collaborations intend to use these classification probabilities for diverse science objectives, indicating a need for a metric that balances a variety of goals.
@@ -52,9 +51,7 @@ mathlines]{lineno}
   Using mock classification probability submissions mimicing archetypes of those anticipated of \textsc{PLAsTiCC}, we compare the sensitivity of two metrics of classification probabilities under various weighting schemes, finding that they yield qualitatively consistent results.
   We choose as a metric for \textsc{PLAsTiCC} a weighted modification of the log-loss because it can be more meaningfully interpreted.
   Finally, we propose extensions of our procedure to ever more complex challenge goals and suggest some guiding principles for approaching the choice of a metric of probabilistic classifications.
-
 \end{abstract}
-
 % Keywords are ignored in the LSST DESC Note style:
 \dockeys{}
 
@@ -88,7 +85,7 @@ mathlines]{lineno}
 % Standard papers only: A.B.C. acknowledges support from grant 1234 from ...
 This paper has undergone internal review in the LSST Dark Energy Science Collaboration. % REQUIRED if true
 The authors would like to thank Melissa Graham, Weikang Lin, and Chad Schafer for serving as the LSST-DESC publication review committee.
-The authors further wish to thank Kaisey Mandel, Tom Loredo, Rick Kessler, and Lluis Galbany for helpful feedback provided in the preparation of this paper.
+The authors further wish to thank Tom Loredo for helpful feedback provided in the preparation of this paper.
 
 AIM is advised by David W. Hogg and was supported by National Science Foundation grant AST-1517237.
 TA is supported in part by STFC.
@@ -107,6 +104,8 @@ They are grateful to have the opportunity to work in the community, on this terr
 
 We acknowledge the University of Chicago Research Computing Center for support of this work.
 This research used resources of the National Energy Research Scientific Computing Center (NERSC), a U.S. Department of Energy Office of Science User Facility operated under Contract No. DE-AC02-05CH11231.
+This research at Rutgers University is supported by US Department of Energy award DE-SC0011636.
+
 
 \input{desc-tex/ack/standard} % also available: key standard_short
 

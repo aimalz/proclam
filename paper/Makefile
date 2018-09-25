@@ -63,7 +63,7 @@ export BIBINPUTS:=./$(DESCTEX)/bib/:./$(LSSTTEX)/texmf/bibtex/bib/:
 # Submission flags (these need some thought)
 # arxiv=\def\flag{emulateapj}
 # submit=${aastex}
-# draft=\def\linenums{\linenumbers}
+draft=\def\linenums{}# {\linenumbers}
 
 # Files to copy when making tarball
 tardir := tmp
@@ -151,7 +151,7 @@ tar : $(main)
 authlist: authors.tex
 authors.tex : authors.csv
 	$(GETMKAUTH)
-	$(MKAUTH) -j ${mastyle} -f -c "LSST Dark Energy Science Collaboration" \
+	$(MKAUTH) -j ${mastyle} -f -c "the LSST Dark Energy Science Collaboration and the LSST Transients and Variable Stars Science Collaboration" \
 		--cntrb contributions.tex authors.csv authors.tex
 #	pip install --upgrade mkauthlist
 
