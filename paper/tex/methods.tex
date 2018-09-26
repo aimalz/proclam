@@ -76,7 +76,7 @@ This definition of entropy, however, is a property of the probability $p(m \mid 
 To reconcile the classification posterior with the true class known by those running a challenge, we define the cross-entropy
 \begin{eqnarray}
   \label{eq:logloss}
-  L_{n} \equiv Q_{L} &=& -\sum_{m=1}^{M} \tau_{n, m} \ln[p(m \mid d_{n})],
+  L_{n} \equiv Q^{L}_{n} &=& -\sum_{m=1}^{M} \tau_{n, m} \ln[p(m \mid d_{n})],
 \end{eqnarray}
 which can be interpreted as the spuriously oversized space of possible states (an increase in disorder) due to using the classification posterior in place of the indicator variable.
 Whereas $H_{n}$ is minimized to a value of $0$ by any deterministic classification, $L_{n}$ is minimized to a value of $0$ only if $\tau_{n}$ and $p(m \mid d_{n})$ are equal to one another.
@@ -94,7 +94,7 @@ Its greatest strength is that it is straightforwardly interpretable, enabling th
 The Brier score \citep{brier_verification_1950}, given as
 \begin{eqnarray}
   \label{eq:brier}
-  B_{n}  \equiv Q_{B} &=& \sum_{m=1}^{M} (\tau_{n, m} - p(m \mid d_{n}))^{2},
+  B_{n}  \equiv Q^{B}_{n} &=& \sum_{m=1}^{M} (\tau_{n, m} - p(m \mid d_{n}))^{2},
 \end{eqnarray}
 is a mean square error calculated between the indicator variable and the classification posterior.
 Unlike the log-loss, the Brier score has been used extensively in solar flare forecasting \citep{crown_validation_2012, mays_ensemble_2015, florios_forecasting_2018}, stellar variability identification \citep{richards_construction_2012, armstrong_k2_2016}, and star-galaxy separation \citep{kim_hybrid_2015}.
