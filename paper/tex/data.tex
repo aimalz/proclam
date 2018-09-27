@@ -24,7 +24,7 @@ We describe below the way in which mock data is synthesized and return to the cl
 
 As is anticipated of the real \lsst\ dataset, we use class populations that are logarithmically distributed such that they span many orders of magnitude.
 We then take $M$ draws $u_{m} \sim \mathcal{U}(0, 1)$ from the standard continuous uniform distribution.
-These draws $\{u_{m\}}$ are used to establish a discrete probability distribution $p(m) = b^{u_{m}}\ / \sum_{m} b^{u_{m}}$ such that $\sum_{m=1}^{M} p(m) = 1$.
+These draws $\{u_{m}\}$ are used to establish a discrete probability distribution $p(m) = b^{u_{m}}\ / \sum_{m} b^{u_{m}}$ such that $\sum_{m=1}^{M} p(m) = 1$.
 From $p(m)$ we draw $N = 10^{b}$ instances $\{m'_{n}\}$ of a true class $m'$ for each light curve $n$ in the catalog.
 
 The true class membership distribution of our tests with $M = 13$ and $b = 6$ is shown in Figure~\ref{fig:classdist}.
