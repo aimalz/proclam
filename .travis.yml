@@ -27,8 +27,8 @@ script:
   - jupyter nbconvert --ExecutePreprocessor.kernel_name=python --ExecutePreprocessor.timeout=600 --to html --execute paper/kaggle-run.ipynb
   #   - jupyter nbconvert --ExecutePreprocessor.kernel_name=python --ExecutePreprocessor.timeout=600 --execute paper/main.ipynb --to notebook ; cp desc_note/main.nbconvert.ipynb .
   #   - jupyter nbconvert --TagRemovePreprocessor.remove_cell_tags='["hideme"]' --TagRemovePreprocessor.remove_input_tags='["hidein"]' desc_note/main.nbconvert.ipynb  ; cp paper/main.nbconvert.html .
-  - cd paper
-  - make apj
+  #   - cd paper
+  #   - make apj
   # Finally, if it's the master branch be
   # ing updated, force-push the
   # notebook html pages to an otherwise empty "html" branch:
