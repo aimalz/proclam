@@ -151,7 +151,7 @@ tar : $(main)
 authlist: authors.tex
 authors.tex : authors.csv
 	$(GETMKAUTH)
-	$(MKAUTH) -j ${mastyle} -f -c "the LSST Dark Energy Science Collaboration and the LSST Transients and Variable Stars Science Collaboration" \
+	$(MKAUTH) -j ${mastyle} -f -c "the LSST Dark Energy Science Collaboration \\ and \\ the LSST Transients and Variable Stars Science Collaboration" \
 		--cntrb contributions.tex authors.csv authors.tex
 #	pip install --upgrade mkauthlist
 

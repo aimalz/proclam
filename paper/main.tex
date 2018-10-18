@@ -37,21 +37,26 @@
 \begin{document}
 % \linenumbers
 
-\title{The Photometric LSST Astronomical Time-series Classification Challenge (PLA\MakeLowercase{s}T\MakeLowercase{i}CC): Selection of a performance metric for classification probabilities balancing diverse science goals}
+\title{The Photometric LSST Astronomical Time-series Classification Challenge (PLA\MakeLowercase{s}T\MakeLowercase{i}CC): Selection of a performance metric for classification probabilities \\ balancing diverse science goals}
 
 \maketitlepre
 
+
 \begin{abstract}
 
-  Classification of transient and variable light curves is an essential step in using astronomical observations to develop an understanding of their underlying physical processes.
-  However, upcoming deep photometric surveys, including the Large Synoptic Survey Telescope (\textsc{LSST}), will produce a deluge of low signal-to-noise data for which traditional labeling procedures are inappropriate.
-  Probabilistic classification is more appropriate for the data but are incompatible with the traditional metrics used on deterministic classifications.
-  Furthermore, large survey collaborations intend to use these classification probabilities for diverse science objectives, indicating a need for a metric that balances a variety of goals.
-  We describe the process used to develop an optimal performance metric for an open classification challenge that seeks probabilistic classifications and must serve many scientific interests.
-  The Photometric \textsc{LSST} Astronomical Time-series Classification Challenge (\textsc{PLAsTiCC}) is an open competition aiming to identify promising techniques for obtaining classification probabilities of transient and variable objects by engaging a broader community both within and outside astronomy.
-  Using mock classification probability submissions emulating archetypes of those anticipated of \textsc{PLAsTiCC}, we compare the sensitivity of metrics of classification probabilities under various weighting schemes, finding that they yield qualitatively consistent results.
-  We choose as a metric for \textsc{PLAsTiCC} a weighted modification of the cross-entropy because it can be meaningfully interpreted.
-  Finally, we propose extensions of our methodology to ever more complex challenge goals and suggest some guiding principles for approaching the choice of a metric of probabilistic classifications.
+  \vspace{0.5cm}
+
+  Classification of transient and variable light curves is an essential step in using astronomical observations to develop an understanding of the underlying physical processes from which they arise.
+  However, upcoming deep photometric surveys, including the Large Synoptic Survey Telescope (\textsc{LSST}), will produce a deluge of low signal-to-noise data for which traditional type estimation procedures are inappropriate.
+  Probabilistic classification is more appropriate for the data but is incompatible with the traditional metrics used on deterministic classifications.
+  Furthermore, large survey collaborations like \textsc{LSST} intend to use the resulting classification probabilities for diverse science objectives, indicating a need for a metric that balances a variety of goals.
+  We describe the process used to develop an optimal performance metric for an open classification challenge that seeks to identify probabilistic classifiers that can serve many scientific interests.
+  The Photometric \textsc{LSST} Astronomical Time-series Classification Challenge (\textsc{PLAsTiCC}) aims to identify promising techniques for obtaining classification probabilities of transient and variable objects by engaging a broader community beyond astronomy.
+  Using mock classification probability submissions emulating realistically complex archetypes of those anticipated of \textsc{PLAsTiCC}, we compare the sensitivity of two metrics of classification probabilities under various weighting schemes, finding that both yield results that are qualitatively consistent with intuitive notions of classification performance.
+  We thus choose as a metric for \textsc{PLAsTiCC} a weighted modification of the cross-entropy because it can be meaningfully interpreted in terms of information content.
+  Finally, we propose extensions of our methodology to ever more complex challenge goals and suggest some guiding principles for approaching the choice of a metric of probabilistic data products.
+
+  \vspace{1cm}
 
 \end{abstract}
 
@@ -62,6 +67,8 @@
 
 % ----------------------------------------------------------------------
 % {% raw %}
+
+\clearpage
 
 \input{./tex/introduction}
 
