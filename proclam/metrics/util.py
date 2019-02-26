@@ -94,6 +94,26 @@ def prob_to_det(probs):
 
     return dets
 
+def prob_to_det_threshold(probs,class_idx,threshold=0.5):
+    """
+    Converts probabilistic classifications to deterministic classifications by assigning the class with highest probability
+
+    Parameters
+    ----------
+    probs: numpy.ndarray, float
+        N * M matrix of class probabilities
+
+    Returns
+    -------
+    dets: numpy.ndarray, int
+        maximum probability classes
+    """
+    
+    dets = np.zeros(np.shape(probs)[0])
+    dets[probs[:,class_idx] > threshold] = 1
+	
+    return dets
+
 def det_to_cm(dets, truth, per_class_norm=True, vb=False):
     """
     Converts deterministic classifications and truth into confusion matrix
