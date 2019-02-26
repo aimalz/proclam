@@ -27,7 +27,7 @@ class Metric(object):
 		self.debug = False
 		self.scheme = scheme
 
-	def evaluate(self, prediction, truth, class_idx, gridspace=0.01, weights=None, **kwds):
+	def evaluate(self, prediction, truth, gridspace=0.01, weights=None, **kwds):
 		"""
 		Evaluates the area under the ROC curve for a given class_idx
 
@@ -45,9 +45,12 @@ class Metric(object):
 		metric: float
 			value of the metric
 		"""
-
+		
 		auc_allclass = 0
 		n_class = np.shape(prediction)[1]
+		if not weights:
+			weights = [1./n_class]*n_class
+		
 		for class_idx in range(n_class):
 		
 			thresholds_grid = np.arange(0,1,gridspace)
@@ -75,7 +78,6 @@ class Metric(object):
 				plt.plot(fpr[ifpr],tpr[ifpr])
 				import pdb; pdb.set_trace()
 
-			if weights: auc_allclass += auc*weights[class_idx]
-			else: auc_allclass += auc
+			auc_allclass += auc*weights[class_idx]
 				
 		return auc_allclass
