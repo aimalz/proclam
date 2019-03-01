@@ -10,6 +10,7 @@ import numpy as np
 from .util import weight_sum
 from .util import check_weights
 from .util import prob_to_det_threshold
+from .util import auc, tpr_fpr
 from scipy.integrate import trapz
 
 class Metric(object):
@@ -52,25 +53,31 @@ class Metric(object):
 			weights = [1./n_class]*n_class
 		
 		for class_idx in range(n_class):
-		
+			if not len(np.where(truth == class_idx)[0]):
+				raise RuntimeError('No true values for class %i so ROC is undefined'%class_idx)
+			
 			thresholds_grid = np.arange(0,1,gridspace)
 			n_thresholds = len(thresholds_grid)
 		
 			tpr,fpr = np.zeros(n_thresholds),np.zeros(n_thresholds)
 			for t,i in zip(thresholds_grid,range(n_thresholds)):
 				classifications = prob_to_det_threshold(prediction,class_idx=class_idx,threshold=t)
-
-				tp = np.sum(classifications[truth == class_idx])
-				fp = np.sum(classifications[truth != class_idx])
-				tpr[i] = tp/len(classifications[truth == class_idx])
-				fpr[i] = fp/len(classifications[truth != class_idx])
+				
+				tpr_thresh,fpr_thresh = tpr_fpr(classifications,truth,class_idx)
+				
+				#tp = np.sum(classifications[truth == class_idx])
+				#fp = np.sum(classifications[truth != class_idx])
+				tpr[i] = tpr_thresh #tp/len(classifications[truth == class_idx])
+				fpr[i] = fpr_thresh #fp/len(classifications[truth != class_idx])
 				#if tpr[i] != tpr[i]: import pdb; pdb.set_trace()
-			
-			fpr = np.concatenate(([0],fpr,[1]),)
-			tpr = np.concatenate(([0],tpr,[1]),)
+
+			auc_class = auc(fpr,tpr)
+				
+			#fpr = np.concatenate(([0],fpr,[1]),)
+			#tpr = np.concatenate(([0],tpr,[1]),)
 		
-			ifpr = np.argsort(fpr)
-			auc = trapz(tpr[ifpr],fpr[ifpr])
+			#ifpr = np.argsort(fpr)
+			#auc = trapz(tpr[ifpr],fpr[ifpr])
 
 			if self.debug:
 				import pylab as plt
@@ -78,6 +85,6 @@ class Metric(object):
 				plt.plot(fpr[ifpr],tpr[ifpr])
 				import pdb; pdb.set_trace()
 
-			auc_allclass += auc*weights[class_idx]
+			auc_allclass += auc_class*weights[class_idx]
 				
 		return auc_allclass

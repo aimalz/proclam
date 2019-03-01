@@ -13,6 +13,7 @@ __all__ = ['sanitize_predictions',
 import collections
 import numpy as np
 import sys
+from scipy.integrate import trapz
 
 RateMatrix = collections.namedtuple('rates', 'TPR FPR FNR TNR')
 
@@ -344,3 +345,25 @@ def averager(per_object_metrics, truth, M, vb=False):
             class_metric[m] = 0.
         if vb: print('by request '+str((m, how_many_in_class, class_metric[m])))
     return class_metric
+
+def tpr_fpr(classifications,truth,class_idx):
+
+	tp = np.sum(classifications[truth == class_idx])
+	fp = np.sum(classifications[truth != class_idx])
+	tpr = tp/len(classifications[truth == class_idx])
+	fpr = fp/len(classifications[truth != class_idx])
+
+	return tpr,fpr
+	
+def auc(fpr,tpr):
+	"""
+	Computes the area under curve using true positive rate and false positive rate
+	"""
+
+	fpr = np.concatenate(([0],fpr,[1]),)
+	tpr = np.concatenate(([0],tpr,[1]),)
+		
+	ifpr = np.argsort(fpr)
+	auc = trapz(tpr[ifpr],fpr[ifpr])
+
+	return auc
