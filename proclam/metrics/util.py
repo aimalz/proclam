@@ -354,7 +354,28 @@ def tpr_fpr(classifications,truth,class_idx):
 	fpr = fp/len(classifications[truth != class_idx])
 
 	return tpr,fpr
+
+def precision(classifications,truth,class_idx):
+
+	tp = np.sum(classifications[truth == class_idx])
+	fp = np.sum(classifications[truth != class_idx])	
+
+	precision = tp/(tp+fp)
+	if precision != precision:
+		import pdb; pdb.set_trace()
 	
+	return tp/(tp+fp)
+
+def recall(classifications,truth,class_idx):
+
+	tp = np.sum(classifications[truth == class_idx])
+	fp = np.sum(classifications[truth != class_idx])	
+	fn = len(np.where((classifications == 0) & (truth == class_idx))[0])
+	#import pdb; pdb.set_trace()
+	#print(fn)
+	
+	return tp/(tp+fn)
+
 def auc(fpr,tpr):
 	"""
 	Computes the area under curve using true positive rate and false positive rate
