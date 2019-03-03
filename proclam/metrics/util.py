@@ -370,7 +370,7 @@ def recall(classifications,truth,class_idx):
 
 	tp = np.sum(classifications[truth == class_idx])
 	fp = np.sum(classifications[truth != class_idx])	
-	fn = len(np.where((classifications == 0) & (truth == class_idx))[0])
+	fn = len(np.where((classifications == 0) & (truth == class_idx))[0]) 
 	#import pdb; pdb.set_trace()
 	#print(fn)
 	
@@ -388,3 +388,17 @@ def auc(fpr,tpr):
 	auc = trapz(tpr[ifpr],fpr[ifpr])
 
 	return auc
+
+def fnr(classifications,truth,class_idx):
+
+    fn = np.sum((classifications == 0) & (truth == class_idx))
+    fnr = fn/np.sum(truth == class_idx)
+   
+    return fnr
+
+def fpr(classifications,truth,class_idx):
+
+    fp = np.sum((classifications == 1) & (truth != class_idx))    
+    fpr = fp/np.sum(truth != class_idx)
+   
+    return fpr
