@@ -71,6 +71,8 @@ class Metric(object):
                 import pylab as plt
                 plt.clf()
                 plt.plot(fnr_arr,fpr_arr)
+                plt.xscale('log')
+                plt.yscale('log')
                 plt.show()
                 # import pdb; pdb.set_trace()
 
