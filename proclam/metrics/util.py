@@ -5,10 +5,9 @@ Utility functions for PLAsTiCC metrics
 from __future__ import absolute_import, division
 __all__ = ['sanitize_predictions',
            'weight_sum', 'averager', 'check_weights',
-           'det_to_prob',
-           'prob_to_det',
+           'det_to_prob', 'prob_to_det', 'prob_to_det_threshold',
            'det_to_cm', 'prob_to_cm',
-           'cm_to_rate', 'det_to_rate', 'prob_to_rate']
+           'cm_to_rate', 'det_to_rate', 'prob_to_rate', 'binary_rates']
 
 import collections
 import numpy as np
@@ -95,24 +94,27 @@ def prob_to_det(probs):
 
     return dets
 
-def prob_to_det_threshold(probs,class_idx,threshold=0.5):
+def prob_to_det_threshold(probs, m, threshold=0.5):
     """
-    Converts probabilistic classifications to deterministic classifications by assigning the class with highest probability
+    Converts probabilistic classifications to binary deterministic classifications by assigning the class if probability exceeds threshold
 
     Parameters
     ----------
     probs: numpy.ndarray, float
         N * M matrix of class probabilities
+    m: int
+        class relative to binary decision
+    threshold: float, optional
+        value between 0 and 1 at which binary decision is made
 
     Returns
     -------
     dets: numpy.ndarray, int
-        maximum probability classes
+        deterministic labels, 1 if class m, 0 otherwise
     """
-    
     dets = np.zeros(np.shape(probs)[0])
-    dets[probs[:,class_idx] > threshold] = 1
-	
+    dets[probs[:, m] >= threshold] = 1
+
     return dets
 
 def det_to_cm(dets, truth, per_class_norm=True, vb=False):
@@ -346,45 +348,56 @@ def averager(per_object_metrics, truth, M, vb=False):
         if vb: print('by request '+str((m, how_many_in_class, class_metric[m])))
     return class_metric
 
-def tpr_fpr(classifications,truth,class_idx):
+def binary_rates(dets, truth, m):
 
-	tp = np.sum(classifications[truth == class_idx])
-	fp = np.sum(classifications[truth != class_idx])
-	tpr = tp/len(classifications[truth == class_idx])
-	fpr = fp/len(classifications[truth != class_idx])
+	tp = np.sum(dets[truth == m])
+	fp = np.sum(dets[truth != m])
+	tpr = tp/len(dets[truth == m])
+	fpr = fp/len(dets[truth != m])
 
 	return tpr,fpr
 
 def precision(classifications,truth,class_idx):
 
 	tp = np.sum(classifications[truth == class_idx])
-	fp = np.sum(classifications[truth != class_idx])	
+	fp = np.sum(classifications[truth != class_idx])
 
 	precision = tp/(tp+fp)
 	if precision != precision:
 		import pdb; pdb.set_trace()
-	
+
 	return tp/(tp+fp)
 
 def recall(classifications,truth,class_idx):
 
 	tp = np.sum(classifications[truth == class_idx])
-	fp = np.sum(classifications[truth != class_idx])	
+	fp = np.sum(classifications[truth != class_idx])
 	fn = len(np.where((classifications == 0) & (truth == class_idx))[0])
 	#import pdb; pdb.set_trace()
 	#print(fn)
-	
+
 	return tp/(tp+fn)
 
-def auc(fpr,tpr):
+def auc(x, y):
 	"""
-	Computes the area under curve using true positive rate and false positive rate
+	Computes the area under curve (just a wrapper for trapezoid rule)
+
+    Parameters
+    ----------
+    x: numpy.ndarray, int or float
+
+    y: numpy.ndarray, int or float
+
+    Returns
+    -------
+    rates: named tuple, float
+        RateMatrix named tuple
 	"""
 
-	fpr = np.concatenate(([0],fpr,[1]),)
-	tpr = np.concatenate(([0],tpr,[1]),)
-		
-	ifpr = np.argsort(fpr)
-	auc = trapz(tpr[ifpr],fpr[ifpr])
+	x = np.concatenate(([0.], x, [1.]),)
+	y = np.concatenate(([0.], y, [1.]),)
+
+	i = np.argsort(x)
+    auc = trapz(y[i], x[i])
 
 	return auc
