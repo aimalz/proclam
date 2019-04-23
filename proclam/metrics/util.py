@@ -381,23 +381,23 @@ def recall(classifications,truth,class_idx):
 def auc(x, y):
 	"""
 	Computes the area under curve (just a wrapper for trapezoid rule)
-
-    Parameters
-    ----------
-    x: numpy.ndarray, int or float
-
-    y: numpy.ndarray, int or float
-
-    Returns
-    -------
-    rates: named tuple, float
+        
+        Parameters
+        ----------
+        x: numpy.ndarray, int or float
+        
+        y: numpy.ndarray, int or float
+        
+        Returns
+        -------
+        rates: named tuple, float
         RateMatrix named tuple
-	"""
-
+        """
+        
 	x = np.concatenate(([0.], x, [1.]),)
 	y = np.concatenate(([0.], y, [1.]),)
-
+        
 	i = np.argsort(x)
         auc = trapz(y[i], x[i])
-
+        
 	return auc
