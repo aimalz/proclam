@@ -398,6 +398,6 @@ def auc(x, y):
 	y = np.concatenate(([0.], y, [1.]),)
 
 	i = np.argsort(x)
-    auc = trapz(y[i], x[i])
+        auc = trapz(y[i], x[i])
 
 	return auc
