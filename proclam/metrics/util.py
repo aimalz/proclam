@@ -141,10 +141,15 @@ def det_to_cm(dets, truth, per_class_norm=True, vb=False):
     -----
     I need to fix the norm keyword all around to enable more options, like normed output vs. not.
     """
+
+    print(truth)
     pred_classes, pred_counts = np.unique(dets, return_counts=True)
     true_classes, true_counts = np.unique(truth, return_counts=True)
+
+
     if vb: print('by request '+str((pred_classes, pred_counts), (true_classes, true_counts)))
 
+    print(pred_classes, true_classes, 'huh')
     M = np.int(max(max(pred_classes), max(true_classes)) + 1)
 
     if vb: print('by request '+str((np.shape(dets), np.shape(truth)), M))
@@ -193,6 +198,7 @@ def prob_to_cm(probs, truth, per_class_norm=True, vb=False):
     """
     dets = prob_to_det(probs)
 
+    print(truth, 'huh 1')
     cm = det_to_cm(dets, truth, per_class_norm=per_class_norm, vb=vb)
 
     return cm
