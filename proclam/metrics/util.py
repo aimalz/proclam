@@ -6,8 +6,9 @@ from __future__ import absolute_import, division
 __all__ = ['sanitize_predictions',
            'weight_sum', 'check_weights', 'averager',
            'cm_to_rate',
+           'auc', 'check_auc_grid',
            'det_to_prob', 'prob_to_det',
-           'det_to_cm', 'prob_to_cm']
+           'det_to_cm']
 
 import collections
 import numpy as np
@@ -222,7 +223,7 @@ def check_auc_grid(grid):
     thresholds_grid: numpy.ndarray, float
         grid of thresholds
     """
-    if type(grid) == list or type(grid) == numpy.ndarray:
+    if type(grid) == list or type(grid) == np.ndarray:
         thresholds_grid = np.array(grid)
     elif type(grid) == float:
         if grid > 0. and grid < 1.:
@@ -234,10 +235,12 @@ def check_auc_grid(grid):
             thresholds_grid = np.linspace(0., 1., grid)
         else:
             thresholds_grid = None
-    if thresholds_grid == None:
+    try:
+        assert thresholds_grid is not None
+        return thresholds_grid
+    except AssertionError:
         print('Please specify a grid, spacing, or density for this AUC metric.')
         return
-    return thresholds_grid
 
 def det_to_prob(dets, prediction=None):
     """
@@ -296,10 +299,9 @@ def prob_to_det(probs, m=None, threshold=None):
         dets = np.argmax(probs, axis=1)
     else:
         try:
-            assert(type(m) == int)
-            assert(type(threshold) == float)
-        except:
-            raise(AssertionError('type(m) must be int, type(threshold) must be float'))
+            assert(type(m) == int and type(threshold) == np.float64)
+        except AssertionError:
+            print(str(m)+' is '+str(type(m))+' and must be int; '+str(threshold)+' is '+str(type(threshold))+' and must be float')
         dets = np.zeros(np.shape(probs)[0])
         dets[probs[:, m] >= threshold] = 1
 
@@ -331,7 +333,7 @@ def det_to_cm(dets, truth, per_class_norm=True, vb=False):
     """
     pred_classes, pred_counts = np.unique(dets, return_counts=True)
     true_classes, true_counts = np.unique(truth, return_counts=True)
-    if vb: print('by request '+str(((pred_classes, pred_counts), (true_classes, true_counts))))
+    # if vb: print('by request '+str(((pred_classes, pred_counts), (true_classes, true_counts))))
 
     M = np.int(max(max(pred_classes), max(true_classes)) + 1)
 
@@ -340,10 +342,13 @@ def det_to_cm(dets, truth, per_class_norm=True, vb=False):
 
     coords = np.array(list(zip(dets, truth)))
     indices, index_counts = np.unique(coords, axis=0, return_counts=True)
+    if vb: print(indices.T, index_counts)
     index_counts = index_counts.astype(int)
+    indices = indices.T.astype(int)
     # if vb: print('by request '+str(index_counts))
     # if vb: print(indices, index_counts)
-    indices = indices.T
+    # indices = indices.T
+    # if vb: print(indices)
     # if vb: print(np.shape(indices))
     cm[indices[0], indices[1]] = index_counts
     # if vb: print(cm)
@@ -355,11 +360,11 @@ def det_to_cm(dets, truth, per_class_norm=True, vb=False):
         # cm /= true_counts[:, np.newaxis] #
         cm = cm / true_counts[np.newaxis, :]
 
-    if vb: print('by request '+str(cm))
+    # if vb: print('by request '+str(cm))
 
     return cm
 
-def prob_to_cm(probs, truth, per_class_norm=True, vb=False):
+# def prob_to_cm(probs, truth, per_class_norm=True, vb=False):
     """
     Turns probabilistic classifications into confusion matrix by taking maximum probability as deterministic class
 
