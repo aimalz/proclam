@@ -43,9 +43,7 @@ class Metric(object):
             value of the metric
         """
 
-
-
-        print('No metric specified: returning true positive rate based on maximum value')
+        print('No metric specified')
         #
         # mode = np.argmax(prediction, axis=1)
         # metric = len(np.where(truth == mode))
