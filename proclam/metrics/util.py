@@ -11,7 +11,7 @@ __all__ = ['sanitize_predictions',
 
 import collections
 import numpy as np
-import pycm
+# import pycm
 import sys
 from scipy.integrate import trapz
 
@@ -208,6 +208,37 @@ def auc(x, y):
     auc = trapz(y[i], x[i])
     return auc
 
+def check_auc_grid(grid):
+    """
+    Checks if a grid for an AUC metric is valid
+
+    Parameters
+    ----------
+    grid: numpy.ndarray, float or float or int
+        array of values between 0 and 1 at which to evaluate AUC or grid spacing or number of grid points
+
+    Returns
+    -------
+    thresholds_grid: numpy.ndarray, float
+        grid of thresholds
+    """
+    if type(grid) == list or type(grid) == numpy.ndarray:
+        thresholds_grid = np.array(grid)
+    elif type(grid) == float:
+        if grid > 0. and grid < 1.:
+            thresholds_grid = np.arange(0., 1., grid)
+        else:
+            thresholds_grid = None
+    elif type(grid) == int:
+        if grid > 0:
+            thresholds_grid = np.linspace(0., 1., grid)
+        else:
+            thresholds_grid = None
+    if thresholds_grid == None:
+        print('Please specify a grid, spacing, or density for this AUC metric.')
+        return
+    return thresholds_grid
+
 def det_to_prob(dets, prediction=None):
     """
     Reformats vector of class assignments into matrix with 1 at true/assigned class and zero elsewhere
@@ -373,8 +404,8 @@ def prob_to_cm(probs, truth, per_class_norm=True, vb=False):
 #
 # 	return tpr,fpr
 
-def recall(rates):
-    return 1. - rates.FNR
+# def recall(rates):
+#     return 1. - rates.FNR
 
 # def recall(rates):
 #     """
