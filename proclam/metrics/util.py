@@ -159,8 +159,8 @@ def cm_to_rate(cm, vb=False):
     """
     # if vb: print('by request cm '+str(cm))
     tot = np.sum(cm)
-    tra = np.trace(cm)
-    # if vb: print('by request sum, trace '+str((tot, tra)))
+    mask = range(len(cm))
+    # if vb: print('by request sum '+str(tot))
 
     T = np.sum(cm, axis=1)
     F = tot[np.newaxis] - T
@@ -170,12 +170,10 @@ def cm_to_rate(cm, vb=False):
 
     TP = np.diag(cm)
     FN = P - TP
-    FP = T - TP#np.sum(cm - np.diag(cm)[:,np.newaxis], axis=0)# np.sum(np.tril(cm), 1), axis=1)
-    TN = F - FN#np.sum(cm - np.diag(cm)[np.newaxis], axis=1)# np.sum(np.triu(cm, 1), axis=0)
+    TN = F - FN
+    FP = T - TP
     # if vb: print('by request TP, FP, FN, TN'+str((TP, FP, FN, TN)))
 
-    # P = TP + FP
-    # N = TN + FN
     TPR = TP / P
     FPR = FP / N
     FNR = FN / P
@@ -307,7 +305,7 @@ def prob_to_det(probs, m=None, threshold=None):
 
     return dets
 
-def det_to_cm(dets, truth, per_class_norm=True, vb=False):
+def det_to_cm(dets, truth, per_class_norm=False, vb=False):
     """
     Converts deterministic classifications and truth into confusion matrix
 
@@ -338,29 +336,19 @@ def det_to_cm(dets, truth, per_class_norm=True, vb=False):
     M = np.int(max(max(pred_classes), max(true_classes)) + 1)
 
     # if vb: print('by request '+str((np.shape(dets), np.shape(truth)), M))
-    cm = np.zeros((M, M), dtype=float)
+    cm = np.zeros((M, M), dtype=int)
 
     coords = np.array(list(zip(dets, truth)))
     indices, index_counts = np.unique(coords, axis=0, return_counts=True)
     if vb: print(indices.T, index_counts)
     index_counts = index_counts.astype(int)
     indices = indices.T.astype(int)
-    # if vb: print('by request '+str(index_counts))
-    # if vb: print(indices, index_counts)
-    # indices = indices.T
-    # if vb: print(indices)
-    # if vb: print(np.shape(indices))
     cm[indices[0], indices[1]] = index_counts
-    # if vb: print(cm)
 
     if per_class_norm:
-        # print(type(cm))
-        # print(type(true_counts))
-        # cm = cm / true_counts
-        # cm /= true_counts[:, np.newaxis] #
-        cm = cm / true_counts[np.newaxis, :]
+        cm = cm.astype(float) / true_counts[np.newaxis, :].astype(float)
 
-    # if vb: print('by request '+str(cm))
+    if vb: print('by request '+str(cm))
 
     return cm
 
