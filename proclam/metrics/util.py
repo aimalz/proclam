@@ -6,7 +6,7 @@ from __future__ import absolute_import, division
 __all__ = ['sanitize_predictions',
            'weight_sum', 'check_weights', 'averager',
            'cm_to_rate',
-           'auc', 'check_auc_grid',
+           'auc', 'check_auc_grid', 'prep_curve',
            'det_to_prob', 'prob_to_det',
            'det_to_cm']
 
@@ -155,9 +155,10 @@ def cm_to_rate(cm, vb=False):
     -----
     This can be done with a mask to weight the classes differently here.
     """
+    cm = cm.astype(float)
     # if vb: print('by request cm '+str(cm))
     tot = np.sum(cm)
-    mask = range(len(cm))
+    # mask = range(len(cm))
     # if vb: print('by request sum '+str(tot))
 
     T = np.sum(cm, axis=1)
@@ -183,6 +184,29 @@ def cm_to_rate(cm, vb=False):
 
     return rates
 
+def prep_curve(x, y):
+    """
+    Makes a curve for AUC
+
+    Parameters
+    ----------
+    x: numpy.ndarray, float
+        x-axis
+    y: numpy.ndarray, float
+        y-axis
+
+    Returns
+    -------
+    x: numpy.ndarray, float
+        x-axis
+    y: numpy.ndarray, float
+        y-axis
+    """
+    x = np.concatenate(([0.], x, [1.]),)
+    y = np.concatenate(([0.], y, [1.]),)
+    i = np.argsort(x)
+    return (x[i], y[i])
+
 def auc(x, y):
     """
     Computes the area under curve (just a wrapper for trapezoid rule)
@@ -199,10 +223,8 @@ def auc(x, y):
     auc: float
         the area under the curve
     """
-    # x = np.concatenate(([0.], x, [1.]),)
-    # y = np.concatenate(([0.], y, [1.]),)
-    i = np.argsort(x)
-    auc = trapz(y[i], x[i])
+    (x, y) = prep_curve(x, y)
+    auc = trapz(y, x)
     return auc
 
 def check_auc_grid(grid):
@@ -233,7 +255,7 @@ def check_auc_grid(grid):
             thresholds_grid = None
     try:
         assert thresholds_grid is not None
-        return thresholds_grid
+        return np.sort(thresholds_grid)
     except AssertionError:
         print('Please specify a grid, spacing, or density for this AUC metric.')
         return
@@ -298,7 +320,7 @@ def prob_to_det(probs, m=None, threshold=None):
             assert(type(m) == int and type(threshold) == np.float64)
         except AssertionError:
             print(str(m)+' is '+str(type(m))+' and must be int; '+str(threshold)+' is '+str(type(threshold))+' and must be float')
-        dets = np.zeros(np.shape(probs)[0])
+        dets = np.zeros(np.shape(probs)[0]).astype(int)
         dets[probs[:, m] >= threshold] = 1
 
     return dets
