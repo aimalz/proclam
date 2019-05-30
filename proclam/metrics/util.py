@@ -43,17 +43,16 @@ def sanitize_predictions(predictions, epsilon=1.e-8):
     predictions = predictions / np.sum(predictions, axis=1)[:, np.newaxis]
     return predictions
 
-def weight_sum(per_class_metrics, weight_vector, norm=True):
+def weight_sum(per_class_metrics, weight_vector):
     """
     Calculates the weighted metric
 
     Parameters
     ----------
-    per_class_metrics: numpy.float
-        the scores separated by class (a list of arrays)
-    weight_vector: numpy.ndarray floar
-        The array of weights per class
-    norm: boolean, optional
+    per_class_metrics: numpy.ndarray, float
+        vector of per-class scores
+    weight_vector: numpy.ndarray, float
+        vector of per-class weights
 
     Returns
     -------
@@ -61,7 +60,6 @@ def weight_sum(per_class_metrics, weight_vector, norm=True):
         The weighted metric
     """
     weight_sum = np.dot(weight_vector, per_class_metrics)
-
     return weight_sum
 
 def check_weights(avg_info, M, chosen=None, truth=None):
@@ -191,9 +189,9 @@ def auc(x, y):
 
     Parameters
     ----------
-    x: numpy.ndarray, int or float
+    x: numpy.ndarray, float
         x-axis
-    y: numpy.ndarray, int or float
+    y: numpy.ndarray, float
         y-axis
 
     Returns
@@ -201,8 +199,8 @@ def auc(x, y):
     auc: float
         the area under the curve
     """
-    x = np.concatenate(([0.], x, [1.]),)
-    y = np.concatenate(([0.], y, [1.]),)
+    # x = np.concatenate(([0.], x, [1.]),)
+    # y = np.concatenate(([0.], y, [1.]),)
     i = np.argsort(x)
     auc = trapz(y[i], x[i])
     return auc
@@ -222,7 +220,7 @@ def check_auc_grid(grid):
         grid of thresholds
     """
     if type(grid) == list or type(grid) == np.ndarray:
-        thresholds_grid = np.array(grid)
+        thresholds_grid = np.concatenate((np.zeros(1), np.array(grid), np.ones(1)))
     elif type(grid) == float:
         if grid > 0. and grid < 1.:
             thresholds_grid = np.arange(0., 1., grid)
@@ -353,30 +351,30 @@ def det_to_cm(dets, truth, per_class_norm=False, vb=False):
     return cm
 
 # def prob_to_cm(probs, truth, per_class_norm=True, vb=False):
-    """
-    Turns probabilistic classifications into confusion matrix by taking maximum probability as deterministic class
-
-    Parameters
-    ----------
-    probs: numpy.ndarray, float
-        N * M matrix of class probabilities
-    truth: numpy.ndarray, int
-        N-dimensional vector of true classes
-    per_class_norm: boolean, optional
-        equal weight per class if True, equal weight per object if False
-    vb: boolean, optional
-        if True, print cm
-
-    Returns
-    -------
-    cm: numpy.ndarray, int
-        confusion matrix
-    """
-    dets = prob_to_det(probs)
-
-    cm = det_to_cm(dets, truth, per_class_norm=per_class_norm, vb=vb)
-
-    return cm
+#     """
+#     Turns probabilistic classifications into confusion matrix by taking maximum probability as deterministic class
+#
+#     Parameters
+#     ----------
+#     probs: numpy.ndarray, float
+#         N * M matrix of class probabilities
+#     truth: numpy.ndarray, int
+#         N-dimensional vector of true classes
+#     per_class_norm: boolean, optional
+#         equal weight per class if True, equal weight per object if False
+#     vb: boolean, optional
+#         if True, print cm
+#
+#     Returns
+#     -------
+#     cm: numpy.ndarray, int
+#         confusion matrix
+#     """
+#     dets = prob_to_det(probs)
+#
+#     cm = det_to_cm(dets, truth, per_class_norm=per_class_norm, vb=vb)
+#
+#     return cm
 
 # def det_to_rate(dets, truth, per_class_norm=True, vb=False):
 #     cm = det_to_cm(dets, truth, per_class_norm=per_class_norm, vb=vb)
