@@ -1,75 +1,88 @@
 """
-A superclass for metrics
+A class for the Precision-Recall Curve
 """
 
 from __future__ import absolute_import
-__all__ = ['Metric']
+__all__ = ['PRC']
 
 import numpy as np
 
-from .util import weight_sum
-from .util import check_weights
-from .util import prob_to_det_threshold
-from .util import auc, precision, recall
-from scipy.integrate import trapz
-from sklearn.metrics import precision_recall_curve
+from .util import weight_sum, check_weights
+from .util import prob_to_det, det_to_cm, cm_to_rate
+from .util import auc, check_auc_grid, prep_curve
+from .metric import Metric
 
-class Metric(object):
+class PRC(Metric):
 
-	def __init__(self, scheme=None, **kwargs):
-		"""
-		An object that evaluates the F-score
+    def __init__(self, scheme=None):
+        """
+        An object that evaluates the PRC metric
 
-		Parameters
-		----------
-		scheme: string
-			the name of the metric
-		"""
+        Parameters
+        ----------
+        scheme: string
+            the name of the metric
+        """
+        super(PRC, self).__init__(scheme)
+        self.scheme = scheme
 
-		self.debug = False
-		self.scheme = scheme
+    def evaluate(self, prediction, truth, grid, averaging='per_class', vb=False):
+        """
+        Evaluates the area under the ROC for a given class_idx
 
-	def evaluate(self, prediction, truth, gridspace=0.01, weights=None, **kwds):
-		"""
-		Evaluates the area under the ROC curve for a given class_idx
+        Parameters
+        ----------
+        prediction: numpy.ndarray, float
+            predicted class probabilities
+        truth: numpy.ndarray, int
+            true classes
+        grid: numpy.ndarray, float or float or int
+            array of values between 0 and 1 at which to evaluate ROC
+        averaging: string or numpy.ndarray, float
+            'per_class' weights classes equally, other keywords possible, vector assumed to be class weights
 
-		Parameters
-		----------
-		prediction: numpy.ndarray, float
-			predicted class probabilities
-		truth: numpy.ndarray, int
-			true classes
-		weights: numpy.ndarray, float
-			per-class weights
+        Returns
+        -------
+        auc_allclass: float
+            value of the metric
+        """
+        thresholds_grid = check_auc_grid(grid)
+        n_thresholds = len(thresholds_grid)
 
-		Returns
-		-------
-		metric: float
-			value of the metric
-		"""
-		
-		auc_allclass = 0
-		n_class = np.shape(prediction)[1]
-		if not weights:
-			weights = [1./n_class]*n_class
-		
-		for class_idx in range(n_class):
-			if not len(np.where(truth == class_idx)[0]):
-				raise RuntimeError('No true values for class %i so ROC is undefined'%class_idx)
-			
-			truth_bool = np.zeros(len(truth),dtype=bool)
-			truth_bool[truth == class_idx] = 1
-			P,R,thresholds_grid = precision_recall_curve(truth_bool,prediction[:,class_idx])
-				
-			auc_class = auc(R,P)
+        prediction, truth = np.asarray(prediction), np.asarray(truth)
+        (N, M) = np.shape(prediction)
 
-			if self.debug:
-				import pylab as plt
-				plt.clf()
-				plt.plot(R,P)
-				plt.show()
-				import pdb; pdb.set_trace()
+        auc_class = np.empty(M)
+        curve = np.empty((M, 2, n_thresholds))
 
-			auc_allclass += auc_class*weights[class_idx]
-				
-		return auc_allclass
+        for m in range(M):
+            m_truth = (truth == m).astype(int)
+
+            if not len(np.where(truth == m)[0]):
+                raise RuntimeError('No true values for class %i so PRC is undefined'%m)
+
+            precision, recall = np.empty(n_thresholds), np.empty(n_thresholds)
+            for i, t in enumerate(thresholds_grid):
+                dets = prob_to_det(prediction, m, threshold=t)
+                cm = det_to_cm(dets, m_truth)
+                rates = cm_to_rate(cm)
+                recall[i] = rates.TP[-1] / (rates.TP[-1] + rates.FN[-1])
+                precision[i] = self._mask_precision(rates.TP[-1] / (rates.TP[-1] + rates.FP[-1]))
+
+            (curve[m][0], curve[m][1]) = (recall, precision)
+            auc_class[m] = auc(recall, precision)
+        if np.any(np.isnan(curve)):
+            print('Where did these NaNs come from?')
+            return (curve)
+
+        weights = check_weights(averaging, M, truth=truth)
+        auc_allclass = weight_sum(auc_class, weights)
+
+        if vb: return curve
+        else: return auc_allclass
+
+    def _mask_precision(self, precision):
+        if np.isnan(precision):
+            return 0.
+        else:
+            return precision

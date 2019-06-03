@@ -16,7 +16,7 @@ import numpy as np
 import sys
 from scipy.integrate import trapz
 
-RateMatrix = collections.namedtuple('rates', 'TPR FPR FNR TNR')
+RateMatrix = collections.namedtuple('rates', 'TPR FPR FNR TNR TP FP FN TN')
 
 def sanitize_predictions(predictions, epsilon=1.e-8):
     """
@@ -110,6 +110,7 @@ def check_weights(avg_info, M, chosen=None, truth=None):
             weights[chosen] = 1./np.float(M)
     else:
         print('something has gone wrong with avg_info '+str(avg_info))
+        weights = None
     return weights
 
 def averager(per_object_metrics, truth, M, vb=False):
@@ -179,7 +180,7 @@ def cm_to_rate(cm, vb=False):
     TNR = TN / N
     # if vb: print('by request TPR, FPR, FNR, TNR'+str((TPR, FPR, FNR, TNR)))
 
-    rates = RateMatrix(TPR=TPR, FPR=FPR, FNR=FNR, TNR=TNR)
+    rates = RateMatrix(TPR=TPR, FPR=FPR, FNR=FNR, TNR=TNR, TP=TP, FN=FN, TN=TN, FP=FP)
     # if vb: print('by request TPR, FPR, FNR, TNR '+str(rates))
 
     return rates
@@ -204,8 +205,7 @@ def prep_curve(x, y):
     """
     x = np.concatenate(([0.], x, [1.]),)
     y = np.concatenate(([0.], y, [1.]),)
-    i = np.argsort(x)
-    return (x[i], y[i])
+    return (x, y)
 
 def auc(x, y):
     """
@@ -223,8 +223,8 @@ def auc(x, y):
     auc: float
         the area under the curve
     """
-    (x, y) = prep_curve(x, y)
-    auc = trapz(y, x)
+    i = np.argsort(x)
+    auc = trapz(y[i], x[i])
     return auc
 
 def check_auc_grid(grid):
