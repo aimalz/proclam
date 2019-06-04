@@ -16,7 +16,7 @@ class PRC(Metric):
 
     def __init__(self, scheme=None):
         """
-        An object that evaluates the PRC metric
+        An object that evaluates the PRC AUC
 
         Parameters
         ----------
@@ -28,7 +28,7 @@ class PRC(Metric):
 
     def evaluate(self, prediction, truth, grid, averaging='per_class', vb=False):
         """
-        Evaluates the area under the ROC for a given class_idx
+        Evaluates the area under the PRC
 
         Parameters
         ----------

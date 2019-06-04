@@ -28,7 +28,7 @@ class ROC(Metric):
 
     def evaluate(self, prediction, truth, grid, averaging='per_class', vb=False):
         """
-        Evaluates the area under the ROC for a given class_idx
+        Evaluates the ROC AUC
 
         Parameters
         ----------

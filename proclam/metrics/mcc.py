@@ -1,9 +1,9 @@
 """
-A class for the F1 score
+A class for the Matthews correlation coefficient
 """
 
 from __future__ import absolute_import
-__all__ = ['F1']
+__all__ = ['MCC']
 
 import numpy as np
 
@@ -12,23 +12,23 @@ from .util import prob_to_det, det_to_cm, cm_to_rate
 from .util import precision
 from .metric import Metric
 
-class F1(Metric):
+class MCC(Metric):
 
     def __init__(self, scheme=None):
         """
-        An object that evaluates the F1 score
+        An object that evaluates the Matthews correlation coefficient
 
         Parameters
         ----------
         scheme: string
             the name of the metric
         """
-        super(F1, self).__init__(scheme)
+        super(MCC, self).__init__(scheme)
         self.scheme = scheme
 
     def evaluate(self, prediction, truth, averaging='per_class'):
         """
-        Evaluates the F1 score
+        Evaluates the Matthews correlation coefficient
 
         Parameters
         ----------
@@ -47,17 +47,22 @@ class F1(Metric):
         prediction, truth = np.asarray(prediction), np.asarray(truth)
         (N, M) = np.shape(prediction)
 
-        for m in range(M):
-            if not len(np.where(truth == m)[0]):
-                raise RuntimeError('No true values for class %i so F1 is undefined'%m)
         dets = prob_to_det(prediction)
         cm = det_to_cm(dets, truth)
         rates = cm_to_rate(cm)
-        r = rates.TPR
-        p = precision(rates.TP, rates.FP)
-        f1 = 2 * p * r / (p + r)
+
+        mcc = np.empty(M)
+        for m in range(M):
+            if not len(np.where(truth == m)[0]):
+                raise RuntimeError('No true values for class %i so MCC is undefined'%m)
+            num = rates.TP[m] * rates.TN[m] - rates.FP[m] * rates.FN[m]
+            A = rates.TP[m] + rates.FP[m]
+            B = rates.TP[m] + rates.FN[m]
+            C = rates.TN[m] + rates.FP[m]
+            D = rates.TN[m] + rates.FN[m]
+            mcc[m] = num / np.sqrt(A * B * C * D)
 
         weights = check_weights(averaging, M, truth=truth)
-        f1_all = weight_sum(f1, weights)
+        mcc_all = weight_sum(mcc, weights)
 
-        return f1_all
+        return mcc_all
