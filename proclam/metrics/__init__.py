@@ -8,3 +8,4 @@ from .roc import *
 from .prc import *
 from .f1 import *
 from .mcc import *
+from .accuracy import *

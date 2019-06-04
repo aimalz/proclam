@@ -41,7 +41,7 @@ class F1(Metric):
 
         Returns
         -------
-        f1: float
+        f1_all: float
             value of the metric
         """
         prediction, truth = np.asarray(prediction), np.asarray(truth)
