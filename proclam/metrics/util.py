@@ -452,11 +452,10 @@ def precision(TP, FP):
     p: float
         precision
     """
-    p = TP / (TP + FP)
-    if np.isnan(p):
-        return 0.
-    else:
-        return p
+    p = np.asarray(TP / (TP + FP))
+    if np.any(np.isnan(p)):
+        p[np.isnan(p)] = 0.
+    return p
 #
 # def recall(classifications,truth,class_idx):
 #
