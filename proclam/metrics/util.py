@@ -5,7 +5,7 @@ Utility functions for PLAsTiCC metrics
 from __future__ import absolute_import, division
 __all__ = ['sanitize_predictions',
            'weight_sum', 'check_weights', 'averager',
-           'cm_to_rate',
+           'cm_to_rate', 'precision',
            'auc', 'check_auc_grid', 'prep_curve',
            'det_to_prob', 'prob_to_det',
            'det_to_cm']
@@ -436,21 +436,27 @@ def det_to_cm(dets, truth, per_class_norm=False, vb=False):
 #     """
 #     return 1. - rates.FNR
 
-# def precision(rates):
-#     """
-#     Calculates precision from rates
-#
-#     Parameters
-#     ----------
-#     rates: namedtuple
-#         named tuple of 'TPR FPR FNR TNR'
-#
-#     Returns
-#     -------
-#     precision: float
-#         precision
-#     """
-# 	return 1. - rates.FNR
+def precision(TP, FP):
+    """
+    Calculates precision from rates
+
+    Parameters
+    ----------
+    TP: float
+        number of true positives
+    FP: float
+        number of false positives
+
+    Returns
+    -------
+    p: float
+        precision
+    """
+    p = TP / (TP + FP)
+    if np.isnan(p):
+        return 0.
+    else:
+        return p
 #
 # def recall(classifications,truth,class_idx):
 #

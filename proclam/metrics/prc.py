@@ -9,7 +9,7 @@ import numpy as np
 
 from .util import weight_sum, check_weights
 from .util import prob_to_det, det_to_cm, cm_to_rate
-from .util import auc, check_auc_grid, prep_curve
+from .util import auc, check_auc_grid, precision
 from .metric import Metric
 
 class PRC(Metric):
@@ -61,28 +61,22 @@ class PRC(Metric):
             if not len(np.where(truth == m)[0]):
                 raise RuntimeError('No true values for class %i so PRC is undefined'%m)
 
-            precision, recall = np.empty(n_thresholds), np.empty(n_thresholds)
+            precisions, recalls = np.empty(n_thresholds), np.empty(n_thresholds)
             for i, t in enumerate(thresholds_grid):
                 dets = prob_to_det(prediction, m, threshold=t)
                 cm = det_to_cm(dets, m_truth)
                 rates = cm_to_rate(cm)
-                recall[i] = rates.TP[-1] / (rates.TP[-1] + rates.FN[-1])
-                precision[i] = self._mask_precision(rates.TP[-1] / (rates.TP[-1] + rates.FP[-1]))
+                recalls[i] = rates.TPR[-1]
+                precisions[i] = precision(rates.TP[-1], rates.FP[-1])
 
-            (curve[m][0], curve[m][1]) = (recall, precision)
-            auc_class[m] = auc(recall, precision)
+            (curve[m][0], curve[m][1]) = (recalls, precisions)
+            auc_class[m] = auc(recalls, precisions)
         if np.any(np.isnan(curve)):
             print('Where did these NaNs come from?')
-            return (curve)
+            return curve
 
         weights = check_weights(averaging, M, truth=truth)
         auc_allclass = weight_sum(auc_class, weights)
 
         if vb: return curve
         else: return auc_allclass
-
-    def _mask_precision(self, precision):
-        if np.isnan(precision):
-            return 0.
-        else:
-            return precision

@@ -69,10 +69,11 @@ class ROC(Metric):
                 fpr[i], tpr[i] = rates.FPR[-1], rates.TPR[-1]
 
             (curve[m][0], curve[m][1]) = (fpr, tpr)
+            (fpr, tpr) = prep_curve(fpr, tpr)
             auc_class[m] = auc(fpr, tpr)
 
         weights = check_weights(averaging, M, truth=truth)
         auc_allclass = weight_sum(auc_class, weights)
 
         if vb: return curve
-        else: return auc_class
+        else: return auc_allclass
