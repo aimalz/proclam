@@ -27,7 +27,7 @@ class Brier(Metric):
 
         super(Brier, self).__init__(scheme)
 
-    def evaluate(self, prediction, truth, averaging='per_class'):
+    def evaluate(self, prediction, truth, weightvector, averaging='per_class'):
         """
         Evaluates the Brier score
 
@@ -37,6 +37,8 @@ class Brier(Metric):
             predicted class probabilities
         truth: numpy.ndarray, int
             true classes
+        wieghtvec: numpy.ndarray, int
+            relative weights
         averaging: string, optional
             'per_class' weights classes equally, other keywords possible
             vector assumed to be class weights
@@ -60,7 +62,9 @@ class Brier(Metric):
         q_each = (prediction - truth_mask) ** 2
 
         class_brier = averager(q_each, truth, M)
-        metric = weight_sum(class_brier, weight_vector=weights)
+        weight_vector=weights*weightvector
+
+        metric = weight_sum(class_brier, weight_vector)
 
         assert(~np.isnan(metric))
 

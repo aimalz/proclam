@@ -30,7 +30,7 @@ class LogLoss(Metric):
         super(LogLoss, self).__init__(scheme)
         self.scheme = scheme
 
-    def evaluate(self, prediction, truth, averaging='per_class'):
+    def evaluate(self, prediction, truth, weightvector, averaging='per_class'):
         """
         Evaluates the log-loss
 
@@ -40,6 +40,8 @@ class LogLoss(Metric):
             predicted class probabilities
         truth: numpy.ndarray, int
             true classes
+        weightvector: numpy.ndarray, float
+            per class weights
         averaging: string or numpy.ndarray, float
             'per_class' weights classes equally, other keywords possible
             vector assumed to be class weights
@@ -53,11 +55,14 @@ class LogLoss(Metric):
         -----
         This uses the natural log.
         """
+        print(weightvector, 'checking')
+
         prediction, truth = np.asarray(prediction), np.asarray(truth)
         prediction_shape = np.shape(prediction)
         (N, M) = prediction_shape
 
         weights = check_weights(averaging, M, truth=truth)
+        print('average weights', weights)
         truth_mask = truth_reformatter(truth, prediction)
 
         prediction = sanitize_predictions(prediction)
@@ -67,8 +72,9 @@ class LogLoss(Metric):
 
         # use a better structure for checking keyword support
         class_logloss = averager(logloss_each, truth, M)
-
-        logloss = weight_sum(class_logloss, weight_vector=weights)
+        weight_vector = weights*weightvector
+        print('ok ready to go', weight_vector)
+        logloss = weight_sum(class_logloss, weight_vector=weight_vector) #=weights)
 
         assert(~np.isnan(logloss))
 

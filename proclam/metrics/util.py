@@ -142,29 +142,32 @@ def det_to_cm(dets, truth, per_class_norm=True, vb=False):
     I need to fix the norm keyword all around to enable more options, like normed output vs. not.
     """
 
-    print(truth)
     pred_classes, pred_counts = np.unique(dets, return_counts=True)
     true_classes, true_counts = np.unique(truth, return_counts=True)
 
-
     if vb: print('by request '+str((pred_classes, pred_counts), (true_classes, true_counts)))
 
-    print(pred_classes, true_classes, 'huh')
+#    print(pred_classes, true_classes, 'huh')
     M = np.int(max(max(pred_classes), max(true_classes)) + 1)
 
     if vb: print('by request '+str((np.shape(dets), np.shape(truth)), M))
     cm = np.zeros((M, M), dtype=float)
 
     coords = np.array(list(zip(dets, truth)))
+#    print(coords, 'huzzah')
+    #print(np.shape(coords), 'shape coords')
     indices, index_counts = np.unique(coords, axis=0, return_counts=True)
     index_counts = index_counts.astype(int)
+    #print(index_counts, 'index_counts')
+    #print(indices, 'indices')
     if vb: print('by request '+str(index_counts))
     # if vb: print(indices, index_counts)
     indices = indices.T
     # if vb: print(np.shape(indices))
+    #print(cm, 'yo')
     cm[indices[0], indices[1]] = index_counts
-    # if vb: print(cm)
-
+    #if vb: print(cm)
+    #print(cm, 'hi')
     if per_class_norm:
         # print(type(cm))
         # print(type(true_counts))
@@ -198,7 +201,7 @@ def prob_to_cm(probs, truth, per_class_norm=True, vb=False):
     """
     dets = prob_to_det(probs)
 
-    print(truth, 'huh 1')
+#    print(truth, 'huh 1')
     cm = det_to_cm(dets, truth, per_class_norm=per_class_norm, vb=vb)
 
     return cm
@@ -268,7 +271,7 @@ def weight_sum(per_class_metrics, weight_vector, norm=True):
     ----------
     per_class_metrics: numpy.float
         the scores separated by class (a list of arrays)
-    weight_vector: numpy.ndarray floar
+    weight_vector: numpy.ndarray float
         The array of weights per class
     norm: boolean, optional
 
@@ -279,6 +282,7 @@ def weight_sum(per_class_metrics, weight_vector, norm=True):
     """
     weight_sum = np.dot(weight_vector, per_class_metrics)
 
+    #print(weight_sum, 'weight_sum')
     return weight_sum
 
 def check_weights(avg_info, M, chosen=None, truth=None):
