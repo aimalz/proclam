@@ -30,7 +30,7 @@ class LogLoss(Metric):
         super(LogLoss, self).__init__(scheme)
         self.scheme = scheme
 
-    def evaluate(self, prediction, truth, averaging='per_class'):
+    def evaluate(self, prediction, truth, averaging='per_class', vb=False):
         """
         Evaluates the log-loss
 
@@ -72,4 +72,5 @@ class LogLoss(Metric):
 
         assert(~np.isnan(logloss))
 
-        return logloss
+        if vb: return class_logloss
+        else: return logloss

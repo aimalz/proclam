@@ -25,7 +25,7 @@ class MCC(Metric):
         super(MCC, self).__init__(scheme)
         self.scheme = scheme
 
-    def evaluate(self, prediction, truth, averaging='per_class'):
+    def evaluate(self, prediction, truth, averaging='per_class', vb=False):
         """
         Evaluates the Matthews correlation coefficient
 
@@ -64,4 +64,5 @@ class MCC(Metric):
         weights = check_weights(averaging, M, truth=truth)
         mcc_all = weight_sum(mcc, weights)
 
-        return mcc_all
+        if vb: return mcc
+        else: return mcc_all

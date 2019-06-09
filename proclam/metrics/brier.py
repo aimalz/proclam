@@ -27,7 +27,7 @@ class Brier(Metric):
 
         super(Brier, self).__init__(scheme)
 
-    def evaluate(self, prediction, truth, averaging='per_class'):
+    def evaluate(self, prediction, truth, averaging='per_class', vb=False):
         """
         Evaluates the Brier score
 
@@ -64,4 +64,5 @@ class Brier(Metric):
 
         assert(~np.isnan(metric))
 
-        return metric
+        if vb: return class_brier
+        else: return metric

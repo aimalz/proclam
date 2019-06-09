@@ -78,5 +78,5 @@ class PRC(Metric):
         weights = check_weights(averaging, M, truth=truth)
         auc_allclass = weight_sum(auc_class, weights)
 
-        if vb: return curve
+        if vb: return auc_class, curve
         else: return auc_allclass

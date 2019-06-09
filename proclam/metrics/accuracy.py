@@ -25,7 +25,7 @@ class Accuracy(Metric):
         super(Accuracy, self).__init__(scheme)
         self.scheme = scheme
 
-    def evaluate(self, prediction, truth, averaging='per_class'):
+    def evaluate(self, prediction, truth, averaging='per_class', vb=False):
         """
         Evaluates the accuracy
 
@@ -54,4 +54,5 @@ class Accuracy(Metric):
         weights = check_weights(averaging, M, truth=truth)
         accuracy_all = weight_sum(accuracy, weights)
 
-        return accuracy_all
+        if vb: return accuracy
+        else: return accuracy_all

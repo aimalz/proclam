@@ -26,7 +26,7 @@ class F1(Metric):
         super(F1, self).__init__(scheme)
         self.scheme = scheme
 
-    def evaluate(self, prediction, truth, averaging='per_class'):
+    def evaluate(self, prediction, truth, averaging='per_class', vb=False):
         """
         Evaluates the F1 score
 
@@ -60,4 +60,5 @@ class F1(Metric):
         weights = check_weights(averaging, M, truth=truth)
         f1_all = weight_sum(f1, weights)
 
-        return f1_all
+        if vb: return f1
+        else: return f1_all
