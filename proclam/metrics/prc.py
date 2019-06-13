@@ -8,7 +8,7 @@ __all__ = ['PRC']
 import numpy as np
 
 from .util import weight_sum, check_weights
-from .util import prob_to_det, det_to_cm, cm_to_rate
+from .util import prob_to_det, det_to_cm, cm_to_rate, prob_to_rate
 from .util import auc, check_auc_grid, precision
 from .metric import Metric
 
@@ -25,6 +25,21 @@ class PRC(Metric):
         """
         super(PRC, self).__init__(scheme)
         self.scheme = scheme
+
+    # def _quick_eval(self, per_threshold_rates):
+    #     (n_thresholds, M) = np.shape(per_threshold_rates)
+    #     auc_class = np.empty(M)
+    #     curve = np.empty((M, 2, n_thresholds))
+    #
+    #     for m in range(M):
+    #         precisions, recalls = np.empty(n_thresholds), np.empty(n_thresholds)
+    #         precisions = per_threshold_rates[m].TP / (per_threshold_rates[m].TP + per_threshold_rates[m].FP)
+    #         recalls = per_threshold_rates[m].TP / (per_threshold_rates[m].TP + per_threshold_rates[m].FN)
+    #
+    #         (curve[m][0], curve[m][1]) = (recalls, precisions)
+    #         auc_class[m] = auc(recalls, precisions)
+    #
+    #     return auc_class, curve
 
     def evaluate(self, prediction, truth, grid, averaging='per_class', vb=False):
         """
@@ -61,16 +76,23 @@ class PRC(Metric):
             if not len(np.where(truth == m)[0]):
                 raise RuntimeError('No true values for class %i so PRC is undefined'%m)
 
-            precisions, recalls = np.empty(n_thresholds), np.empty(n_thresholds)
-            for i, t in enumerate(thresholds_grid):
-                dets = prob_to_det(prediction, m, threshold=t)
-                cm = det_to_cm(dets, m_truth)
-                rates = cm_to_rate(cm)
-                recalls[i] = rates.TPR[-1]
-                precisions[i] = precision(rates.TP[-1], rates.FP[-1])
+        rates = prob_to_rate(prediction, truth, threshold=grid)
 
+            # precisions, recalls = np.empty(n_thresholds), np.empty(n_thresholds)
+            # # warning: this is insanely slow!
+            # for i, t in enumerate(thresholds_grid):
+            #     dets = prob_to_det(prediction, m, threshold=t)
+            #     cm = det_to_cm(dets, m_truth)
+            #     rates = cm_to_rate(cm)
+            #     recalls[i] = rates.TPR[-1]
+            #     precisions[i] = precision(rates.TP[-1], rates.FP[-1])
+
+        for m in range(M):
+            recalls = rates[m].TPR
+            precisions = precision(rates[m].TP, rates[m].FP)
             (curve[m][0], curve[m][1]) = (recalls, precisions)
             auc_class[m] = auc(recalls, precisions)
+
         if np.any(np.isnan(curve)):
             print('Where did these NaNs come from?')
             return curve

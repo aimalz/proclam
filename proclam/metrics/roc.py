@@ -8,7 +8,7 @@ __all__ = ['ROC']
 import numpy as np
 
 from .util import weight_sum, check_weights
-from .util import prob_to_det, det_to_cm, cm_to_rate
+from .util import prob_to_det, det_to_cm, cm_to_rate, prob_to_rate
 from .util import auc, check_auc_grid, prep_curve
 from .metric import Metric
 
@@ -61,15 +61,20 @@ class ROC(Metric):
             if not len(np.where(truth == m)[0]):
                 raise RuntimeError('No true values for class %i so ROC is undefined'%m)
 
-            tpr, fpr = np.empty(n_thresholds), np.empty(n_thresholds)
-            for i, t in enumerate(thresholds_grid):
-                dets = prob_to_det(prediction, m, threshold=t)
-                cm = det_to_cm(dets, m_truth)
-                rates = cm_to_rate(cm)
-                fpr[i], tpr[i] = rates.FPR[-1], rates.TPR[-1]
+        rates = prob_to_rate(prediction, truth, threshold=grid)
 
+            # tpr, fpr = np.empty(n_thresholds), np.empty(n_thresholds)
+            # for i, t in enumerate(thresholds_grid):
+            #     dets = prob_to_det(prediction, m, threshold=t)
+            #     cm = det_to_cm(dets, m_truth)
+            #     rates = cm_to_rate(cm)
+            #     fpr[i], tpr[i] = rates.FPR[-1], rates.TPR[-1]
+
+        # (fpr, tpr) = prep_curve(fpr, tpr)
+        for m in range(M):
+            fpr = rates[m].FPR
+            tpr = rates[m].TPR
             (curve[m][0], curve[m][1]) = (fpr, tpr)
-            (fpr, tpr) = prep_curve(fpr, tpr)
             auc_class[m] = auc(fpr, tpr)
 
         weights = check_weights(averaging, M, truth=truth)

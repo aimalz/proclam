@@ -56,6 +56,8 @@ class F1(Metric):
         r = rates.TPR
         p = precision(rates.TP, rates.FP)
         f1 = 2 * p * r / (p + r)
+        if np.any(np.isnan(f1)):
+            f1[np.isnan(f1)] = 0.
 
         weights = check_weights(averaging, M, truth=truth)
         f1_all = weight_sum(f1, weights)

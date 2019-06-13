@@ -7,8 +7,8 @@ __all__ = ['sanitize_predictions',
            'weight_sum', 'check_weights', 'averager',
            'cm_to_rate', 'precision',
            'auc', 'check_auc_grid', 'prep_curve',
-           'det_to_prob', 'prob_to_det',
-           'det_to_cm']
+           'det_to_prob', 'det_to_cm',
+           'prob_to_det', 'prob_to_rate']
 
 import collections
 import numpy as np
@@ -17,6 +17,7 @@ import sys
 from scipy.integrate import trapz
 
 RateMatrix = collections.namedtuple('rates', 'TPR FPR FNR TNR TP FP FN TN')
+# rate_type = [('TP', int), ('FP', int), ('FN', int), ('TN', int)]
 
 def sanitize_predictions(predictions, epsilon=1.e-8):
     """
@@ -242,10 +243,10 @@ def check_auc_grid(grid):
         grid of thresholds
     """
     if type(grid) == list or type(grid) == np.ndarray:
-        thresholds_grid = np.concatenate((np.zeros(1), np.array(grid), np.ones(1)))
+        thresholds_grid = np.concatenate((np.zeros(1), np.sort(np.array(grid)), np.ones(1)))
     elif type(grid) == float:
         if grid > 0. and grid < 1.:
-            thresholds_grid = np.arange(0., 1., grid)
+            thresholds_grid = np.arange(0., 1.+grid, grid)
         else:
             thresholds_grid = None
     elif type(grid) == int:
@@ -325,6 +326,55 @@ def prob_to_det(probs, m=None, threshold=None):
 
     return dets
 
+def prob_to_rate(probs, truth, threshold=False):
+    """
+    Converts probabilities into rates given the truth
+
+    Parameters
+    ----------
+    probs: numpy.ndarray, float
+        N * M matrix of class probabilities
+    truth: numpy.ndarray, int
+        M-length vector of true classes
+    threshold: numpy.ndarray, float or float or int, optional
+        optional probability threshold values for generating curves
+
+    Returns
+    -------
+    rates: list, proclam.metrics.util.RateMatrix or proclam.metrics.util.RateMatrix
+        true/false positive/negative rates
+    """
+    if type(threshold) == bool:
+        dets = prob_to_det(probs)
+        cm = det_to_cm(dets, truth)
+        rates = cm_to_rate(cm)
+    else:
+        threshold = check_auc_grid(threshold)
+        (N, M) = np.shape(probs)
+        the_classes, split_by_class = np.unique(truth, return_inverse=True)
+        rates = []
+        for m in range(M):
+            mask = np.ones(N, dtype=bool)
+            mask[split_by_class == m] = 0
+            T_probs = probs[mask, m]
+            F_probs = probs[~mask, m]
+            N_T = len(T_probs)
+            N_F = len(F_probs)
+            # T_sort_ord = np.argsort(T_probs)
+            # F_sort_ord = np.argsort(F_probs)
+            T_sort = np.sort(T_probs)# T_probs[T_sort_ord]
+            F_sort = np.sort(F_probs)# F_probs[F_sort_ord]
+            TP = np.searchsorted(T_sort, np.asarray(threshold), side='right')
+            FN = np.asarray(N_T)[np.newaxis] - TP
+            FP = np.searchsorted(F_sort, np.asarray(threshold), side='right')
+            TN = np.asarray(N_F)[np.newaxis] - FP
+            TPR = TP.astype(float) / float(N_T)
+            FPR = FP.astype(float) / float(N_F)
+            FNR = FN.astype(float) / float(N_T)
+            TNR = TN.astype(float) / float(N_F)
+            rates.append(RateMatrix(TPR=TPR, FPR=FPR, FNR=FNR, TNR=TNR, TP=TP, FN=FN, TN=TN, FP=FP))
+    return rates
+
 def det_to_cm(dets, truth, per_class_norm=False, vb=False):
     """
     Converts deterministic classifications and truth into confusion matrix
@@ -353,9 +403,8 @@ def det_to_cm(dets, truth, per_class_norm=False, vb=False):
     true_classes, true_counts = np.unique(truth, return_counts=True)
     # if vb: print('by request '+str(((pred_classes, pred_counts), (true_classes, true_counts))))
 
-    M = np.int(max(max(pred_classes), max(true_classes)) + 1)
-
     # if vb: print('by request '+str((np.shape(dets), np.shape(truth)), M))
+    M = np.int(max(max(pred_classes), max(true_classes)) + 1)
     cm = np.zeros((M, M), dtype=int)
 
     coords = np.array(list(zip(dets, truth)))
@@ -452,7 +501,7 @@ def precision(TP, FP):
     p: float
         precision
     """
-    p = np.asarray(TP / (TP + FP))
+    p = TP.astype(float) / (TP.astype(float) + FP.astype(float))
     if np.any(np.isnan(p)):
         p[np.isnan(p)] = 0.
     return p
