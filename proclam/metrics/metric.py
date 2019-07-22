@@ -24,7 +24,7 @@ class Metric(object):
 
         self.scheme = scheme
 
-    def evaluate(self, prediction, truth, weights=None, **kwds):
+    def evaluate(self, prediction, truth, weights=None, vb=False, **kwds):
         """
         Evaluates a function of the truth and prediction
 
@@ -36,6 +36,8 @@ class Metric(object):
             true classes
         weights: numpy.ndarray, float
             per-class weights
+        vb: bool, optional
+            print comments to stdout?
 
         Returns
         -------
