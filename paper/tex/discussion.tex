@@ -4,8 +4,9 @@
 The goal of this work is to identify the metric most suited to \plasticc, which seeks classification posteriors of complete light curves similar to those anticipated from \lsst, with an emphasis on classification over all types, rewarding a ``best in show'' classifier rather than focusing on any one class or scientific application.\footnote{At the conclusion of \plasticc, other metrics specific to scientific uses of one or more particular classes will be used to identify ``best in class'' classification procedures that will be useful for more targeted science cases.}
 The weighted log-loss is thus the metric most suited to the current \plasticc\ release.
 
-Future releases of \plasticc\ will focus on different challenges in transient and variable object classification, with metrics appropriate to identifying methodologies that best enable those goals.
-We discuss approaches to identifying optimal metrics for these variations, which may be developed further in future work.
+\changes{Classification of transient and variable objects is important for a variety of scientific objectives. This diversity of scientific goals requires different trade-offs, and must be evaluated using multiple metrics. While we leave addressing such challenges for future releases of \plasticc\, and the identification of appropriate metrics to future work, we end by enumerating some of the science goals and approaches for identifying metrics.} 
+\sout{Future releases of \plasticc\ will focus on different challenges in transient and variable object classification, with metrics appropriate to identifying methodologies that best enable those goals.
+We discuss approaches to identifying optimal metrics for these variations, which may be developed further in future work.}
 
 \subsection{Early classification}
 \label{sec:early}
@@ -35,6 +36,8 @@ For this scientific application, the metric must be chosen to not only maximize 
 % balance the value of the information forgone by a false positive and the value of information forgone by a false negative, and the value placed on these is effectively weighted by the value we as researchers place on follow-up resources.
 % \aim{Ciite some deterministic metrics relating to TP/FP?}
 
+\subsection{Anomaly Detection}
+\label{sec:anom}
 Anomaly detection also gains information only from true positives, but the cost function is different in that the potential gain of information from a true positive, since there is no information about undiscovered classes ahead of time.
 An example would be the recent detection of a kilonova, flagged initially by the detection of gravitational waves from an object.
 
