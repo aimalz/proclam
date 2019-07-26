@@ -44,6 +44,24 @@ The pseudo-purity can be interpreted as the traditional purity when $r = 1$ as i
 % \aim{TODO: write about AUC so it can be included in results since Michelle calculated it for us!}
 % While commonly-used metrics like Receiver Operator Characteristic (ROC) curve (which maps the true positive rate against the false positive rate) and the area under the curve (AUC) can be used to infer probabilities from such classifiers, the fact that \plasticc\ is by construction simulating multiple types of objects makes the extension of ROC as a metric infeasible.
 
+\subsection{Deterministic metrics}
+\subsubsection{$\mathrm{F_1}$ Score}
+
+The $\mathrm{F_1}$ Score describes the accuracy of a classifier by taking into account both the precision and the recall. For a binary classification, the $\mathrm{F_1}$ score is defined as:
+
+\begin{equation}
+F_1 = \big(\frac{\mathrm{recall}^{-1} + \mathrm{precision}^{-1}}{2}\big)^{-1} = 2 \cdot \frac{\mathrm{precision}\cdot\mathrm{recall}}{\mathrm{precision} + \mathrm{recall}}
+\end{equation}
+
+where the precision and recall is defined in terms of the true positive ($\mathrm{TP}$), false positive ($\mathrm{FP}$), and false negative ($\mathrm{FN}$) of a binary classification: 
+\begin{equation}
+\mathrm{precision} = \frac{\mathrm{TP}}{\mathrm{TP}+\mathrm{FP}} ,\
+\mathrm{recall} = \frac{\mathrm{TP}}{\mathrm{TP}+\mathrm{FN}}
+\end{equation}
+
+In a multi-class case, the $\mathrm{F_1}$ score is the average of the $\mathrm{F_1}$ scores of all the classes computed as a binary classification, with an assigned weight for each class.
+
+The $\mathrm{F_1}$ score ranges from 0 to 1. $\mathrm{F_1}=1$ indicates perfect classification, when both precision and recall are $1$, whereas the worst measure is $\mathrm{F_1}=0$. The $\mathrm{F_1}$ score provides a balanced measure of precision and recall, and thus describes a classifier's performance more completely and is useful when dealing with imbalanced classes.
 \subsection{Probabilistic metrics}
 \label{sec:probabilistic}
 
