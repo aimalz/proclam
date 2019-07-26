@@ -65,10 +65,9 @@ Subsumed from Noisy & 0.447 & 1.109\\
 Subsumed from Almost & 0.641 & 1.629\\
 Subsumed from Perfect & 1.0 & 18.421\footnote{The entry for the log-loss of a classifier that subsumes a class into one that is otherwise perfectly classified should be infinite but is bounded by the numerical precision of our calculations.}
 \end{tabular}
-\caption{
-The value of each metric when the weight is entirely on the class with the indicated characteristic.
+\caption{\changes{Metric values computed using Eqn.~\ref{eq:weightavg} with unit weights for the mock data produced by mock classification schemes described in Sec.~\ref{sec:mockdata}. The table shows that log-loss metric is more discerning than the Brier score for poor classification, particularly for the Subsuming from Almost and Subsuming from Perfect schemes. Note, that using different weights changes the values of these metrics as shown in Figure~\ref{fig:all_combined}.} \sout{The value of each metric when the weight is entirely on the class with the indicated characteristic.
 Weighting changes the metric performance: the value of each metric when the weight is entirely on the class with the indicated characteristic (\changes{corresponding} to a $w=1$ case in Figure~\ref{fig:all_combined}).
-The log-loss is more sensitive than \changes{the} Brier score, with larger values of the score (indicating poor classification performance), particularly for the subsuming systematic.
+The log-loss is more sensitive than \changes{the} Brier score, with larger values of the score (indicating poor classification performance), particularly for the subsuming systematic.}
 }
 \label{tab:extents}
 \end{table}
