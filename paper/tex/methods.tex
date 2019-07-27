@@ -131,9 +131,9 @@ For example, requiring a minimum difference in probability density between the m
 A simpler alternative that we investigate in this paper is to use a weighted average
 \begin{eqnarray}
   \label{eq:weightavg}
-  Q_{m} &=& \frac{1}{\sum_{n} w_{n}} \sum_{n=1}^{N} w_{n} \sum_{m=1}^{M} Q_{n, m}
+  Q &=& \frac{1}{\sum_{m} w_{m}} \sum_{m} w_{m} Q_{m}
 \end{eqnarray}
-of per-class metrics.
+of per-class metrics $Q_{m}$.
 (While weights could be assigned to each term $Q_{n, m}$, we do not consider this complexity at this time.)
 Weights that are not proportional to $N^{-1}$ nor $M^{-1}$ may be chosen to encourage challenge participants to direct more attention to classes with less active classification efforts or those that have been historically more difficult to classify due to observational limitations.
 
