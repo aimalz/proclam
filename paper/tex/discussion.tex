@@ -4,12 +4,13 @@
 The goal of this work is to identify the metric most suited to \plasticc, which seeks classification posteriors of complete light curves similar to those anticipated from \lsst, with an emphasis on classification over all types, rewarding a ``best in show'' classifier rather than focusing on any one class or scientific application.\footnote{At the conclusion of \plasticc, other metrics specific to scientific uses of one or more particular classes will be used to identify ``best in class'' classification procedures that will be useful for more targeted science cases.}
 The weighted log-loss is thus the metric most suited to the current \plasticc\ release.
 
-\changes{Classification of transient and variable objects is important for a variety of scientific objectives. This diversity of scientific goals requires different trade-offs, and must be evaluated using multiple metrics. While we leave addressing such challenges for future releases of \plasticc\, and the identification of corresponding metrics to future work, we give a few examples of such science goals and approaches for identifying  metrics for them.} 
 \sout{Future releases of \plasticc\ will focus on different challenges in transient and variable object classification, with metrics appropriate to identifying methodologies that best enable those goals.
 We discuss approaches to identifying optimal metrics for these variations, which may be developed further in future work.}
+\changes{Transient and variable object classification is crucial for a variety of scientific objectives.
+The impact of a shared performance metric on this diversity of goals leads to complex and covariant trade-offs, which thus must be evaluated using multiple metrics.
+While a detailed accounting of these possibilities for future releases of \plasticc\ and the selection of appropriate metrics for individual science cases are outside the scope of this first investigation, we discuss below some issues concerning the identification of metrics for a few example science cases.}
 
-\changes{\subsection{Enabling Transient Followup}}
-\subsection{\sout{Early classification}}
+\subsection{\sout{Early classification} \changes{Ongoing transient follow-up}}
 \label{sec:early}
 
 Spectroscopic follow-up is only expected of a small fraction of \lsst's detected transients and variable objects due to limited resources for such observations.
@@ -26,8 +27,9 @@ Even within the scope of spectroscopic follow-up as a primary motivation for ear
 The critical question for choosing the most appropriate metric for any specific science goal motivating follow-up observations is to maximize information.
 We provide two examples of the kind of information one must maximize via early light curve classification and the qualities of a deterministic metric that might enable it.
 
-\changes{\subsection{Spectroscopic Supernova Cosmology}}
+\changes{\subsection{Spectroscopic supernova cosmology}}
 \label{sec:spec_sncosmo}
+
 Supernova cosmology with spectroscopically confirmed light curves benefits from true positives, which contribute to the constraining power of the analysis by including one more data point;
 when the class in which one is interested is as plentiful as SN Ia and our resources limited a priori, we may not be concerned by a high rate of false negatives.
 % requires making a decision balancing the improved constraining power of including another SN Ia in the analysis, thereby constraining the cosmological parameters, so only true positives contribute information, and if we had a perfect classifier and standard follow-up spectroscopy resources, there would be a maximum amount of information about the cosmological parameters that could be gained in this way.
@@ -35,15 +37,19 @@ when the class in which one is interested is as plentiful as SN Ia and our resou
 False positives, on the other hand, may not enter the cosmology analysis, but they consume follow-up resources, thereby depriving the endeavor of the constraining power due to a single SN Ia.
 
 A perfect classifier would lead to a maximum amount of information about the cosmological parameters conditioned on the follow-up resource budget.
-For this scientific application, the metric must be chosen to \changes{\emph{not only maximize true positives but also to minimize false positives, and their relative impacts on the cosmological constraints can be quantified in terms of the information one would have about the cosmological parameters under different balances of true and false positives.}}
-% balance the value of the information forgone by a false positive and the value of information forgone by a false negative, and the value placed on these is effectively weighted by the value we as researchers place on follow-up resources.
+\sout{For this scientific application, the metric must be chosen to balance the value of the information forgone by a false positive and the value of information forgone by a false negative, and the value placed on these is effectively weighted by the value we as researchers place on follow-up resources.}
+\changes{In this scientific application, a classifier that maximizes true positives and minimizes false positives boosts the constraining power over cosmological parameters.
+However, it does so at a cost of rising false negatives, which represent constraining power forgone.
+As this tradeoff is asymmetric, it is insufficient to consider only the true and false positive and negative rates, as the \snphotcc\ FoM does, without propagating their impact on the information gained about the cosmological parameters.}
 % \aim{Cite some deterministic metrics relating to TP/FP?}
 
-\changes{\subsection{Detecting new classes of transients}}
+\changes{\subsection{Anomalous transient and variable detection}}
 \label{sec:anom}
-\changes{A particularly exciting science case is the discovery of entirely unknown classes of transient or variable astrophysical sources, or identifying some of the rarely found sources in the sea of abundant sources. Such a goal may be phrased in terms of detecting anomalies.}
-\changes{Like the case of spectroscopic supernova cosmology discussed above,} anomaly detection also gains information only from true positives, but the cost function is different in that the potential gain of information from a true positive, since there is no information about undiscovered classes ahead of time.
-\changes{COMMENT RB: not to stay in doc, but I don't understand the prev sentence. I would also object to the recent detection of kilonova as a good example of anomaly detection, I can buy it if I squint very hard}
+
+\changes{A particularly exciting science case is anomaly detection, the discovery of entirely unknown classes of transient or variable astrophysical sources, or distinguishing some of the rarest types of sources from more abundant types.
+Like the case of spectroscopic supernova cosmology discussed above,} anomaly detection also gains information only from true positives, but the cost function is different in that the potential information gain is unbounded when there is no prior information about undiscovered classes.
+\aim{COMMENT RB: not to stay in doc, but I don't understand the prev sentence. I would also object to the recent detection of kilonova as a good example of anomaly detection, I can buy it if I squint very hard
+COMMENT AIM: Agreed, but I couldn't think of a better one at the time of writing.}
 An example would be the recent detection of a kilonova, flagged initially by the detection of gravitational waves from an object.
 
 Resource availability for identifying new classes is more flexible, increasing when new predictions or promising preliminary observations attract attention, and decreasing when a discovery is confirmed and the new class is established.
@@ -52,7 +58,7 @@ In this way, a false positive does not necessarily consume a resource that could
 % For a rare event like a kilonova, a false negative represents an unbounfalse positive does not appreciably reduce the amount of remaining information available to collect, but a false negative represents a large quantity of information forgone.
 % Furthermore, r
 % In this case, the information forgone by a false negative is significant compared to the information forgone by a false positive.
-Thus, a metric \sout{tuned to} \changes{evaluating} anomaly detection would aim to \changes{\emph{minimize the false negative rate and maximize the true positive rate.}}
+Thus, a metric \sout{tuned to} \changes{for evaluating} anomaly detection would aim to \changes{\emph{minimize the false negative rate and maximize the true positive rate.}}
 % \aim{Cite some deterministic metrics relating to TP/FN?}
 
 % \subsection{Hierarchical classes}
