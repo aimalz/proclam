@@ -145,50 +145,63 @@ This means that under a population-proportional weighting scheme, it would not b
 
 \subsection{Representative classifications}
 \label{sec:realresults}
-We apply the log-loss and Brier metrics to the classification output from \snmachine. While the classification methods described in \citet{lochner_photometric_2016} refer to the idealized subset of the \snphotcc\ data, these approaches are the state-of-the-art in classification of extragalactic transients. We present in Table~\ref{tab:snmachineresults} the log-loss and Brier scores assuming an equal weight per object.
+
+We apply the log-loss and Brier metrics to the classification output from \snmachine. While the classification methods described in \citet{lochner_photometric_2016} refer to the idealized subset of the \snphotcc\ data, these approaches are the state-of-the-art in classification of extragalactic transients.
+We present in \sout{Table~\ref{fig:snmachineresults}}\changes{Figure~\ref{fig:snmachineresults} the rankings under the} log-loss and Brier score metrics assuming an equal weight per object.
 %, for classification probabilities derived from running the algorithms of \citet{lochner_photometric_2016} on the \snphotcc\ data of Section~\ref{sec:realdata}.
-Table~\ref{tab:snmachineresults} also contains the ranking of classifier performance under each metric.
+\sout{Table~\ref{fig:snmachineresults} also contains the ranking of classifier performance under each metric.}
 
+% \sout{\begin{table*}[]
+% 	\begin{centering}
+% \begin{tabular}{lllllll}%ll}
+% Rank $R$ & $R_\mathrm{FoM}$ & FoM & %$R_\mathrm{AUC}$ & AUC &
+% $R_\mathrm{LogLoss}$ & Log-loss & $R_\mathrm{Brier}$ & Brier \\
+% \hline
+% 1  & TBDT & 0.635  %& TBDT & 0.982
+% & TBDT & 0.0907 & TBDT & 0.0486 \\
+% 2  & WBDT & 0.591  %& WBDT & 0.978
+% & TSVM & 0.113  & TSVM & 0.0583 \\
+% 3  & TSVM & 0.514  %& TSVM & 0.969
+% & TNN  & 0.125  & TNN  & 0.0650 \\
+% 4  & WSVM & 0.499  %& WSVM & 0.968
+% & WSVM & 0.1316 & WBDT & 0.0689 \\
+% 5  & TNN  & 0.496  %& TNN  & 0.954
+% & WBDT & 0.1321 & WSVM & 0.0730 \\
+% 6  & WNN  & 0.480  %& WNN  & 0.946
+% & TKNN & 0.146  & WNN  & 0.0750 \\
+% 7  & TKNN & 0.384  %& TKNN & 0.942
+% & WNN  & 0.152  & TKNN & 0.0787 \\
+% 8  & TNB  & 0.340  %& WKNN & 0.894
+% & WKNN & 0.228  & TNB  & 0.105  \\
+% 9  & WKNN & 0.114  %& TNB  & 0.879
+% & TNB  & 0.251  & WKNN & 0.132  \\
+% 10 & WNB  & 0.0365 %& WNB  & 0.850
+% & WNB  & 0.443  & WNB  & 0.178  \\
+% \end{tabular}
+% 	\caption{
+% 	The values of three metrics for each of ten \snmachine\ classifiers with equal weight per object.
+% 	The metrics broadly agree on the ranking of the classifiers, confirming consistency between a conventional metric of classification performance and the metrics of probabilistic classifications presented here.
+% 	However, there are some differences with pairwise swapping between the log-loss and Brier rankings and some significant reordering of ranks 2 through 5 with the FoM metric relative to the probabilistic metrics.
+% 	}
+% 	\label{tab:snmachineresults}
+% 	\end{centering}
+% \end{table*}}
 
-\begin{table*}[]
-	\begin{centering}
-\begin{tabular}{lllllll}%ll}
-Rank $R$ & $R_\mathrm{FoM}$ & FoM & %$R_\mathrm{AUC}$ & AUC &
-$R_\mathrm{LogLoss}$ & Log-loss & $R_\mathrm{Brier}$ & Brier \\
-\hline
-1  & TBDT & 0.635  %& TBDT & 0.982
-& TBDT & 0.0907 & TBDT & 0.0486 \\
-2  & WBDT & 0.591  %& WBDT & 0.978
-& TSVM & 0.113  & TSVM & 0.0583 \\
-3  & TSVM & 0.514  %& TSVM & 0.969
-& TNN  & 0.125  & TNN  & 0.0650 \\
-4  & WSVM & 0.499  %& WSVM & 0.968
-& WSVM & 0.1316 & WBDT & 0.0689 \\
-5  & TNN  & 0.496  %& TNN  & 0.954
-& WBDT & 0.1321 & WSVM & 0.0730 \\
-6  & WNN  & 0.480  %& WNN  & 0.946
-& TKNN & 0.146  & WNN  & 0.0750 \\
-7  & TKNN & 0.384  %& TKNN & 0.942
-& WNN  & 0.152  & TKNN & 0.0787 \\
-8  & TNB  & 0.340  %& WKNN & 0.894
-& WKNN & 0.228  & TNB  & 0.105  \\
-9  & WKNN & 0.114  %& TNB  & 0.879
-& TNB  & 0.251  & WKNN & 0.132  \\
-10 & WNB  & 0.0365 %& WNB  & 0.850
-& WNB  & 0.443  & WNB  & 0.178  \\
-\end{tabular}
-	\caption{
-	The values of three metrics for each of ten \snmachine\ classifiers with equal weight per object.
-	The metrics broadly agree on the ranking of the classifiers, confirming consistency between a conventional metric of classification performance and the metrics of probabilistic classifications presented here.
-	However, there are some differences with pairwise swapping between the log-loss and Brier rankings and some significant reordering of ranks 2 through 5 with the FoM metric relative to the probabilistic metrics.
-	}
-	\label{tab:snmachineresults}
-	\end{centering}
-\end{table*}
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.49\textwidth]{./fig/Tables3_option4.png}
+		\caption{
+		\changes{The rankings of each of ten \snmachine\ classifiers with equal weight per object under the three metrics.
+		The metrics broadly agree on the ranking of the classifiers, confirming consistency between a conventional metric of classification performance and the metrics of probabilistic classifications presented here.
+		However, there are some differences with pairwise swapping between the log-loss and Brier rankings and some significant reordering of ranks 2 through 5 with the FoM metric relative to the probabilistic metrics.}
+		}
+	\end{center}
+	\label{fig:snmachineresults}
+\end{figure}
 
 We apply our metrics to the classification output from \snmachine\ applied to the \snphotcc\ dataset as an example of representative light curves and representative classifiers used in extragalactic astronomy.
-We present in Table~\ref{tab:snmachineresults} the log-loss and Brier scores assuming an equal weight per object, as well as the original \snphotcc\ metric described in Section~\ref{sec:deterministic}.
-Table~\ref{tab:snmachineresults} also contains the ranking of classifier performance under each metric.
+We present in \sout{Table~\ref{fig:snmachineresults}}\changes{Figure~\ref{fig:snmachineresults}} the rankings of each classifier under the log-loss and Brier scores assuming an equal weight per object, as well as the original \snphotcc\ metric described in Section~\ref{sec:deterministic}.
+\sout{Table~\ref{fig:snmachineresults} also contains the ranking of classifier performance under each metric.}
 
 The Brier score, log-loss, and \snphotcc\ FoM are in agreement as to the first- and last-ranked classifiers.
 This consensus indicates that both of the potential \plasticc\ metrics are roughly consistent with our intuition about what makes a good classifier, providing an anchor between accepted notions of an appropriate metric and the metrics of probabilistic classifications under consideration here.
