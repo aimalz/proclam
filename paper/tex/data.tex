@@ -58,7 +58,7 @@ We refer to the matrix $\mathbb{C}$ composed of $p(\hat{m} \mid m')$ as the \tex
 
 % Without loss of generality, we can decompose $\mathbb{C}$ under some basis functions of parameters $\mathcal{C}$, the same as those introduced above in the definition of a classification posterior $p(m \mid d_{n}, D, \mathcal{C})$.
 % The CPM $\mathbb{C}$ thus defines the behavior of a classifier.
-Assuming the light curves contain information about the true class (an assumption that underlies classification as a whole), we can use the appropriate row $\mathbb{C}_{m'_{n}} = p(\hat{m} \mid m', \mathcal{C})$ of the CPM $\mathbb{C}$ as a proxy for $p(m \mid d_{n}, D, \mathcal{C})$, without directly classifying light curves themselves.\footnote{This assumption is key to the generality of this work, which was condicted without any knowledge of the \plasticc\ dataset simulation procedure.}
+Assuming the light curves contain information about the true class (an assumption that underlies classification as a whole), we can use the appropriate row $\mathbb{C}_{m'_{n}} = p(\hat{m} \mid m', \mathcal{C})$ of the CPM $\mathbb{C}$ as a proxy for $p(m \mid d_{n}, D, \mathcal{C})$, without directly classifying light curves themselves.\footnote{This assumption is key to the generality of this work, which was conducted without any knowledge of the \plasticc\ dataset simulation procedure.}
 To emulate the effect of natural variation of information content in different light curves (e.g. a noisy lightcurve has less information to recover than one with a higher signal-to-noise ratio) using the above, we generate a posterior probability vector $\vec{p}(m \mid m', \mathbb{C})$ by taking a Dirichlet-distributed draw
 \begin{eqnarray}
   \label{eq:cmtoprob}
@@ -77,7 +77,7 @@ We impose one restriction in addition to the normalization factor of Equation~\r
 \begin{figure*}
 	\begin{center}
     \includegraphics[width=0.8\textwidth]{./fig/all_sim_cm.png}
-		\caption{Conditional probability matrices \changes{(CPMs)}for eight mock classifiers.
+		\caption{Conditional probability matrices \changes{(CPMs)} for eight mock classifiers.
 		Top row:
 		the uncertain classifier's uniform CPM;
 		the perfect classifier's identity CPM;
