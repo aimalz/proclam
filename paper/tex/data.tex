@@ -113,7 +113,7 @@ For each of our archetypical mock classifiers, we address:
 		\caption{A realistically complex conditional probability matrix \changes{(CPM)} and classification posteriors drawn from it.
 		Top: An example of a realistically complex conditional probability matrix, constructed by selecting a systematic for each individual class.
 		This illustrates (for example), how a classifier may exhibit multiple systematics from Figure~\ref{fig:mock_cm} for each true class.
-		Bottom: Example classification probabilities, drawn from the above CPM, with their true class indicated by a red star and the systematic, characterized by its row in the CPM, affecting that true class described on the right.
+		Bottom: Example classification probabilities, drawn from the above CPM, with their true class indicated by a star and the systematic, characterized by its row in the CPM, affecting that true class described on the right.
 		The Dirichlet process emulates the variation in classification posteriors due to differences between light curves within a given class, leading to different classification posteriors even among rows sharing a true class.
 		}
 		\label{fig:mock_probs}
@@ -123,7 +123,7 @@ For each of our archetypical mock classifiers, we address:
 An actual classifier is expected to be more complex than the simplified cases of Figure~\ref{fig:mock_cm}, with different systematic behavior for each class.
 An example of a combined CPM across different classes and systematics is given in the top panel of Figure~\ref{fig:mock_probs}.
 The rows of this CPM correspond to rows of the archetypical classifiers of Figure~\ref{fig:mock_cm}.
-To demonstrate the procedure by which mock classification posteriors are generated from rows of the CPM, we provide 22 examples of draws of the posterior CPM in the bottom panel of Figure~\ref{fig:mock_probs}.
+To demonstrate the procedure by which mock classification posteriors are generated from rows of the CPM, we provide 26 examples of draws of the posterior CPM in the bottom panel of Figure~\ref{fig:mock_probs}.
 Given a set of true class identities, the mock classification posteriors of the bottom panel are Dirichlet draws from the corresponding row of the CPM of the top panel.
 
 \subsubsection{Uncertain classification}
