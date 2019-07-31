@@ -4,7 +4,8 @@
 % intro and data
 As part of the preparation for \plasticc\, we investigated the properties of metrics suitable for probabilistic light curve classifications in the absence of a single scientific goal.
 Therefore, we sought a metric that avoids reducing classification probabilities to deterministic labels \changes{and is compatible with a multi-class, rather than binary (two-class), setting.
-In line with the goals of \plasticc, an important desideratum was to have a metric that tends to} reward a classifier's performance across all classes over a classifier that performs well on a small subset of the classes and poorly on others.
+We did not consider some of the most popular metrics used in astronomy (such as accuracy, combinations of the true and false positive and negative rates, and AUC functions thereof) because they did not satisfy these criteria, even though it is in principle possible to extend such metrics for our situation.}
+% In line with the goals of \plasticc, an important desideratum was to have a metric that tends to} reward a classifier's performance across all classes over a classifier that performs well on a small subset of the classes and poorly on others.
 \changes{Our experimental design thus explores the response of potential metrics to simulated classification submissions from a set of mock classifier archetypes expected of generic transient and variable classifiers.}
 
 % the metrics
@@ -25,8 +26,7 @@ However, since only one could be selected, the log-loss was chosen due to its po
 \changes{While modifyinging the log-loss metric to handle weights for different classes diminishes its interpretability, it can still be understood as information gain, subject to the value we as scientists place on knowledge of each class.}
 
 % justifying limited choice of metrics to consider
-\changes{We did not consider some of the most popular metrics used in astronomy (such as accuracy, combinations of the true and false positive and negative rates, and AUC functions thereof) because they did not satisfy these criteria, even though it is in principle possible to extend such metrics for our situation.
-The space of possible metrics we could have considered is truly unbounded, from traditional metrics of deterministic labels to established extensions thereof for probabilistic classifications to novel quantities tuned to any given science case.
+\changes{The space of possible metrics we could have considered is truly unbounded, from traditional metrics of deterministic labels to established extensions thereof for probabilistic classifications to novel quantities tuned to any given science case.
 Though there was no need to do a more extensive survey of metrics nor to devise new metrics for \plasticc, since both log-loss and Brier score passed the basic sanity tests for this application, further work remains to be done in optimally selecting probabilistic classification metrics in other astronomical contexts.}
 
 We conclude by noting that care should be taken in planning future open challenges to ensure alignment between the challenge goals and the performance metric, so that efforts are best directed to achieve the challenge objectives.
