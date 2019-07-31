@@ -1,40 +1,33 @@
 \section{Conclusion}
 \label{sec:conclusion}
 
+% intro and data
 As part of the preparation for \plasticc\, we investigated the properties of metrics suitable for probabilistic light curve classifications in the absence of a single scientific goal.
 Therefore, we sought a metric that avoids reducing classification probabilities to deterministic labels \changes{and is compatible with a multi-class, rather than binary (two-class), setting.
 In line with the goals of \plasticc, an important desideratum was to have a metric that tends to} reward a classifier's performance across all classes over a classifier that performs well on a small subset of the classes and poorly on others.
-\changes{Given the potential of large class imbalance in astronomical datasets, we were also interested in the possibility of up-weighting the importance of certain rarer transient classes if need be;
-consequently we wanted to understand the way the metric would behave with the use of per-class weights.}
+\changes{Our experimental design thus explores the response of potential metrics to simulated classification submissions from a set of mock classifier archetypes expected of generic transient and variable classifiers.}
 
-\sout{We compared two metrics specific to probabilistic classifications: the Brier score and the log-loss.}
-\changes{Our experimental design considers simulated classification submissions from a set of mock classifier archetypes expected of generic transient and variable classifiers.}
-\changes{To start with, we identified two metrics of multi-class classification probabilities established in the literature: the Brier score and the log-loss.
-We left aside popular metrics (such as accuracy, true/false positive/negative rates, and AUC functions thereof) which did not satisfy these criteria, even though it is in principle possible to extend such metrics for these scenarios.}
+% the metrics
+\changes{We identified two metrics of multi-class classification probabilities established in the literature: the Brier score and the log-loss.}
 The Brier score and the log-loss metrics are structurally and conceptually different, with wholly different interpretations.
 The Brier score is a sum of square differences between probabilities;
 the explicit penalty term is an attractive feature, but it treats probabilities as generic scores.
-The log-loss on the other hand is readily interpretable, meaning the metric itself could be propagated into forecasting the cosmological constraining power of \lsst, affecting the choice of observing strategy.
+The log-loss on the other hand is readily interpretable \changes{as a measure of information}, meaning the metric itself could be propagated into forecasting the cosmological constraining power of \lsst, affecting the choice of observing strategy.
 
-\changes{We evaluated these metrics using the simulated classification probability submissions from the classifier archetypes with unit weights and then by varying the weights in Equation~\ref{eq:weightavg}.
-In the absence of per-class weights, both the Brier score and the log-loss metrics are susceptible to rewarding a classifier that performs well on the most prevalent class and poorly on all others, which fails to meet the needs of \plasticc's diverse motivations.
-On the basis of the mock classifier rankings under equal per-class weights, we found that both metrics reward the classifiers that are better and penalize those that are worse, where better and worse are defined by our common intuition, yielding the same rankings under either metric and demonstrating that both could be appropriate for \plasticc.}
+% weights
+\changes{When evaluated with equal weight on each classified object,} both the Brier score and the log-loss metrics are susceptible to rewarding a classifier that performs well on the most prevalent class and poorly on all others, which fails to meet the needs of \plasticc's diverse motivations \changes{under the unavoidable population imbalances of astronomical data}.
+\changes{To discourage competitors from neglecting rare classes,} we explored a weighted average of the metric values on a per-class basis as a possible mitigation strategy to incentivize classifying uncommon classes, effectively ``leveling the playing field'' in the presence of highly nonuniform class membership.
+%\changes{%Such weights were taken to be the same for all objects in the same class.
 
-Even though the Brier score and log-loss metrics take values consistent with one another, they are structurally and conceptually different, with wholly different interpretations.
-The Brier score is a sum of square differences between probabilities; the explicit penalty term is an attractive feature, but it treats probabilities as generic scores and is not interpretable in terms of information.
-The log-loss on the other hand is readily interpretable, meaning the metric itself could be propagated into forecasting the constraining power of \lsst, affecting the choice of observing strategy.
-\sout{We discovered that the log-loss is somewhat more sensitive to the systematic errors in classification that we find most concerning for generic scientific applications.}
-While both metrics could be appropriate for \plasticc, the log-loss is preferable due to its interpretability in terms of information.
-\sout{Both metrics are susceptible to rewarding a classifier that performs well on the most prevalent class and poorly on all others, which fails to meet the needs of \plasticc's diverse motivations.}
+% findings
+On the basis of the mock classifier rankings, we found that both metrics reward the classifiers that are better and penalize those that are worse, where better and worse are defined by our common intuition, yielding the same rankings under either metric and demonstrating that both could be appropriate for \plasticc.
+However, since only one could be selected, the log-loss was chosen due to its potential for interpretation after the conclusion of the challenge.
+\changes{While modifyinging the log-loss metric to handle weights for different classes diminishes its interpretability, it can still be understood as information gain, subject to the value we as scientists place on knowledge of each class.}
 
-\changes{Due to our desire to potentially upweight rare classes,} we explored a weighted average of the metric values on a per-class basis as a possible mitigation strategy to incentivize classifying uncommon classes, effectively ``leveling the playing field'' in the presence of highly imbalanced class membership. %\changes{%Such weights were taken to be the same for all objects in the same class.
-\changes{While modifyinging the log-loss metric to handle weights for different classes diminishes its interpretability, it can still be understood as information gain subject to the value we as scientists place on knowledge stemming from each class.}
-
-\changes{Given that both log-loss and Brier score passed the basic sanity tests for \plasticc, there was no need to devise new metrics built upon established metrics of binary or deterministic classification.
-Since both were deemed appropriate, we chose the weighted log-losss metric due to its possibility of interpretation in terms of information theory, at least in the limit of equal weights}
-\sout{Although weights do impact the interpretability of the log-loss, we select a per-class weighted log-loss as the optimal choice for \plasticc.}
-%%%%
-%%%% % We note that in order to map on to the Kaggle evaluation platform, a metric weighted only by class was used for the general challenge, while a log-loss with more complicated weighting procedure will be used for the science competition (which will continue for an additional month after the main Kaggle release).
+% justifying limited choice of metrics to consider
+\changes{We did not consider some of the most popular metrics used in astronomy (such as accuracy, combinations of the true and false positive and negative rates, and AUC functions thereof) because they did not satisfy these criteria, even though it is in principle possible to extend such metrics for our situation.
+The space of possible metrics we could have considered is truly unbounded, from traditional metrics of deterministic labels to established extensions thereof for probabilistic classifications to novel quantities tuned to any given science case.
+Though there was no need to do a more extensive survey of metrics nor to devise new metrics for \plasticc, since both log-loss and Brier score passed the basic sanity tests for this application, further work remains to be done in optimally selecting probabilistic classification metrics in other astronomical contexts.}
 
 We conclude by noting that care should be taken in planning future open challenges to ensure alignment between the challenge goals and the performance metric, so that efforts are best directed to achieve the challenge objectives.
-It is our hope hope that this study of metric performance across a range of systematic effects and weights may serve as a guide to approaching the problem of identifying optimal probabilistic classifiers for general science applications.
+It is our hope hope that this study of metric performance across a range of systematic effects and weights may serve as a guide to approaching the problem of identifying promising probabilistic classifiers for general science applications.
