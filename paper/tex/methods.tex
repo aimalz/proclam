@@ -141,7 +141,6 @@ Downweighting the metrics of classes affected by counterproductive systematics c
 The weights for the \plasticc\ metric, however, must be determined before there is knowledge of which systematics affect which classes.
 Because of this caveat, the choice of weights is isolated to an inherently human problem dictated by the value placed on the scientific merits of knowledge of each class.
 This paper, on the other hand, can only quantify the impact of weights in relation to the systematics.
-We thus agnostically test weighting schemes\footnote{\changes{The weights considered in this study are more extreme than those ultimately used for \plasticc\ because the true weights were withheld from some authors prior to the end of the challenge.
-However, in the Kaggle framework, it is possible to estimate these values by systematically probing the output of the public leader board with entries from the cruise control classifier archetype targeting each class one at a time.
-Some \plasticc\ competitors did, in fact, execute this procedure and publicly announced the weights they had discovered, making the information available to all participants.}}
+We thus agnostically test weighting schemes\footnote{\changes{The weights considered in this study are more extreme than those ultimately used for \plasticc\ because the true weights were blinded from some authors prior to the end of the challenge.
+However, we note that the weights could be (and in fact were) discovered by \plasticc\ competitors by systematically probing the output of the public leader board with entries from the cruise control classifier archetype targeting each class one at a time.}}
 where classes affected by a particular systematic take a given weight $0 \leq w \leq 1$ and all other classes have a weight $(1 - w) / (M - 1)$.
