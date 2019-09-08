@@ -390,52 +390,53 @@ def det_to_cm(dets, truth, per_class_norm=True, vb=False):
 
     return cm
 
-#def cm_to_rate(cm, vb=False):
-#    """
-#    Turns a confusion matrix into true/false positive/negative rates
+<<<<<<< HEAD
+def cm_to_rate(cm, vb=False):
+    """
+    Turns a confusion matrix into true/false positive/negative rates
 
-#    Parameters
-#    ----------
-#    cm: numpy.ndarray, int or float
-#        confusion matrix, first axis is predictions, second axis is truth
-#    vb: boolean, optional
-#        print progress to stdout?
+    Parameters
+    ----------
+    cm: numpy.ndarray, int or float
+        confusion matrix, first axis is predictions, second axis is truth
+    vb: boolean, optional
+        print progress to stdout?
 
-#    Returns
-#    -------
-#    rates: named tuple, float
-#        RateMatrix named tuple
+    Returns
+    -------
+    rates: named tuple, float
+        RateMatrix named tuple
 
-#    Notes
-#    -----
- #   BROKEN!
- #   This can be done with a mask to weight the classes differently here.
- #   """
- #   if vb: print('by request '+str(cm))
- #   diag = np.diag(cm)
- #   if vb: print('by request '+str(diag))#
-#
-#    TP = np.sum(diag)
-#    FN = np.sum(np.sum(cm, axis=0) - diag)
-#    FP = np.sum(np.sum(cm, axis=1) - diag)
-#    TN = np.sum(cm) - TP
-#    if vb: print('by request '+str((TP, FN, FP, TN)))
+    Notes
+    -----
+    BROKEN!
+    This can be done with a mask to weight the classes differently here.
+    """
+    if vb: print('by request '+str(cm))
+    diag = np.diag(cm)
+    if vb: print('by request '+str(diag))
 
-#    T = TP + TN
-#    F = FP + FN
-#    P = TP + FP
-#    N = TN + FN
-#    if vb: print('by request '+str((T, F, P, N)))
+    TP = np.sum(diag)
+    FN = np.sum(np.sum(cm, axis=0) - diag)
+    FP = np.sum(np.sum(cm, axis=1) - diag)
+    TN = np.sum(cm) - TP
+    if vb: print('by request '+str((TP, FN, FP, TN)))
 
-#    TPR = TP / P
-#    FPR = FP / N
-#    FNR = FN / P
-#    TNR = TN / N
+    T = TP + TN
+    F = FP + FN
+    P = TP + FP
+    N = TN + FN
+    if vb: print('by request '+str((T, F, P, N)))
 
-#    rates = RateMatrix(TPR=TPR, FPR=FPR, FNR=FNR, TNR=TNR)
-#    if vb: print('by request '+str(rates))
+    TPR = TP / P
+    FPR = FP / N
+    FNR = FN / P
+    TNR = TN / N
 
-#    return rates
+    rates = RateMatrix(TPR=TPR, FPR=FPR, FNR=FNR, TNR=TNR)
+    if vb: print('by request '+str(rates))
+
+    return rates
 
 def det_to_rate(dets, truth, per_class_norm=True, vb=False):
     cm = det_to_cm(dets, truth, per_class_norm=per_class_norm, vb=vb)
@@ -594,7 +595,7 @@ def auc(x, y):
     auc = trapz(y[i], x[i])
         
     return auc
-
+=======
 # def det_to_rate(dets, truth, per_class_norm=True, vb=False):
 #     cm = det_to_cm(dets, truth, per_class_norm=per_class_norm, vb=vb)
 #     rates = cm_to_rate(cm, vb=vb)
@@ -658,4 +659,4 @@ def auc(x, y):
 # 	#print(fn)
 #
 # 	return tp/(tp+fn)
-
+>>>>>>> 29e959b3e81259fd7a8f3e60bcbb6f55c1106c48
