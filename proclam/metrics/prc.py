@@ -1,34 +1,34 @@
 """
-A class for the Receiver Operating Curve
+A class for the Precision-Recall Curve
 """
 
 from __future__ import absolute_import
-__all__ = ['ROC']
+__all__ = ['PRC']
 
 import numpy as np
 
 from .util import weight_sum, check_weights
 from .util import prob_to_det, det_to_cm, cm_to_rate
-from .util import auc, check_auc_grid, prep_curve
+from .util import auc, check_auc_grid, precision
 from .metric import Metric
 
-class ROC(Metric):
+class PRC(Metric):
 
     def __init__(self, scheme=None):
         """
-        An object that evaluates the ROC metric
+        An object that evaluates the PRC AUC
 
         Parameters
         ----------
         scheme: string
             the name of the metric
         """
-        super(ROC, self).__init__(scheme)
+        super(PRC, self).__init__(scheme)
         self.scheme = scheme
 
     def evaluate(self, prediction, truth, grid, averaging='per_class', vb=False):
         """
-        Evaluates the ROC AUC
+        Evaluates the area under the PRC
 
         Parameters
         ----------
@@ -59,18 +59,21 @@ class ROC(Metric):
             m_truth = (truth == m).astype(int)
 
             if not len(np.where(truth == m)[0]):
-                raise RuntimeError('No true values for class %i so ROC is undefined'%m)
+                raise RuntimeError('No true values for class %i so PRC is undefined'%m)
 
-            tpr, fpr = np.empty(n_thresholds), np.empty(n_thresholds)
+            precisions, recalls = np.empty(n_thresholds), np.empty(n_thresholds)
             for i, t in enumerate(thresholds_grid):
                 dets = prob_to_det(prediction, m, threshold=t)
                 cm = det_to_cm(dets, m_truth)
                 rates = cm_to_rate(cm)
-                fpr[i], tpr[i] = rates.FPR[-1], rates.TPR[-1]
+                recalls[i] = rates.TPR[-1]
+                precisions[i] = precision(rates.TP[-1], rates.FP[-1])
 
-            (curve[m][0], curve[m][1]) = (fpr, tpr)
-            (fpr, tpr) = prep_curve(fpr, tpr)
-            auc_class[m] = auc(fpr, tpr)
+            (curve[m][0], curve[m][1]) = (recalls, precisions)
+            auc_class[m] = auc(recalls, precisions)
+        if np.any(np.isnan(curve)):
+            print('Where did these NaNs come from?')
+            return curve
 
         weights = check_weights(averaging, M, truth=truth)
         auc_allclass = weight_sum(auc_class, weights)

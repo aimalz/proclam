@@ -5,8 +5,8 @@ Utility functions for PLAsTiCC metrics
 from __future__ import absolute_import, division
 __all__ = ['sanitize_predictions',
            'weight_sum', 'check_weights', 'averager',
-           'cm_to_rate',
-           'auc', 'check_auc_grid',
+           'cm_to_rate', 'precision',
+           'auc', 'check_auc_grid', 'prep_curve',
            'det_to_prob', 'prob_to_det',
            'det_to_cm']
 
@@ -16,7 +16,7 @@ import numpy as np
 import sys
 from scipy.integrate import trapz
 
-RateMatrix = collections.namedtuple('rates', 'TPR FPR FNR TNR')
+RateMatrix = collections.namedtuple('rates', 'TPR FPR FNR TNR TP FP FN TN')
 
 def sanitize_predictions(predictions, epsilon=1.e-8):
     """
@@ -43,17 +43,16 @@ def sanitize_predictions(predictions, epsilon=1.e-8):
     predictions = predictions / np.sum(predictions, axis=1)[:, np.newaxis]
     return predictions
 
-def weight_sum(per_class_metrics, weight_vector, norm=True):
+def weight_sum(per_class_metrics, weight_vector):
     """
     Calculates the weighted metric
 
     Parameters
     ----------
-    per_class_metrics: numpy.float
-        the scores separated by class (a list of arrays)
-    weight_vector: numpy.ndarray floar
-        The array of weights per class
-    norm: boolean, optional
+    per_class_metrics: numpy.ndarray, float
+        vector of per-class scores
+    weight_vector: numpy.ndarray, float
+        vector of per-class weights
 
     Returns
     -------
@@ -61,7 +60,6 @@ def weight_sum(per_class_metrics, weight_vector, norm=True):
         The weighted metric
     """
     weight_sum = np.dot(weight_vector, per_class_metrics)
-
     return weight_sum
 
 def check_weights(avg_info, M, chosen=None, truth=None):
@@ -112,6 +110,7 @@ def check_weights(avg_info, M, chosen=None, truth=None):
             weights[chosen] = 1./np.float(M)
     else:
         print('something has gone wrong with avg_info '+str(avg_info))
+        weights = None
     return weights
 
 def averager(per_object_metrics, truth, M, vb=False):
@@ -157,10 +156,11 @@ def cm_to_rate(cm, vb=False):
     -----
     This can be done with a mask to weight the classes differently here.
     """
+    cm = cm.astype(float)
     # if vb: print('by request cm '+str(cm))
     tot = np.sum(cm)
-    tra = np.trace(cm)
-    # if vb: print('by request sum, trace '+str((tot, tra)))
+    # mask = range(len(cm))
+    # if vb: print('by request sum '+str(tot))
 
     T = np.sum(cm, axis=1)
     F = tot[np.newaxis] - T
@@ -170,22 +170,42 @@ def cm_to_rate(cm, vb=False):
 
     TP = np.diag(cm)
     FN = P - TP
-    FP = T - TP#np.sum(cm - np.diag(cm)[:,np.newaxis], axis=0)# np.sum(np.tril(cm), 1), axis=1)
-    TN = F - FN#np.sum(cm - np.diag(cm)[np.newaxis], axis=1)# np.sum(np.triu(cm, 1), axis=0)
+    TN = F - FN
+    FP = T - TP
     # if vb: print('by request TP, FP, FN, TN'+str((TP, FP, FN, TN)))
 
-    # P = TP + FP
-    # N = TN + FN
     TPR = TP / P
     FPR = FP / N
     FNR = FN / P
     TNR = TN / N
     # if vb: print('by request TPR, FPR, FNR, TNR'+str((TPR, FPR, FNR, TNR)))
 
-    rates = RateMatrix(TPR=TPR, FPR=FPR, FNR=FNR, TNR=TNR)
+    rates = RateMatrix(TPR=TPR, FPR=FPR, FNR=FNR, TNR=TNR, TP=TP, FN=FN, TN=TN, FP=FP)
     # if vb: print('by request TPR, FPR, FNR, TNR '+str(rates))
 
     return rates
+
+def prep_curve(x, y):
+    """
+    Makes a curve for AUC
+
+    Parameters
+    ----------
+    x: numpy.ndarray, float
+        x-axis
+    y: numpy.ndarray, float
+        y-axis
+
+    Returns
+    -------
+    x: numpy.ndarray, float
+        x-axis
+    y: numpy.ndarray, float
+        y-axis
+    """
+    x = np.concatenate(([0.], x, [1.]),)
+    y = np.concatenate(([0.], y, [1.]),)
+    return (x, y)
 
 def auc(x, y):
     """
@@ -193,9 +213,9 @@ def auc(x, y):
 
     Parameters
     ----------
-    x: numpy.ndarray, int or float
+    x: numpy.ndarray, float
         x-axis
-    y: numpy.ndarray, int or float
+    y: numpy.ndarray, float
         y-axis
 
     Returns
@@ -203,8 +223,6 @@ def auc(x, y):
     auc: float
         the area under the curve
     """
-    x = np.concatenate(([0.], x, [1.]),)
-    y = np.concatenate(([0.], y, [1.]),)
     i = np.argsort(x)
     auc = trapz(y[i], x[i])
     return auc
@@ -224,7 +242,7 @@ def check_auc_grid(grid):
         grid of thresholds
     """
     if type(grid) == list or type(grid) == np.ndarray:
-        thresholds_grid = np.array(grid)
+        thresholds_grid = np.concatenate((np.zeros(1), np.array(grid), np.ones(1)))
     elif type(grid) == float:
         if grid > 0. and grid < 1.:
             thresholds_grid = np.arange(0., 1., grid)
@@ -237,7 +255,7 @@ def check_auc_grid(grid):
             thresholds_grid = None
     try:
         assert thresholds_grid is not None
-        return thresholds_grid
+        return np.sort(thresholds_grid)
     except AssertionError:
         print('Please specify a grid, spacing, or density for this AUC metric.')
         return
@@ -302,12 +320,12 @@ def prob_to_det(probs, m=None, threshold=None):
             assert(type(m) == int and type(threshold) == np.float64)
         except AssertionError:
             print(str(m)+' is '+str(type(m))+' and must be int; '+str(threshold)+' is '+str(type(threshold))+' and must be float')
-        dets = np.zeros(np.shape(probs)[0])
+        dets = np.zeros(np.shape(probs)[0]).astype(int)
         dets[probs[:, m] >= threshold] = 1
 
     return dets
 
-def det_to_cm(dets, truth, per_class_norm=True, vb=False):
+def det_to_cm(dets, truth, per_class_norm=False, vb=False):
     """
     Converts deterministic classifications and truth into confusion matrix
 
@@ -338,57 +356,47 @@ def det_to_cm(dets, truth, per_class_norm=True, vb=False):
     M = np.int(max(max(pred_classes), max(true_classes)) + 1)
 
     # if vb: print('by request '+str((np.shape(dets), np.shape(truth)), M))
-    cm = np.zeros((M, M), dtype=float)
+    cm = np.zeros((M, M), dtype=int)
 
     coords = np.array(list(zip(dets, truth)))
     indices, index_counts = np.unique(coords, axis=0, return_counts=True)
     if vb: print(indices.T, index_counts)
     index_counts = index_counts.astype(int)
     indices = indices.T.astype(int)
-    # if vb: print('by request '+str(index_counts))
-    # if vb: print(indices, index_counts)
-    # indices = indices.T
-    # if vb: print(indices)
-    # if vb: print(np.shape(indices))
     cm[indices[0], indices[1]] = index_counts
-    # if vb: print(cm)
 
     if per_class_norm:
-        # print(type(cm))
-        # print(type(true_counts))
-        # cm = cm / true_counts
-        # cm /= true_counts[:, np.newaxis] #
-        cm = cm / true_counts[np.newaxis, :]
+        cm = cm.astype(float) / true_counts[np.newaxis, :].astype(float)
 
-    # if vb: print('by request '+str(cm))
+    if vb: print('by request '+str(cm))
 
     return cm
 
 # def prob_to_cm(probs, truth, per_class_norm=True, vb=False):
-    """
-    Turns probabilistic classifications into confusion matrix by taking maximum probability as deterministic class
-
-    Parameters
-    ----------
-    probs: numpy.ndarray, float
-        N * M matrix of class probabilities
-    truth: numpy.ndarray, int
-        N-dimensional vector of true classes
-    per_class_norm: boolean, optional
-        equal weight per class if True, equal weight per object if False
-    vb: boolean, optional
-        if True, print cm
-
-    Returns
-    -------
-    cm: numpy.ndarray, int
-        confusion matrix
-    """
-    dets = prob_to_det(probs)
-
-    cm = det_to_cm(dets, truth, per_class_norm=per_class_norm, vb=vb)
-
-    return cm
+#     """
+#     Turns probabilistic classifications into confusion matrix by taking maximum probability as deterministic class
+#
+#     Parameters
+#     ----------
+#     probs: numpy.ndarray, float
+#         N * M matrix of class probabilities
+#     truth: numpy.ndarray, int
+#         N-dimensional vector of true classes
+#     per_class_norm: boolean, optional
+#         equal weight per class if True, equal weight per object if False
+#     vb: boolean, optional
+#         if True, print cm
+#
+#     Returns
+#     -------
+#     cm: numpy.ndarray, int
+#         confusion matrix
+#     """
+#     dets = prob_to_det(probs)
+#
+#     cm = det_to_cm(dets, truth, per_class_norm=per_class_norm, vb=vb)
+#
+#     return cm
 
 #def cm_to_rate(cm, vb=False):
 #    """
@@ -633,21 +641,26 @@ def auc(x, y):
 #     """
 #     return 1. - rates.FNR
 
-# def precision(rates):
-#     """
-#     Calculates precision from rates
-#
-#     Parameters
-#     ----------
-#     rates: namedtuple
-#         named tuple of 'TPR FPR FNR TNR'
-#
-#     Returns
-#     -------
-#     precision: float
-#         precision
-#     """
-# 	return 1. - rates.FNR
+def precision(TP, FP):
+    """
+    Calculates precision from rates
+
+    Parameters
+    ----------
+    TP: float
+        number of true positives
+    FP: float
+        number of false positives
+
+    Returns
+    -------
+    p: float
+        precision
+    """
+    p = np.asarray(TP / (TP + FP))
+    if np.any(np.isnan(p)):
+        p[np.isnan(p)] = 0.
+    return p
 #
 # def recall(classifications,truth,class_idx):
 #
