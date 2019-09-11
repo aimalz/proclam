@@ -168,9 +168,11 @@ def det_to_cm(dets, truth, per_class_norm=True, vb=False):
     cm[indices[0], indices[1]] = index_counts
     #if vb: print(cm)
     #print(cm, 'hi')
+
     if per_class_norm:
         # print(type(cm))
         # print(type(true_counts))
+        print(np.shape(cm), np.shape(true_counts), 'shapes')
         # cm = cm / true_counts
         # cm /= true_counts[:, np.newaxis] #
         cm = cm / true_counts[np.newaxis, :]
