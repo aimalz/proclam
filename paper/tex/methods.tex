@@ -128,12 +128,12 @@ A simple reduction to a deterministic label could be made more palatable with a 
 For example, requiring a minimum difference in probability density between the maximum probability class and the next highest probability class would help avert this degeneracy.
 % (e.g. a newly discovered supernova with a very small number of points may be indistinguishable from a Cataclysmic variable going through a brightening).
 
-A simpler alternative that we investigate in this paper is to use a weighted average
+\changes{A simpler alternative that we investigate in this paper is to use a weighted average
 \begin{eqnarray}
   \label{eq:weightavg}
-  Q_{m} &=& \frac{1}{\sum_{n} w_{n}} \sum_{n=1}^{N} w_{n} \sum_{m=1}^{M} Q_{n, m}
+  Q &=& \frac{1}{\sum_{m} w_{m}} \sum_{m} w_{m} Q_{m}
 \end{eqnarray}
-of per-class metrics.
+of per-class metrics $Q_{m}$.}
 (While weights could be assigned to each term $Q_{n, m}$, we do not consider this complexity at this time.)
 Weights that are not proportional to $N^{-1}$ nor $M^{-1}$ may be chosen to encourage challenge participants to direct more attention to classes with less active classification efforts or those that have been historically more difficult to classify due to observational limitations.
 
@@ -141,4 +141,6 @@ Downweighting the metrics of classes affected by counterproductive systematics c
 The weights for the \plasticc\ metric, however, must be determined before there is knowledge of which systematics affect which classes.
 Because of this caveat, the choice of weights is isolated to an inherently human problem dictated by the value placed on the scientific merits of knowledge of each class.
 This paper, on the other hand, can only quantify the impact of weights in relation to the systematics.
-We thus agnostically test weighting schemes where classes affected by a particular systematic take a given weight $0 \leq w \leq 1$ and all other classes have a weight $(1 - w) / (M - 1)$.
+We thus agnostically test weighting schemes\footnote{\changes{The weights considered in this study are more extreme than those ultimately used for \plasticc\ because the true weights were blinded from some authors prior to the end of the challenge.
+However, we note that the weights could be (and in fact were) discovered by \plasticc\ competitors by systematically probing the output of the public leader board with entries from the cruise control classifier archetype targeting each class one at a time.}}
+where classes affected by a particular systematic take a given weight $0 \leq w \leq 1$ and all other classes have a weight $(1 - w) / (M - 1)$.
