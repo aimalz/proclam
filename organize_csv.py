@@ -1,7 +1,7 @@
 import pylab as pl
 import pandas as pd
 import numpy as np
-
+dir = 'examples/plasticc/'
 list = ['2_MikeSilogram', '3_MajorTom']
 
 kyle = pd.read_csv('examples/plasticc/1_Kyle/1_Kyle.csv')
@@ -15,10 +15,10 @@ print(kylecols)
 print(matstrucdat[0,:])
 
 
-truth = pd.read_csv('1_Kyle/1_Kyle_truth.csv')
+truth = pd.read_csv('examples/plasticc/1_Kyle/1_Kyle_truth.csv')
 
 for file in list:
-    name = file+'/'+file+'.csv'
+    name = dir+file+'/'+file+'.csv'
     print(name)
     mat = pd.read_csv(name)
     matdat = np.array(mat)
@@ -41,8 +41,8 @@ for file in list:
                 matstruc.rename(columns={"A": "a", "B": "c"})
     print(matstrucdat[0,:], 'test after')
 
-    newname = file+'/'+file+'_reordered.csv'
-    newnametruth = file+'/'+file+'_reordered_truth.csv'
+    newname = dir+file+'/'+file+'_reordered.csv'
+    newnametruth = dir+file+'/'+file+'_reordered_truth.csv'
 
     matstruc.to_csv(newname, index=False)
     truth.to_csv(newnametruth)
