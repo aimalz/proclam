@@ -4,6 +4,9 @@ Utility functions for PLAsTiCC metrics
 
 from __future__ import absolute_import, division
 from __future__ import print_function
+from builtins import zip
+from builtins import str
+from builtins import range
 __all__ = ['sanitize_predictions',
            'weight_sum', 'check_weights', 'averager',
            'cm_to_rate', 'precision',
@@ -293,7 +296,7 @@ def det_to_prob(dets, prediction=None):
     Does not yet handle number of classes in truth not matching number of classes in prediction, i.e. for having "other" class or secret classes not in training set.  The prediction keyword is a kludge to enable this but should be replaced.
     """
     N = len(dets)
-    indices = range(N)
+    indices = list(range(N))
 
     if prediction is None:
         prediction_shape = (N, int(np.max(dets) + 1))

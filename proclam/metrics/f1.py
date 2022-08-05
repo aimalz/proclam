@@ -3,6 +3,7 @@ A class for the F1 score
 """
 
 from __future__ import absolute_import
+from builtins import range
 __all__ = ['F1']
 
 import numpy as np

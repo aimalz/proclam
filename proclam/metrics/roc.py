@@ -3,6 +3,7 @@ A class for the Receiver Operating Curve
 """
 
 from __future__ import absolute_import
+from builtins import range
 __all__ = ['ROC']
 
 import numpy as np

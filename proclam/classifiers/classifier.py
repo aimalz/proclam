@@ -4,6 +4,8 @@ A superclass for classifiers
 
 from __future__ import absolute_import
 from __future__ import print_function
+from builtins import range
+from builtins import object
 __all__ = ['Classifier']
 
 import numpy as np
@@ -48,7 +50,7 @@ class Classifier(object):
         print('No classification procedure specified: returning truth table')
 
         N = len(truth)
-        indices = range(N)
+        indices = list(range(N))
         if other:
             M += 1
         prediction = np.zeros((N, M))
