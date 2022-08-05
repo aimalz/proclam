@@ -3,6 +3,7 @@ A subclass for a log-scaled unbalanced distribution of classes.
 """
 
 from __future__ import absolute_import
+from __future__ import print_function
 __all__ = ['LogUnbalanced']
 
 import numpy as np

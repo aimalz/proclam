@@ -3,6 +3,7 @@ Utility functions for PLAsTiCC metrics
 """
 
 from __future__ import absolute_import, division
+from __future__ import print_function
 __all__ = ['sanitize_predictions',
            'weight_sum', 'check_weights', 'averager',
            'cm_to_rate', 'precision',
@@ -374,7 +375,7 @@ def det_to_cm(dets, truth, per_class_norm=False, vb=False):
     coords = np.array(list(zip(dets, truth)))
     indices, index_counts = np.unique(coords, axis=0, return_counts=True)
     if vb:
-        print(indices.T, index_counts)
+        print((indices.T, index_counts))
     index_counts = index_counts.astype(int)
     indices = indices.T.astype(int)
     cm[indices[0], indices[1]] = index_counts

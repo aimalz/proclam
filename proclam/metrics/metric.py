@@ -3,6 +3,7 @@ A superclass for metrics
 """
 
 from __future__ import absolute_import
+from __future__ import print_function
 __all__ = ['Metric']
 
 import numpy as np
