@@ -7,6 +7,7 @@ __all__ = ['Classifier']
 
 import numpy as np
 
+
 class Classifier(object):
 
     def __init__(self, scheme=None, seed=0):
@@ -47,7 +48,8 @@ class Classifier(object):
 
         N = len(truth)
         indices = range(N)
-        if other: M += 1
+        if other:
+            M += 1
         prediction = np.zeros((N, M))
 
         prediction[indices, truth[indices]] += 1.

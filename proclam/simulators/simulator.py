@@ -7,6 +7,7 @@ __all__ = ['Simulator']
 
 import numpy as np
 
+
 class Simulator(object):
 
     def __init__(self, scheme=None, seed=0):

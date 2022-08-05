@@ -3,12 +3,11 @@ A subclass for a general classifier based on a perturbed confusion matrix
 """
 
 from __future__ import absolute_import
-__all__  = ['FromCMDM']
-
-import numpy as np
-import scipy.stats as sps
-
 from .classifier import Classifier
+import scipy.stats as sps
+import numpy as np
+__all__ = ['FromCMDM']
+
 
 class FromCMDM(Classifier):
 
@@ -58,7 +57,7 @@ class FromCMDM(Classifier):
 
         cm[cm == 0.] = 1.e-8
         alpha = cm / delta
-        prediction =  np.empty((N, M))
+        prediction = np.empty((N, M))
 
         for m in range(M):
             func_m = sps.dirichlet(alpha[m])

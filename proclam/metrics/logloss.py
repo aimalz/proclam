@@ -15,6 +15,7 @@ from .util import sanitize_predictions
 from .util import averager
 from .metric import Metric
 
+
 class LogLoss(Metric):
 
     def __init__(self, scheme=None):

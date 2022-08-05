@@ -12,6 +12,7 @@ from .util import prob_to_det, det_to_cm, cm_to_rate
 from .util import auc, check_auc_grid, precision
 from .metric import Metric
 
+
 class PRC(Metric):
 
     def __init__(self, scheme=None):
@@ -78,5 +79,7 @@ class PRC(Metric):
         weights = check_weights(averaging, M, truth=truth)
         auc_allclass = weight_sum(auc_class, weights)
 
-        if vb: return curve
-        else: return auc_allclass
+        if vb:
+            return curve
+        else:
+            return auc_allclass

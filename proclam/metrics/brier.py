@@ -13,6 +13,7 @@ from .util import det_to_prob as truth_reformatter
 from .util import averager
 from .metric import Metric
 
+
 class Brier(Metric):
 
     def __init__(self, scheme=None):

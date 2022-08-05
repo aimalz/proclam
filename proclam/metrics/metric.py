@@ -10,6 +10,7 @@ import numpy as np
 from .util import weight_sum
 from .util import check_weights
 
+
 class Metric(object):
 
     def __init__(self, scheme=None, **kwargs):

@@ -18,6 +18,7 @@ from scipy.integrate import trapz
 
 RateMatrix = collections.namedtuple('rates', 'TPR FPR FNR TNR TP FP FN TN')
 
+
 def sanitize_predictions(predictions, epsilon=1.e-8):
     """
     Replaces 0 and 1 with 0+epsilon, 1-epsilon
@@ -43,6 +44,7 @@ def sanitize_predictions(predictions, epsilon=1.e-8):
     predictions = predictions / np.sum(predictions, axis=1)[:, np.newaxis]
     return predictions
 
+
 def weight_sum(per_class_metrics, weight_vector):
     """
     Calculates the weighted metric
@@ -61,6 +63,7 @@ def weight_sum(per_class_metrics, weight_vector):
     """
     weight_sum = np.dot(weight_vector, per_class_metrics)
     return weight_sum
+
 
 def check_weights(avg_info, M, chosen=None, truth=None):
     """
@@ -113,6 +116,7 @@ def check_weights(avg_info, M, chosen=None, truth=None):
         weights = None
     return weights
 
+
 def averager(per_object_metrics, truth, M, vb=False):
     """
     Creates a list with the metrics per object, separated by class
@@ -133,8 +137,10 @@ def averager(per_object_metrics, truth, M, vb=False):
             class_metric[m] = np.average(per_class_metric)
         except AssertionError:
             class_metric[m] = 0.
-        if vb: print('by request '+str((m, how_many_in_class, class_metric[m])))
+        if vb:
+            print('by request '+str((m, how_many_in_class, class_metric[m])))
     return class_metric
+
 
 def cm_to_rate(cm, vb=False):
     """
@@ -185,6 +191,7 @@ def cm_to_rate(cm, vb=False):
 
     return rates
 
+
 def prep_curve(x, y):
     """
     Makes a curve for AUC
@@ -207,6 +214,7 @@ def prep_curve(x, y):
     y = np.concatenate(([0.], y, [1.]),)
     return (x, y)
 
+
 def auc(x, y):
     """
     Computes the area under curve (just a wrapper for trapezoid rule)
@@ -226,6 +234,7 @@ def auc(x, y):
     i = np.argsort(x)
     auc = trapz(y[i], x[i])
     return auc
+
 
 def check_auc_grid(grid):
     """
@@ -259,6 +268,7 @@ def check_auc_grid(grid):
     except AssertionError:
         print('Please specify a grid, spacing, or density for this AUC metric.')
         return
+
 
 def det_to_prob(dets, prediction=None):
     """
@@ -295,6 +305,7 @@ def det_to_prob(dets, prediction=None):
 
     return probs
 
+
 def prob_to_det(probs, m=None, threshold=None):
     """
     Converts probabilistic classifications to deterministic classifications by assigning the class with highest probability
@@ -319,11 +330,13 @@ def prob_to_det(probs, m=None, threshold=None):
         try:
             assert(type(m) == int and type(threshold) == np.float64)
         except AssertionError:
-            print(str(m)+' is '+str(type(m))+' and must be int; '+str(threshold)+' is '+str(type(threshold))+' and must be float')
+            print(str(m)+' is '+str(type(m))+' and must be int; ' +
+                  str(threshold)+' is '+str(type(threshold))+' and must be float')
         dets = np.zeros(np.shape(probs)[0]).astype(int)
         dets[probs[:, m] >= threshold] = 1
 
     return dets
+
 
 def det_to_cm(dets, truth, per_class_norm=False, vb=False):
     """
@@ -360,7 +373,8 @@ def det_to_cm(dets, truth, per_class_norm=False, vb=False):
 
     coords = np.array(list(zip(dets, truth)))
     indices, index_counts = np.unique(coords, axis=0, return_counts=True)
-    if vb: print(indices.T, index_counts)
+    if vb:
+        print(indices.T, index_counts)
     index_counts = index_counts.astype(int)
     indices = indices.T.astype(int)
     cm[indices[0], indices[1]] = index_counts
@@ -368,7 +382,8 @@ def det_to_cm(dets, truth, per_class_norm=False, vb=False):
     if per_class_norm:
         cm = cm.astype(float) / true_counts[np.newaxis, :].astype(float)
 
-    if vb: print('by request '+str(cm))
+    if vb:
+        print('by request '+str(cm))
 
     return cm
 
@@ -435,6 +450,7 @@ def det_to_cm(dets, truth, per_class_norm=False, vb=False):
 #         recall
 #     """
 #     return 1. - rates.FNR
+
 
 def precision(TP, FP):
     """

@@ -9,6 +9,7 @@ import numpy as np
 
 from .simulator import Simulator
 
+
 class Uniform(Simulator):
 
     def __init__(self, scheme='uniform', seed=0):

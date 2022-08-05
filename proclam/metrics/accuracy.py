@@ -11,6 +11,7 @@ from .util import weight_sum, check_weights
 from .util import prob_to_det, det_to_cm, cm_to_rate
 from .metric import Metric
 
+
 class Accuracy(Metric):
 
     def __init__(self, scheme=None):

@@ -9,6 +9,7 @@ import numpy as np
 
 from .simulator import Simulator
 
+
 class LogUnbalanced(Simulator):
 
     def __init__(self, scheme='log-unbalanced', seed=0):

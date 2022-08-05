@@ -3,12 +3,11 @@ A subclass for a general classifier based on a perturbed confusion matrix
 """
 
 from __future__ import absolute_import
-__all__  = ['FromCM']
-
-import numpy as np
-import scipy.stats as sps
-
 from .classifier import Classifier
+import scipy.stats as sps
+import numpy as np
+__all__ = ['FromCM']
+
 
 class FromCM(Classifier):
 
@@ -54,7 +53,8 @@ class FromCM(Classifier):
 
         N = len(truth)
         M = len(cm)
-        if other: M += 1
+        if other:
+            M += 1
 
         prediction = cm[truth] + delta * sps.halfcauchy.rvs(loc=0., scale=delta, size=(N, M))
         prediction /= np.sum(prediction, axis=1)[:, np.newaxis]
